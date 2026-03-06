@@ -1327,9 +1327,10 @@
                 if (upStep >= 40) clearInterval(revealFadeInterval);
             }, 50);
 
-            // At 17s: show historic underneath, dissolve overlay down, fade audio out
+            // At 17s: show historic underneath, scroll instantly so it's in position, dissolve overlay down
             revealTimeout1 = setTimeout(() => {
                 historic.classList.add('visible');
+                historic.scrollIntoView({ behavior: 'instant', block: 'start' });
                 videoOverlay.style.transition = 'opacity 3s ease';
                 videoOverlay.style.opacity = '0';
                 const startVol = videoClip.volume;
@@ -1341,12 +1342,11 @@
                 }, 50);
             }, 17000);
 
-            // At 20s: clean up, scroll, whoosh, typewriter
+            // At 20s: clean up, whoosh, typewriter
             revealTimeout2 = setTimeout(() => {
                 videoOverlay.classList.remove('active');
                 videoClip.pause();
                 videoClip.currentTime = 0;
-                historic.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 clearTimeout(typewriterTimeout);
                 playWhoosh();
                 playEasterAudio();
