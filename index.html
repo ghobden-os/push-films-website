@@ -239,14 +239,14 @@
         .coming-soon-label { font-size: 10px !important; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mid) !important; }
 
         /* PHOTO / VIDEO BUTTONS */
+        .work-btns { display: flex; gap: 8px; margin-top: 8px; }
         .photo-btn, .video-btn {
             display: inline-flex; align-items: center; justify-content: center;
-            width: 24px; height: 18px;
+            height: 18px;
             border: 1px solid rgba(255,255,255,0.2);
             border-radius: 2px;
-            background: none; cursor: pointer; margin-left: 8px;
+            background: none; cursor: pointer;
             vertical-align: middle; transition: all 0.2s;
-            position: relative; top: -1px;
         }
         .photo-btn {
             width: auto; padding: 0 10px;
@@ -486,6 +486,7 @@
                             <h3>Iron Maiden: Burning Ambition</h3>
                             <p class="work-meta">Feature Documentary — Universal Pictures</p>
                             <p class="work-desc">Feature documentary on Iron Maiden. Theatrical release via Universal Pictures.</p>
+                            <p class="work-desc" style="color: var(--mid) !important; font-size: 11px !important; letter-spacing: 0.08em;">Link coming soon</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
@@ -515,8 +516,9 @@
                     <article class="work-item">
                         <div class="work-image"><img src="images/ford-raptor.png" alt="Ford Raptor"></div>
                         <div class="work-info">
-                            <h3>Ford Ranger Raptor <button class="photo-btn" id="raptorBtn" aria-label="View photos"></button> <button class="video-btn" id="raptorVideo1Btn" aria-label="Watch clip 1"></button> <button class="video-btn" id="raptorVideo2Btn" aria-label="Watch clip 2"></button> <button class="video-btn" data-vimeo="1171170029" aria-label="Watch video"></button></h3>
+                            <h3>Ford Ranger Raptor <button class="video-btn" data-vimeo="1171170029" aria-label="Watch video"></button></h3>
                             <p class="work-meta">Producer — Ford</p>
+                            <div class="work-btns"><button class="photo-btn" id="raptorBtn" aria-label="View photos"></button> <button class="video-btn" id="raptorVideo1Btn" aria-label="Watch clip 1"></button> <button class="video-btn" id="raptorVideo2Btn" aria-label="Watch clip 2"></button></div>
                             <p class="work-desc">The global launch film for the new Ford Ranger Raptor. Directed by Nick Piper. The brief was simple: show what it can do. The solution was to chain it inside an Antonov AN-12 Soviet cargo plane and let it break free.</p>
                             <span class="work-arrow">→</span>
                         </div>
@@ -524,8 +526,9 @@
                     <article class="work-item">
                         <div class="work-image"><img src="images/ford-explorer-launch.png" alt="Ford Explorer"></div>
                         <div class="work-info">
-                            <h3>Ford Explorer <button class="photo-btn" id="lexieGreenBtn" aria-label="View photos"></button> <button class="video-btn" id="lexieGreenVideo1Btn" aria-label="Watch clip 1"></button> <button class="video-btn" id="lexieGreenVideo2Btn" aria-label="Watch clip 2"></button> <button class="video-btn" data-vimeo="1171157858" aria-label="Watch video"></button></h3>
+                            <h3>Ford Explorer <button class="video-btn" data-vimeo="1171157858" aria-label="Watch video"></button></h3>
                             <p class="work-meta">Producer — Ford</p>
+                            <div class="work-btns"><button class="photo-btn" id="lexieGreenBtn" aria-label="View photos"></button> <button class="video-btn" id="lexieGreenVideo1Btn" aria-label="Watch clip 1"></button> <button class="video-btn" id="lexieGreenVideo2Btn" aria-label="Watch clip 2"></button></div>
                             <p class="work-desc">Brand film for the Ford Explorer launch.</p>
                             <span class="work-arrow">→</span>
                         </div>
@@ -533,8 +536,9 @@
                     <article class="work-item">
                         <div class="work-image"><img src="images/defender.png" alt="Land Rover Defender"></div>
                         <div class="work-info">
-                            <h3>Land Rover Defender <button class="photo-btn" id="defenderBtn" aria-label="View photos"></button> <button class="video-btn" id="defenderVideoBtn" aria-label="Watch clip"></button> <button class="video-btn" data-vimeo="1171151952" aria-label="Watch video"></button></h3>
+                            <h3>Land Rover Defender <button class="video-btn" data-vimeo="1171151952" aria-label="Watch video"></button></h3>
                             <p class="work-meta">Agency Producer — Imagination / JLR, Kazakhstan</p>
+                            <div class="work-btns"><button class="photo-btn" id="defenderBtn" aria-label="View photos"></button> <button class="video-btn" id="defenderVideoBtn" aria-label="Watch clip"></button></div>
                             <p class="work-desc">The global launch film for the new Land Rover Defender, shot on location in Kazakhstan. The film starred Kenton Cool — the most prolific Everest summiteer in the world outside of the Sherpa community, with 19 ascents to his name. The Defender was the perfect vehicle for the world's most demanding mountaineer.</p>
                             <span class="work-arrow">→</span>
                         </div>
@@ -551,8 +555,9 @@
                     <article class="work-item">
                         <div class="work-image"><img src="images/range-rover-test-track.png" alt="Range Rover Sport Test Track"></div>
                         <div class="work-info">
-                            <h3>Range Rover Sport Test Track <button class="photo-btn" id="brothersBtn" aria-label="View photo"></button> <button class="photo-btn" id="rrSportPrepBtn" aria-label="View prep photos"></button> <button class="video-btn" data-vimeo="1171150693" aria-label="Watch video"></button></h3>
+                            <h3>Range Rover Sport Test Track <button class="video-btn" data-vimeo="1171150693" aria-label="Watch video"></button></h3>
                             <p class="work-meta">Producer — Jaguar Land Rover</p>
+                            <div class="work-btns"><button class="photo-btn" id="brothersBtn" aria-label="View photo"></button> <button class="photo-btn" id="rrSportPrepBtn" aria-label="View prep photos"></button></div>
                             <p class="work-desc">At the Jaguar Land Rover test circuit, Jessica Hawkins — W Series racing driver and official James Bond stunt driver — puts Anthony Joshua through his paces in the new Range Rover Sport.</p>
                             <span class="work-arrow">→</span>
                         </div>
@@ -569,8 +574,9 @@
                     <article class="work-item">
                         <div class="work-image"><img src="images/range-rover-james-corden.png" alt="Range Rover Sport — James Corden"></div>
                         <div class="work-info">
-                            <h3>Range Rover Sport — James Corden <button class="photo-btn" id="cordenBtn" aria-label="View photo"></button> <button class="video-btn" data-vimeo="1171151324" aria-label="Watch video"></button></h3>
+                            <h3>Range Rover Sport — James Corden <button class="video-btn" data-vimeo="1171151324" aria-label="Watch video"></button></h3>
                             <p class="work-meta">Producer — Imagination / JLR, Los Angeles</p>
+                            <div class="work-btns"><button class="photo-btn" id="cordenBtn" aria-label="View photo"></button></div>
                             <p class="work-desc">A Carpool Karaoke spoof with James Corden and Lennard Hoornik, Chief Commercial Officer of Jaguar Land Rover. Shot behind closed gates — the car was still under pre-launch embargo.</p>
                             <span class="work-arrow">→</span>
                         </div>
@@ -587,8 +593,9 @@
                     <article class="work-item">
                         <div class="work-image"><img src="images/Tata.png" alt="Tata"></div>
                         <div class="work-info">
-                            <h3>Tata Nexon <button class="photo-btn" id="tataBtn" aria-label="View photos"></button> <button class="video-btn" id="tataVideoBtn" aria-label="Watch clip"></button></h3>
+                            <h3>Tata Nexon</h3>
                             <p class="work-meta">Producer — Tata</p>
+                            <div class="work-btns"><button class="photo-btn" id="tataBtn" aria-label="View photos"></button> <button class="video-btn" id="tataVideoBtn" aria-label="Watch clip"></button></div>
                             <p class="work-desc">A commercial for the Tata Nexon, shot on location in Hyderabad.</p>
                             <span class="work-arrow">→</span>
                         </div>
@@ -626,8 +633,9 @@
                     <article class="work-item">
                         <div class="work-image"><img src="images/vashi.png" alt="Vashi"></div>
                         <div class="work-info">
-                            <h3>Vashi <button class="photo-btn" id="vashiBtn" aria-label="View photos"></button></h3>
+                            <h3>Vashi <button class="video-btn" data-vimeo="1171158700" aria-label="Watch video"></button></h3>
                             <p class="work-meta">Jewellery Commercial — Vashi</p>
+                            <div class="work-btns"><button class="photo-btn" id="vashiBtn" aria-label="View photos"></button></div>
                             <p class="work-desc">Luxury jewellery commercial for Vashi.</p>
                             <span class="work-arrow">→</span>
                         </div>
@@ -641,8 +649,9 @@
                     <article class="work-item">
                         <div class="work-image"><img src="images/ford-wheels.png" alt="Ford Wheels"></div>
                         <div class="work-info">
-                            <h3>Ford Wheels <button class="photo-btn" id="fordWheelsBtn" aria-label="View photo"></button></h3>
+                            <h3>Ford Wheels</h3>
                             <p class="work-meta">Producer — Ford</p>
+                            <div class="work-btns"><button class="photo-btn" id="fordWheelsBtn" aria-label="View photo"></button></div>
                             <p class="work-desc">A trailer for a fake heist movie, commissioned by Ford and shot with the Mustang. At a separate event, Ford enthusiasts could test drive the new car — we filmed inserts of them behind the wheel and cut them into the trailer on the spot. They left with their own personalised version as a souvenir, placing them in a Hollywood movie. Each one also took away a poster of themselves starring in the film. The punters loved it.</p>
                             <span class="work-arrow">→</span>
                         </div>
@@ -650,8 +659,9 @@
                     <article class="work-item">
                         <div class="work-image"><img src="images/ford-explorer-world-record.png" alt="Ford Explorer World Record"></div>
                         <div class="work-info">
-                            <h3>Ford Explorer: Lexie Limitless World Record Finale <button class="photo-btn" id="explorerBtn" aria-label="View photos"></button> <button class="video-btn" id="explorerVideo1Btn" aria-label="Watch clip 1"></button> <button class="video-btn" id="explorerVideo2Btn" aria-label="Watch clip 2"></button> <button class="video-btn" id="explorerVideo3Btn" aria-label="Watch clip 3"></button></h3>
+                            <h3>Ford Explorer: Lexie Limitless World Record Finale</h3>
                             <p class="work-meta">Live Experiential — Ford</p>
+                            <div class="work-btns"><button class="photo-btn" id="explorerBtn" aria-label="View photos"></button> <button class="video-btn" id="explorerVideo1Btn" aria-label="Watch clip 1"></button> <button class="video-btn" id="explorerVideo2Btn" aria-label="Watch clip 2"></button> <button class="video-btn" id="explorerVideo3Btn" aria-label="Watch clip 3"></button></div>
                             <p class="work-desc">We managed a rolling closure of twenty miles of the South of France coast road into Nice. As the convoy moved through each section, the route was sealed ahead and released behind — keeping the road clear without shutting it down entirely. A convoy of twenty historic Ford vehicles. Motorcycle cameramen whose day job is filming the Tour de France. Helicopters, drones, and multiple fixed cameras the length of the route.</p>
                             <p class="work-desc">The entire event was broadcast live online. To maintain a continuous live feed across twenty miles, we put a relay aircraft at 3,000 feet — signal up from the helicopter, across to the plane, down to the OB truck.</p>
                             <p class="work-desc">Lexie arrived into Nice where Ford CEO Jim Farley joined her for the final mile to the finish line.</p>
@@ -1032,9 +1042,9 @@
                     <article class="work-item">
                         <div class="work-image"><img src="images/snow-patrol.png" alt="Snow Patrol — Chasing Cars"></div>
                         <div class="work-info">
-                            <h3>Snow Patrol — Chasing Cars / Run <button class="video-btn" data-vimeo="1171146732" aria-label="Watch video"></button></h3>
+                            <h3>Snow Patrol — Run <button class="video-btn" data-vimeo="1171146732" aria-label="Watch video"></button></h3>
                             <p class="work-meta">First Assistant Director</p>
-                            <p class="work-desc">Shot at night on location in a field. They were going to go on to become one of the biggest bands in the world. Chasing Cars became the most played song on UK radio of the 21st century.</p>
+                            <p class="work-desc">Shot at night on location. Flares, motorcycles, a field. Nobody knew who Snow Patrol were. Run changed that. Three years later, Chasing Cars became the most played song on UK radio of the 21st century. Directed by Paul Gore. 2003.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
