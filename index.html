@@ -409,12 +409,6 @@
         #videoRevealOverlay video {
             width: 100%; height: 100%;
             object-fit: cover;
-            transition: opacity 3s ease;
-        }
-        #videoRevealOverlay video.fading { opacity: 0; }
-        #videoRevealOverlay.fade-out {
-            opacity: 0;
-            transition: opacity 1.5s ease;
         }
 
         .historic-header {
@@ -1212,7 +1206,7 @@
         const historicClose = document.getElementById('historicClose');
         const typewriterEl = document.getElementById('historicTypewriter');
         const easterEggAudio = document.getElementById('easterEggAudio');
-        const typewriterMsg = 'Congratulations. You found the secret bonus button. Not many do.';
+        const typewriterMsg = 'Congratulations. You found the secret page. Not many do.';
         let typewriterTimeout = null;
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -1306,39 +1300,58 @@
         const videoOverlay = document.getElementById('videoRevealOverlay');
         const videoClip = document.getElementById('videoRevealClip');
         let revealTimeout1 = null, revealTimeout2 = null, revealTimeout3 = null;
+        let revealFadeInterval = null;
 
         function triggerReveal() {
+            clearTimeout(revealTimeout1); clearTimeout(revealTimeout2); clearTimeout(revealTimeout3);
+            clearInterval(revealFadeInterval);
+
+            // Start invisible, audio silent
             videoClip.currentTime = 0;
             videoClip.muted = false;
+            videoClip.volume = 0;
+            videoOverlay.style.transition = 'none';
+            videoOverlay.style.opacity = '0';
             videoOverlay.classList.add('active');
-            videoOverlay.style.opacity = '1';
-            videoOverlay.style.transition = '';
-            videoClip.classList.remove('fading');
             videoClip.play().catch(() => {});
 
-            // Fade video to black at 17s
+            // Fade picture and audio up over 2s
+            setTimeout(() => {
+                videoOverlay.style.transition = 'opacity 2s ease';
+                videoOverlay.style.opacity = '1';
+            }, 50);
+            let upStep = 0;
+            revealFadeInterval = setInterval(() => {
+                upStep++;
+                videoClip.volume = Math.min(1, upStep / 40);
+                if (upStep >= 40) clearInterval(revealFadeInterval);
+            }, 50);
+
+            // At 17s: show historic underneath, dissolve overlay down, fade audio out
             revealTimeout1 = setTimeout(() => {
-                videoClip.classList.add('fading');
+                historic.classList.add('visible');
+                videoOverlay.style.transition = 'opacity 3s ease';
+                videoOverlay.style.opacity = '0';
+                const startVol = videoClip.volume;
+                let downStep = 0;
+                revealFadeInterval = setInterval(() => {
+                    downStep++;
+                    videoClip.volume = Math.max(0, startVol * (1 - downStep / 60));
+                    if (downStep >= 60) clearInterval(revealFadeInterval);
+                }, 50);
             }, 17000);
 
-            // Fade overlay out and reveal page at 20s
+            // At 20s: clean up, scroll, whoosh, typewriter
             revealTimeout2 = setTimeout(() => {
-                videoOverlay.style.transition = 'opacity 1.5s ease';
-                videoOverlay.style.opacity = '0';
-            }, 20000);
-
-            // Remove overlay, show historic section
-            revealTimeout3 = setTimeout(() => {
                 videoOverlay.classList.remove('active');
                 videoClip.pause();
                 videoClip.currentTime = 0;
-                historic.classList.add('visible');
                 historic.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 clearTimeout(typewriterTimeout);
                 playWhoosh();
                 playEasterAudio();
                 setTimeout(runTypewriter, 800);
-            }, 21500);
+            }, 20000);
         }
 
         historicTrigger.addEventListener('click', () => {
