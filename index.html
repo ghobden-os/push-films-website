@@ -1247,27 +1247,55 @@
             type();
         }
 
+        let audioFadeInterval = null;
+
+        function stopEasterAudio() {
+            clearInterval(audioFadeInterval);
+            easterEggAudio.pause();
+            easterEggAudio.currentTime = 0;
+            easterEggAudio.volume = 1;
+        }
+
+        function playEasterAudio() {
+            clearInterval(audioFadeInterval);
+            easterEggAudio.volume = 1;
+            easterEggAudio.currentTime = 0;
+            easterEggAudio.play().catch(() => {});
+            // Fade out over 3s, completing at 8s
+            audioFadeInterval = setTimeout(() => {
+                const fadeDuration = 3000;
+                const steps = 60;
+                const interval = fadeDuration / steps;
+                let step = 0;
+                audioFadeInterval = setInterval(() => {
+                    step++;
+                    easterEggAudio.volume = Math.max(0, 1 - step / steps);
+                    if (step >= steps) {
+                        clearInterval(audioFadeInterval);
+                        easterEggAudio.pause();
+                    }
+                }, interval);
+            }, 5000);
+        }
+
         historicTrigger.addEventListener('click', () => {
             if (historic.classList.contains('visible')) {
                 historic.classList.remove('visible');
-                easterEggAudio.pause();
-                easterEggAudio.currentTime = 0;
+                stopEasterAudio();
                 historicTrigger.scrollIntoView({ behavior: 'smooth', block: 'center' });
             } else {
                 historic.classList.add('visible');
                 historic.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 clearTimeout(typewriterTimeout);
                 playWhoosh();
-                easterEggAudio.currentTime = 0;
-                easterEggAudio.play().catch(() => {});
+                playEasterAudio();
                 setTimeout(runTypewriter, 800);
             }
         });
 
         historicClose.addEventListener('click', () => {
             historic.classList.remove('visible');
-            easterEggAudio.pause();
-            easterEggAudio.currentTime = 0;
+            stopEasterAudio();
             historicTrigger.scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
 
