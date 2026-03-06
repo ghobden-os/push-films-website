@@ -102,12 +102,16 @@
         }
         .hero-name {
             font-family: var(--font-serif);
-            font-size: clamp(48px, 9.6vw, 132px);
+            font-size: clamp(64px, 13vw, 180px);
             font-weight: 300;
-            line-height: 0.85;
+            line-height: 0.82;
             letter-spacing: -0.02em;
             color: var(--fg);
-            margin-bottom: clamp(32px, 4vw, 56px);
+            margin-bottom: clamp(28px, 3.5vw, 48px);
+        }
+        .hero-title {
+            font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+            color: var(--mid); margin-bottom: clamp(28px, 4vw, 48px);
         }
         .hero-name em {
             font-style: italic;
@@ -423,8 +427,8 @@
     </nav>
 
     <section id="hero">
-        <div class="hero-rule-top">Film Producer &amp; Production Consultant</div>
         <h1 class="hero-name">Greg<br><em>Hobden</em></h1>
+        <p class="hero-title">Film Producer &amp; Production Consultant</p>
         <div class="hero-disciplines">
             <span>Theatrical documentary</span>
             <span class="hero-disc-dot">·</span>
