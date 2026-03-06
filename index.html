@@ -1327,12 +1327,14 @@
                 if (upStep >= 40) clearInterval(revealFadeInterval);
             }, 50);
 
-            // At 17s: show historic underneath, scroll instantly so it's in position, dissolve overlay down
+            // At 17s: show historic underneath, scroll into position, dissolve overlay down
             revealTimeout1 = setTimeout(() => {
+                typewriterEl.textContent = '';
                 historic.classList.add('visible');
                 setTimeout(() => { window.scrollTo(0, historic.offsetTop); }, 50);
                 videoOverlay.style.transition = 'opacity 3s ease';
                 videoOverlay.style.opacity = '0';
+                videoOverlay.style.pointerEvents = 'none';
                 const startVol = videoClip.volume;
                 let downStep = 0;
                 revealFadeInterval = setInterval(() => {
@@ -1345,6 +1347,7 @@
             // At 20s: clean up, whoosh, typewriter
             revealTimeout2 = setTimeout(() => {
                 videoOverlay.classList.remove('active');
+                videoOverlay.style.pointerEvents = '';
                 videoClip.pause();
                 videoClip.currentTime = 0;
                 clearTimeout(typewriterTimeout);
