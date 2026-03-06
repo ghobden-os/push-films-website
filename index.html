@@ -397,6 +397,26 @@
         #historic.visible { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* VIDEO REVEAL OVERLAY */
+        #videoRevealOverlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #000;
+        }
+        #videoRevealOverlay.active { display: block; }
+        #videoRevealOverlay video {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: opacity 3s ease;
+        }
+        #videoRevealOverlay video.fading { opacity: 0; }
+        #videoRevealOverlay.fade-out {
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
         .historic-header {
             margin-bottom: clamp(40px, 5vw, 64px);
             padding-bottom: 20px;
@@ -903,6 +923,10 @@
         </div>
     </footer>
 
+    <div id="videoRevealOverlay">
+        <video id="videoRevealClip" src="five-intro.mp4" playsinline muted></video>
+    </div>
+
     <div class="historic-trigger-wrap">
         <button class="historic-trigger" id="historicTrigger">
         </button>
@@ -1279,18 +1303,51 @@
             }, 4000);
         }
 
-        historicTrigger.addEventListener('click', () => {
-            if (historic.classList.contains('visible')) {
-                historic.classList.remove('visible');
-                stopEasterAudio();
-                historicTrigger.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            } else {
+        const videoOverlay = document.getElementById('videoRevealOverlay');
+        const videoClip = document.getElementById('videoRevealClip');
+        let revealTimeout1 = null, revealTimeout2 = null, revealTimeout3 = null;
+
+        function triggerReveal() {
+            videoClip.currentTime = 0;
+            videoClip.muted = false;
+            videoOverlay.classList.add('active');
+            videoOverlay.style.opacity = '1';
+            videoOverlay.style.transition = '';
+            videoClip.classList.remove('fading');
+            videoClip.play().catch(() => {});
+
+            // Fade video to black at 17s
+            revealTimeout1 = setTimeout(() => {
+                videoClip.classList.add('fading');
+            }, 17000);
+
+            // Fade overlay out and reveal page at 20s
+            revealTimeout2 = setTimeout(() => {
+                videoOverlay.style.transition = 'opacity 1.5s ease';
+                videoOverlay.style.opacity = '0';
+            }, 20000);
+
+            // Remove overlay, show historic section
+            revealTimeout3 = setTimeout(() => {
+                videoOverlay.classList.remove('active');
+                videoClip.pause();
+                videoClip.currentTime = 0;
                 historic.classList.add('visible');
                 historic.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 clearTimeout(typewriterTimeout);
                 playWhoosh();
                 playEasterAudio();
                 setTimeout(runTypewriter, 800);
+            }, 21500);
+        }
+
+        historicTrigger.addEventListener('click', () => {
+            if (historic.classList.contains('visible')) {
+                historic.classList.remove('visible');
+                stopEasterAudio();
+                historicTrigger.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                triggerReveal();
             }
         });
 
