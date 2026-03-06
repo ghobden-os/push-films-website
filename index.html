@@ -258,6 +258,17 @@
         }
         .photo-btn:hover, .video-btn:hover { border-color: var(--gold); }
         .photo-btn:hover::after, .video-btn:hover::after { color: var(--gold); }
+        .video-btn[data-vimeo] {
+            width: auto; padding: 0 10px;
+            border-color: var(--gold);
+            gap: 5px;
+        }
+        .video-btn[data-vimeo]::after {
+            content: '▶ Watch'; font-size: 8px; letter-spacing: 0.08em;
+            color: var(--gold); text-transform: uppercase;
+        }
+        .video-btn[data-vimeo]:hover { background: var(--gold); }
+        .video-btn[data-vimeo]:hover::after { color: #000; }
         .photo-modal {
             display: none; position: fixed; inset: 0; z-index: 1000;
             background: rgba(0,0,0,0.85); align-items: center; justify-content: center;
@@ -561,7 +572,7 @@
                     <article class="work-item">
                         <div class="work-image"><img src="images/discovery-sport.png" alt="Land Rover Discovery Sport"></div>
                         <div class="work-info">
-                            <h3>Land Rover Discovery Sport</h3>
+                            <h3>Land Rover Discovery Sport <button class="video-btn" data-vimeo="1171150533" aria-label="Watch video"></button></h3>
                             <p class="work-meta">Producer — Jaguar Land Rover</p>
                             <p class="work-desc">A promotional film for the Land Rover Discovery Sport, showcasing the full range of Land Rover accessories. Rubber matting to roof racks. Everything you need — including, as it turns out, a dog wash.</p>
                             <span class="work-arrow">→</span>
@@ -594,7 +605,7 @@
                     <article class="work-item">
                         <div class="work-image"><img src="images/the-turtle.png" alt="UAE Expo: The Turtle"></div>
                         <div class="work-info">
-                            <h3>UAE Expo: The Turtle</h3>
+                            <h3>UAE Expo: The Turtle <button class="video-btn" data-vimeo="1171157242" aria-label="Watch video"></button></h3>
                             <p class="work-meta">Executive Producer — Abu Dhabi National Media Council</p>
                             <p class="work-desc">Film content produced for the UAE's World Expo pavilion at the Yeosu Expo.</p>
                             <span class="work-arrow">→</span>
@@ -659,7 +670,7 @@
                     <article class="work-item">
                         <div class="work-image"><img src="images/bridgestone.png" alt="Bridgestone"></div>
                         <div class="work-info">
-                            <h3>Bridgestone</h3>
+                            <h3>Bridgestone <button class="video-btn" data-vimeo="1171158800" aria-label="Watch video"></button></h3>
                             <p class="work-meta">Producer — Bridgestone</p>
                             <p class="work-desc">One of my favourite shoot days ever. An incredibly simple idea, unbelievably powerful. I have to confess, I shed a tear when she jumped.</p>
                             <span class="work-arrow">→</span>
@@ -668,7 +679,7 @@
                     <article class="work-item">
                         <div class="work-image"><img src="images/football-league.png" alt="Football League"></div>
                         <div class="work-info">
-                            <h3>Football League</h3>
+                            <h3>Football League <button class="video-btn" data-vimeo="1171158741" aria-label="Watch video"></button></h3>
                             <p class="work-meta">Producer — Football League</p>
                             <p class="work-desc">IVCA Grand Prix winner.</p>
                             <span class="work-arrow">→</span>
@@ -891,7 +902,7 @@
                     <article class="work-item">
                         <div class="work-image"><img src="images/amy-winehouse.png" alt="Amy Winehouse — In My Bed"></div>
                         <div class="work-info">
-                            <h3>Amy Winehouse — In My Bed <button class="video-btn" data-vimeo="1171143953" aria-label="Watch video"></button></h3>
+                            <h3>Amy Winehouse — In My Bed <button class="video-btn" data-vimeo="1171159898" aria-label="Watch video"></button></h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">At the time, Amy was completely unknown. I had no idea I was working with one of the all-time greats. She was absolutely lovely. And one of music's greatest losses.</p>
                             <span class="work-arrow">→</span>
@@ -1028,6 +1039,38 @@
                             <h3>Steps — Say You'll Be Mine <button class="video-btn" data-vimeo="1171145142" aria-label="Watch video"></button></h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">Cheese factor nineteen. Actually a really fun shoot. I think I did four or five Steps videos in the end.</p>
+                            <span class="work-arrow">→</span>
+                        </div>
+                    </article>
+                    <article class="work-item">
+                        <div class="work-image"><img src="images/LOUISE.png" alt="Louise — Let's Go Round Again"></div>
+                        <div class="work-info">
+                            <h3>Louise — Let's Go Round Again <button class="video-btn" data-vimeo="1171163129" aria-label="Watch video"></button></h3>
+                            <p class="work-meta">First Assistant Director</p>
+                            <span class="work-arrow">→</span>
+                        </div>
+                    </article>
+                    <article class="work-item">
+                        <div class="work-image"><img src="images/BOYZONE .png" alt="Boyzone — All That I Need"></div>
+                        <div class="work-info">
+                            <h3>Boyzone — All That I Need <button class="video-btn" data-vimeo="1171163076" aria-label="Watch video"></button></h3>
+                            <p class="work-meta">First Assistant Director</p>
+                            <span class="work-arrow">→</span>
+                        </div>
+                    </article>
+                    <article class="work-item">
+                        <div class="work-image"><img src="images/Five 2.png" alt="Five — Keep On Moving"></div>
+                        <div class="work-info">
+                            <h3>Five — Keep On Moving <button class="video-btn" data-vimeo="1171163096" aria-label="Watch video"></button></h3>
+                            <p class="work-meta">First Assistant Director</p>
+                            <span class="work-arrow">→</span>
+                        </div>
+                    </article>
+                    <article class="work-item">
+                        <div class="work-image"><img src="images/A1.png" alt="A1 — Every Time"></div>
+                        <div class="work-info">
+                            <h3>A1 — Every Time <button class="video-btn" data-vimeo="1171163174" aria-label="Watch video"></button></h3>
+                            <p class="work-meta">First Assistant Director</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
