@@ -349,6 +349,10 @@
         .footer-inner { display: flex; justify-content: space-between; align-items: center; }
         footer span { font-size: 10px; color: var(--mid); letter-spacing: 0.08em; }
 
+        /* TYPEWRITER */
+        .typewriter-cursor { animation: blink 0.8s step-end infinite; color: var(--gold); font-style: normal; }
+        @keyframes blink { 50% { opacity: 0; } }
+
         /* HISTORIC / FUN — hidden section */
         .historic-trigger-wrap { padding: 48px 0 56px; text-align: center; background: var(--bg); }
         .historic-trigger {
@@ -914,7 +918,7 @@
             <div class="about-grid" style="margin-bottom: clamp(40px, 5vw, 64px);">
                 <div class="about-label"><span></span></div>
                 <div class="about-content">
-                    <p class="about-lead">Congratulations. You found the secret button. Not many do.</p>
+                    <p class="about-lead"><span id="historicTypewriter"></span><span class="typewriter-cursor">|</span></p>
                     <p>Here's a bit of fun and a trip down memory lane — welcome to the early years. The 90s and early noughties.</p>
                 </div>
             </div>
@@ -1181,6 +1185,22 @@
         const historic = document.getElementById('historic');
         const historicTrigger = document.getElementById('historicTrigger');
         const historicClose = document.getElementById('historicClose');
+        const typewriterEl = document.getElementById('historicTypewriter');
+        const typewriterMsg = 'Congratulations. You found the secret bonus button. Not many do.';
+        let typewriterTimeout = null;
+
+        function runTypewriter() {
+            typewriterEl.textContent = '';
+            let i = 0;
+            function type() {
+                if (i < typewriterMsg.length) {
+                    typewriterEl.textContent += typewriterMsg[i++];
+                    typewriterTimeout = setTimeout(type, 45);
+                }
+            }
+            type();
+        }
+
         historicTrigger.addEventListener('click', () => {
             if (historic.classList.contains('visible')) {
                 historic.classList.remove('visible');
@@ -1188,6 +1208,8 @@
             } else {
                 historic.classList.add('visible');
                 historic.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                clearTimeout(typewriterTimeout);
+                runTypewriter();
             }
         });
 
