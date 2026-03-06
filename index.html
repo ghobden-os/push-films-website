@@ -248,14 +248,20 @@
             vertical-align: middle; transition: all 0.2s;
             position: relative; top: -1px;
         }
+        .photo-btn {
+            width: auto; padding: 0 10px;
+        }
         .photo-btn::after {
-            content: '⛰'; font-size: 9px; color: rgba(255,255,255,0.3);
+            content: '◼ Photos'; font-size: 8px; letter-spacing: 0.08em;
+            text-transform: uppercase; color: rgba(255,255,255,0.4);
             transition: color 0.2s;
         }
         .video-btn::after {
-            content: '▶'; font-size: 7px; color: rgba(255,255,255,0.3);
+            content: '▶ Clip'; font-size: 8px; letter-spacing: 0.08em;
+            text-transform: uppercase; color: rgba(255,255,255,0.4);
             transition: color 0.2s;
         }
+        .video-btn { width: auto; padding: 0 10px; }
         .photo-btn:hover, .video-btn:hover { border-color: var(--gold); }
         .photo-btn:hover::after, .video-btn:hover::after { color: var(--gold); }
         .video-btn[data-vimeo] {
@@ -497,7 +503,7 @@
                         <div class="work-info">
                             <h3>Feature Documentary</h3>
                             <p class="work-meta">Feature Documentary — Universal Pictures</p>
-                            <p class="work-desc coming-soon-label">Coming Soon — currently under NDA</p>
+                            <p class="work-desc coming-soon-label">Currently under NDA</p>
                         </div>
                     </article>
                 </div>
@@ -944,6 +950,15 @@
                         </div>
                     </article>
                     <article class="work-item">
+                        <div class="work-image"><img src="images/Five 2.png" alt="Five — Keep On Movin'"></div>
+                        <div class="work-info">
+                            <h3>Five — Keep On Movin' <button class="video-btn" data-vimeo="1171163096" aria-label="Watch video"></button></h3>
+                            <p class="work-meta">First Assistant Director</p>
+                            <p class="work-desc">Some songs don't age. Twenty-seven years on, this one is still as catchy as the day it was recorded. Directed by Cameron Casey. 1999.</p>
+                            <span class="work-arrow">→</span>
+                        </div>
+                    </article>
+                    <article class="work-item">
                         <div class="work-image"><img src="images/girls-aloud.png" alt="Girls Aloud — Sound of the Underground"></div>
                         <div class="work-info">
                             <h3>Girls Aloud — Sound of the Underground <button class="video-btn" data-vimeo="1171149068" aria-label="Watch video"></button></h3>
@@ -1042,6 +1057,15 @@
                         </div>
                     </article>
                     <article class="work-item">
+                        <div class="work-image"><img src="images/LOUISE.png" alt="Louise — Let's Go Round Again"></div>
+                        <div class="work-info">
+                            <h3>Louise — Let's Go Round Again <button class="video-btn" data-vimeo="1171163129" aria-label="Watch video"></button></h3>
+                            <p class="work-meta">First Assistant Director</p>
+                            <p class="work-desc">Top 10 UK. Red leather, a warehouse, dancers, laser beams. Directing Louise Redknapp was, by all accounts, not the hardest day's work Cameron Casey ever had. Directed by Cameron Casey. 1997.</p>
+                            <span class="work-arrow">→</span>
+                        </div>
+                    </article>
+                    <article class="work-item">
                         <div class="work-image"><img src="images/steps.png" alt="Steps — Say You'll Be Mine"></div>
                         <div class="work-info">
                             <h3>Steps — Say You'll Be Mine <button class="video-btn" data-vimeo="1171145142" aria-label="Watch video"></button></h3>
@@ -1051,26 +1075,11 @@
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/LOUISE.png" alt="Louise — Let's Go Round Again"></div>
-                        <div class="work-info">
-                            <h3>Louise — Let's Go Round Again <button class="video-btn" data-vimeo="1171163129" aria-label="Watch video"></button></h3>
-                            <p class="work-meta">First Assistant Director</p>
-                            <span class="work-arrow">→</span>
-                        </div>
-                    </article>
-                    <article class="work-item">
                         <div class="work-image"><img src="images/BOYZONE .png" alt="Boyzone — All That I Need"></div>
                         <div class="work-info">
                             <h3>Boyzone — All That I Need <button class="video-btn" data-vimeo="1171163076" aria-label="Watch video"></button></h3>
                             <p class="work-meta">First Assistant Director</p>
-                            <span class="work-arrow">→</span>
-                        </div>
-                    </article>
-                    <article class="work-item">
-                        <div class="work-image"><img src="images/Five 2.png" alt="Five — Keep On Moving"></div>
-                        <div class="work-info">
-                            <h3>Five — Keep On Moving <button class="video-btn" data-vimeo="1171163096" aria-label="Watch video"></button></h3>
-                            <p class="work-meta">First Assistant Director</p>
+                            <p class="work-desc">Number one in the UK. Shot at Three Mills Studios, East London. Directed by Cameron Casey. 1998.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
@@ -1079,6 +1088,7 @@
                         <div class="work-info">
                             <h3>A1 — Every Time <button class="video-btn" data-vimeo="1171163174" aria-label="Watch video"></button></h3>
                             <p class="work-meta">First Assistant Director</p>
+                            <p class="work-desc">A night bus through Morocco. A corner of the Sahara. The song wasn't going to win any awards. The trip more than made up for it. Directed by Phil Griffin. 1999.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
