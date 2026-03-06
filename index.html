@@ -126,6 +126,20 @@
             font-size: clamp(13px, 1.2vw, 15px); font-weight: 300; color: var(--mid);
             max-width: 420px; line-height: 1.8; margin-bottom: clamp(40px, 5vw, 64px);
         }
+        .hero-disciplines {
+            display: flex; flex-direction: column; align-items: flex-start;
+            gap: 0; margin-bottom: clamp(40px, 5vw, 64px);
+        }
+        .hero-disciplines span {
+            font-size: clamp(13px, 1.2vw, 15px); font-weight: 300; color: var(--mid);
+            letter-spacing: 0.04em;
+        }
+        .hero-disc-dot {
+            color: var(--gold) !important;
+            font-size: 18px !important;
+            line-height: 1.2;
+            margin: 4px 0;
+        }
         .btn-showreel {
             display: inline-flex; align-items: center; gap: 12px;
             font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
@@ -410,10 +424,14 @@
 
     <section id="hero">
         <div class="hero-rule-top">Film Producer &amp; Production Consultant</div>
-        <p class="hero-label">London &amp; International</p>
         <h1 class="hero-name">Greg<br><em>Hobden</em></h1>
-        <div class="hero-divider"><span>Thirty years in film</span></div>
-        <p class="hero-sub">Theatrical documentary, high-end automotive, large-scale live experiential.</p>
+        <div class="hero-disciplines">
+            <span>Theatrical documentary</span>
+            <span class="hero-disc-dot">·</span>
+            <span>High-end automotive</span>
+            <span class="hero-disc-dot">·</span>
+            <span>Large-scale live experiential</span>
+        </div>
     </section>
 
     <section id="showreel">
