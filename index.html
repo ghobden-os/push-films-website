@@ -1261,11 +1261,12 @@
             easterEggAudio.volume = 0.6;
             easterEggAudio.currentTime = 0;
             easterEggAudio.play().catch(() => {});
-            // Fade out over 3s, completing at 8s
+            // Fade out over 3s, completing at 7s
             audioFadeInterval = setTimeout(() => {
                 const fadeDuration = 3000;
                 const steps = 60;
                 const interval = fadeDuration / steps;
+
                 let step = 0;
                 audioFadeInterval = setInterval(() => {
                     step++;
@@ -1275,7 +1276,7 @@
                         easterEggAudio.pause();
                     }
                 }, interval);
-            }, 5000);
+            }, 4000);
         }
 
         historicTrigger.addEventListener('click', () => {
