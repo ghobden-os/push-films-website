@@ -1,0 +1,26 @@
+/* Dark theme — imports the base stylesheet and overrides colours */
+@import url('styles.css');
+
+:root {
+    --black:      #EDEDE8;
+    --grey-dark:  #AAAAAA;
+    --grey-mid:   #555555;
+    --grey-light: #242424;
+    --grey-bg:    #141414;
+    --white:      #0C0C0C;
+}
+
+/* Nav background is hardcoded in base — override for dark */
+#nav {
+    background: rgba(12, 12, 12, 0.94);
+}
+
+/* Mobile nav panel */
+.nav-links {
+    background: #0C0C0C;
+}
+
+/* Showreel stays pure black */
+#showreel {
+    background: #000000;
+}
