@@ -1253,12 +1253,12 @@
             clearInterval(audioFadeInterval);
             easterEggAudio.pause();
             easterEggAudio.currentTime = 0;
-            easterEggAudio.volume = 1;
+            easterEggAudio.volume = 0.6;
         }
 
         function playEasterAudio() {
             clearInterval(audioFadeInterval);
-            easterEggAudio.volume = 1;
+            easterEggAudio.volume = 0.6;
             easterEggAudio.currentTime = 0;
             easterEggAudio.play().catch(() => {});
             // Fade out over 3s, completing at 8s
@@ -1269,7 +1269,7 @@
                 let step = 0;
                 audioFadeInterval = setInterval(() => {
                     step++;
-                    easterEggAudio.volume = Math.max(0, 1 - step / steps);
+                    easterEggAudio.volume = Math.max(0, 0.6 - (0.6 * step / steps));
                     if (step >= steps) {
                         clearInterval(audioFadeInterval);
                         easterEggAudio.pause();
