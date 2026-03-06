@@ -1213,17 +1213,23 @@
         }
 
         function playClick() {
-            const osc = audioCtx.createOscillator();
+            const bufSize = audioCtx.sampleRate * 0.04;
+            const buf = audioCtx.createBuffer(1, bufSize, audioCtx.sampleRate);
+            const data = buf.getChannelData(0);
+            for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1);
+            const source = audioCtx.createBufferSource();
+            source.buffer = buf;
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(2200, audioCtx.currentTime);
+            filter.Q.value = 2.5;
             const gain = audioCtx.createGain();
-            osc.type = 'square';
-            osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
-            osc.frequency.linearRampToValueAtTime(600, audioCtx.currentTime + 0.03);
-            gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.03);
-            osc.connect(gain);
+            gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.04);
+            source.connect(filter);
+            filter.connect(gain);
             gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.03);
+            source.start();
         }
 
         function runTypewriter() {
