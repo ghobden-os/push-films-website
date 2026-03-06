@@ -1058,6 +1058,22 @@
             reelWrap.classList.add('playing');
             reelFrame.addEventListener('load', () => {
                 const player = new Vimeo.Player(reelFrame);
+                let pauseTimer = null;
+
+                player.on('pause', () => {
+                    pauseTimer = setTimeout(() => {
+                        reelWrap.classList.remove('playing');
+                        reelFrame.src = '';
+                    }, 20000);
+                });
+
+                player.on('play', () => {
+                    if (pauseTimer) {
+                        clearTimeout(pauseTimer);
+                        pauseTimer = null;
+                    }
+                });
+
                 player.on('ended', () => {
                     reelWrap.classList.remove('playing');
                     reelFrame.src = '';
