@@ -1330,7 +1330,7 @@
             // At 17s: show historic underneath, scroll instantly so it's in position, dissolve overlay down
             revealTimeout1 = setTimeout(() => {
                 historic.classList.add('visible');
-                historic.scrollIntoView({ behavior: 'instant', block: 'start' });
+                setTimeout(() => { window.scrollTo(0, historic.offsetTop); }, 50);
                 videoOverlay.style.transition = 'opacity 3s ease';
                 videoOverlay.style.opacity = '0';
                 const startVol = videoClip.volume;
