@@ -1188,6 +1188,43 @@
         const typewriterEl = document.getElementById('historicTypewriter');
         const typewriterMsg = 'Congratulations. You found the secret bonus button. Not many do.';
         let typewriterTimeout = null;
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playWhoosh() {
+            const bufferSize = audioCtx.sampleRate * 0.6;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
+            const source = audioCtx.createBufferSource();
+            source.buffer = buffer;
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(400, audioCtx.currentTime);
+            filter.frequency.linearRampToValueAtTime(1800, audioCtx.currentTime + 0.3);
+            filter.Q.value = 0.8;
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.18, audioCtx.currentTime + 0.05);
+            gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.6);
+            source.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+            source.start();
+        }
+
+        function playClick() {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
+            osc.frequency.linearRampToValueAtTime(600, audioCtx.currentTime + 0.03);
+            gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.03);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.03);
+        }
 
         function runTypewriter() {
             typewriterEl.textContent = '';
@@ -1195,6 +1232,7 @@
             function type() {
                 if (i < typewriterMsg.length) {
                     typewriterEl.textContent += typewriterMsg[i++];
+                    playClick();
                     typewriterTimeout = setTimeout(type, 45);
                 }
             }
@@ -1209,7 +1247,8 @@
                 historic.classList.add('visible');
                 historic.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 clearTimeout(typewriterTimeout);
-                runTypewriter();
+                playWhoosh();
+                setTimeout(runTypewriter, 300);
             }
         });
 
