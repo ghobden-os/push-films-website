@@ -570,7 +570,7 @@
         .expand-film { position: relative; padding-bottom: 56.25%; height: 0; background: #000; }
         .expand-film iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
         .expand-gallery-stage { aspect-ratio: 16/9; background: #000; overflow: hidden; }
-        .expand-gallery-stage img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+        .expand-gallery-stage img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; opacity: 0; transition: opacity 0.6s ease; }
         .expand-gallery-stage video { width: 100%; height: 100%; object-fit: contain; display: block; }
         .expand-gallery-bar { display: flex; align-items: center; justify-content: space-between; padding: 10px 0 0; }
         .expand-gallery-bar button { background: none; border: none; color: var(--mid); cursor: pointer; font-size: 18px; padding: 2px 6px; transition: color 0.2s; }
@@ -1850,6 +1850,8 @@
                 if (counter) counter.textContent = (idx + 1) + ' / ' + items.length;
                 if (item.type === 'image') {
                     stage.innerHTML = '<img src="' + item.src + '" alt="">';
+                    const img = stage.querySelector('img');
+                    requestAnimationFrame(() => requestAnimationFrame(() => { img.style.opacity = '1'; }));
                     slideTimer = setTimeout(() => showSlide(idx + 1, true), 3000);
                 } else {
                     stage.innerHTML = '<video src="' + item.src + '" autoplay playsinline muted controls></video>';
