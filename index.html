@@ -1304,10 +1304,49 @@
         const videoClip = document.getElementById('videoRevealClip');
         let revealTimeout1 = null, revealTimeout2 = null, revealTimeout3 = null;
         let revealFadeInterval = null;
+        let revealActive = false;
+
+        function finishReveal(dissolveSecs) {
+            if (!revealActive) return;
+            revealActive = false;
+            clearTimeout(revealTimeout1); clearTimeout(revealTimeout2);
+            clearInterval(revealFadeInterval);
+
+            typewriterEl.textContent = '';
+            historic.classList.add('visible');
+            setTimeout(() => { window.scrollTo(0, historic.offsetTop); }, 50);
+
+            // Dissolve overlay out
+            videoOverlay.style.transition = `opacity ${dissolveSecs}s ease`;
+            videoOverlay.style.opacity = '0';
+            videoOverlay.style.pointerEvents = 'none';
+
+            // Fade audio to match dissolve speed
+            const startVol = videoClip.volume;
+            let downStep = 0;
+            const totalSteps = Math.round(dissolveSecs * 20);
+            revealFadeInterval = setInterval(() => {
+                downStep++;
+                videoClip.volume = Math.max(0, startVol * (1 - downStep / totalSteps));
+                if (downStep >= totalSteps) clearInterval(revealFadeInterval);
+            }, 50);
+
+            revealTimeout3 = setTimeout(() => {
+                videoOverlay.classList.remove('active');
+                videoOverlay.style.pointerEvents = '';
+                videoClip.pause();
+                videoClip.currentTime = 0;
+                clearTimeout(typewriterTimeout);
+                playWhoosh();
+                playEasterAudio();
+                setTimeout(runTypewriter, 800);
+            }, dissolveSecs * 1000);
+        }
 
         function triggerReveal() {
             clearTimeout(revealTimeout1); clearTimeout(revealTimeout2); clearTimeout(revealTimeout3);
             clearInterval(revealFadeInterval);
+            revealActive = true;
 
             // Start invisible, audio silent
             videoClip.currentTime = 0;
@@ -1330,35 +1369,25 @@
                 if (upStep >= 40) clearInterval(revealFadeInterval);
             }, 50);
 
-            // At 17s: show historic underneath, scroll into position, dissolve overlay down
+            // At 12s: begin slow audio fade over 8s
             revealTimeout1 = setTimeout(() => {
-                typewriterEl.textContent = '';
-                historic.classList.add('visible');
-                setTimeout(() => { window.scrollTo(0, historic.offsetTop); }, 50);
-                videoOverlay.style.transition = 'opacity 3s ease';
-                videoOverlay.style.opacity = '0';
-                videoOverlay.style.pointerEvents = 'none';
+                clearInterval(revealFadeInterval);
                 const startVol = videoClip.volume;
                 let downStep = 0;
                 revealFadeInterval = setInterval(() => {
                     downStep++;
-                    videoClip.volume = Math.max(0, startVol * (1 - downStep / 60));
-                    if (downStep >= 60) clearInterval(revealFadeInterval);
+                    videoClip.volume = Math.max(0, startVol * (1 - downStep / 160));
+                    if (downStep >= 160) clearInterval(revealFadeInterval);
                 }, 50);
-            }, 17000);
+            }, 12000);
 
-            // At 20s: clean up, whoosh, typewriter
-            revealTimeout2 = setTimeout(() => {
-                videoOverlay.classList.remove('active');
-                videoOverlay.style.pointerEvents = '';
-                videoClip.pause();
-                videoClip.currentTime = 0;
-                clearTimeout(typewriterTimeout);
-                playWhoosh();
-                playEasterAudio();
-                setTimeout(runTypewriter, 800);
-            }, 20000);
+            // At 17s: dissolve to page (3s visual)
+            revealTimeout2 = setTimeout(() => finishReveal(3), 17000);
         }
+
+        // Tap or click anywhere on the video to skip
+        videoOverlay.addEventListener('click', () => { if (revealActive) finishReveal(1.5); });
+        videoOverlay.addEventListener('touchend', () => { if (revealActive) finishReveal(1.5); }, { passive: true });
 
         historicTrigger.addEventListener('click', () => {
             if (historic.classList.contains('visible')) {
