@@ -560,6 +560,31 @@
             .historic { width: 95vw; max-height: 85vh; overflow-y: auto; }
         }
 
+        /* ACCORDION EXPAND */
+        .work-item.accordion { cursor: pointer; align-items: start; }
+        .work-item.accordion .work-image { margin-top: 6px; }
+        .work-expand {
+            display: none;
+            grid-column: 1 / -1;
+            border-top: 1px solid var(--rule);
+            padding-top: clamp(20px, 2.5vw, 32px);
+            padding-bottom: clamp(8px, 1vw, 16px);
+        }
+        .work-item.expanded .work-expand { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(16px, 2.5vw, 36px); align-items: start; }
+        .work-item.expanded .work-arrow { color: var(--gold); transform: rotate(90deg); }
+        .expand-film { position: relative; padding-bottom: 56.25%; height: 0; background: #000; }
+        .expand-film iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .expand-gallery-stage { aspect-ratio: 16/9; background: #000; overflow: hidden; }
+        .expand-gallery-stage img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .expand-gallery-stage video { width: 100%; height: 100%; object-fit: contain; display: block; }
+        .expand-gallery-bar { display: flex; align-items: center; justify-content: space-between; padding: 10px 0 0; }
+        .expand-gallery-bar button { background: none; border: none; color: var(--mid); cursor: pointer; font-size: 18px; padding: 2px 6px; transition: color 0.2s; }
+        .expand-gallery-bar button:hover { color: var(--gold); }
+        .expand-gallery-bar span { font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.1em; color: var(--mid); }
+        @media (max-width: 700px) {
+            .work-item.expanded .work-expand { grid-template-columns: 1fr; }
+        }
+
         /* MEDIA BUTTON */
         .media-btn {
             display: inline-block; margin-top: 10px;
@@ -714,14 +739,28 @@
             <div class="work-category">
                 <div class="work-category-header"><span>Automotive</span></div>
                 <div class="work-grid">
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171170029"><img src="images/ford-raptor.png" alt="Ford Raptor"></div>
+                    <article class="work-item accordion" id="raptorItem">
+                        <div class="work-image"><img src="images/ford-raptor.png" alt="Ford Raptor"></div>
                         <div class="work-info">
                             <h3>Ford Ranger Raptor</h3>
                             <p class="work-meta">Producer — Ford</p>
-                            <button class="media-btn" data-gallery="raptor">Photos &amp; Clips</button>
                             <p class="work-desc">The global launch film for the new Ford Ranger Raptor. Directed by Nick Piper. The brief was simple: show what it can do. The solution was to chain it inside an Antonov AN-12 Soviet cargo plane and let it break free.</p>
                             <span class="work-arrow">→</span>
+                        </div>
+                        <div class="work-expand">
+                            <div>
+                                <div class="expand-film">
+                                    <iframe id="raptorFrame" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="expand-gallery-stage" id="raptorGalleryStage"></div>
+                                <div class="expand-gallery-bar">
+                                    <button id="raptorGalleryPrev">←</button>
+                                    <span id="raptorGalleryCounter"></span>
+                                    <button id="raptorGalleryNext">→</button>
+                                </div>
+                            </div>
                         </div>
                     </article>
                     <article class="work-item">
@@ -1797,6 +1836,71 @@
                 btn.textContent = hasVideo ? 'Photos & Clips' : 'Photos';
             }
         });
+
+        // RAPTOR ACCORDION (proof of concept)
+        (function() {
+            const article = document.getElementById('raptorItem');
+            const frame = document.getElementById('raptorFrame');
+            const stage = document.getElementById('raptorGalleryStage');
+            const counter = document.getElementById('raptorGalleryCounter');
+            const items = galleries.raptor.items;
+            let expanded = false;
+            let idx = 0;
+            let timer = null;
+            let currentVideo = null;
+
+            function stopGallery() {
+                clearTimeout(timer);
+                if (currentVideo) { currentVideo.pause(); currentVideo = null; }
+            }
+
+            function showSlide(i) {
+                stopGallery();
+                idx = (i + items.length) % items.length;
+                const item = items[idx];
+                counter.textContent = (idx + 1) + ' / ' + items.length;
+                if (item.type === 'image') {
+                    stage.innerHTML = '<img src="' + item.src + '" alt="">';
+                    timer = setTimeout(() => showSlide(idx + 1), 3000);
+                } else {
+                    stage.innerHTML = '<video src="' + item.src + '" autoplay playsinline controls></video>';
+                    currentVideo = stage.querySelector('video');
+                    currentVideo.addEventListener('ended', () => showSlide(idx + 1), { once: true });
+                }
+            }
+
+            // Preload images when expanding
+            function preload() {
+                items.forEach(item => { if (item.type === 'image') { const img = new Image(); img.src = item.src; } });
+            }
+
+            function expand() {
+                expanded = true;
+                article.classList.add('expanded');
+                frame.src = 'https://player.vimeo.com/video/1171170029?autoplay=1&title=0&byline=0&portrait=0';
+                preload();
+                showSlide(0);
+                setTimeout(() => article.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+            }
+
+            function collapse() {
+                expanded = false;
+                article.classList.remove('expanded');
+                frame.src = '';
+                stopGallery();
+                stage.innerHTML = '';
+                counter.textContent = '';
+            }
+
+            // Click anywhere on the card header (not inside the expand panel) to toggle
+            article.addEventListener('click', (e) => {
+                if (e.target.closest('.work-expand')) return;
+                expanded ? collapse() : expand();
+            });
+
+            document.getElementById('raptorGalleryPrev').addEventListener('click', (e) => { e.stopPropagation(); showSlide(idx - 1); });
+            document.getElementById('raptorGalleryNext').addEventListener('click', (e) => { e.stopPropagation(); showSlide(idx + 1); });
+        })();
 
         // Shared Vimeo modal
 
