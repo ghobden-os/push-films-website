@@ -1736,6 +1736,10 @@
 
         function galleryOpen(key) {
             galleryItems = galleries[key].items;
+            // Preload all images in the background
+            galleryItems.forEach(item => {
+                if (item.type === 'image') { const img = new Image(); img.src = item.src; }
+            });
             galleryShow(0);
             galleryModal.classList.add('open');
         }
@@ -1766,6 +1770,12 @@
         // Media button click → gallery
         document.querySelectorAll('.media-btn[data-gallery]').forEach(btn => {
             btn.addEventListener('click', (e) => { e.stopPropagation(); galleryOpen(btn.dataset.gallery); });
+            // Auto-label: "Photos & Clips" if gallery has video items, otherwise "Photos"
+            const key = btn.dataset.gallery;
+            if (galleries[key]) {
+                const hasVideo = galleries[key].items.some(i => i.type === 'video');
+                btn.textContent = hasVideo ? 'Photos & Clips' : 'Photos';
+            }
         });
 
         // Shared Vimeo modal
