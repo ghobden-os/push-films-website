@@ -1795,12 +1795,16 @@
             vimeoFrame.src = 'https://player.vimeo.com/video/' + id + '?autoplay=1&title=0&byline=0&portrait=0';
             vimeoModal.classList.add('open');
             if (id === '1171163096') {
-                vimeoCloseTimer = setTimeout(() => {
-                    vimeoModal.classList.remove('open');
-                    vimeoFrame.src = '';
-                    audioCtx.resume();
-                    triggerReveal();
-                }, 8000);
+                const fivePlayer = new Vimeo.Player(vimeoFrame);
+                fivePlayer.on('play', function onFivePlay() {
+                    fivePlayer.off('play', onFivePlay);
+                    vimeoCloseTimer = setTimeout(() => {
+                        vimeoModal.classList.remove('open');
+                        vimeoFrame.src = '';
+                        audioCtx.resume();
+                        triggerReveal();
+                    }, 10000);
+                });
             }
         }
         document.querySelectorAll('.work-image[data-vimeo]').forEach(img => {
