@@ -239,6 +239,16 @@
         .work-category-header span { font-family: var(--font-serif); font-size: clamp(20px, 2.2vw, 26px); color: var(--fg); }
         .work-category-header::after { content: ''; display: block; flex: 1; height: 1px; background: var(--rule); }
 
+        /* EARLY YEARS */
+        .early-years-link-wrap { padding: clamp(24px, 3vw, 40px) 0; display: flex; align-items: center; gap: 48px; flex-wrap: wrap; }
+        .early-years-text { font-size: 14px; line-height: 1.8; color: #666; max-width: 520px; }
+        .early-years-btn {
+            font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+            color: var(--gold); background: none; border: 1px solid var(--gold);
+            padding: 12px 24px; cursor: pointer; white-space: nowrap; transition: all 0.2s;
+        }
+        .early-years-btn:hover { background: var(--gold); color: #000; }
+
         /* HORIZONTAL WORK STRIPS */
         .work-grid { display: flex; flex-direction: column; }
         .work-item {
@@ -632,7 +642,7 @@
     <section id="hero">
         <div class="hero-rule-top">Film Producer &amp; Production Consultant</div>
         <div class="hero-main">
-            <h1 class="hero-name">Greg<br><em>Hobd<span class="e-letter">e<button class="historic-trigger" id="historicTrigger"></button></span>n</em></h1>
+            <h1 class="hero-name">Greg<br><em>Hobden</em></h1>
             <div class="hero-divider"><span>Thirty years in film</span></div>
             <p class="hero-sub">Theatrical documentary, high-end automotive, large-scale live experiential.</p>
             <button class="hero-reel-btn" id="heroReelBtn"><span class="hero-reel-play">&#9654;</span>Showreel</button>
@@ -656,7 +666,7 @@
                 <hr class="about-section-break">
                 <p>Tea boy. Runner. 2nd AD. First AD. Music videos, commercials, documentaries. The Middle East. Automotive. Universal Pictures. Thirty-five years of saying yes to the next thing and seeing where it leads.</p>
                 <p>The work is on this website. Have a look around.</p>
-                <p>And if you're curious about where it all started — find the button hiding in the e of Hobden at the top of the page. It's all yours.</p>
+                <p>And if you're curious about where it all started — scroll down to The Early Years.</p>
                 <div class="about-links">
                     <a href="https://linkedin.com/in/greghobden" target="_blank" rel="noopener">LinkedIn →</a>
                     <a href="mailto:ghobden@mac.com">ghobden@mac.com</a>
@@ -926,6 +936,15 @@
                     </article>
                 </div>
             </div>
+
+            <div class="work-category">
+                <div class="work-category-header"><span>The Early Years</span></div>
+                <div class="early-years-link-wrap">
+                    <p class="early-years-text">Before the features and the car launches and the Expo pavilions, there were music videos. A lot of them. The nineties. The early noughties. Boy bands, girl bands, and some of the biggest songs of the decade.</p>
+                    <button class="early-years-btn" id="earlyYearsBtn">See the music videos →</button>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -1276,7 +1295,6 @@
         });
 
         const historic = document.getElementById('historic');
-        const historicTrigger = document.getElementById('historicTrigger');
         const historicClose = document.getElementById('historicClose');
         const typewriterEl = document.getElementById('historicTypewriter');
         const easterEggAudio = document.getElementById('easterEggAudio');
@@ -1460,21 +1478,15 @@
         videoOverlay.addEventListener('click', () => { if (revealActive) finishReveal(1.5); });
         videoOverlay.addEventListener('touchend', () => { if (revealActive) finishReveal(1.5); }, { passive: true });
 
-        historicTrigger.addEventListener('click', () => {
+        document.getElementById('earlyYearsBtn').addEventListener('click', () => {
             audioCtx.resume();
-            if (historic.classList.contains('visible')) {
-                historic.classList.remove('visible');
-                stopEasterAudio();
-                historicTrigger.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            } else {
-                triggerReveal();
-            }
+            triggerReveal();
         });
 
         historicClose.addEventListener('click', () => {
             historic.classList.remove('visible');
             stopEasterAudio();
-            historicTrigger.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            document.getElementById('earlyYearsBtn').scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
 
         // Restricted film password gate
