@@ -519,6 +519,16 @@
             .historic { width: 95vw; max-height: 85vh; overflow-y: auto; }
         }
 
+        /* MEDIA BUTTON */
+        .media-btn {
+            display: inline-block; margin-top: 10px;
+            font-family: var(--font-sans); font-size: 9px; letter-spacing: 0.14em;
+            text-transform: uppercase; color: rgba(255,255,255,0.45);
+            background: none; border: 1px solid rgba(255,255,255,0.15);
+            padding: 5px 12px; cursor: pointer; transition: all 0.2s;
+        }
+        .media-btn:hover { border-color: var(--gold); color: var(--gold); }
+
         /* UNIFIED GALLERY MODAL */
         .gallery-modal {
             display: none; position: fixed; inset: 0; z-index: 1000;
@@ -666,28 +676,31 @@
                 <div class="work-category-header"><span>Automotive</span></div>
                 <div class="work-grid">
                     <article class="work-item">
-                        <div class="work-image" data-gallery="raptor"><img src="images/ford-raptor.png" alt="Ford Raptor"></div>
+                        <div class="work-image" data-vimeo="1171170029"><img src="images/ford-raptor.png" alt="Ford Raptor"></div>
                         <div class="work-info">
                             <h3>Ford Ranger Raptor</h3>
                             <p class="work-meta">Producer — Ford</p>
+                            <button class="media-btn" data-gallery="raptor">Photos &amp; Clips</button>
                             <p class="work-desc">The global launch film for the new Ford Ranger Raptor. Directed by Nick Piper. The brief was simple: show what it can do. The solution was to chain it inside an Antonov AN-12 Soviet cargo plane and let it break free.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image" data-gallery="lexieGreen"><img src="images/ford-explorer-launch.png" alt="Ford Explorer"></div>
+                        <div class="work-image" data-vimeo="1171157858"><img src="images/ford-explorer-launch.png" alt="Ford Explorer"></div>
                         <div class="work-info">
                             <h3>Ford Explorer</h3>
                             <p class="work-meta">Producer — Ford</p>
+                            <button class="media-btn" data-gallery="lexieGreen">Photos &amp; Clips</button>
                             <p class="work-desc">Brand film for the Ford Explorer launch.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image" data-gallery="defender"><img src="images/defender.png" alt="Land Rover Defender"></div>
+                        <div class="work-image" data-vimeo="1171151952"><img src="images/defender.png" alt="Land Rover Defender"></div>
                         <div class="work-info">
                             <h3>Land Rover Defender</h3>
                             <p class="work-meta">Agency Producer — Imagination / JLR, Kazakhstan</p>
+                            <button class="media-btn" data-gallery="defender">Photos &amp; Clips</button>
                             <p class="work-desc">The global launch film for the new Land Rover Defender, shot on location in Kazakhstan. The film starred Kenton Cool — the most prolific Everest summiteer in the world outside of the Sherpa community, with 19 ascents to his name. The Defender was the perfect vehicle for the world's most demanding mountaineer.</p>
                             <span class="work-arrow">→</span>
                         </div>
@@ -702,10 +715,11 @@
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image" data-gallery="rrSportTestTrack"><img src="images/range-rover-test-track.png" alt="Range Rover Sport Test Track"></div>
+                        <div class="work-image" data-vimeo="1171178087"><img src="images/range-rover-test-track.png" alt="Range Rover Sport Test Track"></div>
                         <div class="work-info">
                             <h3>Range Rover Sport Test Track</h3>
                             <p class="work-meta">Producer — Jaguar Land Rover</p>
+                            <button class="media-btn" data-gallery="rrSportTestTrack">Photos &amp; Clips</button>
                             <p class="work-desc">At the Jaguar Land Rover test circuit, Jessica Hawkins — W Series racing driver and official James Bond stunt driver — puts Anthony Joshua through his paces in the new Range Rover Sport.</p>
                             <span class="work-arrow">→</span>
                         </div>
@@ -720,10 +734,11 @@
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image" data-gallery="corden"><img src="images/range-rover-james-corden.png" alt="Range Rover Sport — James Corden"></div>
+                        <div class="work-image" data-vimeo="1171151324"><img src="images/range-rover-james-corden.png" alt="Range Rover Sport — James Corden"></div>
                         <div class="work-info">
                             <h3>Range Rover Sport — James Corden</h3>
                             <p class="work-meta">Producer — Imagination / JLR, Los Angeles</p>
+                            <button class="media-btn" data-gallery="corden">Photos &amp; Clips</button>
                             <p class="work-desc">A Carpool Karaoke spoof with James Corden and Lennard Hoornik, Chief Commercial Officer of Jaguar Land Rover. Shot behind closed gates — the car was still under pre-launch embargo.</p>
                             <span class="work-arrow">→</span>
                         </div>
@@ -777,10 +792,11 @@
                 <div class="work-category-header"><span>Luxury</span></div>
                 <div class="work-grid">
                     <article class="work-item">
-                        <div class="work-image" data-gallery="vashi"><img src="images/vashi.png" alt="Vashi"></div>
+                        <div class="work-image" data-vimeo="1171158700"><img src="images/vashi.png" alt="Vashi"></div>
                         <div class="work-info">
                             <h3>Vashi</h3>
                             <p class="work-meta">Jewellery Commercial — Vashi</p>
+                            <button class="media-btn" data-gallery="vashi">Photos &amp; Clips</button>
                             <p class="work-desc">Luxury jewellery commercial for Vashi.</p>
                             <span class="work-arrow">→</span>
                         </div>
@@ -801,10 +817,11 @@
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image" data-gallery="explorer"><img src="images/ford-explorer-world-record.png" alt="Ford Explorer World Record"></div>
+                        <div class="work-image" data-vimeo="1171318976"><img src="images/ford-explorer-world-record.png" alt="Ford Explorer World Record"></div>
                         <div class="work-info">
                             <h3>Ford Explorer: Lexie Limitless World Record Finale</h3>
                             <p class="work-meta">Live Experiential — Ford</p>
+                            <button class="media-btn" data-gallery="explorer">Photos &amp; Clips</button>
                             <p class="work-desc">We managed a rolling closure of twenty miles of the South of France coast road into Nice. As the convoy moved through each section, the route was sealed ahead and released behind — keeping the road clear without shutting it down entirely. A convoy of twenty historic Ford vehicles. Motorcycle cameramen whose day job is filming the Tour de France. Helicopters, drones, and multiple fixed cameras the length of the route.</p>
                             <p class="work-desc">The entire event was broadcast live online. To maintain a continuous live feed across twenty miles, we put a relay aircraft at 3,000 feet — signal up from the helicopter, across to the plane, down to the OB truck.</p>
                             <p class="work-desc">Lexie arrived into Nice where Ford CEO Jim Farley joined her for the final mile to the finish line.</p>
@@ -961,8 +978,7 @@
     <div class="gallery-modal" id="galleryModal">
         <div class="gallery-top-bar">
             <span class="gallery-counter" id="galleryCounter"></span>
-            <button class="gallery-watch-btn" id="galleryWatchBtn">&#9654; Watch Film</button>
-            <button class="gallery-close" id="galleryClose">Close ✕</button>
+<button class="gallery-close" id="galleryClose">Close ✕</button>
         </div>
         <div class="gallery-inner">
             <button class="gallery-btn" id="galleryPrev">&#8592;</button>
@@ -1643,10 +1659,14 @@
         const galleryModal = document.getElementById('galleryModal');
         const galleryContent = document.getElementById('galleryContent');
         const galleryCounter = document.getElementById('galleryCounter');
-        const galleryWatchBtn = document.getElementById('galleryWatchBtn');
-        let galleryItems = [], galleryVimeo = null, galleryIndex = 0, galleryCurrentVideo = null;
+        let galleryItems = [], galleryIndex = 0, galleryCurrentVideo = null, galleryTimer = null;
+
+        function galleryStopTimer() {
+            if (galleryTimer) { clearTimeout(galleryTimer); galleryTimer = null; }
+        }
 
         function galleryStopCurrent() {
+            galleryStopTimer();
             if (galleryCurrentVideo) {
                 galleryCurrentVideo.pause();
                 galleryCurrentVideo.currentTime = 0;
@@ -1661,17 +1681,16 @@
             galleryCounter.textContent = (galleryIndex + 1) + ' / ' + galleryItems.length;
             if (item.type === 'image') {
                 galleryContent.innerHTML = '<img src="' + item.src + '" alt="">';
+                galleryTimer = setTimeout(() => galleryShow(galleryIndex + 1), 3000);
             } else {
                 galleryContent.innerHTML = '<video src="' + item.src + '" autoplay playsinline controls></video>';
                 galleryCurrentVideo = galleryContent.querySelector('video');
+                galleryCurrentVideo.addEventListener('ended', () => galleryShow(galleryIndex + 1), {once: true});
             }
         }
 
         function galleryOpen(key) {
-            const data = galleries[key];
-            galleryItems = data.items;
-            galleryVimeo = data.vimeo || null;
-            galleryWatchBtn.style.display = galleryVimeo ? '' : 'none';
+            galleryItems = galleries[key].items;
             galleryShow(0);
             galleryModal.classList.add('open');
         }
@@ -1687,13 +1706,6 @@
         document.getElementById('galleryPrev').addEventListener('click', (e) => { e.stopPropagation(); galleryShow(galleryIndex - 1); });
         document.getElementById('galleryNext').addEventListener('click', (e) => { e.stopPropagation(); galleryShow(galleryIndex + 1); });
 
-        galleryWatchBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            galleryClose();
-            vimeoFrame.src = 'https://player.vimeo.com/video/' + galleryVimeo + '?autoplay=1&title=0&byline=0&portrait=0';
-            vimeoModal.classList.add('open');
-        });
-
         let galleryTouchX = 0;
         galleryModal.addEventListener('touchstart', (e) => { galleryTouchX = e.touches[0].clientX; }, {passive:true});
         galleryModal.addEventListener('touchend', (e) => {
@@ -1701,8 +1713,14 @@
             if (Math.abs(dx) > 40) dx < 0 ? galleryShow(galleryIndex + 1) : galleryShow(galleryIndex - 1);
         }, {passive:true});
 
+        // Image click → gallery (for items with no film, e.g. Ford Wheels, Tata)
         document.querySelectorAll('.work-image[data-gallery]').forEach(img => {
             img.addEventListener('click', () => galleryOpen(img.dataset.gallery));
+        });
+
+        // Media button click → gallery
+        document.querySelectorAll('.media-btn[data-gallery]').forEach(btn => {
+            btn.addEventListener('click', (e) => { e.stopPropagation(); galleryOpen(btn.dataset.gallery); });
         });
 
         // Shared Vimeo modal
