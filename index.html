@@ -401,21 +401,17 @@
         #siteIntro {
             position: fixed; inset: 0; z-index: 10000;
             background: #000;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
             transition: opacity 1.2s ease;
             pointer-events: none;
         }
         #siteIntro.fade-out { opacity: 0; }
-        #introText {
-            display: flex; align-items: baseline;
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: clamp(36px, 7vw, 88px);
-            letter-spacing: 0.12em;
-            color: #C4A46B;
-            font-style: italic;
-            font-weight: 300;
+        /* Hero name sits above the overlay during intro */
+        body.intro-playing .hero-name {
+            position: relative;
+            z-index: 10001;
         }
-        .intro-space { width: 0.35em; display: inline-block; }
+        /* Hide everything in hero except the name during intro */
+        body.intro-playing #hero > *:not(.hero-name) { opacity: 0; }
         .intro-letter { display: inline-block; }
 
         /* VIDEO REVEAL OVERLAY */
@@ -475,11 +471,7 @@
 </head>
 <body>
 
-    <div id="siteIntro">
-        <div id="introText">
-            <span class="intro-letter">G</span><span class="intro-letter">r</span><span class="intro-letter">e</span><span class="intro-letter">g</span><span class="intro-space"></span><span class="intro-letter">H</span><span class="intro-letter">o</span><span class="intro-letter">b</span><span class="intro-letter">d</span><span class="intro-letter">e</span><span class="intro-letter">n</span>
-        </div>
-    </div>
+    <div id="siteIntro"></div>
 
     <nav id="nav">
         <div class="nav-inner">
@@ -496,7 +488,7 @@
 
     <section id="hero">
         <div class="hero-rule-top">Film Producer &amp; Production Consultant</div>
-        <h1 class="hero-name">Greg<br><em>Hobden</em></h1>
+        <h1 class="hero-name"><span class="intro-letter">G</span><span class="intro-letter">r</span><span class="intro-letter">e</span><span class="intro-letter">g</span><br><em><span class="intro-letter">H</span><span class="intro-letter">o</span><span class="intro-letter">b</span><span class="intro-letter">d</span><span class="intro-letter">e</span><span class="intro-letter">n</span></em></h1>
         <div class="hero-divider"><span>Thirty years in film</span></div>
         <p class="hero-sub">Theatrical documentary, high-end automotive, large-scale live experiential.</p>
     </section>
@@ -1202,13 +1194,15 @@
     </section>
 
     <script>
-        // Site intro — letters assemble on first load
+        // Site intro — hero name letters fly in from random positions
         (function() {
             const intro = document.getElementById('siteIntro');
             const letters = document.querySelectorAll('.intro-letter');
             const w = window.innerWidth, h = window.innerHeight;
 
-            // Set each letter's starting position directly via inline style
+            document.body.classList.add('intro-playing');
+
+            // Scatter letters from their natural positions
             letters.forEach(l => {
                 const tx = (Math.random() - 0.5) * w * 2.2;
                 const ty = (Math.random() - 0.5) * h * 2.2;
@@ -1216,18 +1210,20 @@
                 l.style.transform = `translate(${tx}px, ${ty}px)`;
             });
 
-            // After the browser has rendered the starting state, animate to final position
+            // Animate letters to their natural position in the hero name
             requestAnimationFrame(() => requestAnimationFrame(() => {
                 letters.forEach((l, i) => {
                     setTimeout(() => {
                         l.style.transition = 'transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s ease';
                         l.style.transform = 'translate(0, 0)';
                         l.style.opacity = '1';
-                    }, i * 60);
+                    }, i * 70);
                 });
             }));
 
+            // Fade overlay away, reveal rest of page
             setTimeout(() => {
+                document.body.classList.remove('intro-playing');
                 intro.classList.add('fade-out');
                 setTimeout(() => intro.remove(), 1200);
             }, 2600);
