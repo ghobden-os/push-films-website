@@ -729,7 +729,7 @@
                     <article class="work-item">
                         <div class="work-image"><img src="images/ford-explorer-world-record.png" alt="Ford Explorer World Record"></div>
                         <div class="work-info">
-                            <h3>Ford Explorer: Lexie Limitless World Record Finale <button class="video-btn" id="lexieMainVideoBtn" aria-label="Watch film"></button></h3>
+                            <h3>Ford Explorer: Lexie Limitless World Record Finale <button class="video-btn" data-vimeo="1171318976" aria-label="Watch film"></button></h3>
                             <p class="work-meta">Live Experiential — Ford</p>
                             <div class="work-btns"><button class="photo-btn" id="explorerBtn" aria-label="View photos"></button> <button class="video-btn" id="explorerVideo1Btn" aria-label="Watch clip 1"></button> <button class="video-btn" id="explorerVideo2Btn" aria-label="Watch clip 2"></button> <button class="video-btn" id="explorerVideo3Btn" aria-label="Watch clip 3"></button></div>
                             <p class="work-desc">We managed a rolling closure of twenty miles of the South of France coast road into Nice. As the convoy moved through each section, the route was sealed ahead and released behind — keeping the road clear without shutting it down entirely. A convoy of twenty historic Ford vehicles. Motorcycle cameramen whose day job is filming the Tour de France. Helicopters, drones, and multiple fixed cameras the length of the route.</p>
@@ -891,10 +891,6 @@
         <span class="carousel-counter" id="defenderCounter"></span>
     </div>
 
-    <div class="video-modal" id="lexieMainVideoModal">
-        <button class="video-modal-close" id="lexieMainVideoClose">Close ✕</button>
-        <video id="lexieMainVideo" src="images/lexie-clip.mp4" controls playsinline></video>
-    </div>
 
     <div class="video-modal" id="defenderVideoModal">
         <button class="video-modal-close" id="defenderVideoClose">Close ✕</button>
@@ -1779,20 +1775,7 @@
             showDefenderImage(defenderIndex + 1);
         });
 
-        // Lexie Limitless main film
-        const lexieMainVideoModal = document.getElementById('lexieMainVideoModal');
-        const lexieMainVideo = document.getElementById('lexieMainVideo');
-        document.getElementById('lexieMainVideoBtn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            lexieMainVideoModal.classList.add('open');
-            lexieMainVideo.play();
-        });
-        document.getElementById('lexieMainVideoClose').addEventListener('click', (e) => {
-            e.stopPropagation();
-            lexieMainVideoModal.classList.remove('open');
-            lexieMainVideo.pause();
-            lexieMainVideo.currentTime = 0;
-        });
+
 
         // Defender video
         const defenderVideoModal = document.getElementById('defenderVideoModal');
