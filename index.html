@@ -1223,37 +1223,44 @@
 
             document.body.classList.add('intro-playing');
 
-            // Position overlay letters to exactly match the h1 on the page
-            const rect = heroName.getBoundingClientRect();
-            introLetters.style.left = rect.left + 'px';
-            introLetters.style.top = rect.top + 'px';
+            function start() {
+                // Wait for fonts so measurement is pixel-accurate
+                document.fonts.ready.then(() => {
+                    // Measure h1 after font is fully rendered
+                    const rect = heroName.getBoundingClientRect();
+                    introLetters.style.left = rect.left + 'px';
+                    introLetters.style.top  = rect.top  + 'px';
+                    introLetters.style.width = rect.width + 'px';
 
-            // Each letter starts with small random drift and slight rotation
-            letters.forEach(l => {
-                const tx = (Math.random() - 0.5) * 120;
-                const ty = (Math.random() - 0.5) * 80;
-                const rot = (Math.random() - 0.5) * 18;
-                l.style.opacity = '0';
-                l.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
-            });
+                    // Each letter starts with small random drift and slight rotation
+                    letters.forEach(l => {
+                        const tx = (Math.random() - 0.5) * 120;
+                        const ty = (Math.random() - 0.5) * 80;
+                        const rot = (Math.random() - 0.5) * 18;
+                        l.style.opacity = '0';
+                        l.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
+                    });
 
-            // Letters dissolve in and drift to position
-            requestAnimationFrame(() => requestAnimationFrame(() => {
-                letters.forEach((l, i) => {
+                    // Letters dissolve in and drift to position
+                    requestAnimationFrame(() => requestAnimationFrame(() => {
+                        letters.forEach((l, i) => {
+                            setTimeout(() => {
+                                l.style.transition = 'transform 1.6s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 1.4s ease';
+                                l.style.transform = 'translate(0, 0) rotate(0deg)';
+                                l.style.opacity = '1';
+                            }, i * 60);
+                        });
+                    }));
+
+                    // True crossfade: entire overlay dissolves, entire page fades in together
                     setTimeout(() => {
-                        l.style.transition = 'transform 1.6s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 1.4s ease';
-                        l.style.transform = 'translate(0, 0) rotate(0deg)';
-                        l.style.opacity = '1';
-                    }, i * 60);
+                        document.body.classList.remove('intro-playing');
+                        intro.classList.add('fade-out');
+                        setTimeout(() => intro.remove(), 3000);
+                    }, 2300);
                 });
-            }));
-
-            // True crossfade: entire overlay dissolves out, entire page fades in together
-            setTimeout(() => {
-                document.body.classList.remove('intro-playing');
-                intro.classList.add('fade-out');
-                setTimeout(() => intro.remove(), 3000);
-            }, 2300);
+            }
+            start();
         })();
 
         const nav = document.getElementById('nav');
