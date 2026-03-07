@@ -81,11 +81,12 @@
             padding-top: var(--nav-h);
             position: relative;
             overflow: hidden;
+            background: url('images/REEL IMAGE .png') center/cover no-repeat;
         }
         #hero::before {
             content: '';
             position: absolute; inset: 0;
-            background: radial-gradient(ellipse at 50% 60%, rgba(196,164,107,0.06) 0%, transparent 65%);
+            background: rgba(0,0,0,0.6);
             pointer-events: none;
         }
         .hero-rule-top {
@@ -141,6 +142,23 @@
             line-height: 1.2;
             margin: 4px 0;
         }
+        .hero-reel-btn {
+            display: inline-flex; align-items: center; gap: 14px;
+            margin-top: clamp(32px, 4vw, 48px);
+            font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+            color: rgba(255,255,255,0.7); background: none;
+            border: 1px solid rgba(255,255,255,0.3); padding: 16px 32px;
+            cursor: pointer; transition: all 0.3s ease; position: relative; z-index: 1;
+        }
+        .hero-reel-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .hero-reel-play {
+            width: 28px; height: 28px; border-radius: 50%;
+            border: 1px solid currentColor;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; padding-left: 2px;
+            transition: all 0.3s ease;
+        }
+
         .btn-showreel {
             display: inline-flex; align-items: center; gap: 12px;
             font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
@@ -608,15 +626,7 @@
         <h1 class="hero-name">Greg<br><em>Hobd<span class="e-letter">e<button class="historic-trigger" id="historicTrigger"></button></span>n</em></h1>
         <div class="hero-divider"><span>Thirty years in film</span></div>
         <p class="hero-sub">Theatrical documentary, high-end automotive, large-scale live experiential.</p>
-    </section>
-
-    <section id="showreel">
-        <div class="reel-wrap" id="reelWrap">
-            <div class="reel-poster" id="reelPoster">
-                <div class="reel-play-btn">&#9654;</div>
-            </div>
-            <iframe id="reelFrame" src="" data-src="https://player.vimeo.com/video/1102618071?title=0&byline=0&portrait=0&color=ffffff&autoplay=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-        </div>
+        <button class="hero-reel-btn" id="heroReelBtn"><span class="hero-reel-play">&#9654;</span>Showreel</button>
     </section>
 
 
@@ -1254,35 +1264,9 @@
         const links = document.querySelector('.nav-links');
         toggle?.addEventListener('click', () => { toggle.classList.toggle('open'); links.classList.toggle('open'); });
 
-        const reelPoster = document.getElementById('reelPoster');
-        const reelWrap = document.getElementById('reelWrap');
-        const reelFrame = document.getElementById('reelFrame');
-        reelPoster.addEventListener('click', () => {
-            reelFrame.src = reelFrame.dataset.src;
-            reelWrap.classList.add('playing');
-            reelFrame.addEventListener('load', () => {
-                const player = new Vimeo.Player(reelFrame);
-                let pauseTimer = null;
-
-                player.on('pause', () => {
-                    pauseTimer = setTimeout(() => {
-                        reelWrap.classList.remove('playing');
-                        reelFrame.src = '';
-                    }, 20000);
-                });
-
-                player.on('play', () => {
-                    if (pauseTimer) {
-                        clearTimeout(pauseTimer);
-                        pauseTimer = null;
-                    }
-                });
-
-                player.on('ended', () => {
-                    reelWrap.classList.remove('playing');
-                    reelFrame.src = '';
-                });
-            }, { once: true });
+        document.getElementById('heroReelBtn').addEventListener('click', () => {
+            document.getElementById('vimeoModalFrame').src = 'https://player.vimeo.com/video/1102618071?autoplay=1&title=0&byline=0&portrait=0';
+            document.getElementById('vimeoModal').classList.add('open');
         });
 
         const historic = document.getElementById('historic');
