@@ -408,21 +408,15 @@
         #siteIntro.fade-out { opacity: 0; }
         #introText {
             display: flex; align-items: baseline;
-            font-family: Georgia, serif;
+            font-family: 'Cormorant Garamond', Georgia, serif;
             font-size: clamp(36px, 7vw, 88px);
             letter-spacing: 0.12em;
             color: #C4A46B;
             font-style: italic;
-            font-weight: 400;
+            font-weight: 300;
         }
         .intro-space { width: 0.35em; display: inline-block; }
-        .intro-letter {
-            display: inline-block;
-            opacity: 0;
-            transform: translate(var(--tx, 0px), var(--ty, 0px));
-            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s ease;
-        }
-        .intro-letter.landed { opacity: 1; transform: translate(0, 0); }
+        .intro-letter { display: inline-block; }
 
         /* VIDEO REVEAL OVERLAY */
         #videoRevealOverlay {
@@ -1213,19 +1207,30 @@
             const intro = document.getElementById('siteIntro');
             const letters = document.querySelectorAll('.intro-letter');
             const w = window.innerWidth, h = window.innerHeight;
+
+            // Set each letter's starting position directly via inline style
             letters.forEach(l => {
-                const tx = (Math.random() - 0.5) * w * 2;
-                const ty = (Math.random() - 0.5) * h * 2;
-                l.style.setProperty('--tx', tx + 'px');
-                l.style.setProperty('--ty', ty + 'px');
+                const tx = (Math.random() - 0.5) * w * 2.2;
+                const ty = (Math.random() - 0.5) * h * 2.2;
+                l.style.opacity = '0';
+                l.style.transform = `translate(${tx}px, ${ty}px)`;
             });
+
+            // After the browser has rendered the starting state, animate to final position
             requestAnimationFrame(() => requestAnimationFrame(() => {
-                letters.forEach((l, i) => setTimeout(() => l.classList.add('landed'), i * 60));
+                letters.forEach((l, i) => {
+                    setTimeout(() => {
+                        l.style.transition = 'transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s ease';
+                        l.style.transform = 'translate(0, 0)';
+                        l.style.opacity = '1';
+                    }, i * 60);
+                });
             }));
+
             setTimeout(() => {
                 intro.classList.add('fade-out');
                 setTimeout(() => intro.remove(), 1200);
-            }, 2400);
+            }, 2600);
         })();
 
         const nav = document.getElementById('nav');
