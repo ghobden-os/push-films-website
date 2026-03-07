@@ -1277,10 +1277,7 @@
         const links = document.querySelector('.nav-links');
         toggle?.addEventListener('click', () => { toggle.classList.toggle('open'); links.classList.toggle('open'); });
 
-        document.getElementById('heroReelBtn').addEventListener('click', () => {
-            document.getElementById('vimeoModalFrame').src = 'https://player.vimeo.com/video/1102618071?autoplay=1&title=0&byline=0&portrait=0';
-            document.getElementById('vimeoModal').classList.add('open');
-        });
+        document.getElementById('heroReelBtn').addEventListener('click', () => openVimeo('1102618071'));
 
         const historic = document.getElementById('historic');
         const historicClose = document.getElementById('historicClose');
@@ -1724,22 +1721,27 @@
 
         const vimeoModal = document.getElementById('vimeoModal');
         const vimeoFrame = document.getElementById('vimeoModalFrame');
-        document.getElementById('vimeoModalClose').addEventListener('click', () => {
+        function closeVimeo() {
+            if (vimeoCloseTimer) { clearTimeout(vimeoCloseTimer); vimeoCloseTimer = null; }
             vimeoModal.classList.remove('open');
             vimeoFrame.src = '';
-        });
-        vimeoModal.addEventListener('click', (e) => {
-            if (e.target === vimeoModal) {
-                vimeoModal.classList.remove('open');
-                vimeoFrame.src = '';
+        }
+        document.getElementById('vimeoModalClose').addEventListener('click', closeVimeo);
+        vimeoModal.addEventListener('click', (e) => { if (e.target === vimeoModal) closeVimeo(); });
+        let vimeoCloseTimer = null;
+        function openVimeo(id) {
+            if (vimeoCloseTimer) { clearTimeout(vimeoCloseTimer); vimeoCloseTimer = null; }
+            vimeoFrame.src = 'https://player.vimeo.com/video/' + id + '?autoplay=1&title=0&byline=0&portrait=0';
+            vimeoModal.classList.add('open');
+            if (id === '1171163096') {
+                vimeoCloseTimer = setTimeout(() => {
+                    vimeoModal.classList.remove('open');
+                    vimeoFrame.src = '';
+                }, 9000);
             }
-        });
+        }
         document.querySelectorAll('.work-image[data-vimeo]').forEach(img => {
-            img.addEventListener('click', () => {
-                const id = img.dataset.vimeo;
-                vimeoFrame.src = 'https://player.vimeo.com/video/' + id + '?autoplay=1&title=0&byline=0&portrait=0';
-                vimeoModal.classList.add('open');
-            });
+            img.addEventListener('click', () => openVimeo(img.dataset.vimeo));
         });
     </script>
     <script src="https://player.vimeo.com/api/player.js"></script>
