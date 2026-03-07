@@ -332,6 +332,37 @@
         .client-category li { font-size: 14px; color: #777; padding: 10px 0; border-bottom: 1px solid var(--rule); line-height: 1.4; }
         .client-category li:first-of-type { border-top: 1px solid var(--rule); }
 
+        /* RESTRICTED FILM */
+        #restricted { border-top: 1px solid var(--rule); }
+        .restricted-grid { display: grid; grid-template-columns: 180px 1fr; gap: clamp(40px, 6vw, 120px); align-items: start; }
+        .restricted-lead { font-family: var(--font-serif); font-size: clamp(24px, 3.2vw, 42px); font-weight: 300; color: var(--fg); line-height: 1.2; margin-bottom: clamp(32px, 4vw, 48px); }
+        .restricted-lead em { font-style: italic; color: var(--gold); }
+        .password-form { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        .password-input {
+            background: none; border: none; border-bottom: 1px solid var(--rule);
+            color: var(--fg); font-family: var(--font-sans); font-size: 14px;
+            padding: 8px 0; width: 180px; outline: none; letter-spacing: 0.06em;
+            transition: border-color 0.2s;
+        }
+        .password-input::placeholder { color: var(--mid); }
+        .password-input:focus { border-color: var(--gold); }
+        .password-submit {
+            background: none; border: 1px solid var(--rule); color: var(--mid);
+            font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.14em;
+            text-transform: uppercase; padding: 8px 16px; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .password-submit:hover { border-color: var(--gold); color: var(--gold); }
+        .password-error { font-size: 11px; letter-spacing: 0.1em; color: #c0392b; text-transform: uppercase; display: none; margin-top: 12px; }
+        .password-error.show { display: block; }
+        #restrictedFilm { display: none; margin-top: clamp(32px, 4vw, 48px); }
+        #restrictedFilm.visible { display: block; }
+        .restricted-frame-wrap { position: relative; padding-bottom: 56.25%; height: 0; }
+        .restricted-frame-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        @media (max-width: 640px) {
+            .restricted-grid { grid-template-columns: 1fr; gap: 24px; }
+        }
+
         /* CONTACT */
         #contact { border-top: 1px solid var(--rule); }
         .contact-grid { display: grid; grid-template-columns: 180px 1fr; gap: clamp(40px, 6vw, 120px); align-items: start; }
@@ -788,6 +819,25 @@
                 <div class="client-category"><h4>Film &amp; Entertainment</h4><ul><li>Universal Pictures</li><li>Imagination</li></ul></div>
                 <div class="client-category"><h4>Government &amp; Institutional</h4><ul><li>Abu Dhabi National Media Council</li><li>UAE World Expo Pavilions</li></ul></div>
                 <div class="client-category"><h4>Corporate</h4><ul><li>CRH Global Building Materials</li><li>Financial &amp; Luxury Sector</li></ul></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="restricted">
+        <div class="container restricted-grid">
+            <div class="contact-label"><span>Restricted</span></div>
+            <div>
+                <p class="restricted-lead">The budget on this one was <em>nobody's business.</em><br>It still isn't.</p>
+                <div class="password-form">
+                    <input class="password-input" id="restrictedPassword" type="password" placeholder="Password" autocomplete="off">
+                    <button class="password-submit" id="restrictedSubmit">Enter</button>
+                </div>
+                <p class="password-error" id="restrictedError">Incorrect password</p>
+                <div id="restrictedFilm">
+                    <div class="restricted-frame-wrap">
+                        <iframe id="restrictedFrame" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1500,6 +1550,29 @@
             stopEasterAudio();
             historicTrigger.scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
+
+        // Restricted film password gate
+        const restrictedPassword = document.getElementById('restrictedPassword');
+        const restrictedSubmit = document.getElementById('restrictedSubmit');
+        const restrictedError = document.getElementById('restrictedError');
+        const restrictedFilm = document.getElementById('restrictedFilm');
+        const restrictedFrame = document.getElementById('restrictedFrame');
+
+        function checkPassword() {
+            if (restrictedPassword.value === 'Sandcastle') {
+                restrictedFilm.classList.add('visible');
+                restrictedError.classList.remove('show');
+                restrictedFrame.src = 'https://player.vimeo.com/video/1171296890?autoplay=1';
+                restrictedPassword.closest('.password-form').style.display = 'none';
+            } else {
+                restrictedError.classList.add('show');
+                restrictedPassword.value = '';
+                restrictedPassword.focus();
+            }
+        }
+
+        restrictedSubmit.addEventListener('click', checkPassword);
+        restrictedPassword.addEventListener('keydown', (e) => { if (e.key === 'Enter') checkPassword(); });
 
         // Vashi carousel
         const vashiImages = [
