@@ -404,14 +404,16 @@
         @keyframes blink { 50% { opacity: 0; } }
 
         /* HISTORIC / FUN — hidden section */
-        .historic-trigger-wrap { padding: 48px 0 56px; text-align: center; background: var(--bg); }
+        .e-letter { position: relative; display: inline-block; }
         .historic-trigger {
             display: inline-block;
             width: 42px; height: 24px;
             border-radius: 50%;
             background: none;
             border: 1px solid rgba(255,255,255,0.07);
-            position: relative;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
             cursor: pointer;
             transition: border-color 0.3s ease;
         }
@@ -520,7 +522,7 @@
 
     <section id="hero">
         <div class="hero-rule-top">Film Producer &amp; Production Consultant</div>
-        <h1 class="hero-name">Greg<br><em>Hobden</em></h1>
+        <h1 class="hero-name">Greg<br><em>Hobd<span class="e-letter">e<button class="historic-trigger" id="historicTrigger"></button></span>n</em></h1>
         <div class="hero-divider"><span>Thirty years in film</span></div>
         <p class="hero-sub">Theatrical documentary, high-end automotive, large-scale live experiential.</p>
     </section>
@@ -1036,10 +1038,6 @@
         <video id="videoRevealClip" src="five-intro.mp4" playsinline muted></video>
     </div>
 
-    <div class="historic-trigger-wrap">
-        <button class="historic-trigger" id="historicTrigger">
-        </button>
-    </div>
     <audio id="easterEggAudio" src="easter-egg.mp3" preload="auto"></audio>
 
     <section id="historic">
