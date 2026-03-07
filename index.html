@@ -1387,8 +1387,8 @@
             let i = 0;
             function type() {
                 if (i < typewriterMsg.length) {
-                    typewriterEl.textContent += typewriterMsg[i++];
                     playClick();
+                    typewriterEl.textContent += typewriterMsg[i++];
                     typewriterTimeout = setTimeout(type, 45);
                 }
             }
