@@ -1517,6 +1517,7 @@
         videoOverlay.addEventListener('touchend', () => { if (revealActive) finishReveal(1.5); }, { passive: true });
 
         historicTrigger.addEventListener('click', () => {
+            audioCtx.resume();
             if (historic.classList.contains('visible')) {
                 historic.classList.remove('visible');
                 stopEasterAudio();
