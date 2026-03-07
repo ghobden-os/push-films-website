@@ -518,6 +518,59 @@
             #vimeoModal iframe { width: 95vw !important; height: 53.5vw !important; }
             .historic { width: 95vw; max-height: 85vh; overflow-y: auto; }
         }
+
+        /* UNIFIED GALLERY MODAL */
+        .gallery-modal {
+            display: none; position: fixed; inset: 0; z-index: 1000;
+            background: rgba(0,0,0,0.95); flex-direction: column;
+            align-items: center; justify-content: center;
+        }
+        .gallery-modal.open { display: flex; }
+        .gallery-top-bar {
+            position: absolute; top: 0; left: 0; right: 0;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 24px;
+        }
+        .gallery-counter { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+        .gallery-watch-btn {
+            font-family: var(--font-sans); font-size: 9px; letter-spacing: 0.14em;
+            text-transform: uppercase; color: var(--gold); background: none;
+            border: 1px solid var(--gold); padding: 6px 14px; cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .gallery-watch-btn:hover { background: var(--gold); color: #000; }
+        .gallery-close {
+            font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.12em;
+            text-transform: uppercase; background: none; border: none;
+            color: rgba(255,255,255,0.5); cursor: pointer; transition: color 0.2s;
+        }
+        .gallery-close:hover { color: var(--fg); }
+        .gallery-inner {
+            display: flex; align-items: center; justify-content: center;
+            width: 100%; height: 100%; position: relative;
+        }
+        .gallery-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.6); font-size: 20px;
+            width: 44px; height: 44px; cursor: pointer; z-index: 2;
+            transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+        }
+        .gallery-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(0,0,0,0.8); }
+        #galleryPrev { left: 16px; }
+        #galleryNext { right: 16px; }
+        .gallery-content {
+            max-width: 88vw; max-height: 80vh;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .gallery-content img { max-width: 88vw; max-height: 80vh; object-fit: contain; display: block; }
+        .gallery-content video { max-width: 88vw; max-height: 80vh; display: block; }
+        @media (max-width: 600px) {
+            .gallery-btn { width: 36px; height: 36px; font-size: 16px; }
+            #galleryPrev { left: 6px; }
+            #galleryNext { right: 6px; }
+            .gallery-content img, .gallery-content video { max-width: 96vw; max-height: 70vh; }
+        }
     </style>
 </head>
 <body>
@@ -613,31 +666,28 @@
                 <div class="work-category-header"><span>Automotive</span></div>
                 <div class="work-grid">
                     <article class="work-item">
-                        <div class="work-image" data-vimeo="1171170029"><img src="images/ford-raptor.png" alt="Ford Raptor"></div>
+                        <div class="work-image" data-gallery="raptor"><img src="images/ford-raptor.png" alt="Ford Raptor"></div>
                         <div class="work-info">
                             <h3>Ford Ranger Raptor</h3>
                             <p class="work-meta">Producer — Ford</p>
-                            <div class="work-btns"><button class="photo-btn" id="raptorBtn" aria-label="View photos"></button> <button class="video-btn" id="raptorVideo1Btn" aria-label="Watch clip 1"></button> <button class="video-btn" id="raptorVideo2Btn" aria-label="Watch clip 2"></button></div>
                             <p class="work-desc">The global launch film for the new Ford Ranger Raptor. Directed by Nick Piper. The brief was simple: show what it can do. The solution was to chain it inside an Antonov AN-12 Soviet cargo plane and let it break free.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image" data-vimeo="1171157858"><img src="images/ford-explorer-launch.png" alt="Ford Explorer"></div>
+                        <div class="work-image" data-gallery="lexieGreen"><img src="images/ford-explorer-launch.png" alt="Ford Explorer"></div>
                         <div class="work-info">
                             <h3>Ford Explorer</h3>
                             <p class="work-meta">Producer — Ford</p>
-                            <div class="work-btns"><button class="photo-btn" id="lexieGreenBtn" aria-label="View photos"></button> <button class="video-btn" id="lexieGreenVideo1Btn" aria-label="Watch clip 1"></button> <button class="video-btn" id="lexieGreenVideo2Btn" aria-label="Watch clip 2"></button></div>
                             <p class="work-desc">Brand film for the Ford Explorer launch.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image" data-vimeo="1171151952"><img src="images/defender.png" alt="Land Rover Defender"></div>
+                        <div class="work-image" data-gallery="defender"><img src="images/defender.png" alt="Land Rover Defender"></div>
                         <div class="work-info">
                             <h3>Land Rover Defender</h3>
                             <p class="work-meta">Agency Producer — Imagination / JLR, Kazakhstan</p>
-                            <div class="work-btns"><button class="photo-btn" id="defenderBtn" aria-label="View photos"></button> <button class="video-btn" id="defenderVideoBtn" aria-label="Watch clip"></button></div>
                             <p class="work-desc">The global launch film for the new Land Rover Defender, shot on location in Kazakhstan. The film starred Kenton Cool — the most prolific Everest summiteer in the world outside of the Sherpa community, with 19 ascents to his name. The Defender was the perfect vehicle for the world's most demanding mountaineer.</p>
                             <span class="work-arrow">→</span>
                         </div>
@@ -652,11 +702,10 @@
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image" data-vimeo="1171178087"><img src="images/range-rover-test-track.png" alt="Range Rover Sport Test Track"></div>
+                        <div class="work-image" data-gallery="rrSportTestTrack"><img src="images/range-rover-test-track.png" alt="Range Rover Sport Test Track"></div>
                         <div class="work-info">
                             <h3>Range Rover Sport Test Track</h3>
                             <p class="work-meta">Producer — Jaguar Land Rover</p>
-                            <div class="work-btns"><button class="photo-btn" id="brothersBtn" aria-label="View photo"></button> <button class="photo-btn" id="rrSportPrepBtn" aria-label="View prep photos"></button></div>
                             <p class="work-desc">At the Jaguar Land Rover test circuit, Jessica Hawkins — W Series racing driver and official James Bond stunt driver — puts Anthony Joshua through his paces in the new Range Rover Sport.</p>
                             <span class="work-arrow">→</span>
                         </div>
@@ -671,11 +720,10 @@
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image" data-vimeo="1171151324"><img src="images/range-rover-james-corden.png" alt="Range Rover Sport — James Corden"></div>
+                        <div class="work-image" data-gallery="corden"><img src="images/range-rover-james-corden.png" alt="Range Rover Sport — James Corden"></div>
                         <div class="work-info">
                             <h3>Range Rover Sport — James Corden</h3>
                             <p class="work-meta">Producer — Imagination / JLR, Los Angeles</p>
-                            <div class="work-btns"><button class="photo-btn" id="cordenBtn" aria-label="View photo"></button></div>
                             <p class="work-desc">A Carpool Karaoke spoof with James Corden and Lennard Hoornik, Chief Commercial Officer of Jaguar Land Rover. Shot behind closed gates — the car was still under pre-launch embargo.</p>
                             <span class="work-arrow">→</span>
                         </div>
@@ -690,11 +738,10 @@
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/Tata.png" alt="Tata"></div>
+                        <div class="work-image" data-gallery="tata"><img src="images/Tata.png" alt="Tata"></div>
                         <div class="work-info">
                             <h3>Tata Nexon</h3>
                             <p class="work-meta">Producer — Tata</p>
-                            <div class="work-btns"><button class="photo-btn" id="tataBtn" aria-label="View photos"></button> <button class="video-btn" id="tataVideoBtn" aria-label="Watch clip"></button></div>
                             <p class="work-desc">A commercial for the Tata Nexon, shot on location in Hyderabad.</p>
                             <span class="work-arrow">→</span>
                         </div>
@@ -730,11 +777,10 @@
                 <div class="work-category-header"><span>Luxury</span></div>
                 <div class="work-grid">
                     <article class="work-item">
-                        <div class="work-image" data-vimeo="1171158700"><img src="images/vashi.png" alt="Vashi"></div>
+                        <div class="work-image" data-gallery="vashi"><img src="images/vashi.png" alt="Vashi"></div>
                         <div class="work-info">
                             <h3>Vashi</h3>
                             <p class="work-meta">Jewellery Commercial — Vashi</p>
-                            <div class="work-btns"><button class="photo-btn" id="vashiBtn" aria-label="View photos"></button></div>
                             <p class="work-desc">Luxury jewellery commercial for Vashi.</p>
                             <span class="work-arrow">→</span>
                         </div>
@@ -746,21 +792,19 @@
                 <div class="work-category-header"><span>Experiential</span></div>
                 <div class="work-grid">
                     <article class="work-item">
-                        <div class="work-image"><img src="images/ford-wheels.png" alt="Ford Wheels"></div>
+                        <div class="work-image" data-gallery="fordWheels"><img src="images/ford-wheels.png" alt="Ford Wheels"></div>
                         <div class="work-info">
                             <h3>Ford Wheels</h3>
                             <p class="work-meta">Producer — Ford</p>
-                            <div class="work-btns"><button class="photo-btn" id="fordWheelsBtn" aria-label="View photo"></button></div>
                             <p class="work-desc">A trailer for a fake heist movie, commissioned by Ford and shot with the Mustang. At a separate event, Ford enthusiasts could test drive the new car — we filmed inserts of them behind the wheel and cut them into the trailer on the spot. They left with their own personalised version as a souvenir, placing them in a Hollywood movie. Each one also took away a poster of themselves starring in the film. The punters loved it.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image" data-vimeo="1171318976"><img src="images/ford-explorer-world-record.png" alt="Ford Explorer World Record"></div>
+                        <div class="work-image" data-gallery="explorer"><img src="images/ford-explorer-world-record.png" alt="Ford Explorer World Record"></div>
                         <div class="work-info">
                             <h3>Ford Explorer: Lexie Limitless World Record Finale</h3>
                             <p class="work-meta">Live Experiential — Ford</p>
-                            <div class="work-btns"><button class="photo-btn" id="explorerBtn" aria-label="View photos"></button> <button class="video-btn" id="explorerVideo1Btn" aria-label="Watch clip 1"></button> <button class="video-btn" id="explorerVideo2Btn" aria-label="Watch clip 2"></button> <button class="video-btn" id="explorerVideo3Btn" aria-label="Watch clip 3"></button></div>
                             <p class="work-desc">We managed a rolling closure of twenty miles of the South of France coast road into Nice. As the convoy moved through each section, the route was sealed ahead and released behind — keeping the road clear without shutting it down entirely. A convoy of twenty historic Ford vehicles. Motorcycle cameramen whose day job is filming the Tour de France. Helicopters, drones, and multiple fixed cameras the length of the route.</p>
                             <p class="work-desc">The entire event was broadcast live online. To maintain a continuous live feed across twenty miles, we put a relay aircraft at 3,000 feet — signal up from the helicopter, across to the plane, down to the OB truck.</p>
                             <p class="work-desc">Lexie arrived into Nice where Ford CEO Jim Farley joined her for the final mile to the finish line.</p>
@@ -908,148 +952,23 @@
         </div>
     </section>
 
-    <div class="carousel-modal" id="defenderCarousel">
-        <button class="carousel-close" id="defenderClose">Close ✕</button>
-        <div class="carousel-inner">
-            <button class="carousel-btn" id="defenderPrev">&#8592;</button>
-            <img class="carousel-img" id="defenderImg" src="" alt="Defender">
-            <button class="carousel-btn" id="defenderNext">&#8594;</button>
-        </div>
-        <span class="carousel-counter" id="defenderCounter"></span>
-    </div>
-
-
-    <div class="video-modal" id="defenderVideoModal">
-        <button class="video-modal-close" id="defenderVideoClose">Close ✕</button>
-        <video id="defenderVideo" src="images/defender-9.mov" controls playsinline></video>
-    </div>
-
-    <div class="carousel-modal" id="tataCarousel">
-        <button class="carousel-close" id="tataClose">Close ✕</button>
-        <div class="carousel-inner">
-            <button class="carousel-btn" id="tataPrev">&#8592;</button>
-            <img class="carousel-img" id="tataImg" src="" alt="Tata">
-            <button class="carousel-btn" id="tataNext">&#8594;</button>
-        </div>
-        <span class="carousel-counter" id="tataCounter"></span>
-    </div>
-
-    <div class="video-modal" id="tataVideoModal">
-        <button class="video-modal-close" id="tataVideoClose">Close ✕</button>
-        <video id="tataVideo" src="images/tata-1.mov" controls playsinline></video>
-    </div>
-
-    <div class="carousel-modal" id="raptorCarousel">
-        <button class="carousel-close" id="raptorClose">Close ✕</button>
-        <div class="carousel-inner">
-            <button class="carousel-btn" id="raptorPrev">&#8592;</button>
-            <img class="carousel-img" id="raptorImg" src="" alt="Raptor">
-            <button class="carousel-btn" id="raptorNext">&#8594;</button>
-        </div>
-        <span class="carousel-counter" id="raptorCounter"></span>
-    </div>
-
-    <div class="carousel-modal" id="lexieGreenCarousel">
-        <button class="carousel-close" id="lexieGreenClose">Close ✕</button>
-        <div class="carousel-inner">
-            <button class="carousel-btn" id="lexieGreenPrev">&#8592;</button>
-            <img class="carousel-img" id="lexieGreenImg" src="" alt="Lexie Green Screen">
-            <button class="carousel-btn" id="lexieGreenNext">&#8594;</button>
-        </div>
-        <span class="carousel-counter" id="lexieGreenCounter"></span>
-    </div>
-
-    <div class="video-modal" id="lexieGreenVideoModal1">
-        <button class="video-modal-close" id="lexieGreenVideoClose1">Close ✕</button>
-        <video id="lexieGreenVideo1" src="images/lexie-green-screen-1.mov" controls playsinline></video>
-    </div>
-
-    <div class="video-modal" id="lexieGreenVideoModal2">
-        <button class="video-modal-close" id="lexieGreenVideoClose2">Close ✕</button>
-        <video id="lexieGreenVideo2" src="images/lexie-green-screen-2.mov" controls playsinline></video>
-    </div>
-
-    <div class="video-modal" id="raptorVideoModal1">
-        <button class="video-modal-close" id="raptorVideoClose1">Close ✕</button>
-        <video id="raptorVideo1" src="images/raptor-50.mov" controls playsinline></video>
-    </div>
-
-    <div class="video-modal" id="raptorVideoModal2">
-        <button class="video-modal-close" id="raptorVideoClose2">Close ✕</button>
-        <video id="raptorVideo2" src="images/raptor-51.mov" controls playsinline></video>
-    </div>
-
-    <div class="carousel-modal" id="explorerCarousel">
-        <button class="carousel-close" id="explorerClose">Close ✕</button>
-        <div class="carousel-inner">
-            <button class="carousel-btn" id="explorerPrev">&#8592;</button>
-            <img class="carousel-img" id="explorerImg" src="" alt="Ford Explorer">
-            <button class="carousel-btn" id="explorerNext">&#8594;</button>
-        </div>
-        <span class="carousel-counter" id="explorerCounter"></span>
-    </div>
-
-    <div class="video-modal" id="explorerVideoModal1">
-        <button class="video-modal-close" id="explorerVideoClose1">Close ✕</button>
-        <video id="explorerVideo1" src="images/explorer-15.mov" controls playsinline></video>
-    </div>
-
-    <div class="video-modal" id="explorerVideoModal2">
-        <button class="video-modal-close" id="explorerVideoClose2">Close ✕</button>
-        <video id="explorerVideo2" src="images/explorer-16.mov" controls playsinline></video>
-    </div>
-
-    <div class="video-modal" id="explorerVideoModal3">
-        <button class="video-modal-close" id="explorerVideoClose3">Close ✕</button>
-        <video id="explorerVideo3" src="images/explorer-17.mov" controls playsinline></video>
-    </div>
-
-    <div class="carousel-modal" id="vashiCarousel">
-        <button class="carousel-close" id="vashiClose">Close ✕</button>
-        <div class="carousel-inner">
-            <button class="carousel-btn" id="vashiPrev">&#8592;</button>
-            <img class="carousel-img" id="vashiImg" src="" alt="Vashi">
-            <button class="carousel-btn" id="vashiNext">&#8594;</button>
-        </div>
-        <span class="carousel-counter" id="vashiCounter"></span>
-    </div>
-
-    <div class="carousel-modal" id="rrSportPrepCarousel">
-        <button class="carousel-close" id="rrSportPrepClose">Close ✕</button>
-        <div class="carousel-inner">
-            <button class="carousel-btn" id="rrSportPrepPrev">&#8592;</button>
-            <img class="carousel-img" id="rrSportPrepImg" src="" alt="Range Rover Sport Prep">
-            <button class="carousel-btn" id="rrSportPrepNext">&#8594;</button>
-        </div>
-        <span class="carousel-counter" id="rrSportPrepCounter"></span>
-    </div>
-
-    <div class="carousel-modal" id="fordWheelsCarousel">
-        <button class="carousel-close" id="fordWheelsClose">Close ✕</button>
-        <div class="carousel-inner">
-            <button class="carousel-btn" id="fordWheelsPrev">&#8592;</button>
-            <img class="carousel-img" id="fordWheelsImg" src="" alt="Ford Wheels">
-            <button class="carousel-btn" id="fordWheelsNext">&#8594;</button>
-        </div>
-        <span class="carousel-counter" id="fordWheelsCounter"></span>
-    </div>
-
-    <div class="photo-modal" id="brothersModal">
-        <img src="images/brothers.png" alt="Brothers from a Different Mother">
-    </div>
-    <div class="carousel-modal" id="cordenCarousel">
-        <button class="carousel-close" id="cordenClose">Close ✕</button>
-        <div class="carousel-inner">
-            <button class="carousel-btn" id="cordenPrev">&#8592;</button>
-            <img class="carousel-img" id="cordenImg" src="" alt="James Corden">
-            <button class="carousel-btn" id="cordenNext">&#8594;</button>
-        </div>
-        <span class="carousel-counter" id="cordenCounter"></span>
-    </div>
 
     <div class="video-modal" id="vimeoModal">
         <button class="video-modal-close" id="vimeoModalClose">Close ✕</button>
         <iframe id="vimeoModalFrame" src="" width="960" height="540" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="max-width:90vw;max-height:82vh;aspect-ratio:16/9;width:90vw;height:auto;"></iframe>
+    </div>
+
+    <div class="gallery-modal" id="galleryModal">
+        <div class="gallery-top-bar">
+            <span class="gallery-counter" id="galleryCounter"></span>
+            <button class="gallery-watch-btn" id="galleryWatchBtn">&#9654; Watch Film</button>
+            <button class="gallery-close" id="galleryClose">Close ✕</button>
+        </div>
+        <div class="gallery-inner">
+            <button class="gallery-btn" id="galleryPrev">&#8592;</button>
+            <div class="gallery-content" id="galleryContent"></div>
+            <button class="gallery-btn" id="galleryNext">&#8594;</button>
+        </div>
     </div>
 
     <footer>
@@ -1577,450 +1496,217 @@
             });
         });
 
-        // Vashi carousel
-        const vashiImages = [
-            'images/vashi-1.jpg', 'images/vashi-2.jpg', 'images/vashi-3.jpg',
-            'images/vashi-4.jpg', 'images/vashi-5.jpg', 'images/vashi-6.jpg',
-            'images/vashi-7.jpg', 'images/vashi-8.jpg', 'images/vashi-9.jpg',
-            'images/vashi-10.jpg', 'images/vashi-11.jpg', 'images/vashi-12.jpg',
-            'images/vashi-13.jpg', 'images/vashi-14.jpg', 'images/vashi-15.jpg',
-            'images/vashi-16.jpg', 'images/vashi-17.jpg', 'images/vashi-18.jpg'
-        ];
-        let vashiIndex = 0;
-        const vashiCarousel = document.getElementById('vashiCarousel');
-        const vashiImg = document.getElementById('vashiImg');
-        const vashiCounter = document.getElementById('vashiCounter');
+        // UNIFIED GALLERY
+        const galleries = {
+            raptor: {
+                vimeo: '1171170029',
+                items: [
+                    {type:'image',src:'images/raptor-4.jpeg'},
+                    {type:'image',src:'images/raptor-11.jpeg'},
+                    {type:'image',src:'images/raptor-12.jpeg'},
+                    {type:'image',src:'images/raptor-14.jpeg'},
+                    {type:'image',src:'images/raptor-15.jpeg'},
+                    {type:'image',src:'images/raptor-16.jpeg'},
+                    {type:'image',src:'images/raptor-17.jpeg'},
+                    {type:'image',src:'images/raptor-52.jpg'},
+                    {type:'image',src:'images/raptor-53.jpg'},
+                    {type:'image',src:'images/raptor-55.jpg'},
+                    {type:'video',src:'images/raptor-50.mov'},
+                    {type:'video',src:'images/raptor-51.mov'},
+                ]
+            },
+            lexieGreen: {
+                vimeo: '1171157858',
+                items: [
+                    {type:'image',src:'images/lexie-green-screen-3.jpg'},
+                    {type:'image',src:'images/lexie-green-screen-4.jpg'},
+                    {type:'video',src:'images/lexie-green-screen-1.mov'},
+                    {type:'video',src:'images/lexie-green-screen-2.mov'},
+                ]
+            },
+            defender: {
+                vimeo: '1171151952',
+                items: [
+                    {type:'image',src:'images/defender-10.jpg'},
+                    {type:'image',src:'images/defender-11.jpeg'},
+                    {type:'image',src:'images/defender-12.jpg'},
+                    {type:'image',src:'images/defender-13.jpg'},
+                    {type:'image',src:'images/defender-14.jpeg'},
+                    {type:'image',src:'images/defender-15.jpeg'},
+                    {type:'image',src:'images/defender-16.jpeg'},
+                    {type:'image',src:'images/defender-17.jpg'},
+                    {type:'image',src:'images/defender-19.jpeg'},
+                    {type:'image',src:'images/defender-20.jpeg'},
+                    {type:'video',src:'images/defender-9.mov'},
+                ]
+            },
+            rrSportTestTrack: {
+                vimeo: '1171178087',
+                items: [
+                    {type:'image',src:'images/brothers.png'},
+                    {type:'image',src:'images/rr-sport-prep-3.jpg'},
+                    {type:'image',src:'images/rr-sport-prep-5.jpg'},
+                    {type:'image',src:'images/rr-sport-prep-8.jpg'},
+                    {type:'image',src:'images/rr-sport-prep-10.jpg'},
+                    {type:'image',src:'images/rr-sport-prep-11.jpg'},
+                    {type:'image',src:'images/rr-sport-prep-12.jpg'},
+                    {type:'image',src:'images/rr-sport-prep-14.jpg'},
+                ]
+            },
+            corden: {
+                vimeo: '1171151324',
+                items: [
+                    {type:'image',src:'images/james-corden.jpeg'},
+                    {type:'image',src:'images/range-rover-james-corden-1.jpg'},
+                    {type:'image',src:'images/range-rover-james-corden-3.jpg'},
+                    {type:'image',src:'images/range-rover-james-corden-4.jpg'},
+                    {type:'image',src:'images/range-rover-james-corden-5.jpg'},
+                    {type:'image',src:'images/range-rover-james-corden-7.jpg'},
+                    {type:'image',src:'images/range-rover-james-corden-8.jpg'},
+                    {type:'image',src:'images/range-rover-james-corden-9.jpg'},
+                    {type:'image',src:'images/range-rover-james-corden-10.jpg'},
+                    {type:'image',src:'images/range-rover-james-corden-11.jpg'},
+                    {type:'image',src:'images/range-rover-james-corden-12.jpg'},
+                ]
+            },
+            vashi: {
+                vimeo: '1171158700',
+                items: [
+                    {type:'image',src:'images/vashi-1.jpg'},
+                    {type:'image',src:'images/vashi-2.jpg'},
+                    {type:'image',src:'images/vashi-3.jpg'},
+                    {type:'image',src:'images/vashi-4.jpg'},
+                    {type:'image',src:'images/vashi-5.jpg'},
+                    {type:'image',src:'images/vashi-6.jpg'},
+                    {type:'image',src:'images/vashi-7.jpg'},
+                    {type:'image',src:'images/vashi-8.jpg'},
+                    {type:'image',src:'images/vashi-9.jpg'},
+                    {type:'image',src:'images/vashi-10.jpg'},
+                    {type:'image',src:'images/vashi-11.jpg'},
+                    {type:'image',src:'images/vashi-12.jpg'},
+                    {type:'image',src:'images/vashi-13.jpg'},
+                    {type:'image',src:'images/vashi-14.jpg'},
+                    {type:'image',src:'images/vashi-15.jpg'},
+                    {type:'image',src:'images/vashi-16.jpg'},
+                    {type:'image',src:'images/vashi-17.jpg'},
+                    {type:'image',src:'images/vashi-18.jpg'},
+                ]
+            },
+            fordWheels: {
+                items: [
+                    {type:'image',src:'images/go-faster.png'},
+                    {type:'image',src:'images/go-faster-2.png'},
+                ]
+            },
+            explorer: {
+                vimeo: '1171318976',
+                items: [
+                    {type:'image',src:'images/explorer-1.jpg'},
+                    {type:'image',src:'images/explorer-2.jpg'},
+                    {type:'image',src:'images/explorer-3.jpg'},
+                    {type:'image',src:'images/explorer-4.jpg'},
+                    {type:'image',src:'images/explorer-5.jpg'},
+                    {type:'image',src:'images/explorer-6.jpg'},
+                    {type:'image',src:'images/explorer-7.jpg'},
+                    {type:'image',src:'images/explorer-8.jpg'},
+                    {type:'image',src:'images/explorer-9.jpg'},
+                    {type:'image',src:'images/explorer-10.jpg'},
+                    {type:'image',src:'images/explorer-11.jpg'},
+                    {type:'image',src:'images/explorer-12.jpg'},
+                    {type:'image',src:'images/explorer-13.jpg'},
+                    {type:'image',src:'images/explorer-14.jpg'},
+                    {type:'image',src:'images/EXPLORER15.PNG'},
+                    {type:'image',src:'images/EXPLORER 100.jpeg'},
+                    {type:'video',src:'images/explorer-15.mov'},
+                    {type:'video',src:'images/explorer-16.mov'},
+                    {type:'video',src:'images/explorer-17.mov'},
+                ]
+            },
+            tata: {
+                items: [
+                    {type:'image',src:'images/tata-1.jpeg'},
+                    {type:'image',src:'images/tata-2.jpeg'},
+                    {type:'image',src:'images/tata-3.jpeg'},
+                    {type:'image',src:'images/tata-4.jpeg'},
+                    {type:'image',src:'images/tata-6.jpeg'},
+                    {type:'image',src:'images/tata-7.jpeg'},
+                    {type:'image',src:'images/tata-8.jpeg'},
+                    {type:'image',src:'images/tata-9.jpeg'},
+                    {type:'image',src:'images/tata-10.jpeg'},
+                    {type:'image',src:'images/tata-11.jpeg'},
+                    {type:'image',src:'images/tata-12.jpg'},
+                    {type:'video',src:'images/tata-1.mov'},
+                ]
+            },
+        };
 
-        function showVashiImage(i) {
-            vashiIndex = (i + vashiImages.length) % vashiImages.length;
-            vashiImg.src = vashiImages[vashiIndex];
-            vashiCounter.textContent = (vashiIndex + 1) + ' / ' + vashiImages.length;
+        const galleryModal = document.getElementById('galleryModal');
+        const galleryContent = document.getElementById('galleryContent');
+        const galleryCounter = document.getElementById('galleryCounter');
+        const galleryWatchBtn = document.getElementById('galleryWatchBtn');
+        let galleryItems = [], galleryVimeo = null, galleryIndex = 0, galleryCurrentVideo = null;
+
+        function galleryStopCurrent() {
+            if (galleryCurrentVideo) {
+                galleryCurrentVideo.pause();
+                galleryCurrentVideo.currentTime = 0;
+                galleryCurrentVideo = null;
+            }
         }
 
-        document.getElementById('vashiBtn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showVashiImage(0);
-            vashiCarousel.classList.add('open');
-        });
-        document.getElementById('vashiClose').addEventListener('click', (e) => {
-            e.stopPropagation();
-            vashiCarousel.classList.remove('open');
-        });
-        document.getElementById('vashiPrev').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showVashiImage(vashiIndex - 1);
-        });
-        document.getElementById('vashiNext').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showVashiImage(vashiIndex + 1);
-        });
-
-        // RR Sport Prep carousel
-        const rrSportPrepImages = [
-            'images/rr-sport-prep-3.jpg', 'images/rr-sport-prep-5.jpg',
-            'images/rr-sport-prep-8.jpg', 'images/rr-sport-prep-10.jpg',
-            'images/rr-sport-prep-11.jpg', 'images/rr-sport-prep-12.jpg',
-            'images/rr-sport-prep-14.jpg'
-        ];
-        let rrSportPrepIndex = 0;
-        const rrSportPrepCarousel = document.getElementById('rrSportPrepCarousel');
-        const rrSportPrepImg = document.getElementById('rrSportPrepImg');
-        const rrSportPrepCounter = document.getElementById('rrSportPrepCounter');
-
-        function showRrSportPrepImage(i) {
-            rrSportPrepIndex = (i + rrSportPrepImages.length) % rrSportPrepImages.length;
-            rrSportPrepImg.src = rrSportPrepImages[rrSportPrepIndex];
-            rrSportPrepCounter.textContent = (rrSportPrepIndex + 1) + ' / ' + rrSportPrepImages.length;
+        function galleryShow(i) {
+            galleryStopCurrent();
+            galleryIndex = (i + galleryItems.length) % galleryItems.length;
+            const item = galleryItems[galleryIndex];
+            galleryCounter.textContent = (galleryIndex + 1) + ' / ' + galleryItems.length;
+            if (item.type === 'image') {
+                galleryContent.innerHTML = '<img src="' + item.src + '" alt="">';
+            } else {
+                galleryContent.innerHTML = '<video src="' + item.src + '" autoplay playsinline controls></video>';
+                galleryCurrentVideo = galleryContent.querySelector('video');
+            }
         }
 
-        document.getElementById('rrSportPrepBtn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showRrSportPrepImage(0);
-            rrSportPrepCarousel.classList.add('open');
-        });
-        document.getElementById('rrSportPrepClose').addEventListener('click', (e) => {
-            e.stopPropagation();
-            rrSportPrepCarousel.classList.remove('open');
-        });
-        document.getElementById('rrSportPrepPrev').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showRrSportPrepImage(rrSportPrepIndex - 1);
-        });
-        document.getElementById('rrSportPrepNext').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showRrSportPrepImage(rrSportPrepIndex + 1);
-        });
-
-        const fordWheelsImages = ['images/go-faster.png', 'images/go-faster-2.png'];
-        let fordWheelsIndex = 0;
-        const fordWheelsCarousel = document.getElementById('fordWheelsCarousel');
-        const fordWheelsImg = document.getElementById('fordWheelsImg');
-        const fordWheelsCounter = document.getElementById('fordWheelsCounter');
-
-        function showFordWheelsImage(i) {
-            fordWheelsIndex = (i + fordWheelsImages.length) % fordWheelsImages.length;
-            fordWheelsImg.src = fordWheelsImages[fordWheelsIndex];
-            fordWheelsCounter.textContent = (fordWheelsIndex + 1) + ' / ' + fordWheelsImages.length;
+        function galleryOpen(key) {
+            const data = galleries[key];
+            galleryItems = data.items;
+            galleryVimeo = data.vimeo || null;
+            galleryWatchBtn.style.display = galleryVimeo ? '' : 'none';
+            galleryShow(0);
+            galleryModal.classList.add('open');
         }
 
-        document.getElementById('fordWheelsBtn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showFordWheelsImage(0);
-            fordWheelsCarousel.classList.add('open');
-        });
-        document.getElementById('fordWheelsClose').addEventListener('click', (e) => {
-            e.stopPropagation();
-            fordWheelsCarousel.classList.remove('open');
-        });
-        document.getElementById('fordWheelsPrev').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showFordWheelsImage(fordWheelsIndex - 1);
-        });
-        document.getElementById('fordWheelsNext').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showFordWheelsImage(fordWheelsIndex + 1);
-        });
-
-        const brothersBtn = document.getElementById('brothersBtn');
-        const brothersModal = document.getElementById('brothersModal');
-        brothersBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            brothersModal.classList.add('open');
-        });
-        brothersModal.addEventListener('click', () => {
-            brothersModal.classList.remove('open');
-        });
-
-        const cordenImages = [
-            'images/james-corden.jpeg',
-            'images/range-rover-james-corden-1.jpg',
-            'images/range-rover-james-corden-3.jpg',
-            'images/range-rover-james-corden-4.jpg',
-            'images/range-rover-james-corden-5.jpg',
-            'images/range-rover-james-corden-7.jpg',
-            'images/range-rover-james-corden-8.jpg',
-            'images/range-rover-james-corden-9.jpg',
-            'images/range-rover-james-corden-10.jpg',
-            'images/range-rover-james-corden-11.jpg',
-            'images/range-rover-james-corden-12.jpg'
-        ];
-        let cordenIndex = 0;
-        const cordenCarousel = document.getElementById('cordenCarousel');
-        const cordenImg = document.getElementById('cordenImg');
-        const cordenCounter = document.getElementById('cordenCounter');
-
-        function showCordenImage(i) {
-            cordenIndex = (i + cordenImages.length) % cordenImages.length;
-            cordenImg.src = cordenImages[cordenIndex];
-            cordenCounter.textContent = (cordenIndex + 1) + ' / ' + cordenImages.length;
+        function galleryClose() {
+            galleryStopCurrent();
+            galleryContent.innerHTML = '';
+            galleryModal.classList.remove('open');
         }
 
-        document.getElementById('cordenBtn').addEventListener('click', (e) => {
+        document.getElementById('galleryClose').addEventListener('click', galleryClose);
+        galleryModal.addEventListener('click', (e) => { if (e.target === galleryModal) galleryClose(); });
+        document.getElementById('galleryPrev').addEventListener('click', (e) => { e.stopPropagation(); galleryShow(galleryIndex - 1); });
+        document.getElementById('galleryNext').addEventListener('click', (e) => { e.stopPropagation(); galleryShow(galleryIndex + 1); });
+
+        galleryWatchBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            showCordenImage(0);
-            cordenCarousel.classList.add('open');
-        });
-        document.getElementById('cordenClose').addEventListener('click', (e) => {
-            e.stopPropagation();
-            cordenCarousel.classList.remove('open');
-        });
-        document.getElementById('cordenPrev').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showCordenImage(cordenIndex - 1);
-        });
-        document.getElementById('cordenNext').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showCordenImage(cordenIndex + 1);
+            galleryClose();
+            vimeoFrame.src = 'https://player.vimeo.com/video/' + galleryVimeo + '?autoplay=1&title=0&byline=0&portrait=0';
+            vimeoModal.classList.add('open');
         });
 
-        // Swipe support for all carousels
-        document.querySelectorAll('.carousel-modal').forEach(modal => {
-            let touchStartX = 0;
-            modal.addEventListener('touchstart', (e) => {
-                touchStartX = e.touches[0].clientX;
-            }, { passive: true });
-            modal.addEventListener('touchend', (e) => {
-                const dx = e.changedTouches[0].clientX - touchStartX;
-                if (Math.abs(dx) > 40) {
-                    const btns = modal.querySelectorAll('.carousel-btn');
-                    if (dx < 0 && btns[1]) btns[1].click();
-                    if (dx > 0 && btns[0]) btns[0].click();
-                }
-            }, { passive: true });
-        });
+        let galleryTouchX = 0;
+        galleryModal.addEventListener('touchstart', (e) => { galleryTouchX = e.touches[0].clientX; }, {passive:true});
+        galleryModal.addEventListener('touchend', (e) => {
+            const dx = e.changedTouches[0].clientX - galleryTouchX;
+            if (Math.abs(dx) > 40) dx < 0 ? galleryShow(galleryIndex + 1) : galleryShow(galleryIndex - 1);
+        }, {passive:true});
 
-        // Defender carousel
-        const defenderImages = [
-            'images/defender-10.jpg',
-            'images/defender-11.jpeg',
-            'images/defender-12.jpg',
-            'images/defender-13.jpg',
-            'images/defender-14.jpeg',
-            'images/defender-15.jpeg',
-            'images/defender-16.jpeg',
-            'images/defender-17.jpg',
-
-            'images/defender-19.jpeg',
-            'images/defender-20.jpeg'
-        ];
-        let defenderIndex = 0;
-        const defenderCarousel = document.getElementById('defenderCarousel');
-        const defenderImg = document.getElementById('defenderImg');
-        const defenderCounter = document.getElementById('defenderCounter');
-
-        function showDefenderImage(i) {
-            defenderIndex = (i + defenderImages.length) % defenderImages.length;
-            defenderImg.src = defenderImages[defenderIndex];
-            defenderCounter.textContent = (defenderIndex + 1) + ' / ' + defenderImages.length;
-        }
-
-        document.getElementById('defenderBtn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showDefenderImage(0);
-            defenderCarousel.classList.add('open');
-        });
-        document.getElementById('defenderClose').addEventListener('click', (e) => {
-            e.stopPropagation();
-            defenderCarousel.classList.remove('open');
-        });
-        document.getElementById('defenderPrev').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showDefenderImage(defenderIndex - 1);
-        });
-        document.getElementById('defenderNext').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showDefenderImage(defenderIndex + 1);
-        });
-
-
-
-        // Defender video
-        const defenderVideoModal = document.getElementById('defenderVideoModal');
-        const defenderVideo = document.getElementById('defenderVideo');
-        document.getElementById('defenderVideoBtn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            defenderVideoModal.classList.add('open');
-            defenderVideo.play();
-        });
-        document.getElementById('defenderVideoClose').addEventListener('click', (e) => {
-            e.stopPropagation();
-            defenderVideoModal.classList.remove('open');
-            defenderVideo.pause();
-            defenderVideo.currentTime = 0;
-        });
-
-        // Tata carousel
-        const tataImages = [
-            'images/tata-1.jpeg',
-            'images/tata-2.jpeg',
-            'images/tata-3.jpeg',
-            'images/tata-4.jpeg',
-            'images/tata-6.jpeg',
-            'images/tata-7.jpeg',
-            'images/tata-8.jpeg',
-            'images/tata-9.jpeg',
-            'images/tata-10.jpeg',
-            'images/tata-11.jpeg',
-            'images/tata-12.jpg'
-        ];
-        let tataIndex = 0;
-        const tataCarousel = document.getElementById('tataCarousel');
-        const tataImg = document.getElementById('tataImg');
-        const tataCounter = document.getElementById('tataCounter');
-
-        function showTataImage(i) {
-            tataIndex = (i + tataImages.length) % tataImages.length;
-            tataImg.src = tataImages[tataIndex];
-            tataCounter.textContent = (tataIndex + 1) + ' / ' + tataImages.length;
-        }
-
-        document.getElementById('tataBtn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showTataImage(0);
-            tataCarousel.classList.add('open');
-        });
-        document.getElementById('tataClose').addEventListener('click', (e) => {
-            e.stopPropagation();
-            tataCarousel.classList.remove('open');
-        });
-        document.getElementById('tataPrev').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showTataImage(tataIndex - 1);
-        });
-        document.getElementById('tataNext').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showTataImage(tataIndex + 1);
-        });
-
-        // Tata video
-        const tataVideoModal = document.getElementById('tataVideoModal');
-        const tataVideo = document.getElementById('tataVideo');
-        document.getElementById('tataVideoBtn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            tataVideoModal.classList.add('open');
-            tataVideo.play();
-        });
-        document.getElementById('tataVideoClose').addEventListener('click', (e) => {
-            e.stopPropagation();
-            tataVideoModal.classList.remove('open');
-            tataVideo.pause();
-            tataVideo.currentTime = 0;
-        });
-
-        const raptorImages = [
-            'images/raptor-4.jpeg',
-            'images/raptor-11.jpeg',
-            'images/raptor-12.jpeg',
-            'images/raptor-14.jpeg',
-            'images/raptor-15.jpeg',
-            'images/raptor-16.jpeg',
-            'images/raptor-17.jpeg',
-            'images/raptor-52.jpg',
-            'images/raptor-53.jpg',
-            'images/raptor-55.jpg'
-        ];
-        let raptorIndex = 0;
-        const raptorCarousel = document.getElementById('raptorCarousel');
-        const raptorImg = document.getElementById('raptorImg');
-        const raptorCounter = document.getElementById('raptorCounter');
-
-        function showRaptorImage(i) {
-            raptorIndex = (i + raptorImages.length) % raptorImages.length;
-            raptorImg.src = raptorImages[raptorIndex];
-            raptorCounter.textContent = (raptorIndex + 1) + ' / ' + raptorImages.length;
-        }
-
-        document.getElementById('raptorBtn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showRaptorImage(0);
-            raptorCarousel.classList.add('open');
-        });
-        document.getElementById('raptorClose').addEventListener('click', (e) => {
-            e.stopPropagation();
-            raptorCarousel.classList.remove('open');
-        });
-        document.getElementById('raptorPrev').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showRaptorImage(raptorIndex - 1);
-        });
-        document.getElementById('raptorNext').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showRaptorImage(raptorIndex + 1);
-        });
-
-        // Raptor videos
-        [1, 2].forEach(n => {
-            const modal = document.getElementById('raptorVideoModal' + n);
-            const video = document.getElementById('raptorVideo' + n);
-            document.getElementById('raptorVideo' + n + 'Btn').addEventListener('click', (e) => {
-                e.stopPropagation();
-                modal.classList.add('open');
-                video.play();
-            });
-            document.getElementById('raptorVideoClose' + n).addEventListener('click', (e) => {
-                e.stopPropagation();
-                modal.classList.remove('open');
-                video.pause();
-                video.currentTime = 0;
-            });
-        });
-
-        // Lexie Green Screen carousel
-        const lexieGreenImages = ['images/lexie-green-screen-3.jpg', 'images/lexie-green-screen-4.jpg'];
-        let lexieGreenIndex = 0;
-        const lexieGreenCarousel = document.getElementById('lexieGreenCarousel');
-        const lexieGreenImg = document.getElementById('lexieGreenImg');
-        const lexieGreenCounter = document.getElementById('lexieGreenCounter');
-
-        function showLexieGreenImage(i) {
-            lexieGreenIndex = (i + lexieGreenImages.length) % lexieGreenImages.length;
-            lexieGreenImg.src = lexieGreenImages[lexieGreenIndex];
-            lexieGreenCounter.textContent = (lexieGreenIndex + 1) + ' / ' + lexieGreenImages.length;
-        }
-
-        document.getElementById('lexieGreenBtn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showLexieGreenImage(0);
-            lexieGreenCarousel.classList.add('open');
-        });
-        document.getElementById('lexieGreenClose').addEventListener('click', (e) => {
-            e.stopPropagation();
-            lexieGreenCarousel.classList.remove('open');
-        });
-        document.getElementById('lexieGreenPrev').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showLexieGreenImage(lexieGreenIndex - 1);
-        });
-        document.getElementById('lexieGreenNext').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showLexieGreenImage(lexieGreenIndex + 1);
-        });
-
-        [1, 2].forEach(n => {
-            const modal = document.getElementById('lexieGreenVideoModal' + n);
-            const video = document.getElementById('lexieGreenVideo' + n);
-            document.getElementById('lexieGreenVideo' + n + 'Btn').addEventListener('click', (e) => {
-                e.stopPropagation();
-                modal.classList.add('open');
-                video.play();
-            });
-            document.getElementById('lexieGreenVideoClose' + n).addEventListener('click', (e) => {
-                e.stopPropagation();
-                modal.classList.remove('open');
-                video.pause();
-                video.currentTime = 0;
-            });
-        });
-
-        // Explorer carousel
-        const explorerImages = [
-            'images/explorer-1.jpg',
-            'images/explorer-2.jpg',
-            'images/explorer-3.jpg',
-            'images/explorer-4.jpg',
-            'images/explorer-5.jpg',
-            'images/explorer-6.jpg',
-            'images/explorer-7.jpg',
-            'images/explorer-8.jpg',
-            'images/explorer-9.jpg',
-            'images/explorer-10.jpg',
-            'images/explorer-11.jpg',
-            'images/explorer-12.jpg',
-            'images/explorer-13.jpg',
-            'images/explorer-14.jpg',
-            'images/EXPLORER15.PNG',
-            'images/EXPLORER 100.jpeg'
-        ];
-        let explorerIndex = 0;
-        const explorerCarousel = document.getElementById('explorerCarousel');
-        const explorerImg = document.getElementById('explorerImg');
-        const explorerCounter = document.getElementById('explorerCounter');
-
-        function showExplorerImage(i) {
-            explorerIndex = (i + explorerImages.length) % explorerImages.length;
-            explorerImg.src = explorerImages[explorerIndex];
-            explorerCounter.textContent = (explorerIndex + 1) + ' / ' + explorerImages.length;
-        }
-
-        document.getElementById('explorerBtn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showExplorerImage(0);
-            explorerCarousel.classList.add('open');
-        });
-        document.getElementById('explorerClose').addEventListener('click', (e) => {
-            e.stopPropagation();
-            explorerCarousel.classList.remove('open');
-        });
-        document.getElementById('explorerPrev').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showExplorerImage(explorerIndex - 1);
-        });
-        document.getElementById('explorerNext').addEventListener('click', (e) => {
-            e.stopPropagation();
-            showExplorerImage(explorerIndex + 1);
+        document.querySelectorAll('.work-image[data-gallery]').forEach(img => {
+            img.addEventListener('click', () => galleryOpen(img.dataset.gallery));
         });
 
         // Shared Vimeo modal
+
         const vimeoModal = document.getElementById('vimeoModal');
         const vimeoFrame = document.getElementById('vimeoModalFrame');
         document.getElementById('vimeoModalClose').addEventListener('click', () => {
@@ -2038,23 +1724,6 @@
                 const id = img.dataset.vimeo;
                 vimeoFrame.src = 'https://player.vimeo.com/video/' + id + '?autoplay=1&title=0&byline=0&portrait=0';
                 vimeoModal.classList.add('open');
-            });
-        });
-
-        // Explorer videos
-        [1, 2, 3].forEach(n => {
-            const modal = document.getElementById('explorerVideoModal' + n);
-            const video = document.getElementById('explorerVideo' + n);
-            document.getElementById('explorerVideo' + n + 'Btn').addEventListener('click', (e) => {
-                e.stopPropagation();
-                modal.classList.add('open');
-                video.play();
-            });
-            document.getElementById('explorerVideoClose' + n).addEventListener('click', (e) => {
-                e.stopPropagation();
-                modal.classList.remove('open');
-                video.pause();
-                video.currentTime = 0;
             });
         });
     </script>
