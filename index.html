@@ -1215,22 +1215,23 @@
 
             document.body.classList.add('intro-playing');
 
-            // Scatter letters from their natural positions
+            // Each letter starts close to home with a small random drift and slight rotation
             letters.forEach(l => {
-                const tx = (Math.random() - 0.5) * w * 2.2;
-                const ty = (Math.random() - 0.5) * h * 2.2;
+                const tx = (Math.random() - 0.5) * 120;
+                const ty = (Math.random() - 0.5) * 80;
+                const rot = (Math.random() - 0.5) * 18;
                 l.style.opacity = '0';
-                l.style.transform = `translate(${tx}px, ${ty}px)`;
+                l.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
             });
 
-            // Animate letters to their natural position in the hero name
+            // Letters dissolve in and drift to their natural position
             requestAnimationFrame(() => requestAnimationFrame(() => {
                 letters.forEach((l, i) => {
                     setTimeout(() => {
-                        l.style.transition = 'transform 1.4s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 1s ease';
-                        l.style.transform = 'translate(0, 0)';
+                        l.style.transition = 'transform 1.6s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 1.4s ease';
+                        l.style.transform = 'translate(0, 0) rotate(0deg)';
                         l.style.opacity = '1';
-                    }, i * 45);
+                    }, i * 60);
                 });
             }));
 
