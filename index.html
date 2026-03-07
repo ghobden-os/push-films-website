@@ -1740,7 +1740,9 @@
                 vimeoCloseTimer = setTimeout(() => {
                     vimeoModal.classList.remove('open');
                     vimeoFrame.src = '';
-                }, 9000);
+                    audioCtx.resume();
+                    triggerReveal();
+                }, 8000);
             }
         }
         document.querySelectorAll('.work-image[data-vimeo]').forEach(img => {
