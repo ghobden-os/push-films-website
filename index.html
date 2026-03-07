@@ -1227,7 +1227,7 @@
             filter.Q.value = 0.8;
             const gain = audioCtx.createGain();
             gain.gain.setValueAtTime(0, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.18, audioCtx.currentTime + 0.05);
+            gain.gain.linearRampToValueAtTime(0.55, audioCtx.currentTime + 0.05);
             gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.6);
             source.connect(filter);
             filter.connect(gain);
@@ -1247,7 +1247,7 @@
             filter.frequency.setValueAtTime(2200, audioCtx.currentTime);
             filter.Q.value = 2.5;
             const gain = audioCtx.createGain();
-            gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
             gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.04);
             source.connect(filter);
             filter.connect(gain);
