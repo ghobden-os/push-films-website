@@ -1875,6 +1875,7 @@
             }
 
             function expand() {
+                lockVimeo();
                 expanded = true;
                 article.classList.add('expanded');
                 frame.src = 'https://player.vimeo.com/video/1171170029?autoplay=1&title=0&byline=0&portrait=0';
@@ -1891,17 +1892,8 @@
                 counter.textContent = '';
             }
 
-            // Toggle on tap/click — use touchend + preventDefault to kill ghost clicks on mobile
-            let touchHandled = false;
-            article.addEventListener('touchend', (e) => {
-                if (e.target.closest('.work-expand')) return;
-                touchHandled = true;
-                e.preventDefault();
-                expanded ? collapse() : expand();
-                setTimeout(() => { touchHandled = false; }, 600);
-            }, { passive: false });
             article.addEventListener('click', (e) => {
-                if (touchHandled || e.target.closest('.work-expand')) return;
+                if (e.target.closest('.work-expand')) return;
                 expanded ? collapse() : expand();
             });
 
@@ -1923,6 +1915,8 @@
         vimeoModal.addEventListener('click', (e) => { if (e.target === vimeoModal) closeVimeo(); });
         let vimeoCloseTimer = null;
         let fivePlayer = null;
+        let vimeoLocked = false;
+        function lockVimeo() { vimeoLocked = true; setTimeout(() => { vimeoLocked = false; }, 800); }
         function closeFiveVideo() {
             if (vimeoCloseTimer) { clearTimeout(vimeoCloseTimer); vimeoCloseTimer = null; }
             if (fivePlayer) { fivePlayer.pause().catch(() => {}); fivePlayer = null; }
@@ -1930,6 +1924,7 @@
             vimeoFrame.src = '';
         }
         function openVimeo(id) {
+            if (vimeoLocked) return;
             if (vimeoCloseTimer) { clearTimeout(vimeoCloseTimer); vimeoCloseTimer = null; }
             vimeoFrame.src = 'https://player.vimeo.com/video/' + id + '?autoplay=1&title=0&byline=0&portrait=0';
             vimeoModal.classList.add('open');
