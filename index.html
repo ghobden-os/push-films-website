@@ -1783,6 +1783,7 @@
         const vimeoModal = document.getElementById('vimeoModal');
         const vimeoFrame = document.getElementById('vimeoModalFrame');
         function closeVimeo() {
+            if (fivePlayer) { fivePlayer.pause().catch(() => {}); fivePlayer = null; }
             if (vimeoCloseTimer) { clearTimeout(vimeoCloseTimer); vimeoCloseTimer = null; }
             vimeoModal.classList.remove('open');
             vimeoFrame.src = '';
@@ -1790,20 +1791,33 @@
         document.getElementById('vimeoModalClose').addEventListener('click', closeVimeo);
         vimeoModal.addEventListener('click', (e) => { if (e.target === vimeoModal) closeVimeo(); });
         let vimeoCloseTimer = null;
+        let fivePlayer = null;
+        function closeFiveVideo() {
+            if (vimeoCloseTimer) { clearTimeout(vimeoCloseTimer); vimeoCloseTimer = null; }
+            if (fivePlayer) { fivePlayer.pause().catch(() => {}); fivePlayer = null; }
+            vimeoModal.classList.remove('open');
+            vimeoFrame.src = '';
+        }
         function openVimeo(id) {
             if (vimeoCloseTimer) { clearTimeout(vimeoCloseTimer); vimeoCloseTimer = null; }
             vimeoFrame.src = 'https://player.vimeo.com/video/' + id + '?autoplay=1&title=0&byline=0&portrait=0';
             vimeoModal.classList.add('open');
             if (id === '1171163096') {
-                const fivePlayer = new Vimeo.Player(vimeoFrame);
-                fivePlayer.on('play', function onFivePlay() {
-                    fivePlayer.off('play', onFivePlay);
-                    vimeoCloseTimer = setTimeout(() => {
-                        vimeoModal.classList.remove('open');
-                        vimeoFrame.src = '';
-                        audioCtx.resume();
-                        triggerReveal();
-                    }, 10000);
+                fivePlayer = new Vimeo.Player(vimeoFrame);
+                let timerStarted = false;
+                // Hard fallback: close after 20s no matter what
+                const fallback = setTimeout(() => { closeFiveVideo(); audioCtx.resume(); triggerReveal(); }, 20000);
+                fivePlayer.on('timeupdate', function(data) {
+                    if (!timerStarted && data.seconds > 0) {
+                        timerStarted = true;
+                        fivePlayer.off('timeupdate');
+                        clearTimeout(fallback);
+                        vimeoCloseTimer = setTimeout(() => {
+                            closeFiveVideo();
+                            audioCtx.resume();
+                            triggerReveal();
+                        }, 10000);
+                    }
                 });
             }
         }
