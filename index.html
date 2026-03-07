@@ -794,7 +794,7 @@
                         <div class="work-expand"></div>
                     </article>
                     <article class="work-item accordion" data-vimeo="1171151324" data-gallery="corden">
-                        <div class="work-image"><img src="images/range-rover-james-corden-12.jpg" alt="Range Rover Sport — James Corden" style="object-position: bottom;"></div>
+                        <div class="work-image"><img src="images/range-rover-james-corden.png" alt="Range Rover Sport — James Corden"></div>
                         <div class="work-info">
                             <h3>Range Rover Sport — James Corden</h3>
                             <p class="work-meta">Producer — Imagination / JLR, Los Angeles</p>
@@ -1631,7 +1631,7 @@
                     {type:'image',src:'images/range-rover-james-corden-9.jpg'},
                     {type:'image',src:'images/range-rover-james-corden-10.jpg'},
                     {type:'image',src:'images/range-rover-james-corden-11.jpg'},
-                    {type:'image',src:'images/range-rover-james-corden-12.jpg'},
+                    {type:'image',src:'images/range-rover-james-corden-12.jpg',position:'center'},
                 ]
             },
             vashi: {
@@ -1849,7 +1849,7 @@
                 const item = items[idx];
                 if (counter) counter.textContent = (idx + 1) + ' / ' + items.length;
                 if (item.type === 'image') {
-                    stage.innerHTML = '<img src="' + item.src + '" alt="">';
+                    stage.innerHTML = '<img src="' + item.src + '" alt=""' + (item.position ? ' style="object-position:' + item.position + '"' : '') + '>';
                     const img = stage.querySelector('img');
                     requestAnimationFrame(() => requestAnimationFrame(() => { img.style.opacity = '1'; }));
                     slideTimer = setTimeout(() => showSlide(idx + 1, true), 3000);
