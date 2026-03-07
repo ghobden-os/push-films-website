@@ -355,12 +355,27 @@
         .password-submit:hover { border-color: var(--gold); color: var(--gold); }
         .password-error { font-size: 11px; letter-spacing: 0.1em; color: #c0392b; text-transform: uppercase; display: none; margin-top: 12px; }
         .password-error.show { display: block; }
-        #restrictedFilm { display: none; margin-top: clamp(32px, 4vw, 48px); }
-        #restrictedFilm.visible { display: block; }
-        .restricted-frame-wrap { position: relative; padding-bottom: 56.25%; height: 0; }
+        #restrictedFilms { display: none; margin-top: clamp(32px, 4vw, 48px); }
+        #restrictedFilms.visible { display: block; }
+        .restricted-films-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 40px); margin-bottom: clamp(24px, 3vw, 40px); }
+        .restricted-film-card { cursor: pointer; }
+        .restricted-film-card img { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; opacity: 0.7; transition: opacity 0.3s; }
+        .restricted-film-card:hover img { opacity: 1; }
+        .restricted-film-card h3 { font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); margin-top: 12px; margin-bottom: 8px; }
+        .restricted-film-card:hover h3 { color: var(--gold); }
+        .restricted-play-btn {
+            background: none; border: 1px solid var(--rule); color: var(--mid);
+            font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.14em;
+            text-transform: uppercase; padding: 6px 14px; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .restricted-play-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .restricted-frame-wrap { position: relative; padding-bottom: 56.25%; height: 0; display: none; }
+        .restricted-frame-wrap.visible { display: block; }
         .restricted-frame-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
         @media (max-width: 640px) {
             .restricted-grid { grid-template-columns: 1fr; gap: 24px; }
+            .restricted-films-grid { grid-template-columns: 1fr; }
         }
 
         /* CONTACT */
@@ -821,8 +836,20 @@
                     <button class="password-submit" id="restrictedSubmit">Enter</button>
                 </div>
                 <p class="password-error" id="restrictedError">Incorrect password</p>
-                <div id="restrictedFilm">
-                    <div class="restricted-frame-wrap">
+                <div id="restrictedFilms">
+                    <div class="restricted-films-grid">
+                        <div class="restricted-film-card" data-vimeo="1171296890">
+                            <img src="images/RED SEA WEEK 1.png" alt="Red Sea Week">
+                            <h3>Red Sea Week</h3>
+                            <button class="restricted-play-btn">Watch</button>
+                        </div>
+                        <div class="restricted-film-card" data-vimeo="1171304514">
+                            <img src="images/RED SEA WEEK IMAGINATION .png" alt="Red Sea Week Imagination">
+                            <h3>Red Sea Week Imagination</h3>
+                            <button class="restricted-play-btn">Watch</button>
+                        </div>
+                    </div>
+                    <div class="restricted-frame-wrap" id="restrictedFrameWrap">
                         <iframe id="restrictedFrame" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
@@ -1495,14 +1522,14 @@
         const restrictedPassword = document.getElementById('restrictedPassword');
         const restrictedSubmit = document.getElementById('restrictedSubmit');
         const restrictedError = document.getElementById('restrictedError');
-        const restrictedFilm = document.getElementById('restrictedFilm');
+        const restrictedFilms = document.getElementById('restrictedFilms');
         const restrictedFrame = document.getElementById('restrictedFrame');
+        const restrictedFrameWrap = document.getElementById('restrictedFrameWrap');
 
         function checkPassword() {
             if (restrictedPassword.value === 'Sandcastle') {
-                restrictedFilm.classList.add('visible');
+                restrictedFilms.classList.add('visible');
                 restrictedError.classList.remove('show');
-                restrictedFrame.src = 'https://player.vimeo.com/video/1171296890?autoplay=1';
                 restrictedPassword.closest('.password-form').style.display = 'none';
             } else {
                 restrictedError.classList.add('show');
@@ -1513,6 +1540,15 @@
 
         restrictedSubmit.addEventListener('click', checkPassword);
         restrictedPassword.addEventListener('keydown', (e) => { if (e.key === 'Enter') checkPassword(); });
+
+        document.querySelectorAll('.restricted-film-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const vimeoId = card.dataset.vimeo;
+                restrictedFrame.src = `https://player.vimeo.com/video/${vimeoId}?autoplay=1`;
+                restrictedFrameWrap.classList.add('visible');
+                restrictedFrameWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
 
         // Vashi carousel
         const vashiImages = [
