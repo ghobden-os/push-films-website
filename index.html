@@ -397,6 +397,33 @@
         #historic.visible { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* SITE INTRO */
+        #siteIntro {
+            position: fixed; inset: 0; z-index: 10000;
+            background: #000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 1.2s ease;
+            pointer-events: none;
+        }
+        #siteIntro.fade-out { opacity: 0; }
+        #introText {
+            display: flex; align-items: baseline;
+            font-family: Georgia, serif;
+            font-size: clamp(36px, 7vw, 88px);
+            letter-spacing: 0.12em;
+            color: #C4A46B;
+            font-style: italic;
+            font-weight: 400;
+        }
+        .intro-space { width: 0.35em; display: inline-block; }
+        .intro-letter {
+            display: inline-block;
+            opacity: 0;
+            transform: translate(var(--tx, 0px), var(--ty, 0px));
+            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s ease;
+        }
+        .intro-letter.landed { opacity: 1; transform: translate(0, 0); }
+
         /* VIDEO REVEAL OVERLAY */
         #videoRevealOverlay {
             display: none;
@@ -453,6 +480,12 @@
     </style>
 </head>
 <body>
+
+    <div id="siteIntro">
+        <div id="introText">
+            <span class="intro-letter">G</span><span class="intro-letter">r</span><span class="intro-letter">e</span><span class="intro-letter">g</span><span class="intro-space"></span><span class="intro-letter">H</span><span class="intro-letter">o</span><span class="intro-letter">b</span><span class="intro-letter">d</span><span class="intro-letter">e</span><span class="intro-letter">n</span>
+        </div>
+    </div>
 
     <nav id="nav">
         <div class="nav-inner">
@@ -1175,6 +1208,26 @@
     </section>
 
     <script>
+        // Site intro — letters assemble on first load
+        (function() {
+            const intro = document.getElementById('siteIntro');
+            const letters = document.querySelectorAll('.intro-letter');
+            const w = window.innerWidth, h = window.innerHeight;
+            letters.forEach(l => {
+                const tx = (Math.random() - 0.5) * w * 2;
+                const ty = (Math.random() - 0.5) * h * 2;
+                l.style.setProperty('--tx', tx + 'px');
+                l.style.setProperty('--ty', ty + 'px');
+            });
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                letters.forEach((l, i) => setTimeout(() => l.classList.add('landed'), i * 60));
+            }));
+            setTimeout(() => {
+                intro.classList.add('fade-out');
+                setTimeout(() => intro.remove(), 1200);
+            }, 2400);
+        })();
+
         const nav = document.getElementById('nav');
         window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
         const toggle = document.querySelector('.nav-toggle');
