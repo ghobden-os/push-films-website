@@ -436,20 +436,12 @@
             pointer-events: none;
         }
         #siteIntro.fade-out { opacity: 0; }
-        #introLetters {
-            position: fixed;
-            visibility: hidden;
-            font-family: var(--font-serif);
-            font-size: clamp(48px, 9.6vw, 132px);
-            font-weight: 300;
-            line-height: 0.85;
-            letter-spacing: -0.02em;
-            color: var(--fg);
+        /* h1 floats above the overlay during intro */
+        body.intro-playing .hero-name {
+            position: relative;
+            z-index: 10001;
         }
-        #introLetters em { font-style: italic; color: var(--gold); }
-        .intro-letter { display: inline-block; will-change: transform, opacity; }
-        /* Page hidden during intro — applied via class on <body> in HTML */
-        body.intro-playing .hero-name,
+        /* Everything except the h1 is hidden, fades in as overlay dissolves */
         body.intro-playing #hero > *:not(.hero-name),
         body.intro-playing #nav,
         body.intro-playing #work,
@@ -458,10 +450,11 @@
         body.intro-playing #restricted,
         body.intro-playing footer,
         body.intro-playing .historic-trigger-wrap { opacity: 0; }
-        .hero-name, #hero > *:not(.hero-name),
+        #hero > *:not(.hero-name),
         #nav, #work, #about, #clients, #restricted, footer, .historic-trigger-wrap {
             transition: opacity 3s ease;
         }
+        .intro-letter { display: inline-block; will-change: transform, opacity; }
 
         /* VIDEO REVEAL OVERLAY */
         #videoRevealOverlay {
@@ -520,9 +513,7 @@
 </head>
 <body class="intro-playing">
 
-    <div id="siteIntro">
-        <div id="introLetters"><span class="intro-letter">G</span><span class="intro-letter">r</span><span class="intro-letter">e</span><span class="intro-letter">g</span><br><em><span class="intro-letter">H</span><span class="intro-letter">o</span><span class="intro-letter">b</span><span class="intro-letter">d</span><span class="intro-letter">e</span><span class="intro-letter">n</span></em></div>
-    </div>
+    <div id="siteIntro"></div>
 
     <nav id="nav">
         <div class="nav-inner">
@@ -539,7 +530,7 @@
 
     <section id="hero">
         <div class="hero-rule-top">Film Producer &amp; Production Consultant</div>
-        <h1 class="hero-name">Greg<br><em>Hobden</em></h1>
+        <h1 class="hero-name"><span class="intro-letter">G</span><span class="intro-letter">r</span><span class="intro-letter">e</span><span class="intro-letter">g</span><br><em><span class="intro-letter">H</span><span class="intro-letter">o</span><span class="intro-letter">b</span><span class="intro-letter">d</span><span class="intro-letter">e</span><span class="intro-letter">n</span></em></h1>
         <div class="hero-divider"><span>Thirty years in film</span></div>
         <p class="hero-sub">Theatrical documentary, high-end automotive, large-scale live experiential.</p>
     </section>
@@ -1265,22 +1256,13 @@
     </section>
 
     <script>
-        // Site intro — letters animate in overlay, then whole screen dissolves
+        // Site intro — actual h1 letters animate above overlay, then overlay dissolves
         (function() {
             const intro = document.getElementById('siteIntro');
-            const introLetters = document.getElementById('introLetters');
-            const heroName = document.querySelector('.hero-name');
-            const letters = document.querySelectorAll('#introLetters .intro-letter');
+            const letters = document.querySelectorAll('.hero-name .intro-letter');
 
             document.fonts.ready.then(() => {
-                // Position overlay letters to exactly match h1
-                const rect = heroName.getBoundingClientRect();
-                introLetters.style.left  = rect.left + 'px';
-                introLetters.style.top   = rect.top  + 'px';
-                introLetters.style.width = rect.width + 'px';
-                introLetters.style.visibility = 'visible';
-
-                // Scatter each letter with small random drift and rotation
+                // Scatter each letter from its natural position
                 letters.forEach(l => {
                     const tx  = (Math.random() - 0.5) * 120;
                     const ty  = (Math.random() - 0.5) * 80;
@@ -1289,7 +1271,7 @@
                     l.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
                 });
 
-                // Animate letters to their natural position
+                // Animate letters to their natural h1 position
                 requestAnimationFrame(() => requestAnimationFrame(() => {
                     letters.forEach((l, i) => {
                         setTimeout(() => {
@@ -1300,7 +1282,7 @@
                     });
                 }));
 
-                // Crossfade: overlay fades out, page fades in simultaneously
+                // Dissolve overlay away, rest of page fades in underneath
                 setTimeout(() => {
                     document.body.classList.remove('intro-playing');
                     intro.classList.add('fade-out');
