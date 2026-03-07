@@ -1284,7 +1284,7 @@
         const typewriterEl = document.getElementById('historicTypewriter');
         const easterEggAudio = document.getElementById('easterEggAudio');
         const typewriterMsg = 'You found it. Welcome to the early years.';
-        let typewriterTimeout = null;
+        let typewriterTimeouts = [];
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
         function playWhoosh() {
@@ -1309,7 +1309,7 @@
             source.start();
         }
 
-        function playClick() {
+        function scheduleClick(atTime) {
             const bufSize = audioCtx.sampleRate * 0.04;
             const buf = audioCtx.createBuffer(1, bufSize, audioCtx.sampleRate);
             const data = buf.getChannelData(0);
@@ -1318,28 +1318,31 @@
             source.buffer = buf;
             const filter = audioCtx.createBiquadFilter();
             filter.type = 'bandpass';
-            filter.frequency.setValueAtTime(2200, audioCtx.currentTime);
+            filter.frequency.setValueAtTime(2200, atTime);
             filter.Q.value = 2.5;
             const gain = audioCtx.createGain();
-            gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.04);
+            gain.gain.setValueAtTime(0.4, atTime);
+            gain.gain.linearRampToValueAtTime(0, atTime + 0.04);
             source.connect(filter);
             filter.connect(gain);
             gain.connect(audioCtx.destination);
-            source.start();
+            source.start(atTime);
         }
 
         function runTypewriter() {
             typewriterEl.textContent = '';
-            let i = 0;
-            function type() {
-                if (i < typewriterMsg.length) {
-                    playClick();
-                    typewriterEl.textContent += typewriterMsg[i++];
-                    typewriterTimeout = setTimeout(type, 45);
-                }
+            typewriterTimeouts.forEach(clearTimeout);
+            typewriterTimeouts = [];
+            const charInterval = 0.045; // seconds per character
+            const startAt = audioCtx.currentTime + 0.05;
+            for (let j = 0; j < typewriterMsg.length; j++) {
+                scheduleClick(startAt + j * charInterval);
+                const delay = Math.round((startAt + j * charInterval - audioCtx.currentTime) * 1000);
+                const idx = j;
+                typewriterTimeouts.push(setTimeout(() => {
+                    typewriterEl.textContent = typewriterMsg.slice(0, idx + 1);
+                }, delay));
             }
-            type();
         }
 
         let audioFadeInterval = null;
@@ -1410,7 +1413,7 @@
                 videoOverlay.style.pointerEvents = '';
                 videoClip.pause();
                 videoClip.currentTime = 0;
-                clearTimeout(typewriterTimeout);
+                typewriterTimeouts.forEach(clearTimeout); typewriterTimeouts = [];
                 playWhoosh();
                 playEasterAudio();
                 setTimeout(runTypewriter, 800);
