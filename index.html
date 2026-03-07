@@ -63,7 +63,7 @@
         .nav-logo { font-family: var(--font-serif); font-size: 17px; letter-spacing: 0.03em; transition: color 0.2s; }
         .nav-logo:hover { color: var(--gold); }
         .nav-links { list-style: none; display: flex; gap: 40px; }
-        .nav-links a { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); transition: color 0.2s; }
+        .nav-links a { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; transition: color 0.2s; }
         .nav-links a:hover { color: var(--gold); }
         .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 6px; flex-direction: column; gap: 6px; }
         .nav-toggle span { display: block; width: 22px; height: 1px; background: var(--fg); transition: all 0.25s; transform-origin: center; }
@@ -76,11 +76,11 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: flex-end;
-            text-align: right;
+            align-items: center;
+            text-align: center;
             padding-top: var(--nav-h);
-            padding-right: clamp(24px, 6vw, 100px);
-            padding-left: clamp(24px, 6vw, 100px);
+            padding-left: clamp(24px, 5vw, 80px);
+            padding-right: clamp(24px, 5vw, 80px);
             position: relative;
             overflow: hidden;
             background: url('images/REEL IMAGE* .png') center/cover no-repeat;
@@ -88,16 +88,22 @@
         #hero::before {
             content: '';
             position: absolute; inset: 0;
-            background: linear-gradient(to left, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 55%, rgba(0,0,0,0) 100%);
+            background: rgba(0,0,0,0.45);
             pointer-events: none;
         }
         .hero-rule-top {
             display: flex; align-items: center; gap: 28px;
             margin-bottom: clamp(40px, 6vw, 80px);
-            color: rgba(255,255,255,0.8); font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase;
+            color: #fff; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase;
+            position: relative; z-index: 1;
         }
         .hero-rule-top::before, .hero-rule-top::after {
-            content: ''; display: block; width: clamp(40px, 8vw, 120px); height: 1px; background: rgba(255,255,255,0.3);
+            content: ''; display: block; width: clamp(40px, 8vw, 120px); height: 1px; background: rgba(255,255,255,0.4);
+        }
+        .hero-main {
+            display: flex; flex-direction: column; align-items: flex-start; text-align: left;
+            margin-left: calc(50% + 20px);
+            position: relative; z-index: 1;
         }
         .hero-label {
             font-family: var(--font-sans);
@@ -124,10 +130,10 @@
             content: ''; display: block; flex: 1; max-width: 80px; height: 1px; background: rgba(255,255,255,0.3);
         }
         .hero-divider span {
-            font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.8);
+            font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: #fff;
         }
         .hero-sub {
-            font-size: clamp(15px, 1.38vw, 17px); font-weight: 300; color: rgba(255,255,255,0.85);
+            font-size: clamp(15px, 1.38vw, 17px); font-weight: 300; color: #fff;
             max-width: 420px; line-height: 1.8; margin-bottom: clamp(40px, 5vw, 64px);
         }
         .hero-disciplines {
@@ -625,10 +631,12 @@
 
     <section id="hero">
         <div class="hero-rule-top">Film Producer &amp; Production Consultant</div>
-        <h1 class="hero-name">Greg<br><em>Hobd<span class="e-letter">e<button class="historic-trigger" id="historicTrigger"></button></span>n</em></h1>
-        <div class="hero-divider"><span>Thirty years in film</span></div>
-        <p class="hero-sub">Theatrical documentary, high-end automotive, large-scale live experiential.</p>
-        <button class="hero-reel-btn" id="heroReelBtn"><span class="hero-reel-play">&#9654;</span>Showreel</button>
+        <div class="hero-main">
+            <h1 class="hero-name">Greg<br><em>Hobd<span class="e-letter">e<button class="historic-trigger" id="historicTrigger"></button></span>n</em></h1>
+            <div class="hero-divider"><span>Thirty years in film</span></div>
+            <p class="hero-sub">Theatrical documentary, high-end automotive, large-scale live experiential.</p>
+            <button class="hero-reel-btn" id="heroReelBtn"><span class="hero-reel-play">&#9654;</span>Showreel</button>
+        </div>
     </section>
 
 
