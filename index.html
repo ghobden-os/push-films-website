@@ -1829,29 +1829,43 @@
             const frame = expandPanel.querySelector('.expand-frame');
             const stage = expandPanel.querySelector('.expand-gallery-stage');
             const counter = expandPanel.querySelector('.expand-gal-counter');
-            let expanded = false, idx = 0, slideTimer = null, slideVideo = null;
+            const galleryCol = stage ? stage.closest('.work-expand-inner > div:last-child') : null;
+            const inner = expandPanel.querySelector('.work-expand-inner');
+            let expanded = false, idx = 0, slideTimer = null, slideVideo = null, slidesShown = 0;
             function stopSlide() { clearTimeout(slideTimer); if (slideVideo) { slideVideo.pause(); slideVideo = null; } }
-            function showSlide(i) {
+            function hideGallery() {
                 stopSlide();
+                if (galleryCol) galleryCol.style.display = 'none';
+                if (inner && vimeoId) inner.classList.add('single');
+            }
+            function showSlide(i, auto) {
+                stopSlide();
+                if (auto) {
+                    slidesShown++;
+                    if (vimeoId && slidesShown > items.length) { hideGallery(); return; }
+                }
                 idx = (i + items.length) % items.length;
                 const item = items[idx];
                 if (counter) counter.textContent = (idx + 1) + ' / ' + items.length;
                 if (item.type === 'image') {
                     stage.innerHTML = '<img src="' + item.src + '" alt="">';
-                    slideTimer = setTimeout(() => showSlide(idx + 1), 3000);
+                    slideTimer = setTimeout(() => showSlide(idx + 1, true), 3000);
                 } else {
                     stage.innerHTML = '<video src="' + item.src + '" autoplay playsinline muted controls></video>';
                     slideVideo = stage.querySelector('video');
-                    slideVideo.addEventListener('ended', () => showSlide(idx + 1), { once: true });
+                    slideVideo.addEventListener('ended', () => showSlide(idx + 1, true), { once: true });
                 }
             }
             function expand() {
                 expanded = true;
+                slidesShown = 0;
+                if (galleryCol) galleryCol.style.display = '';
+                if (inner) inner.classList.remove('single');
                 article.classList.add('expanded');
                 if (frame) frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?autoplay=1&title=0&byline=0&portrait=0';
                 if (items.length > 0) {
                     items.forEach(it => { if (it.type === 'image') { const img = new Image(); img.src = it.src; } });
-                    showSlide(0);
+                    showSlide(0, false);
                 }
             }
             function collapse() {
@@ -1868,8 +1882,8 @@
             });
             const prev = expandPanel.querySelector('.expand-gal-prev');
             const next = expandPanel.querySelector('.expand-gal-next');
-            if (prev) prev.addEventListener('click', (e) => { e.stopPropagation(); showSlide(idx - 1); });
-            if (next) next.addEventListener('click', (e) => { e.stopPropagation(); showSlide(idx + 1); });
+            if (prev) prev.addEventListener('click', (e) => { e.stopPropagation(); showSlide(idx - 1, false); });
+            if (next) next.addEventListener('click', (e) => { e.stopPropagation(); showSlide(idx + 1, false); });
         });
 
         // Shared Vimeo modal
