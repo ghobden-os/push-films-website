@@ -76,9 +76,11 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
-            text-align: center;
+            align-items: flex-end;
+            text-align: right;
             padding-top: var(--nav-h);
+            padding-right: clamp(24px, 6vw, 100px);
+            padding-left: clamp(24px, 6vw, 100px);
             position: relative;
             overflow: hidden;
             background: url('images/REEL IMAGE* .png') center/cover no-repeat;
@@ -86,16 +88,16 @@
         #hero::before {
             content: '';
             position: absolute; inset: 0;
-            background: rgba(0,0,0,0.6);
+            background: linear-gradient(to left, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 55%, rgba(0,0,0,0) 100%);
             pointer-events: none;
         }
         .hero-rule-top {
             display: flex; align-items: center; gap: 28px;
             margin-bottom: clamp(40px, 6vw, 80px);
-            color: var(--mid); font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase;
+            color: rgba(255,255,255,0.8); font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase;
         }
         .hero-rule-top::before, .hero-rule-top::after {
-            content: ''; display: block; width: clamp(40px, 8vw, 120px); height: 1px; background: var(--rule);
+            content: ''; display: block; width: clamp(40px, 8vw, 120px); height: 1px; background: rgba(255,255,255,0.3);
         }
         .hero-label {
             font-family: var(--font-sans);
@@ -119,13 +121,13 @@
             display: flex; align-items: center; gap: 20px; margin-bottom: clamp(28px, 4vw, 48px);
         }
         .hero-divider::before, .hero-divider::after {
-            content: ''; display: block; flex: 1; max-width: 80px; height: 1px; background: var(--rule);
+            content: ''; display: block; flex: 1; max-width: 80px; height: 1px; background: rgba(255,255,255,0.3);
         }
         .hero-divider span {
-            font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid);
+            font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.8);
         }
         .hero-sub {
-            font-size: clamp(15px, 1.38vw, 17px); font-weight: 300; color: var(--mid);
+            font-size: clamp(15px, 1.38vw, 17px); font-weight: 300; color: rgba(255,255,255,0.85);
             max-width: 420px; line-height: 1.8; margin-bottom: clamp(40px, 5vw, 64px);
         }
         .hero-disciplines {
