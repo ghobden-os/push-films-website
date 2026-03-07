@@ -401,7 +401,7 @@
         #siteIntro {
             position: fixed; inset: 0; z-index: 10000;
             background: #000;
-            transition: opacity 1.2s ease;
+            transition: opacity 2.5s ease;
             pointer-events: none;
         }
         #siteIntro.fade-out { opacity: 0; }
@@ -410,8 +410,19 @@
             position: relative;
             z-index: 10001;
         }
-        /* Hide everything in hero except the name during intro */
+        /* Hide everything in hero except the name during intro, fade in slowly */
+        #hero > *:not(.hero-name) { transition: opacity 2s ease; }
         body.intro-playing #hero > *:not(.hero-name) { opacity: 0; }
+        /* Nav and rest of page fade in with overlay */
+        #nav, #work, #about, #clients, footer, .historic-trigger-wrap {
+            transition: opacity 2s ease;
+        }
+        body.intro-playing #nav,
+        body.intro-playing #work,
+        body.intro-playing #about,
+        body.intro-playing #clients,
+        body.intro-playing footer,
+        body.intro-playing .historic-trigger-wrap { opacity: 0; }
         .intro-letter { display: inline-block; }
 
         /* VIDEO REVEAL OVERLAY */
@@ -1222,12 +1233,12 @@
                 });
             }));
 
-            // Fade overlay away, reveal rest of page
+            // Remove intro-playing (fades in rest of page) then fade overlay
             setTimeout(() => {
                 document.body.classList.remove('intro-playing');
                 intro.classList.add('fade-out');
-                setTimeout(() => intro.remove(), 1200);
-            }, 2600);
+                setTimeout(() => intro.remove(), 2500);
+            }, 2400);
         })();
 
         const nav = document.getElementById('nav');
