@@ -1854,7 +1854,7 @@
                     requestAnimationFrame(() => requestAnimationFrame(() => { img.style.opacity = '1'; }));
                     slideTimer = setTimeout(() => showSlide(idx + 1, true), 3000);
                 } else {
-                    stage.innerHTML = '<video src="' + item.src + '" autoplay playsinline muted controls></video>';
+                    stage.innerHTML = '<video src="' + item.src + '" autoplay playsinline muted></video>';
                     slideVideo = stage.querySelector('video');
                     slideVideo.addEventListener('ended', () => showSlide(idx + 1, true), { once: true });
                 }
