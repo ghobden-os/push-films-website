@@ -268,8 +268,7 @@
         }
         .work-image img { transition: transform 0.8s ease; }
         .work-item:hover .work-image img { transform: scale(1.05); }
-        .work-image[data-vimeo] { cursor: pointer; }
-        .work-image[data-vimeo]::after {
+        .work-item.accordion .work-image::after {
             content: '▶';
             position: absolute; inset: 0;
             display: flex; align-items: center; justify-content: center;
@@ -278,7 +277,7 @@
             transition: color 0.3s ease, background 0.3s ease;
             pointer-events: none;
         }
-        .work-image[data-vimeo]:hover::after {
+        .work-item.accordion:hover .work-image::after {
             color: rgba(255,255,255,0.9);
             background: rgba(0,0,0,0.35);
         }
@@ -563,15 +562,11 @@
         /* ACCORDION EXPAND */
         .work-item.accordion { cursor: pointer; align-items: start; }
         .work-item.accordion .work-image { margin-top: 6px; }
-        .work-expand {
-            display: none;
-            grid-column: 1 / -1;
-            border-top: 1px solid var(--rule);
-            padding-top: clamp(20px, 2.5vw, 32px);
-            padding-bottom: clamp(8px, 1vw, 16px);
-        }
-        .work-item.expanded .work-expand { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(16px, 2.5vw, 36px); align-items: start; }
+        .work-expand { display: none; grid-column: 1 / -1; border-top: 1px solid var(--rule); padding-top: clamp(20px, 2.5vw, 32px); padding-bottom: clamp(8px, 1vw, 16px); }
+        .work-item.expanded .work-expand { display: block; }
         .work-item.expanded .work-arrow { color: var(--gold); transform: rotate(90deg); }
+        .work-expand-inner { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(16px, 2.5vw, 36px); align-items: start; }
+        .work-expand-inner.single { display: block; max-width: 860px; }
         .expand-film { position: relative; padding-bottom: 56.25%; height: 0; background: #000; }
         .expand-film iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
         .expand-gallery-stage { aspect-ratio: 16/9; background: #000; overflow: hidden; }
@@ -581,9 +576,7 @@
         .expand-gallery-bar button { background: none; border: none; color: var(--mid); cursor: pointer; font-size: 18px; padding: 2px 6px; transition: color 0.2s; }
         .expand-gallery-bar button:hover { color: var(--gold); }
         .expand-gallery-bar span { font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.1em; color: var(--mid); }
-        @media (max-width: 700px) {
-            .work-item.expanded .work-expand { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 700px) { .work-expand-inner { grid-template-columns: 1fr; } }
 
         /* MEDIA BUTTON */
         .media-btn {
@@ -706,14 +699,15 @@
             <div class="work-category">
                 <div class="work-category-header"><span>Documentary</span></div>
                 <div class="work-grid">
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171150609"><img src="images/i-am-ali.png" alt="I Am Ali"></div>
+                    <article class="work-item accordion" data-vimeo="1171150609">
+                        <div class="work-image"><img src="images/i-am-ali.png" alt="I Am Ali"></div>
                         <div class="work-info">
                             <h3>I Am Ali</h3>
                             <p class="work-meta">Feature Documentary — Universal Pictures</p>
                             <p class="work-desc">Feature documentary on Muhammad Ali, one of the most iconic figures of the 20th century. Theatrical release via Universal Pictures.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
                     <article class="work-item">
                         <div class="work-image"><img src="images/burning-ambition.png" alt="Iron Maiden: Burning Ambition"></div>
@@ -739,7 +733,7 @@
             <div class="work-category">
                 <div class="work-category-header"><span>Automotive</span></div>
                 <div class="work-grid">
-                    <article class="work-item accordion" id="raptorItem">
+                    <article class="work-item accordion" data-vimeo="1171170029" data-gallery="raptor">
                         <div class="work-image"><img src="images/ford-raptor.png" alt="Ford Raptor"></div>
                         <div class="work-info">
                             <h3>Ford Ranger Raptor</h3>
@@ -747,97 +741,87 @@
                             <p class="work-desc">The global launch film for the new Ford Ranger Raptor. Directed by Nick Piper. The brief was simple: show what it can do. The solution was to chain it inside an Antonov AN-12 Soviet cargo plane and let it break free.</p>
                             <span class="work-arrow">→</span>
                         </div>
-                        <div class="work-expand">
-                            <div>
-                                <div class="expand-film">
-                                    <iframe id="raptorFrame" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="expand-gallery-stage" id="raptorGalleryStage"></div>
-                                <div class="expand-gallery-bar">
-                                    <button id="raptorGalleryPrev">←</button>
-                                    <span id="raptorGalleryCounter"></span>
-                                    <button id="raptorGalleryNext">→</button>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="work-expand"></div>
                     </article>
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171157858"><img src="images/ford-explorer-launch.png" alt="Ford Explorer"></div>
+                    <article class="work-item accordion" data-vimeo="1171157858" data-gallery="lexieGreen">
+                        <div class="work-image"><img src="images/ford-explorer-launch.png" alt="Ford Explorer"></div>
                         <div class="work-info">
                             <h3>Ford Explorer</h3>
                             <p class="work-meta">Producer — Ford</p>
-                            <button class="media-btn" data-gallery="lexieGreen">Photos &amp; Clips</button>
                             <p class="work-desc">Brand film for the Ford Explorer launch.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171151952"><img src="images/defender.png" alt="Land Rover Defender"></div>
+                    <article class="work-item accordion" data-vimeo="1171151952" data-gallery="defender">
+                        <div class="work-image"><img src="images/defender.png" alt="Land Rover Defender"></div>
                         <div class="work-info">
                             <h3>Land Rover Defender</h3>
                             <p class="work-meta">Agency Producer — Imagination / JLR, Kazakhstan</p>
-                            <button class="media-btn" data-gallery="defender">Photos &amp; Clips</button>
                             <p class="work-desc">The global launch film for the new Land Rover Defender, shot on location in Kazakhstan. The film starred Kenton Cool — the most prolific Everest summiteer in the world outside of the Sherpa community, with 19 ascents to his name. The Defender was the perfect vehicle for the world's most demanding mountaineer.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171150653"><img src="images/mclaren.png" alt="McLaren Spider"></div>
+                    <article class="work-item accordion" data-vimeo="1171150653">
+                        <div class="work-image"><img src="images/mclaren.png" alt="McLaren Spider"></div>
                         <div class="work-info">
                             <h3>McLaren Spider</h3>
                             <p class="work-meta">Agency Producer — McLaren</p>
                             <p class="work-desc">Some cars make the job easy. The McLaren Spider is one of them.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171178087"><img src="images/range-rover-test-track.png" alt="Range Rover Sport Test Track"></div>
+                    <article class="work-item accordion" data-vimeo="1171178087" data-gallery="rrSportTestTrack">
+                        <div class="work-image"><img src="images/range-rover-test-track.png" alt="Range Rover Sport Test Track"></div>
                         <div class="work-info">
                             <h3>Range Rover Sport Test Track</h3>
                             <p class="work-meta">Producer — Jaguar Land Rover</p>
-                            <button class="media-btn" data-gallery="rrSportTestTrack">Photos &amp; Clips</button>
                             <p class="work-desc">At the Jaguar Land Rover test circuit, Jessica Hawkins — W Series racing driver and official James Bond stunt driver — puts Anthony Joshua through his paces in the new Range Rover Sport.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171150941"><img src="images/range-rover-reveal.png" alt="Range Rover Sport Reveal"></div>
+                    <article class="work-item accordion" data-vimeo="1171150941">
+                        <div class="work-image"><img src="images/range-rover-reveal.png" alt="Range Rover Sport Reveal"></div>
                         <div class="work-info">
                             <h3>Range Rover Sport Reveal</h3>
                             <p class="work-meta">Producer — Jaguar Land Rover</p>
                             <p class="work-desc">World reveal film for the Range Rover Sport.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171151324"><img src="images/range-rover-james-corden.png" alt="Range Rover Sport — James Corden"></div>
+                    <article class="work-item accordion" data-vimeo="1171151324" data-gallery="corden">
+                        <div class="work-image"><img src="images/range-rover-james-corden.png" alt="Range Rover Sport — James Corden"></div>
                         <div class="work-info">
                             <h3>Range Rover Sport — James Corden</h3>
                             <p class="work-meta">Producer — Imagination / JLR, Los Angeles</p>
-                            <button class="media-btn" data-gallery="corden">Photos &amp; Clips</button>
                             <p class="work-desc">A Carpool Karaoke spoof with James Corden and Lennard Hoornik, Chief Commercial Officer of Jaguar Land Rover. Shot behind closed gates — the car was still under pre-launch embargo.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171150533"><img src="images/discovery-sport.png" alt="Land Rover Discovery Sport"></div>
+                    <article class="work-item accordion" data-vimeo="1171150533">
+                        <div class="work-image"><img src="images/discovery-sport.png" alt="Land Rover Discovery Sport"></div>
                         <div class="work-info">
                             <h3>Land Rover Discovery Sport</h3>
                             <p class="work-meta">Producer — Jaguar Land Rover</p>
                             <p class="work-desc">A promotional film for the Land Rover Discovery Sport, showcasing the full range of Land Rover accessories. Rubber matting to roof racks. Everything you need — including, as it turns out, a dog wash.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
-                    <article class="work-item">
-                        <div class="work-image" data-gallery="tata"><img src="images/Tata.png" alt="Tata"></div>
+                    <article class="work-item accordion" data-gallery="tata">
+                        <div class="work-image"><img src="images/Tata.png" alt="Tata"></div>
                         <div class="work-info">
                             <h3>Tata Nexon</h3>
                             <p class="work-meta">Producer — Tata</p>
                             <p class="work-desc">A commercial for the Tata Nexon, shot on location in Hyderabad.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
                 </div>
             </div>
@@ -845,23 +829,25 @@
             <div class="work-category">
                 <div class="work-category-header"><span>Expo</span></div>
                 <div class="work-grid">
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171151872"><img src="images/family-tree.png" alt="Family Tree — Milan 2015"></div>
+                    <article class="work-item accordion" data-vimeo="1171151872">
+                        <div class="work-image"><img src="images/family-tree.png" alt="Family Tree — Milan 2015"></div>
                         <div class="work-info">
                             <h3>Family Tree — Milan 2015</h3>
                             <p class="work-meta">Executive Producer — Abu Dhabi National Media Council</p>
                             <p class="work-desc">The theme of the Milan Expo was Feeding the Planet, Energy for Life. The UAE's answer was Food for Thought — how a nation in the middle of a desert had solved the problem of feeding its people. Family Tree told that story through the eyes of a young girl who travelled from the future to save a date tree.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171157242"><img src="images/the-turtle.png" alt="The Turtle — Yeosu 2012"></div>
+                    <article class="work-item accordion" data-vimeo="1171157242">
+                        <div class="work-image"><img src="images/the-turtle.png" alt="The Turtle — Yeosu 2012"></div>
                         <div class="work-info">
                             <h3>The Turtle — Yeosu 2012</h3>
                             <p class="work-meta">Executive Producer — Abu Dhabi National Media Council</p>
                             <p class="work-desc">The theme of the Yeosu Expo was The Living Ocean and Coast. A young Emirati boy. A turtle that had swallowed a plastic bag. A film about what one person can do. The Turtle went on to win a gold at Cannes.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
                 </div>
             </div>
@@ -869,15 +855,15 @@
             <div class="work-category">
                 <div class="work-category-header"><span>Luxury</span></div>
                 <div class="work-grid">
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171158700"><img src="images/vashi.png" alt="Vashi"></div>
+                    <article class="work-item accordion" data-vimeo="1171158700" data-gallery="vashi">
+                        <div class="work-image"><img src="images/vashi.png" alt="Vashi"></div>
                         <div class="work-info">
                             <h3>Vashi</h3>
                             <p class="work-meta">Jewellery Commercial — Vashi</p>
-                            <button class="media-btn" data-gallery="vashi">Photos &amp; Clips</button>
                             <p class="work-desc">Luxury jewellery commercial for Vashi.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
                 </div>
             </div>
@@ -885,36 +871,37 @@
             <div class="work-category">
                 <div class="work-category-header"><span>Experiential</span></div>
                 <div class="work-grid">
-                    <article class="work-item">
-                        <div class="work-image" data-gallery="fordWheels"><img src="images/ford-wheels.png" alt="Ford Wheels"></div>
+                    <article class="work-item accordion" data-gallery="fordWheels">
+                        <div class="work-image"><img src="images/ford-wheels.png" alt="Ford Wheels"></div>
                         <div class="work-info">
                             <h3>Ford Wheels</h3>
                             <p class="work-meta">Producer — Ford</p>
                             <p class="work-desc">A trailer for a fake heist movie, commissioned by Ford and shot with the Mustang. At a separate event, Ford enthusiasts could test drive the new car — we filmed inserts of them behind the wheel and cut them into the trailer on the spot. They left with their own personalised version as a souvenir, placing them in a Hollywood movie. Each one also took away a poster of themselves starring in the film. The punters loved it.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171318976"><img src="images/ford-explorer-world-record.png" alt="Ford Explorer World Record"></div>
+                    <article class="work-item accordion" data-vimeo="1171318976" data-gallery="explorer">
+                        <div class="work-image"><img src="images/ford-explorer-world-record.png" alt="Ford Explorer World Record"></div>
                         <div class="work-info">
                             <h3>Ford Explorer: Lexie Limitless World Record Finale</h3>
                             <p class="work-meta">Live Experiential — Ford</p>
-                            <button class="media-btn" data-gallery="explorer">Photos &amp; Clips</button>
                             <p class="work-desc">We managed a rolling closure of twenty miles of the South of France coast road into Nice. As the convoy moved through each section, the route was sealed ahead and released behind — keeping the road clear without shutting it down entirely. A convoy of twenty historic Ford vehicles. Motorcycle cameramen whose day job is filming the Tour de France. Helicopters, drones, and multiple fixed cameras the length of the route.</p>
                             <p class="work-desc">The entire event was broadcast live online. To maintain a continuous live feed across twenty miles, we put a relay aircraft at 3,000 feet — signal up from the helicopter, across to the plane, down to the OB truck.</p>
                             <p class="work-desc">Lexie arrived into Nice where Ford CEO Jim Farley joined her for the final mile to the finish line.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171320476" data-gallery="everest"><img src="images/everest.png" alt="Everest"></div>
+                    <article class="work-item accordion" data-vimeo="1171320476" data-gallery="everest">
+                        <div class="work-image"><img src="images/everest.png" alt="Everest"></div>
                         <div class="work-info">
                             <h3>Everest</h3>
                             <p class="work-meta">Live Broadcast / Television — On-Mountain Producer</p>
-                            <button class="media-btn" data-gallery="everest">Photos</button>
                             <p class="work-desc">The British Army mounted a 2006 attempt on the West Ridge of Everest — a route no British team had ever climbed. What that understates is just how rarely anyone has climbed it. Fewer than a dozen climbers have ever summited via the West Ridge and Hornbein Couloir. More people have died attempting it than have reached the top.<br><br>Twenty-two soldiers. Three years of preparation. They turned back 800 metres short of the summit. In that context, how far they got matters.<br><br>The expedition was filmed for television and served as a national Army recruitment campaign. I was the on-mountain producer at 6,000 metres for twelve weeks, responsible for all filming and live satellite broadcasts from the mountain.<br><br>It was a pivotal project. Twelve weeks at altitude, cut off from the world, working with people who had committed everything to a single goal. The friendships it forged have lasted twenty years.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
                 </div>
             </div>
@@ -922,32 +909,35 @@
             <div class="work-category">
                 <div class="work-category-header"><span>Sport</span></div>
                 <div class="work-grid">
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171158800"><img src="images/bridgestone.png" alt="Bridgestone"></div>
+                    <article class="work-item accordion" data-vimeo="1171158800">
+                        <div class="work-image"><img src="images/bridgestone.png" alt="Bridgestone"></div>
                         <div class="work-info">
                             <h3>Bridgestone</h3>
                             <p class="work-meta">Producer — Bridgestone</p>
                             <p class="work-desc">One of my favourite shoot days ever. An incredibly simple idea, unbelievably powerful. I have to confess, I shed a tear when she jumped.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171158741"><img src="images/football-league.png" alt="Football League"></div>
+                    <article class="work-item accordion" data-vimeo="1171158741">
+                        <div class="work-image"><img src="images/football-league.png" alt="Football League"></div>
                         <div class="work-info">
                             <h3>Football League</h3>
                             <p class="work-meta">Producer — Football League</p>
                             <p class="work-desc">IVCA Grand Prix winner.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171158957"><img src="images/Golfing4 Life .png" alt="Golfing 4 Life"></div>
+                    <article class="work-item accordion" data-vimeo="1171158957">
+                        <div class="work-image"><img src="images/Golfing4 Life .png" alt="Golfing 4 Life"></div>
                         <div class="work-info">
                             <h3>Golfing 4 Life</h3>
                             <p class="work-meta">Producer</p>
                             <p class="work-desc">Enrique is a talented young golfer. He is also sixteen years old and can't afford to compete. Golfing 4 Life exists for kids like him. The charity covers the costs that stand between ability and opportunity. This film is his story.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
                 </div>
             </div>
@@ -955,23 +945,25 @@
             <div class="work-category">
                 <div class="work-category-header"><span>Comedy</span></div>
                 <div class="work-grid">
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171300697"><img src="images/Sexy Tuesdays .png" alt="Sexy Tuesdays"></div>
+                    <article class="work-item accordion" data-vimeo="1171300697">
+                        <div class="work-image"><img src="images/Sexy Tuesdays .png" alt="Sexy Tuesdays"></div>
                         <div class="work-info">
                             <h3>Sexy Tuesdays</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">A 48 hour film challenge. Subject given Friday night. Film delivered Sunday. The genre was comedy. The character was Alice or Alastair. The prop was a toothbrush. It was a competitive field.<br>We won.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171300442"><img src="images/Waiting for Conkers.png" alt="Waiting for Conkers"></div>
+                    <article class="work-item accordion" data-vimeo="1171300442">
+                        <div class="work-image"><img src="images/Waiting for Conkers.png" alt="Waiting for Conkers"></div>
                         <div class="work-info">
                             <h3>Waiting for Conkers</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">A short film for a design agency. Comedy as a communication tool. Simple idea, beautifully executed.</p>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
                 </div>
             </div>
@@ -1821,85 +1813,64 @@
             if (Math.abs(dx) > 40) dx < 0 ? galleryShow(galleryIndex + 1) : galleryShow(galleryIndex - 1);
         }, {passive:true});
 
-        // Image click → gallery (for items with no film, e.g. Ford Wheels, Tata)
-        document.querySelectorAll('.work-image[data-gallery]').forEach(img => {
-            img.addEventListener('click', () => galleryOpen(img.dataset.gallery));
-        });
-
-        // Media button click → gallery
-        document.querySelectorAll('.media-btn[data-gallery]').forEach(btn => {
-            btn.addEventListener('click', (e) => { e.stopPropagation(); galleryOpen(btn.dataset.gallery); });
-            // Auto-label: "Photos & Clips" if gallery has video items, otherwise "Photos"
-            const key = btn.dataset.gallery;
-            if (galleries[key]) {
-                const hasVideo = galleries[key].items.some(i => i.type === 'video');
-                btn.textContent = hasVideo ? 'Photos & Clips' : 'Photos';
-            }
-        });
-
-        // RAPTOR ACCORDION (proof of concept)
-        (function() {
-            const article = document.getElementById('raptorItem');
-            const frame = document.getElementById('raptorFrame');
-            const stage = document.getElementById('raptorGalleryStage');
-            const counter = document.getElementById('raptorGalleryCounter');
-            const items = galleries.raptor.items;
-            let expanded = false;
-            let idx = 0;
-            let timer = null;
-            let currentVideo = null;
-
-            function stopGallery() {
-                clearTimeout(timer);
-                if (currentVideo) { currentVideo.pause(); currentVideo = null; }
-            }
-
+        // GENERIC ACCORDION
+        document.querySelectorAll('.work-item.accordion').forEach(article => {
+            const vimeoId = article.dataset.vimeo;
+            const galleryKey = article.dataset.gallery;
+            const expandPanel = article.querySelector('.work-expand');
+            const items = (galleryKey && galleries[galleryKey]) ? galleries[galleryKey].items : [];
+            const hasBoth = vimeoId && items.length > 0;
+            const innerClass = hasBoth ? 'work-expand-inner' : 'work-expand-inner single';
+            let html = '<div class="' + innerClass + '">';
+            if (vimeoId) html += '<div><div class="expand-film"><iframe class="expand-frame" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div></div>';
+            if (items.length > 0) html += '<div><div class="expand-gallery-stage"></div><div class="expand-gallery-bar"><button class="expand-gal-prev">←</button><span class="expand-gal-counter"></span><button class="expand-gal-next">→</button></div></div>';
+            html += '</div>';
+            expandPanel.innerHTML = html;
+            const frame = expandPanel.querySelector('.expand-frame');
+            const stage = expandPanel.querySelector('.expand-gallery-stage');
+            const counter = expandPanel.querySelector('.expand-gal-counter');
+            let expanded = false, idx = 0, slideTimer = null, slideVideo = null;
+            function stopSlide() { clearTimeout(slideTimer); if (slideVideo) { slideVideo.pause(); slideVideo = null; } }
             function showSlide(i) {
-                stopGallery();
+                stopSlide();
                 idx = (i + items.length) % items.length;
                 const item = items[idx];
-                counter.textContent = (idx + 1) + ' / ' + items.length;
+                if (counter) counter.textContent = (idx + 1) + ' / ' + items.length;
                 if (item.type === 'image') {
                     stage.innerHTML = '<img src="' + item.src + '" alt="">';
-                    timer = setTimeout(() => showSlide(idx + 1), 3000);
+                    slideTimer = setTimeout(() => showSlide(idx + 1), 3000);
                 } else {
-                    stage.innerHTML = '<video src="' + item.src + '" autoplay playsinline controls></video>';
-                    currentVideo = stage.querySelector('video');
-                    currentVideo.addEventListener('ended', () => showSlide(idx + 1), { once: true });
+                    stage.innerHTML = '<video src="' + item.src + '" autoplay playsinline muted controls></video>';
+                    slideVideo = stage.querySelector('video');
+                    slideVideo.addEventListener('ended', () => showSlide(idx + 1), { once: true });
                 }
             }
-
-            // Preload images when expanding
-            function preload() {
-                items.forEach(item => { if (item.type === 'image') { const img = new Image(); img.src = item.src; } });
-            }
-
             function expand() {
-                lockVimeo();
                 expanded = true;
                 article.classList.add('expanded');
-                frame.src = 'https://player.vimeo.com/video/1171170029?autoplay=1&title=0&byline=0&portrait=0';
-                preload();
-                showSlide(0);
+                if (frame) frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?autoplay=1&title=0&byline=0&portrait=0';
+                if (items.length > 0) {
+                    items.forEach(it => { if (it.type === 'image') { const img = new Image(); img.src = it.src; } });
+                    showSlide(0);
+                }
             }
-
             function collapse() {
                 expanded = false;
                 article.classList.remove('expanded');
-                frame.src = '';
-                stopGallery();
-                stage.innerHTML = '';
-                counter.textContent = '';
+                if (frame) frame.src = '';
+                stopSlide();
+                if (stage) stage.innerHTML = '';
+                if (counter) counter.textContent = '';
             }
-
             article.addEventListener('click', (e) => {
                 if (e.target.closest('.work-expand')) return;
                 expanded ? collapse() : expand();
             });
-
-            document.getElementById('raptorGalleryPrev').addEventListener('click', (e) => { e.stopPropagation(); showSlide(idx - 1); });
-            document.getElementById('raptorGalleryNext').addEventListener('click', (e) => { e.stopPropagation(); showSlide(idx + 1); });
-        })();
+            const prev = expandPanel.querySelector('.expand-gal-prev');
+            const next = expandPanel.querySelector('.expand-gal-next');
+            if (prev) prev.addEventListener('click', (e) => { e.stopPropagation(); showSlide(idx - 1); });
+            if (next) next.addEventListener('click', (e) => { e.stopPropagation(); showSlide(idx + 1); });
+        });
 
         // Shared Vimeo modal
 
@@ -1947,9 +1918,6 @@
                 });
             }
         }
-        document.querySelectorAll('.work-image[data-vimeo]').forEach(img => {
-            img.addEventListener('click', () => openVimeo(img.dataset.vimeo));
-        });
     </script>
     <script src="https://player.vimeo.com/api/player.js"></script>
 </body>
