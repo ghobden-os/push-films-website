@@ -160,8 +160,13 @@
             position: absolute; inset: 0;
             display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
             cursor: pointer;
-            background: #080808;
+            background: url('images/showreel.png') center/cover no-repeat;
         }
+        .reel-poster::before {
+            content: ''; position: absolute; inset: 0;
+            background: rgba(0,0,0,0.45);
+        }
+        .reel-play-btn, .reel-poster-label { position: relative; z-index: 1; }
         .reel-wrap.playing .reel-poster { display: none; }
         .reel-play-btn {
             width: clamp(64px, 8vw, 96px);
@@ -605,6 +610,16 @@
         <p class="hero-sub">Theatrical documentary, high-end automotive, large-scale live experiential.</p>
     </section>
 
+    <section id="showreel">
+        <div class="reel-wrap" id="reelWrap">
+            <div class="reel-poster" id="reelPoster">
+                <div class="reel-play-btn">&#9654;</div>
+                <span class="reel-poster-label">Watch Showreel</span>
+            </div>
+            <iframe id="reelFrame" src="" data-src="https://player.vimeo.com/video/1102618071?title=0&byline=0&portrait=0&color=ffffff&autoplay=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </section>
+
 
     <section id="about">
         <div class="container about-grid">
@@ -957,13 +972,6 @@
                 <div class="contact-details">
                     <a href="mailto:ghobden@mac.com" class="contact-link"><span class="contact-type">Email</span>ghobden@mac.com</a>
                     <a href="https://linkedin.com/in/greghobden" target="_blank" rel="noopener" class="contact-link"><span class="contact-type">LinkedIn</span>linkedin.com/in/greghobden</a>
-                </div>
-                <div class="reel-wrap" id="reelWrap" style="margin-top: clamp(32px, 4vw, 48px);">
-                    <div class="reel-poster" id="reelPoster">
-                        <div class="reel-play-btn">&#9654;</div>
-                        <span class="reel-poster-label">Watch Showreel</span>
-                    </div>
-                    <iframe id="reelFrame" src="" data-src="https://player.vimeo.com/video/1102618071?title=0&byline=0&portrait=0&color=ffffff&autoplay=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
