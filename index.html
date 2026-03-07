@@ -370,6 +370,10 @@
             transition: all 0.2s;
         }
         .restricted-play-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .restricted-desc { margin-bottom: clamp(28px, 3vw, 44px); }
+        .restricted-desc p { font-size: clamp(13px, 1.1vw, 15px); color: var(--mid); line-height: 1.7; margin-bottom: 0.8em; }
+        .restricted-desc p:last-child { margin-bottom: 0; }
+        .restricted-desc em { color: var(--fg); font-style: italic; }
         .restricted-frame-wrap { position: relative; padding-bottom: 56.25%; height: 0; display: none; }
         .restricted-frame-wrap.visible { display: block; }
         .restricted-frame-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
@@ -837,6 +841,13 @@
                 </div>
                 <p class="password-error" id="restrictedError">Incorrect password</p>
                 <div id="restrictedFilms">
+                    <div class="restricted-desc">
+                        <p>Imagination were given a brief. Take a desert island in the Red Sea and turn it into a Glastonbury weekend for billionaires. Sindalla Island. Saudi Arabia. The largest gathering of superyachts in history.</p>
+                        <p>A desert island. No infrastructure. No facilities. Culminating in everything you could ever wish for, including a Michelin star restaurant.</p>
+                        <p>To make it work, you need to populate an island. That meant flying from the UK the full human spectrum of festival talent. It was like a real life Mr Ben. Jugglers. Chefs. Dancers. DJs. Singers. Circus performers. Kite surfers. Fire breathers. Yoga instructors. Personal trainers. Face painters. Catering staff. Massage therapists.</p>
+                        <p><em>Two films. The Island is the finished event. From Nothing is how it came to exist.</em></p>
+                        <p>The guests? My NDA has its own NDA.</p>
+                    </div>
                     <div class="restricted-films-grid">
                         <div class="restricted-film-card" data-vimeo="1171296890">
                             <img src="images/RED SEA WEEK 1.png" alt="Red Sea Week">
