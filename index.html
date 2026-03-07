@@ -979,6 +979,7 @@
                         </div>
                     </div>
                     <div class="restricted-frame-wrap" id="restrictedFrameWrap">
+                        <button id="restrictedBack" style="display:none; background:none; border:none; color:var(--mid); font-family:var(--font-sans); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer; padding:0 0 14px 0;">← Back to films</button>
                         <iframe id="restrictedFrame" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
@@ -1501,11 +1502,23 @@
         restrictedSubmit.addEventListener('click', checkPassword);
         restrictedPassword.addEventListener('keydown', (e) => { if (e.key === 'Enter') checkPassword(); });
 
+        const restrictedGrid = document.querySelector('.restricted-films-grid');
+        const restrictedBack = document.getElementById('restrictedBack');
+
+        restrictedBack.addEventListener('click', () => {
+            restrictedFrame.src = '';
+            restrictedFrameWrap.classList.remove('visible');
+            restrictedBack.style.display = 'none';
+            restrictedGrid.style.display = '';
+        });
+
         document.querySelectorAll('.restricted-film-card').forEach(card => {
             card.addEventListener('click', () => {
                 const vimeoId = card.dataset.vimeo;
+                restrictedGrid.style.display = 'none';
                 restrictedFrame.src = `https://player.vimeo.com/video/${vimeoId}?autoplay=1`;
                 restrictedFrameWrap.classList.add('visible');
+                restrictedBack.style.display = 'block';
                 restrictedFrameWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
