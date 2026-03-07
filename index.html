@@ -1891,9 +1891,17 @@
                 counter.textContent = '';
             }
 
-            // Click anywhere on the card header (not inside the expand panel) to toggle
-            article.addEventListener('click', (e) => {
+            // Toggle on tap/click — use touchend + preventDefault to kill ghost clicks on mobile
+            let touchHandled = false;
+            article.addEventListener('touchend', (e) => {
                 if (e.target.closest('.work-expand')) return;
+                touchHandled = true;
+                e.preventDefault();
+                expanded ? collapse() : expand();
+                setTimeout(() => { touchHandled = false; }, 600);
+            }, { passive: false });
+            article.addEventListener('click', (e) => {
+                if (touchHandled || e.target.closest('.work-expand')) return;
                 expanded ? collapse() : expand();
             });
 
