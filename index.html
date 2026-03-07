@@ -428,33 +428,6 @@
         #historic.visible { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* SITE INTRO */
-        #siteIntro {
-            position: fixed; inset: 0; z-index: 10000;
-            background: #080808;
-            transition: opacity 3s ease;
-            pointer-events: none;
-        }
-        #siteIntro.fade-out { opacity: 0; }
-        /* h1 floats above the overlay during intro */
-        body.intro-playing .hero-name {
-            position: relative;
-            z-index: 10001;
-        }
-        /* Everything except the h1 is hidden, fades in as overlay dissolves */
-        body.intro-playing #hero > *:not(.hero-name),
-        body.intro-playing #nav,
-        body.intro-playing #work,
-        body.intro-playing #about,
-        body.intro-playing #clients,
-        body.intro-playing #restricted,
-        body.intro-playing footer,
-        body.intro-playing .historic-trigger-wrap { opacity: 0; }
-        #hero > *:not(.hero-name),
-        #nav, #work, #about, #clients, #restricted, footer, .historic-trigger-wrap {
-            transition: opacity 3s ease;
-        }
-        .intro-letter { display: inline-block; will-change: transform, opacity; }
 
         /* VIDEO REVEAL OVERLAY */
         #videoRevealOverlay {
@@ -511,9 +484,7 @@
         }
     </style>
 </head>
-<body class="intro-playing">
-
-    <div id="siteIntro"></div>
+<body>
 
     <nav id="nav">
         <div class="nav-inner">
@@ -530,7 +501,7 @@
 
     <section id="hero">
         <div class="hero-rule-top">Film Producer &amp; Production Consultant</div>
-        <h1 class="hero-name"><span class="intro-letter">G</span><span class="intro-letter">r</span><span class="intro-letter">e</span><span class="intro-letter">g</span><br><em><span class="intro-letter">H</span><span class="intro-letter">o</span><span class="intro-letter">b</span><span class="intro-letter">d</span><span class="intro-letter">e</span><span class="intro-letter">n</span></em></h1>
+        <h1 class="hero-name">Greg<br><em>Hobden</em></h1>
         <div class="hero-divider"><span>Thirty years in film</span></div>
         <p class="hero-sub">Theatrical documentary, high-end automotive, large-scale live experiential.</p>
     </section>
@@ -1281,40 +1252,6 @@
     </section>
 
     <script>
-        // Site intro — actual h1 letters animate above overlay, then overlay dissolves
-        (function() {
-            const intro = document.getElementById('siteIntro');
-            const letters = document.querySelectorAll('.hero-name .intro-letter');
-
-            document.fonts.ready.then(() => {
-                // Scatter each letter from its natural position
-                letters.forEach(l => {
-                    const tx  = (Math.random() - 0.5) * 120;
-                    const ty  = (Math.random() - 0.5) * 80;
-                    const rot = (Math.random() - 0.5) * 18;
-                    l.style.opacity   = '0';
-                    l.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
-                });
-
-                // Animate letters to their natural h1 position
-                requestAnimationFrame(() => requestAnimationFrame(() => {
-                    letters.forEach((l, i) => {
-                        setTimeout(() => {
-                            l.style.transition = 'transform 1.6s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 1.4s ease';
-                            l.style.transform  = 'translate(0, 0) rotate(0deg)';
-                            l.style.opacity    = '1';
-                        }, i * 60);
-                    });
-                }));
-
-                // Dissolve overlay away, rest of page fades in underneath
-                setTimeout(() => {
-                    document.body.classList.remove('intro-playing');
-                    intro.classList.add('fade-out');
-                    setTimeout(() => intro.remove(), 3000);
-                }, 2400);
-            });
-        })();
 
         const nav = document.getElementById('nav');
         window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
