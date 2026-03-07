@@ -436,9 +436,9 @@
             pointer-events: none;
         }
         #siteIntro.fade-out { opacity: 0; }
-        /* Intro letters — positioned by JS to match h1 exactly */
         #introLetters {
             position: fixed;
+            visibility: hidden;
             font-family: var(--font-serif);
             font-size: clamp(48px, 9.6vw, 132px);
             font-weight: 300;
@@ -448,18 +448,20 @@
         }
         #introLetters em { font-style: italic; color: var(--gold); }
         .intro-letter { display: inline-block; will-change: transform, opacity; }
-        /* Everything fades in as overlay dissolves */
-        .hero-name, #hero > *:not(.hero-name), #nav, #work, #about, #clients, footer, .historic-trigger-wrap {
-            transition: opacity 3s ease;
-        }
+        /* Page hidden during intro — applied via class on <body> in HTML */
         body.intro-playing .hero-name,
         body.intro-playing #hero > *:not(.hero-name),
         body.intro-playing #nav,
         body.intro-playing #work,
         body.intro-playing #about,
         body.intro-playing #clients,
+        body.intro-playing #restricted,
         body.intro-playing footer,
         body.intro-playing .historic-trigger-wrap { opacity: 0; }
+        .hero-name, #hero > *:not(.hero-name),
+        #nav, #work, #about, #clients, #restricted, footer, .historic-trigger-wrap {
+            transition: opacity 3s ease;
+        }
 
         /* VIDEO REVEAL OVERLAY */
         #videoRevealOverlay {
@@ -516,7 +518,7 @@
         }
     </style>
 </head>
-<body>
+<body class="intro-playing">
 
     <div id="siteIntro">
         <div id="introLetters"><span class="intro-letter">G</span><span class="intro-letter">r</span><span class="intro-letter">e</span><span class="intro-letter">g</span><br><em><span class="intro-letter">H</span><span class="intro-letter">o</span><span class="intro-letter">b</span><span class="intro-letter">d</span><span class="intro-letter">e</span><span class="intro-letter">n</span></em></div>
@@ -1269,48 +1271,42 @@
             const introLetters = document.getElementById('introLetters');
             const heroName = document.querySelector('.hero-name');
             const letters = document.querySelectorAll('#introLetters .intro-letter');
-            const w = window.innerWidth, h = window.innerHeight;
 
-            document.body.classList.add('intro-playing');
+            document.fonts.ready.then(() => {
+                // Position overlay letters to exactly match h1
+                const rect = heroName.getBoundingClientRect();
+                introLetters.style.left  = rect.left + 'px';
+                introLetters.style.top   = rect.top  + 'px';
+                introLetters.style.width = rect.width + 'px';
+                introLetters.style.visibility = 'visible';
 
-            function start() {
-                // Wait for fonts so measurement is pixel-accurate
-                document.fonts.ready.then(() => {
-                    // Measure h1 after font is fully rendered
-                    const rect = heroName.getBoundingClientRect();
-                    introLetters.style.left = rect.left + 'px';
-                    introLetters.style.top  = rect.top  + 'px';
-                    introLetters.style.width = rect.width + 'px';
-
-                    // Each letter starts with small random drift and slight rotation
-                    letters.forEach(l => {
-                        const tx = (Math.random() - 0.5) * 120;
-                        const ty = (Math.random() - 0.5) * 80;
-                        const rot = (Math.random() - 0.5) * 18;
-                        l.style.opacity = '0';
-                        l.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
-                    });
-
-                    // Letters dissolve in and drift to position
-                    requestAnimationFrame(() => requestAnimationFrame(() => {
-                        letters.forEach((l, i) => {
-                            setTimeout(() => {
-                                l.style.transition = 'transform 1.6s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 1.4s ease';
-                                l.style.transform = 'translate(0, 0) rotate(0deg)';
-                                l.style.opacity = '1';
-                            }, i * 60);
-                        });
-                    }));
-
-                    // True crossfade: entire overlay dissolves, entire page fades in together
-                    setTimeout(() => {
-                        document.body.classList.remove('intro-playing');
-                        intro.classList.add('fade-out');
-                        setTimeout(() => intro.remove(), 3000);
-                    }, 2300);
+                // Scatter each letter with small random drift and rotation
+                letters.forEach(l => {
+                    const tx  = (Math.random() - 0.5) * 120;
+                    const ty  = (Math.random() - 0.5) * 80;
+                    const rot = (Math.random() - 0.5) * 18;
+                    l.style.opacity   = '0';
+                    l.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
                 });
-            }
-            start();
+
+                // Animate letters to their natural position
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    letters.forEach((l, i) => {
+                        setTimeout(() => {
+                            l.style.transition = 'transform 1.6s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 1.4s ease';
+                            l.style.transform  = 'translate(0, 0) rotate(0deg)';
+                            l.style.opacity    = '1';
+                        }, i * 60);
+                    });
+                }));
+
+                // Crossfade: overlay fades out, page fades in simultaneously
+                setTimeout(() => {
+                    document.body.classList.remove('intro-playing');
+                    intro.classList.add('fade-out');
+                    setTimeout(() => intro.remove(), 3000);
+                }, 2400);
+            });
         })();
 
         const nav = document.getElementById('nav');
