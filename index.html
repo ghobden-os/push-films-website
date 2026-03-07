@@ -227,6 +227,20 @@
         }
         .work-image img { transition: transform 0.8s ease; }
         .work-item:hover .work-image img { transform: scale(1.05); }
+        .work-image[data-vimeo] { cursor: pointer; }
+        .work-image[data-vimeo]::after {
+            content: '▶';
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 32px; color: rgba(255,255,255,0);
+            background: rgba(0,0,0,0);
+            transition: color 0.3s ease, background 0.3s ease;
+            pointer-events: none;
+        }
+        .work-image[data-vimeo]:hover::after {
+            color: rgba(255,255,255,0.9);
+            background: rgba(0,0,0,0.35);
+        }
         .work-image.placeholder { display: flex; align-items: center; justify-content: center; }
         .work-image.placeholder span { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rule); }
         .work-info { display: flex; flex-direction: column; gap: 8px; padding-right: 40px; }
@@ -566,9 +580,9 @@
                 <div class="work-category-header"><span>Documentary</span></div>
                 <div class="work-grid">
                     <article class="work-item">
-                        <div class="work-image"><img src="images/i-am-ali.png" alt="I Am Ali"></div>
+                        <div class="work-image" data-vimeo="1171150609"><img src="images/i-am-ali.png" alt="I Am Ali"></div>
                         <div class="work-info">
-                            <h3>I Am Ali <button class="video-btn" data-vimeo="1171150609" aria-label="Watch trailer"></button></h3>
+                            <h3>I Am Ali</h3>
                             <p class="work-meta">Feature Documentary — Universal Pictures</p>
                             <p class="work-desc">Feature documentary on Muhammad Ali, one of the most iconic figures of the 20th century. Theatrical release via Universal Pictures.</p>
                             <span class="work-arrow">→</span>
@@ -599,9 +613,9 @@
                 <div class="work-category-header"><span>Automotive</span></div>
                 <div class="work-grid">
                     <article class="work-item">
-                        <div class="work-image"><img src="images/ford-raptor.png" alt="Ford Raptor"></div>
+                        <div class="work-image" data-vimeo="1171170029"><img src="images/ford-raptor.png" alt="Ford Raptor"></div>
                         <div class="work-info">
-                            <h3>Ford Ranger Raptor <button class="video-btn" data-vimeo="1171170029" aria-label="Watch video"></button></h3>
+                            <h3>Ford Ranger Raptor</h3>
                             <p class="work-meta">Producer — Ford</p>
                             <div class="work-btns"><button class="photo-btn" id="raptorBtn" aria-label="View photos"></button> <button class="video-btn" id="raptorVideo1Btn" aria-label="Watch clip 1"></button> <button class="video-btn" id="raptorVideo2Btn" aria-label="Watch clip 2"></button></div>
                             <p class="work-desc">The global launch film for the new Ford Ranger Raptor. Directed by Nick Piper. The brief was simple: show what it can do. The solution was to chain it inside an Antonov AN-12 Soviet cargo plane and let it break free.</p>
@@ -609,9 +623,9 @@
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/ford-explorer-launch.png" alt="Ford Explorer"></div>
+                        <div class="work-image" data-vimeo="1171157858"><img src="images/ford-explorer-launch.png" alt="Ford Explorer"></div>
                         <div class="work-info">
-                            <h3>Ford Explorer <button class="video-btn" data-vimeo="1171157858" aria-label="Watch video"></button></h3>
+                            <h3>Ford Explorer</h3>
                             <p class="work-meta">Producer — Ford</p>
                             <div class="work-btns"><button class="photo-btn" id="lexieGreenBtn" aria-label="View photos"></button> <button class="video-btn" id="lexieGreenVideo1Btn" aria-label="Watch clip 1"></button> <button class="video-btn" id="lexieGreenVideo2Btn" aria-label="Watch clip 2"></button></div>
                             <p class="work-desc">Brand film for the Ford Explorer launch.</p>
@@ -619,9 +633,9 @@
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/defender.png" alt="Land Rover Defender"></div>
+                        <div class="work-image" data-vimeo="1171151952"><img src="images/defender.png" alt="Land Rover Defender"></div>
                         <div class="work-info">
-                            <h3>Land Rover Defender <button class="video-btn" data-vimeo="1171151952" aria-label="Watch video"></button></h3>
+                            <h3>Land Rover Defender</h3>
                             <p class="work-meta">Agency Producer — Imagination / JLR, Kazakhstan</p>
                             <div class="work-btns"><button class="photo-btn" id="defenderBtn" aria-label="View photos"></button> <button class="video-btn" id="defenderVideoBtn" aria-label="Watch clip"></button></div>
                             <p class="work-desc">The global launch film for the new Land Rover Defender, shot on location in Kazakhstan. The film starred Kenton Cool — the most prolific Everest summiteer in the world outside of the Sherpa community, with 19 ascents to his name. The Defender was the perfect vehicle for the world's most demanding mountaineer.</p>
@@ -629,18 +643,18 @@
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/mclaren.png" alt="McLaren Spider"></div>
+                        <div class="work-image" data-vimeo="1171150653"><img src="images/mclaren.png" alt="McLaren Spider"></div>
                         <div class="work-info">
-                            <h3>McLaren Spider <button class="video-btn" data-vimeo="1171150653" aria-label="Watch video"></button></h3>
+                            <h3>McLaren Spider</h3>
                             <p class="work-meta">Agency Producer — McLaren</p>
                             <p class="work-desc">Some cars make the job easy. The McLaren Spider is one of them.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/range-rover-test-track.png" alt="Range Rover Sport Test Track"></div>
+                        <div class="work-image" data-vimeo="1171178087"><img src="images/range-rover-test-track.png" alt="Range Rover Sport Test Track"></div>
                         <div class="work-info">
-                            <h3>Range Rover Sport Test Track <button class="video-btn" data-vimeo="1171178087" aria-label="Watch video"></button></h3>
+                            <h3>Range Rover Sport Test Track</h3>
                             <p class="work-meta">Producer — Jaguar Land Rover</p>
                             <div class="work-btns"><button class="photo-btn" id="brothersBtn" aria-label="View photo"></button> <button class="photo-btn" id="rrSportPrepBtn" aria-label="View prep photos"></button></div>
                             <p class="work-desc">At the Jaguar Land Rover test circuit, Jessica Hawkins — W Series racing driver and official James Bond stunt driver — puts Anthony Joshua through his paces in the new Range Rover Sport.</p>
@@ -648,18 +662,18 @@
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/range-rover-reveal.png" alt="Range Rover Sport Reveal"></div>
+                        <div class="work-image" data-vimeo="1171150941"><img src="images/range-rover-reveal.png" alt="Range Rover Sport Reveal"></div>
                         <div class="work-info">
-                            <h3>Range Rover Sport Reveal <button class="video-btn" data-vimeo="1171150941" aria-label="Watch video"></button></h3>
+                            <h3>Range Rover Sport Reveal</h3>
                             <p class="work-meta">Producer — Jaguar Land Rover</p>
                             <p class="work-desc">World reveal film for the Range Rover Sport.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/range-rover-james-corden.png" alt="Range Rover Sport — James Corden"></div>
+                        <div class="work-image" data-vimeo="1171151324"><img src="images/range-rover-james-corden.png" alt="Range Rover Sport — James Corden"></div>
                         <div class="work-info">
-                            <h3>Range Rover Sport — James Corden <button class="video-btn" data-vimeo="1171151324" aria-label="Watch video"></button></h3>
+                            <h3>Range Rover Sport — James Corden</h3>
                             <p class="work-meta">Producer — Imagination / JLR, Los Angeles</p>
                             <div class="work-btns"><button class="photo-btn" id="cordenBtn" aria-label="View photo"></button></div>
                             <p class="work-desc">A Carpool Karaoke spoof with James Corden and Lennard Hoornik, Chief Commercial Officer of Jaguar Land Rover. Shot behind closed gates — the car was still under pre-launch embargo.</p>
@@ -667,9 +681,9 @@
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/discovery-sport.png" alt="Land Rover Discovery Sport"></div>
+                        <div class="work-image" data-vimeo="1171150533"><img src="images/discovery-sport.png" alt="Land Rover Discovery Sport"></div>
                         <div class="work-info">
-                            <h3>Land Rover Discovery Sport <button class="video-btn" data-vimeo="1171150533" aria-label="Watch video"></button></h3>
+                            <h3>Land Rover Discovery Sport</h3>
                             <p class="work-meta">Producer — Jaguar Land Rover</p>
                             <p class="work-desc">A promotional film for the Land Rover Discovery Sport, showcasing the full range of Land Rover accessories. Rubber matting to roof racks. Everything you need — including, as it turns out, a dog wash.</p>
                             <span class="work-arrow">→</span>
@@ -692,18 +706,18 @@
                 <div class="work-category-header"><span>Expo</span></div>
                 <div class="work-grid">
                     <article class="work-item">
-                        <div class="work-image"><img src="images/family-tree.png" alt="Family Tree — Milan 2015"></div>
+                        <div class="work-image" data-vimeo="1171151872"><img src="images/family-tree.png" alt="Family Tree — Milan 2015"></div>
                         <div class="work-info">
-                            <h3>Family Tree — Milan 2015 <button class="video-btn" data-vimeo="1171151872" aria-label="Watch video"></button></h3>
+                            <h3>Family Tree — Milan 2015</h3>
                             <p class="work-meta">Executive Producer — Abu Dhabi National Media Council</p>
                             <p class="work-desc">The theme of the Milan Expo was Feeding the Planet, Energy for Life. The UAE's answer was Food for Thought — how a nation in the middle of a desert had solved the problem of feeding its people. Family Tree told that story through the eyes of a young girl who travelled from the future to save a date tree.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/the-turtle.png" alt="The Turtle — Yeosu 2012"></div>
+                        <div class="work-image" data-vimeo="1171157242"><img src="images/the-turtle.png" alt="The Turtle — Yeosu 2012"></div>
                         <div class="work-info">
-                            <h3>The Turtle — Yeosu 2012 <button class="video-btn" data-vimeo="1171157242" aria-label="Watch video"></button></h3>
+                            <h3>The Turtle — Yeosu 2012</h3>
                             <p class="work-meta">Executive Producer — Abu Dhabi National Media Council</p>
                             <p class="work-desc">The theme of the Yeosu Expo was The Living Ocean and Coast. A young Emirati boy. A turtle that had swallowed a plastic bag. A film about what one person can do. The Turtle went on to win a gold at Cannes.</p>
                             <span class="work-arrow">→</span>
@@ -716,9 +730,9 @@
                 <div class="work-category-header"><span>Luxury</span></div>
                 <div class="work-grid">
                     <article class="work-item">
-                        <div class="work-image"><img src="images/vashi.png" alt="Vashi"></div>
+                        <div class="work-image" data-vimeo="1171158700"><img src="images/vashi.png" alt="Vashi"></div>
                         <div class="work-info">
-                            <h3>Vashi <button class="video-btn" data-vimeo="1171158700" aria-label="Watch video"></button></h3>
+                            <h3>Vashi</h3>
                             <p class="work-meta">Jewellery Commercial — Vashi</p>
                             <div class="work-btns"><button class="photo-btn" id="vashiBtn" aria-label="View photos"></button></div>
                             <p class="work-desc">Luxury jewellery commercial for Vashi.</p>
@@ -742,9 +756,9 @@
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/ford-explorer-world-record.png" alt="Ford Explorer World Record"></div>
+                        <div class="work-image" data-vimeo="1171318976"><img src="images/ford-explorer-world-record.png" alt="Ford Explorer World Record"></div>
                         <div class="work-info">
-                            <h3>Ford Explorer: Lexie Limitless World Record Finale <button class="video-btn" data-vimeo="1171318976" aria-label="Watch film"></button></h3>
+                            <h3>Ford Explorer: Lexie Limitless World Record Finale</h3>
                             <p class="work-meta">Live Experiential — Ford</p>
                             <div class="work-btns"><button class="photo-btn" id="explorerBtn" aria-label="View photos"></button> <button class="video-btn" id="explorerVideo1Btn" aria-label="Watch clip 1"></button> <button class="video-btn" id="explorerVideo2Btn" aria-label="Watch clip 2"></button> <button class="video-btn" id="explorerVideo3Btn" aria-label="Watch clip 3"></button></div>
                             <p class="work-desc">We managed a rolling closure of twenty miles of the South of France coast road into Nice. As the convoy moved through each section, the route was sealed ahead and released behind — keeping the road clear without shutting it down entirely. A convoy of twenty historic Ford vehicles. Motorcycle cameramen whose day job is filming the Tour de France. Helicopters, drones, and multiple fixed cameras the length of the route.</p>
@@ -754,9 +768,9 @@
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/everest.png" alt="Everest"></div>
+                        <div class="work-image" data-vimeo="1171320476"><img src="images/everest.png" alt="Everest"></div>
                         <div class="work-info">
-                            <h3>Everest <button class="video-btn" data-vimeo="1171320476" aria-label="Watch"></button></h3>
+                            <h3>Everest</h3>
                             <p class="work-meta">Live Broadcast / Television — On-Mountain Producer</p>
                             <p class="work-desc">The British Army mounted a 2006 attempt on the West Ridge of Everest — a route no British team had ever climbed. What that understates is just how rarely anyone has climbed it. Fewer than a dozen climbers have ever summited via the West Ridge and Hornbein Couloir. More people have died attempting it than have reached the top.<br><br>Twenty-two soldiers. Three years of preparation. They turned back 800 metres short of the summit. In that context, how far they got matters.<br><br>The expedition was filmed for television and served as a national Army recruitment campaign. I was the on-mountain producer at 6,000 metres for twelve weeks, responsible for all filming and live satellite broadcasts from the mountain.<br><br>It was a pivotal project. Twelve weeks at altitude, cut off from the world, working with people who had committed everything to a single goal. The friendships it forged have lasted twenty years.</p>
                             <span class="work-arrow">→</span>
@@ -769,27 +783,27 @@
                 <div class="work-category-header"><span>Sport</span></div>
                 <div class="work-grid">
                     <article class="work-item">
-                        <div class="work-image"><img src="images/bridgestone.png" alt="Bridgestone"></div>
+                        <div class="work-image" data-vimeo="1171158800"><img src="images/bridgestone.png" alt="Bridgestone"></div>
                         <div class="work-info">
-                            <h3>Bridgestone <button class="video-btn" data-vimeo="1171158800" aria-label="Watch video"></button></h3>
+                            <h3>Bridgestone</h3>
                             <p class="work-meta">Producer — Bridgestone</p>
                             <p class="work-desc">One of my favourite shoot days ever. An incredibly simple idea, unbelievably powerful. I have to confess, I shed a tear when she jumped.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/football-league.png" alt="Football League"></div>
+                        <div class="work-image" data-vimeo="1171158741"><img src="images/football-league.png" alt="Football League"></div>
                         <div class="work-info">
-                            <h3>Football League <button class="video-btn" data-vimeo="1171158741" aria-label="Watch video"></button></h3>
+                            <h3>Football League</h3>
                             <p class="work-meta">Producer — Football League</p>
                             <p class="work-desc">IVCA Grand Prix winner.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/Golfing4 Life .png" alt="Golfing 4 Life"></div>
+                        <div class="work-image" data-vimeo="1171158957"><img src="images/Golfing4 Life .png" alt="Golfing 4 Life"></div>
                         <div class="work-info">
-                            <h3>Golfing 4 Life <button class="video-btn" data-vimeo="1171158957" aria-label="Watch video"></button></h3>
+                            <h3>Golfing 4 Life</h3>
                             <p class="work-meta">Producer</p>
                             <p class="work-desc">Enrique is a talented young golfer. He is also sixteen years old and can't afford to compete. Golfing 4 Life exists for kids like him. The charity covers the costs that stand between ability and opportunity. This film is his story.</p>
                             <span class="work-arrow">→</span>
@@ -802,18 +816,18 @@
                 <div class="work-category-header"><span>Comedy</span></div>
                 <div class="work-grid">
                     <article class="work-item">
-                        <div class="work-image"><img src="images/Sexy Tuesdays .png" alt="Sexy Tuesdays"></div>
+                        <div class="work-image" data-vimeo="1171300697"><img src="images/Sexy Tuesdays .png" alt="Sexy Tuesdays"></div>
                         <div class="work-info">
-                            <h3>Sexy Tuesdays <button class="video-btn" data-vimeo="1171300697" aria-label="Watch video"></button></h3>
+                            <h3>Sexy Tuesdays</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">A 48 hour film challenge. Subject given Friday night. Film delivered Sunday. The genre was comedy. The character was Alice or Alastair. The prop was a toothbrush. It was a competitive field.<br>We won.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/Waiting for Conkers.png" alt="Waiting for Conkers"></div>
+                        <div class="work-image" data-vimeo="1171300442"><img src="images/Waiting for Conkers.png" alt="Waiting for Conkers"></div>
                         <div class="work-info">
-                            <h3>Waiting for Conkers <button class="video-btn" data-vimeo="1171300442" aria-label="Watch video"></button></h3>
+                            <h3>Waiting for Conkers</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">A short film for a design agency. Comedy as a communication tool. Simple idea, beautifully executed.</p>
                             <span class="work-arrow">→</span>
@@ -1072,188 +1086,188 @@
                 <div class="work-category-header"><span>Music Videos</span></div>
                 <div class="work-grid">
                     <article class="work-item">
-                        <div class="work-image"><img src="images/amy-winehouse.png" alt="Amy Winehouse — In My Bed"></div>
+                        <div class="work-image" data-vimeo="1171159898"><img src="images/amy-winehouse.png" alt="Amy Winehouse — In My Bed"></div>
                         <div class="work-info">
-                            <h3>Amy Winehouse — In My Bed <button class="video-btn" data-vimeo="1171159898" aria-label="Watch video"></button></h3>
+                            <h3>Amy Winehouse — In My Bed</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">At the time, Amy was completely unknown. I had no idea I was working with one of the all-time greats. She was absolutely lovely. And one of music's greatest losses.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/diana-ross.png" alt="Diana Ross — Not Over You Yet"></div>
+                        <div class="work-image" data-vimeo="1171144740"><img src="images/diana-ross.png" alt="Diana Ross — Not Over You Yet"></div>
                         <div class="work-info">
-                            <h3>Diana Ross — Not Over You Yet <button class="video-btn" data-vimeo="1171144740" aria-label="Watch video"></button></h3>
+                            <h3>Diana Ross — Not Over You Yet</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">Shot in the Tate &amp; Lyle building in East London. We wrapped around midnight. Less than seven hours later, Diana Ross was arrested at Heathrow Airport for allegedly assaulting a female security officer during a search. She was released without charge. The centrepiece of the video was a huge American convertible, sourced from a scrapyard. When we were setting up, I ejected the eight-track cassette from the original in-car system — and found it was Diana Ross and the Supremes. Unbelievable.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/will-young.png" alt="Will Young — Friday's Child"></div>
+                        <div class="work-image" data-vimeo="1171146333"><img src="images/will-young.png" alt="Will Young — Friday's Child"></div>
                         <div class="work-info">
-                            <h3>Will Young — Friday's Child <button class="video-btn" data-vimeo="1171146333" aria-label="Watch video"></button></h3>
+                            <h3>Will Young — Friday's Child</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">Directed by Dougal Wilson. Dougal is a lovely man and one of my favourite directors — sooo talented, and always destined for bigger things. He went on to direct the John Lewis Christmas ads, the Channel 4 Paralympics film, and most recently Paddington in Peru.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/busted.png" alt="Busted — Year 3000"></div>
+                        <div class="work-image" data-vimeo="1171144521"><img src="images/busted.png" alt="Busted — Year 3000"></div>
                         <div class="work-info">
-                            <h3>Busted — Year 3000 <button class="video-btn" data-vimeo="1171144521" aria-label="Watch video"></button></h3>
+                            <h3>Busted — Year 3000</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">Directed by Dougal Wilson. A really fun shoot. Dougal always made it fun — and I really liked the boys.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/Five 2.png" alt="Five — Keep On Movin'"></div>
+                        <div class="work-image" data-vimeo="1171163096"><img src="images/Five 2.png" alt="Five — Keep On Movin'"></div>
                         <div class="work-info">
-                            <h3>Five — Keep On Movin' <button class="video-btn" data-vimeo="1171163096" aria-label="Watch video"></button></h3>
+                            <h3>Five — Keep On Movin'</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">Some songs don't age. Twenty-seven years on, this one is still as catchy as the day it was recorded. Directed by Cameron Casey. 1999.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/girls-aloud.png" alt="Girls Aloud — Sound of the Underground"></div>
+                        <div class="work-image" data-vimeo="1171149068"><img src="images/girls-aloud.png" alt="Girls Aloud — Sound of the Underground"></div>
                         <div class="work-info">
-                            <h3>Girls Aloud — Sound of the Underground <button class="video-btn" data-vimeo="1171149068" aria-label="Watch video"></button></h3>
+                            <h3>Girls Aloud — Sound of the Underground</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/klonhertz.png" alt="Klonhertz — Three Girl Rhumba"></div>
+                        <div class="work-image" data-vimeo="1171142626"><img src="images/klonhertz.png" alt="Klonhertz — Three Girl Rhumba"></div>
                         <div class="work-info">
-                            <h3>Klonhertz — Three Girl Rhumba <button class="video-btn" data-vimeo="1171142626" aria-label="Watch video"></button></h3>
+                            <h3>Klonhertz — Three Girl Rhumba</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">A paper animation video, spun off from a series of commercials we made for Orange. An unbelievably laborious process but with a great end result. I remember being blown away by the talent in the art department.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/oasis-lyla.png" alt="Oasis — Lyla"></div>
+                        <div class="work-image" data-vimeo="1171141536"><img src="images/oasis-lyla.png" alt="Oasis — Lyla"></div>
                         <div class="work-info">
-                            <h3>Oasis — Lyla <button class="video-btn" data-vimeo="1171141536" aria-label="Watch video"></button></h3>
+                            <h3>Oasis — Lyla</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">Directed by Tim Qualtrough. Tim asked me to make sure Liam stood still for the next take. I did as I was told and walked up to him. Liam looked at me… and in front of 300 people said "Stand still? Have you ever seen me f***ing perform?"</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/primal-scream-kowalski.png" alt="Primal Scream — Kowalski"></div>
+                        <div class="work-image" data-vimeo="1171148695"><img src="images/primal-scream-kowalski.png" alt="Primal Scream — Kowalski"></div>
                         <div class="work-info">
-                            <h3>Primal Scream — Kowalski <button class="video-btn" data-vimeo="1171148695" aria-label="Watch video"></button></h3>
+                            <h3>Primal Scream — Kowalski</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">Directed by Steve Hanft. Kate Moss, Bobby Gillespie, Irvine Welsh, a Dodge Challenger, and one of the more memorable shoots of my career. All I'll say is that someone projectile vomited in shot.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/sugababes.png" alt="Sugababes"></div>
+                        <div class="work-image" data-vimeo="1171145556"><img src="images/sugababes.png" alt="Sugababes"></div>
                         <div class="work-info">
-                            <h3>Sugababes — Round Round <button class="video-btn" data-vimeo="1171145556" aria-label="Watch video"></button></h3>
+                            <h3>Sugababes — Round Round</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">Directed by Phil Griffin. Phil had boy bands and girl bands sewn up at that point — for a while he was doing everyone. Ring light bonanza. A fun period.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/the-streets.png" alt="The Streets — Fit But You Know It"></div>
+                        <div class="work-image" data-vimeo="1171146145"><img src="images/the-streets.png" alt="The Streets — Fit But You Know It"></div>
                         <div class="work-info">
-                            <h3>The Streets — Fit But You Know It <button class="video-btn" data-vimeo="1171146145" aria-label="Watch video"></button></h3>
+                            <h3>The Streets — Fit But You Know It</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">At the time, Mike Skinner was pretty unknown. It was a catchy tune and I knew it was going to be a hit.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/the-streets-blinded.png" alt="The Streets — Blinded by the Lights"></div>
+                        <div class="work-image" data-vimeo="1171145969"><img src="images/the-streets-blinded.png" alt="The Streets — Blinded by the Lights"></div>
                         <div class="work-info">
-                            <h3>The Streets — Blinded by the Lights <button class="video-btn" data-vimeo="1171145969" aria-label="Watch video"></button></h3>
+                            <h3>The Streets — Blinded by the Lights</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">A method shoot. The cast took their roles very seriously — perhaps too seriously. Let's just say keeping the set under control that day was an interesting challenge for a First AD.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/westlife.png" alt="Westlife — Flying Without Wings"></div>
+                        <div class="work-image" data-vimeo="1171147332"><img src="images/westlife.png" alt="Westlife — Flying Without Wings"></div>
                         <div class="work-info">
-                            <h3>Westlife — Flying Without Wings <button class="video-btn" data-vimeo="1171147332" aria-label="Watch video"></button></h3>
+                            <h3>Westlife — Flying Without Wings</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">A massive job for a First AD. Hundreds of people floating around the studio — I had no idea why. There was clearly a big buzz around this new band. They must have known something, because I still hear this song on the radio all the time, and it takes me back every time.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/snow-patrol.png" alt="Snow Patrol — Chasing Cars"></div>
+                        <div class="work-image" data-vimeo="1171146732"><img src="images/snow-patrol.png" alt="Snow Patrol — Chasing Cars"></div>
                         <div class="work-info">
-                            <h3>Snow Patrol — Run <button class="video-btn" data-vimeo="1171146732" aria-label="Watch video"></button></h3>
+                            <h3>Snow Patrol — Run</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">Shot at night on location. Flares, motorcycles, a field. Nobody knew who Snow Patrol were. Run changed that. Three years later, Chasing Cars became the most played song on UK radio of the 21st century. Directed by Paul Gore. 2003.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/the-killers.png" alt="The Killers — All These Things That I've Done"></div>
+                        <div class="work-image" data-vimeo="1171145757"><img src="images/the-killers.png" alt="The Killers — All These Things That I've Done"></div>
                         <div class="work-info">
-                            <h3>The Killers — All These Things That I've Done <button class="video-btn" data-vimeo="1171145757" aria-label="Watch video"></button></h3>
+                            <h3>The Killers — All These Things That I've Done</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">Shot on Brick Lane in 2004. Nobody knew it then, but this was the beginning of one of the biggest rock bands in the world.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/atomic-kitten.png" alt="Atomic Kitten — Whole Again"></div>
+                        <div class="work-image" data-vimeo="1171143713"><img src="images/atomic-kitten.png" alt="Atomic Kitten — Whole Again"></div>
                         <div class="work-info">
-                            <h3>Atomic Kitten — Whole Again <button class="video-btn" data-vimeo="1171143713" aria-label="Watch video"></button></h3>
+                            <h3>Atomic Kitten — Whole Again</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">Cheese factor eleven. It's a great tune, and I still love it.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/LOUISE.png" alt="Louise — Let's Go Round Again"></div>
+                        <div class="work-image" data-vimeo="1171163129"><img src="images/LOUISE.png" alt="Louise — Let's Go Round Again"></div>
                         <div class="work-info">
-                            <h3>Louise — Let's Go Round Again <button class="video-btn" data-vimeo="1171163129" aria-label="Watch video"></button></h3>
+                            <h3>Louise — Let's Go Round Again</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">Top 10 UK. Red leather, a warehouse, dancers, laser beams. Directing Louise Redknapp was, by all accounts, not the hardest day's work Cameron Casey ever had. Directed by Cameron Casey. 1997.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/steps.png" alt="Steps — Say You'll Be Mine"></div>
+                        <div class="work-image" data-vimeo="1171145142"><img src="images/steps.png" alt="Steps — Say You'll Be Mine"></div>
                         <div class="work-info">
-                            <h3>Steps — Say You'll Be Mine <button class="video-btn" data-vimeo="1171145142" aria-label="Watch video"></button></h3>
+                            <h3>Steps — Say You'll Be Mine</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">Cheese factor nineteen. Actually a really fun shoot. I think I did four or five Steps videos in the end.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/BOYZONE .png" alt="Boyzone — All That I Need"></div>
+                        <div class="work-image" data-vimeo="1171163076"><img src="images/BOYZONE .png" alt="Boyzone — All That I Need"></div>
                         <div class="work-info">
-                            <h3>Boyzone — All That I Need <button class="video-btn" data-vimeo="1171163076" aria-label="Watch video"></button></h3>
+                            <h3>Boyzone — All That I Need</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">Number one in the UK. Shot at Three Mills Studios, East London. Directed by Cameron Casey. 1998.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/A1.png" alt="A1 — Every Time"></div>
+                        <div class="work-image" data-vimeo="1171163174"><img src="images/A1.png" alt="A1 — Every Time"></div>
                         <div class="work-info">
-                            <h3>A1 — Every Time <button class="video-btn" data-vimeo="1171163174" aria-label="Watch video"></button></h3>
+                            <h3>A1 — Every Time</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">A night bus through Morocco. A corner of the Sahara. The song wasn't going to win any awards. The trip more than made up for it. Directed by Phil Griffin. 1999.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/Just Jack - Starz In Their Eyes .png" alt="Just Jack — Starz In Their Eyes"></div>
+                        <div class="work-image" data-vimeo="1171292253"><img src="images/Just Jack - Starz In Their Eyes .png" alt="Just Jack — Starz In Their Eyes"></div>
                         <div class="work-info">
-                            <h3>Just Jack — Starz In Their Eyes <button class="video-btn" data-vimeo="1171292253" aria-label="Watch video"></button></h3>
+                            <h3>Just Jack — Starz In Their Eyes</h3>
                             <p class="work-meta">First Assistant Director</p>
                             <p class="work-desc">Number two in the UK. One of those songs you hear once and it stays with you. Directed by Christian Bevilacqua. 2006.</p>
                             <span class="work-arrow">→</span>
@@ -1266,18 +1280,18 @@
                 <div class="work-category-header"><span>Commercials</span></div>
                 <div class="work-grid">
                     <article class="work-item">
-                        <div class="work-image"><img src="images/anchor-butter.png" alt="Anchor Butter — Cow Soccer"></div>
+                        <div class="work-image" data-vimeo="1171143132"><img src="images/anchor-butter.png" alt="Anchor Butter — Cow Soccer"></div>
                         <div class="work-info">
-                            <h3>Anchor Butter — Cow Soccer <button class="video-btn" data-vimeo="1171143132" aria-label="Watch video"></button></h3>
+                            <h3>Anchor Butter — Cow Soccer</h3>
                             <p class="work-meta">Second Assistant Director</p>
                             <p class="work-desc">The Anchor Butter commercial. Two weeks in Somerset, three cows, and a bucket and shovel. You can imagine.</p>
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
                     <article class="work-item">
-                        <div class="work-image"><img src="images/ariston.png" alt="Ariston — And On and On"></div>
+                        <div class="work-image" data-vimeo="1171144174"><img src="images/ariston.png" alt="Ariston — And On and On"></div>
                         <div class="work-info">
-                            <h3>Ariston — And On and On <button class="video-btn" data-vimeo="1171144174" aria-label="Watch video"></button></h3>
+                            <h3>Ariston — And On and On</h3>
                             <p class="work-meta">Runner</p>
                             <p class="work-desc">The Ariston commercial, 1990. My first job. Edited using a then-unknown piece of technology called Harry — the direct ancestor of Flame, which went on to become the industry standard for visual effects post-production. It was the moment I knew I wanted to make a career in film.</p>
                             <span class="work-arrow">→</span>
@@ -2019,10 +2033,9 @@
                 vimeoFrame.src = '';
             }
         });
-        document.querySelectorAll('.video-btn[data-vimeo]').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const id = btn.dataset.vimeo;
+        document.querySelectorAll('.work-image[data-vimeo]').forEach(img => {
+            img.addEventListener('click', () => {
+                const id = img.dataset.vimeo;
                 vimeoFrame.src = 'https://player.vimeo.com/video/' + id + '?autoplay=1&title=0&byline=0&portrait=0';
                 vimeoModal.classList.add('open');
             });
