@@ -405,26 +405,30 @@
             pointer-events: none;
         }
         #siteIntro.fade-out { opacity: 0; }
-        /* Hero name sits above the overlay during intro */
-        body.intro-playing .hero-name {
-            position: relative;
-            z-index: 10001;
+        /* Intro letters — positioned by JS to match h1 exactly */
+        #introLetters {
+            position: fixed;
+            font-family: var(--font-serif);
+            font-size: clamp(48px, 9.6vw, 132px);
+            font-weight: 300;
+            line-height: 0.85;
+            letter-spacing: -0.02em;
+            color: var(--fg);
         }
-        /* Hide everything in hero except the name, fade in gently */
-        #hero > *:not(.hero-name) { transition: opacity 3s ease; }
-        body.intro-playing #hero > *:not(.hero-name) { opacity: 0; }
-        /* Nav and rest of page fade in with overlay */
-        #nav, #work, #about, #clients, footer, .historic-trigger-wrap {
+        #introLetters em { font-style: italic; color: var(--gold); }
+        .intro-letter { display: inline-block; will-change: transform, opacity; }
+        /* Everything fades in as overlay dissolves */
+        .hero-name, #hero > *:not(.hero-name), #nav, #work, #about, #clients, footer, .historic-trigger-wrap {
             transition: opacity 3s ease;
         }
+        body.intro-playing .hero-name,
+        body.intro-playing #hero > *:not(.hero-name),
         body.intro-playing #nav,
         body.intro-playing #work,
         body.intro-playing #about,
         body.intro-playing #clients,
         body.intro-playing footer,
         body.intro-playing .historic-trigger-wrap { opacity: 0; }
-        /* GPU-accelerated smooth letter animation */
-        .intro-letter { display: inline-block; will-change: transform, opacity; }
 
         /* VIDEO REVEAL OVERLAY */
         #videoRevealOverlay {
@@ -483,7 +487,9 @@
 </head>
 <body>
 
-    <div id="siteIntro"></div>
+    <div id="siteIntro">
+        <div id="introLetters"><span class="intro-letter">G</span><span class="intro-letter">r</span><span class="intro-letter">e</span><span class="intro-letter">g</span><br><em><span class="intro-letter">H</span><span class="intro-letter">o</span><span class="intro-letter">b</span><span class="intro-letter">d</span><span class="intro-letter">e</span><span class="intro-letter">n</span></em></div>
+    </div>
 
     <nav id="nav">
         <div class="nav-inner">
@@ -500,7 +506,7 @@
 
     <section id="hero">
         <div class="hero-rule-top">Film Producer &amp; Production Consultant</div>
-        <h1 class="hero-name"><span class="intro-letter">G</span><span class="intro-letter">r</span><span class="intro-letter">e</span><span class="intro-letter">g</span><br><em><span class="intro-letter">H</span><span class="intro-letter">o</span><span class="intro-letter">b</span><span class="intro-letter">d</span><span class="intro-letter">e</span><span class="intro-letter">n</span></em></h1>
+        <h1 class="hero-name">Greg<br><em>Hobden</em></h1>
         <div class="hero-divider"><span>Thirty years in film</span></div>
         <p class="hero-sub">Theatrical documentary, high-end automotive, large-scale live experiential.</p>
     </section>
@@ -1207,15 +1213,22 @@
     </section>
 
     <script>
-        // Site intro — hero name letters fly in from random positions
+        // Site intro — letters animate in overlay, then whole screen dissolves
         (function() {
             const intro = document.getElementById('siteIntro');
-            const letters = document.querySelectorAll('.intro-letter');
+            const introLetters = document.getElementById('introLetters');
+            const heroName = document.querySelector('.hero-name');
+            const letters = document.querySelectorAll('#introLetters .intro-letter');
             const w = window.innerWidth, h = window.innerHeight;
 
             document.body.classList.add('intro-playing');
 
-            // Each letter starts close to home with a small random drift and slight rotation
+            // Position overlay letters to exactly match the h1 on the page
+            const rect = heroName.getBoundingClientRect();
+            introLetters.style.left = rect.left + 'px';
+            introLetters.style.top = rect.top + 'px';
+
+            // Each letter starts with small random drift and slight rotation
             letters.forEach(l => {
                 const tx = (Math.random() - 0.5) * 120;
                 const ty = (Math.random() - 0.5) * 80;
@@ -1224,7 +1237,7 @@
                 l.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
             });
 
-            // Letters dissolve in and drift to their natural position
+            // Letters dissolve in and drift to position
             requestAnimationFrame(() => requestAnimationFrame(() => {
                 letters.forEach((l, i) => {
                     setTimeout(() => {
@@ -1235,12 +1248,12 @@
                 });
             }));
 
-            // Remove intro-playing (fades in rest of page) then fade overlay
+            // True crossfade: entire overlay dissolves out, entire page fades in together
             setTimeout(() => {
                 document.body.classList.remove('intro-playing');
                 intro.classList.add('fade-out');
                 setTimeout(() => intro.remove(), 3000);
-            }, 2200);
+            }, 2300);
         })();
 
         const nav = document.getElementById('nav');
