@@ -882,7 +882,7 @@
                         </div>
                         <div class="work-expand"></div>
                     </article>
-                    <article class="work-item accordion" data-vimeo="1171318976" data-gallery="explorer" data-start="1140">
+                    <article class="work-item accordion" data-vimeo="1171318976" data-gallery="explorer" data-start="1140" data-last-hold="12000">
                         <div class="work-image"><img src="images/ford-explorer-world-record.png" alt="Ford Explorer World Record"></div>
                         <div class="work-info">
                             <h3>Ford Explorer: Lexie Limitless World Record Finale</h3>
@@ -1682,7 +1682,6 @@
                     {type:'image',src:'images/explorer-13.jpg'},
                     {type:'image',src:'images/explorer-14.jpg',position:'50% 85%'},
                     {type:'image',src:'images/EXPLORER15.PNG'},
-                    {type:'image',src:'images/EXPLORER 100.jpeg'},
                     {type:'video',src:'images/explorer-15.mov'},
                     {type:'video',src:'images/explorer-16.mov'},
                     {type:'video',src:'images/explorer-17.mov'},
@@ -1820,6 +1819,7 @@
         document.querySelectorAll('.work-item.accordion').forEach(article => {
             const vimeoId = article.dataset.vimeo;
             const vimeoStart = article.dataset.start ? '#t=' + article.dataset.start + 's' : '';
+            const lastHoldMs = parseInt(article.dataset.lastHold) || 16000;
             const galleryKey = article.dataset.gallery;
             const expandPanel = article.querySelector('.work-expand');
             const items = (galleryKey && galleries[galleryKey]) ? galleries[galleryKey].items : [];
@@ -1869,7 +1869,7 @@
                     strip.appendChild(thumb);
                 }
                 const isLastGroup = vimeoId && (idx + STRIP_SIZE) >= items.length;
-                slideTimer = setTimeout(() => showSlide(idx + STRIP_SIZE, true), isLastGroup ? 16000 : 7000);
+                slideTimer = setTimeout(() => showSlide(idx + STRIP_SIZE, true), isLastGroup ? lastHoldMs : 7000);
             }
             function collapse() {
                 expanded = false;
