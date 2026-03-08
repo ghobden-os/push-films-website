@@ -576,6 +576,7 @@
         .pos-overlay button { background: none; border: 1px solid rgba(255,255,255,0.5); color: #fff; cursor: pointer; width: 22px; height: 22px; border-radius: 3px; font-size: 13px; line-height: 1; }
         .pos-overlay button:hover { background: rgba(255,255,255,0.2); }
         .pos-overlay span { font-family: var(--font-sans); font-size: 11px; color: #fff; letter-spacing: 0.05em; min-width: 32px; text-align: center; }
+        .pos-overlay .pos-num { min-width: 20px; color: var(--gold); font-weight: 500; }
         .pos-mode-badge { position: fixed; top: 80px; right: 20px; background: var(--gold); color: #000; padding: 6px 14px; border-radius: 4px; font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; z-index: 9999; display: none; }
         .expand-gallery-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; opacity: 0; transition: opacity 0.6s ease; }
         .expand-gallery-thumb video { width: 100%; height: 100%; object-fit: contain; display: block; }
@@ -1824,9 +1825,10 @@
 
         // POSITION HELPER
         let posMode = false;
+        const posAdjustments = {}; // galleryKey-itemIndex → yPct
         const posBadge = document.createElement('div');
         posBadge.className = 'pos-mode-badge';
-        posBadge.textContent = 'Position Mode — P to exit';
+        posBadge.textContent = 'Position Mode — P to exit | V for values';
         document.body.appendChild(posBadge);
 
         function addPosOverlay(thumb) {
@@ -1834,6 +1836,8 @@
             if (!img) return;
             const existing = thumb.querySelector('.pos-overlay');
             if (existing) existing.remove();
+            const posKey = thumb.dataset.posKey || '';
+            const imgNum = thumb.dataset.imgNum || '';
             const style = img.style.objectPosition;
             let yPct = 0;
             if (!style || style === 'top') yPct = 0;
@@ -1842,11 +1846,23 @@
             else { const m = style.match(/[\d.]+%\s+([\d.]+)%/); yPct = m ? parseInt(m[1]) : 0; }
             const ov = document.createElement('div');
             ov.className = 'pos-overlay';
-            ov.innerHTML = '<button class="pu">↑</button><span>' + yPct + '%</span><button class="pd">↓</button>';
+            ov.innerHTML = '<span class="pos-num">' + imgNum + '</span><button class="pu">↑</button><span class="pos-val">' + yPct + '%</span><button class="pd">↓</button>';
             thumb.appendChild(ov);
-            const lbl = ov.querySelector('span');
-            ov.querySelector('.pu').addEventListener('click', e => { e.stopPropagation(); yPct = Math.max(0, yPct - 5); img.style.objectPosition = '50% ' + yPct + '%'; lbl.textContent = yPct + '%'; });
-            ov.querySelector('.pd').addEventListener('click', e => { e.stopPropagation(); yPct = Math.min(100, yPct + 5); img.style.objectPosition = '50% ' + yPct + '%'; lbl.textContent = yPct + '%'; });
+            const lbl = ov.querySelector('.pos-val');
+            ov.querySelector('.pu').addEventListener('click', e => {
+                e.stopPropagation();
+                yPct = Math.max(0, yPct - 5);
+                img.style.objectPosition = '50% ' + yPct + '%';
+                lbl.textContent = yPct + '%';
+                if (posKey) posAdjustments[posKey] = yPct;
+            });
+            ov.querySelector('.pd').addEventListener('click', e => {
+                e.stopPropagation();
+                yPct = Math.min(100, yPct + 5);
+                img.style.objectPosition = '50% ' + yPct + '%';
+                lbl.textContent = yPct + '%';
+                if (posKey) posAdjustments[posKey] = yPct;
+            });
         }
 
         document.addEventListener('keydown', e => {
@@ -1857,6 +1873,13 @@
                     if (posMode) addPosOverlay(t);
                     else { const ov = t.querySelector('.pos-overlay'); if (ov) ov.remove(); }
                 });
+            }
+            if (e.key === 'v' || e.key === 'V') {
+                if (!posMode) return;
+                const keys = Object.keys(posAdjustments);
+                if (keys.length === 0) { alert('No adjustments made yet.'); return; }
+                const lines = keys.map(k => k + ' → ' + posAdjustments[k] + '%');
+                prompt('Adjusted values (copy these):', lines.join('\n'));
             }
         });
         document.querySelectorAll('.work-item.accordion').forEach(article => {
@@ -1898,10 +1921,15 @@
                     const rawIdx = idx + t;
                     const thumb = document.createElement('div');
                     thumb.className = 'expand-gallery-thumb';
+                    const posKey = galleryKey ? (galleryKey + '-' + rawIdx) : '';
+                    thumb.dataset.posKey = posKey;
+                    thumb.dataset.imgNum = rawIdx + 1;
                     if (rawIdx < items.length) {
                         const item = items[rawIdx];
                         if (item.type === 'image') {
-                            const posStyle = item.position ? ' style="object-position:' + item.position + '"' : '';
+                            const storedY = posKey && posAdjustments[posKey] !== undefined ? posAdjustments[posKey] : null;
+                            const posToApply = storedY !== null ? ('50% ' + storedY + '%') : (item.position || '');
+                            const posStyle = posToApply ? ' style="object-position:' + posToApply + '"' : '';
                             thumb.innerHTML = '<img src="' + item.src + '" alt=""' + posStyle + '>';
                             const img = thumb.querySelector('img');
                             requestAnimationFrame(() => requestAnimationFrame(() => { img.style.opacity = '1'; }));
