@@ -2144,6 +2144,11 @@
                 if (strip) { strip.style.display = ''; strip.innerHTML = ''; }
                 if (bar) bar.style.display = '';
                 article.classList.add('expanded');
+                requestAnimationFrame(() => {
+                    const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 64;
+                    const top = expandPanel.getBoundingClientRect().top + window.scrollY - navH - 12;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                });
                 if (frame) {
                     frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?autoplay=1&title=0&byline=0&portrait=0' + vimeoStart;
                     vimeoPlayer = new Vimeo.Player(frame);
