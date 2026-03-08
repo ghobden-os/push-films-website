@@ -1868,7 +1868,8 @@
                     }
                     strip.appendChild(thumb);
                 }
-                slideTimer = setTimeout(() => showSlide(idx + STRIP_SIZE, true), 7000);
+                const isLastGroup = vimeoId && (idx + STRIP_SIZE) >= items.length;
+                slideTimer = setTimeout(() => showSlide(idx + STRIP_SIZE, true), isLastGroup ? 16000 : 7000);
             }
             function collapse() {
                 expanded = false;
