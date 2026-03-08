@@ -9,7 +9,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    <script>history.scrollRestoration = 'manual';</script>
+    <script>
+        history.scrollRestoration = 'manual';
+        window.addEventListener('load', function() { window.scrollTo(0, 0); });
+        window.addEventListener('pageshow', function() { window.scrollTo(0, 0); });
+    </script>
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
