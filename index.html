@@ -1589,6 +1589,7 @@
         const galleries = {
             raptor: {
                 vimeo: '1171170029',
+                stripDurations: [7667, 7667, 7666, 12000],
                 items: [
                     {type:'image',src:'images/raptor-4.jpeg',position:'50% 40%'},
                     {type:'image',src:'images/raptor-11.jpeg',position:'50% 40%'},
@@ -2114,7 +2115,10 @@
                     if (posMode) addPosOverlay(thumb);
                 }
                 const isLastGroup = vimeoId && (idx + STRIP_SIZE) >= items.length;
-                slideTimer = setTimeout(() => showSlide(idx + STRIP_SIZE, true), isLastGroup ? lastHoldMs : 7000);
+                const stripGroupIdx = Math.floor(idx / STRIP_SIZE);
+                const galleryStripDurations = (galleryKey && galleries[galleryKey] && galleries[galleryKey].stripDurations) ? galleries[galleryKey].stripDurations : null;
+                const holdMs = isLastGroup ? lastHoldMs : (galleryStripDurations && galleryStripDurations[stripGroupIdx] !== undefined ? galleryStripDurations[stripGroupIdx] : 7000);
+                slideTimer = setTimeout(() => showSlide(idx + STRIP_SIZE, true), holdMs);
             }
             function collapse() {
                 expanded = false;
