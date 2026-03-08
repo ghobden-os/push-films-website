@@ -1316,8 +1316,8 @@
             <div class="work-category">
                 <div class="work-category-header"><span>Commercials — my first couple of jobs</span></div>
                 <div class="work-grid">
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171143132"><img src="images/anchor-butter.png" alt="Anchor Butter — Cow Soccer"></div>
+                    <article class="work-item" data-vimeo="1171143132">
+                        <div class="work-image"><img src="images/anchor-butter.png" alt="Anchor Butter — Cow Soccer"></div>
                         <div class="work-info">
                             <h3>Anchor Butter — Cow Soccer</h3>
                             <p class="work-meta">Second Assistant Director</p>
@@ -1325,8 +1325,8 @@
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
-                    <article class="work-item">
-                        <div class="work-image" data-vimeo="1171144174"><img src="images/ariston.png" alt="Ariston — And On and On"></div>
+                    <article class="work-item" data-vimeo="1171144174">
+                        <div class="work-image"><img src="images/ariston.png" alt="Ariston — And On and On"></div>
                         <div class="work-info">
                             <h3>Ariston — And On and On</h3>
                             <p class="work-meta">Runner</p>
@@ -2056,6 +2056,11 @@
                 prompt('Values (copy these):', all.join('\n'));
             }
         });
+        document.querySelectorAll('.work-item:not(.accordion)[data-vimeo]').forEach(article => {
+            article.style.cursor = 'pointer';
+            article.addEventListener('click', () => openVimeo(article.dataset.vimeo));
+        });
+
         document.querySelectorAll('.work-item.accordion').forEach(article => {
             const vimeoId = article.dataset.vimeo;
             const vimeoStart = article.dataset.start ? '#t=' + article.dataset.start + 's' : '';
