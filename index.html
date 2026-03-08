@@ -1832,16 +1832,21 @@
             const strip = expandPanel.querySelector('.expand-gallery-strip');
             const counter = expandPanel.querySelector('.expand-gal-counter');
             const bar = expandPanel.querySelector('.expand-gallery-bar');
-            let expanded = false, idx = 0, slideTimer = null, vimeoPlayer = null;
-            function stopSlide() { clearTimeout(slideTimer); }
+            let expanded = false, idx = 0, slideTimer = null, vimeoPlayer = null, slideDone = false;
+            function stopSlide() { clearTimeout(slideTimer); slideTimer = null; }
             function hideGallery() {
                 stopSlide();
+                slideDone = true;
                 if (strip) strip.style.display = 'none';
                 if (bar) bar.style.display = 'none';
             }
             function showSlide(i, auto) {
                 stopSlide();
-                if (auto && i >= items.length) { if (vimeoId) { hideGallery(); return; } i = 0; }
+                if (auto && slideDone) return;
+                if (auto && i >= items.length) {
+                    if (vimeoId) { hideGallery(); return; }
+                    slideDone = true; return;
+                }
                 idx = ((i % items.length) + items.length) % items.length;
                 if (counter) counter.textContent = (idx + 1) + ' / ' + items.length;
                 if (!strip) return;
@@ -1879,7 +1884,7 @@
                 if (currentlyExpanded) currentlyExpanded();
                 expanded = true;
                 currentlyExpanded = collapse;
-                slidesShown = 0;
+                slideDone = false;
                 if (strip) { strip.style.display = ''; strip.innerHTML = ''; }
                 if (bar) bar.style.display = '';
                 article.classList.add('expanded');
