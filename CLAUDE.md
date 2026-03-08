@@ -57,7 +57,7 @@ raptor: {
 - Ford Ranger Raptor: `1171157858` / gallery: `raptor`
 - Ford Explorer: `1171170029` / gallery: `lexieGreen`
 - Land Rover Defender: `1171151952` / gallery: `defender`
-- McLaren Spider: `1171150653`
+- McLaren Spider: `1171150653` / gallery: `mclaren`
 - RR Sport Test Track: `1171178087` / gallery: `rrSportTestTrack`
 - RR Sport Reveal: `1171150941`
 - RR James Corden: `1171151324` / gallery: `corden`
@@ -98,6 +98,7 @@ LinkedIn URL: `https://www.linkedin.com/in/greg-hobden-340a913/`
 --rule: #1E1E1E; --gold: #C4A46B;
 --font-serif: 'Hanken Grotesk', sans-serif;
 --font-sans: 'Hanken Grotesk', sans-serif;
+--font-hero: 'Hanken Grotesk', sans-serif;
 --pad: clamp(24px, 5vw, 80px); --gap: clamp(72px, 10vw, 140px);
 ```
 
