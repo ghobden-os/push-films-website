@@ -1832,7 +1832,7 @@
             const strip = expandPanel.querySelector('.expand-gallery-strip');
             const counter = expandPanel.querySelector('.expand-gal-counter');
             const bar = expandPanel.querySelector('.expand-gallery-bar');
-            let expanded = false, idx = 0, slideTimer = null, slidesShown = 0, vimeoPlayer = null;
+            let expanded = false, idx = 0, slideTimer = null, vimeoPlayer = null;
             function stopSlide() { clearTimeout(slideTimer); }
             function hideGallery() {
                 stopSlide();
@@ -1841,25 +1841,25 @@
             }
             function showSlide(i, auto) {
                 stopSlide();
-                if (auto) {
-                    slidesShown += STRIP_SIZE;
-                    if (vimeoId && slidesShown > items.length) { hideGallery(); return; }
-                }
+                if (auto && i >= items.length) { if (vimeoId) { hideGallery(); return; } i = 0; }
                 idx = ((i % items.length) + items.length) % items.length;
                 if (counter) counter.textContent = (idx + 1) + ' / ' + items.length;
                 if (!strip) return;
                 strip.innerHTML = '';
                 for (let t = 0; t < STRIP_SIZE; t++) {
-                    const item = items[(idx + t) % items.length];
+                    const rawIdx = idx + t;
                     const thumb = document.createElement('div');
                     thumb.className = 'expand-gallery-thumb';
-                    if (item.type === 'image') {
-                        const posStyle = item.position ? ' style="object-position:' + item.position + '"' : '';
-                        thumb.innerHTML = '<img src="' + item.src + '" alt=""' + posStyle + '>';
-                        const img = thumb.querySelector('img');
-                        requestAnimationFrame(() => requestAnimationFrame(() => { img.style.opacity = '1'; }));
-                    } else {
-                        thumb.innerHTML = '<video src="' + item.src + '" autoplay playsinline muted></video>';
+                    if (rawIdx < items.length) {
+                        const item = items[rawIdx];
+                        if (item.type === 'image') {
+                            const posStyle = item.position ? ' style="object-position:' + item.position + '"' : '';
+                            thumb.innerHTML = '<img src="' + item.src + '" alt=""' + posStyle + '>';
+                            const img = thumb.querySelector('img');
+                            requestAnimationFrame(() => requestAnimationFrame(() => { img.style.opacity = '1'; }));
+                        } else {
+                            thumb.innerHTML = '<video src="' + item.src + '" autoplay playsinline muted></video>';
+                        }
                     }
                     strip.appendChild(thumb);
                 }
