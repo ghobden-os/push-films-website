@@ -451,11 +451,10 @@
         .contact-label { padding-top: 5px; position: sticky; top: calc(var(--nav-h) + 24px); }
         .contact-label span { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); }
         .contact-lead { font-family: var(--font-serif); font-size: clamp(18px, 2vw, 28px); font-weight: 300; color: var(--fg); line-height: 1.1; margin-bottom: clamp(24px, 3vw, 36px); }
-        .contact-details { display: flex; flex-direction: column; }
-        .contact-link { display: flex; align-items: baseline; gap: 24px; font-size: clamp(14px, 1.3vw, 16px); color: #777; padding: 16px 0; border-bottom: 1px solid var(--rule); transition: color 0.2s; }
-        .contact-link:first-child { border-top: 1px solid var(--rule); }
-        .contact-link:hover { color: var(--gold); }
-        .contact-type { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); min-width: 72px; flex-shrink: 0; }
+        .contact-details { display: flex; flex-direction: row; gap: 16px; flex-wrap: wrap; }
+        .contact-link { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: #080808; background: var(--gold); border: 1px solid var(--gold); padding: 16px 32px; transition: all 0.3s ease; }
+        .contact-link:hover { background: #d4b47e; border-color: #d4b47e; }
+        .contact-type { display: none; }
 
         /* FOOTER */
         footer { padding: 28px 0; border-top: 1px solid var(--rule); }
@@ -555,7 +554,6 @@
             .nav-toggle { display: flex; }
             .clients-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
             .footer-inner { flex-direction: column; gap: 8px; text-align: center; }
-            .contact-link { flex-direction: column; gap: 4px; }
             .work-info h3 { font-size: clamp(20px, 6vw, 26px); }
             .carousel-modal .carousel-inner { max-width: 100vw; position: relative; }
             .carousel-modal img { max-width: 100vw; max-height: 75vh; }
@@ -1052,8 +1050,8 @@
             <div class="contact-content">
                 <p class="contact-lead">Drop me a line.</p>
                 <div class="contact-details">
-                    <a href="mailto:ghobden@mac.com" class="contact-link"><span class="contact-type">Email</span>ghobden@mac.com</a>
-                    <a href="https://linkedin.com/in/greghobden" target="_blank" rel="noopener" class="contact-link"><span class="contact-type">LinkedIn</span>linkedin.com/in/greghobden</a>
+                    <a href="mailto:ghobden@mac.com" class="contact-link"><span class="contact-type">Email</span>Email</a>
+                    <a href="https://www.linkedin.com/in/greg-hobden-340a913/" target="_blank" rel="noopener" class="contact-link"><span class="contact-type">LinkedIn</span>LinkedIn</a>
                 </div>
             </div>
         </div>
