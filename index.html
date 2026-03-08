@@ -6,9 +6,18 @@
     <title>Greg Hobden — Film Producer</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <meta name="description" content="Greg Hobden — Film Producer and Production Consultant. Thirty years in film across theatrical documentary, automotive commercial production and large-scale live experiential.">
+    <meta property="og:title" content="Greg Hobden — Film Producer">
+    <meta property="og:description" content="Film Producer and Production Consultant. Thirty years in film across theatrical documentary, automotive commercial, and large-scale live experiential.">
+    <meta property="og:image" content="https://greghobden.com/images/REEL%20IMAGE*%20.png">
+    <meta property="og:url" content="https://greghobden.com">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Greg Hobden — Film Producer">
+    <meta name="twitter:description" content="Film Producer and Production Consultant. Thirty years in film across theatrical documentary, automotive commercial, and large-scale live experiential.">
+    <meta name="twitter:image" content="https://greghobden.com/images/REEL%20IMAGE*%20.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500&family=Outfit:wght@400;500&display=swap" rel="stylesheet">
     <script>
         history.scrollRestoration = 'manual';
         window.addEventListener('load', function() { window.scrollTo(0, 0); });
@@ -24,9 +33,8 @@
             --dim:        #1C1C1C;
             --rule:       #1E1E1E;
             --gold:       #C4A46B;
-            --font-serif: 'Hanken Grotesk', sans-serif;
-            --font-hero: 'Hanken Grotesk', sans-serif;
-            --font-sans: 'Hanken Grotesk', sans-serif;
+            --font-serif: 'Outfit', sans-serif;
+            --font-sans: 'Manrope', sans-serif;
             --nav-h:      64px;
             --pad:        clamp(24px, 5vw, 80px);
             --gap:        clamp(72px, 10vw, 140px);
@@ -119,7 +127,7 @@
             margin-bottom: clamp(24px, 3vw, 36px);
         }
         .hero-name {
-            font-family: var(--font-hero);
+            font-family: var(--font-serif);
             font-size: clamp(56px, 11.3vw, 155px);
             font-weight: 300;
             line-height: 0.85;
@@ -563,6 +571,10 @@
             .video-modal video { max-width: 95vw; max-height: 70vh; }
             #vimeoModal iframe { width: 95vw !important; height: 53.5vw !important; }
             .historic { width: 95vw; max-height: 85vh; overflow-y: auto; }
+            .expand-film { width: 100%; padding-bottom: 56.25%; }
+            .expand-gallery-strip { gap: 8px; }
+            .work-expand { margin-left: calc(var(--pad) * -1); margin-right: calc(var(--pad) * -1); padding-left: var(--pad); padding-right: var(--pad); overflow-x: hidden; }
+            .expand-gallery-bar span { display: none; }
         }
 
         /* ACCORDION EXPAND */
@@ -762,7 +774,8 @@
                         <div class="work-info">
                             <h3>Ford Explorer</h3>
                             <p class="work-meta">Producer — Ford</p>
-                            <p class="work-desc">Brand film for the Ford Explorer launch.</p>
+                            <p class="work-desc">Ford's first European-designed, European-manufactured all-electric car. This wasn't a straightforward automotive reveal. It couldn't be.</p>
+                            <p class="work-desc">No location shoot was possible — the car was still a prototype. So we used an LED volume with Unreal Engine real-time content for the driving sequences, and green screen with CGI compositing for the product features. Multiple production methods, one seamless film.</p>
                             <span class="work-arrow">→</span>
                         </div>
                         <div class="work-expand"></div>
@@ -1543,8 +1556,13 @@
         const restrictedFrame = document.getElementById('restrictedFrame');
         const restrictedFrameWrap = document.getElementById('restrictedFrameWrap');
 
-        function checkPassword() {
-            if (restrictedPassword.value === 'Sandcastle') {
+        const PASSWORD_HASH = '239f09c36bd4aa7c192be960a639be17d90c987dbc3950ff675d4dae2b429c79';
+
+        async function checkPassword() {
+            const encoded = new TextEncoder().encode(restrictedPassword.value);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', encoded);
+            const hashHex = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+            if (hashHex === PASSWORD_HASH) {
                 restrictedFilms.classList.add('visible');
                 restrictedError.classList.remove('show');
                 restrictedPassword.closest('.password-form').style.display = 'none';
@@ -1588,7 +1606,6 @@
         // UNIFIED GALLERY
         const galleries = {
             raptor: {
-                vimeo: '1171170029',
                 stripDurations: [7667, 7667, 7666, 15000],
                 items: [
                     {type:'image',src:'images/raptor-4.jpeg',position:'50% 40%'},
@@ -1620,7 +1637,6 @@
                 ]
             },
             discovery: {
-                vimeo: '1171150533',
                 items: [
                     {type:'image',src:'images/DISCOVERY%20/DiscoverySport_Accessories_026.jpg'},
                     {type:'image',src:'images/DISCOVERY%20/DiscoverySport_Accessories_027.jpg'},
@@ -1631,7 +1647,6 @@
                 ]
             },
             lexieGreen: {
-                vimeo: '1171157858',
                 items: [
                     {type:'image',src:'images/lexie-green-screen-3.jpg',position:'50% 40%'},
                     {type:'image',src:'images/lexie-green-screen-4.jpg',position:'50% 40%'},
@@ -1642,7 +1657,7 @@
                     {type:'image',src:'images/LEXIE%20LAUNCH%20FILM%20/IMG_1678.jpeg',position:'50% 100%'},
                     {type:'image',src:'images/LEXIE%20LAUNCH%20FILM%20/IMG_1683.jpeg',position:'50% 100%'},
                     {type:'image',src:'images/LEXIE%20LAUNCH%20FILM%20/IMG_1684.jpeg',position:'50% 100%'},
-                    {type:'image',src:'images/LEXIE%20LAUNCH%20FILM%20/IMG_1686.jpeg',position:'50% 50%'},
+                    {type:'image',src:'images/LEXIE%20LAUNCH%20FILM%20/IMG_1686.jpeg',position:'50% 20%'},
                     {type:'image',src:'images/LEXIE%20LAUNCH%20FILM%20/IMG_1688.jpeg',position:'50% 15%'},
                     {type:'image',src:'images/LEXIE%20LAUNCH%20FILM%20/IMG_1695.jpeg'},
                     {type:'image',src:'images/LEXIE%20LAUNCH%20FILM%20/IMG_1699.jpeg',position:'50% 100%'},
@@ -1660,7 +1675,6 @@
                 ]
             },
             defender: {
-                vimeo: '1171151952',
                 items: [
                     {type:'image',src:'images/defender-10.jpg',position:'50% 50%'},
                     {type:'image',src:'images/defender-11.jpeg',position:'50% 100%'},
@@ -1699,7 +1713,6 @@
                 ]
             },
             rrSportTestTrack: {
-                vimeo: '1171178087',
                 items: [
                     {type:'image',src:'images/rr-sport-prep-3.jpg',position:'50% 55%'},
                     {type:'image',src:'images/rr-sport-prep-8.jpg',position:'50% 60%'},
@@ -1713,7 +1726,6 @@
                 ]
             },
             corden: {
-                vimeo: '1171151324',
                 items: [
                     {type:'image',src:'images/james-corden2_.png',position:'50% 15%'},
                     {type:'image',src:'images/range-rover-james-corden-1.jpg',position:'50% 65%'},
@@ -1733,7 +1745,6 @@
                 ]
             },
             vashi: {
-                vimeo: '1171158700',
                 items: [
                     {type:'image',src:'images/vashi-1.jpg',position:'50% 40%'},
                     {type:'image',src:'images/vashi-2.jpg',position:'50% 30%'},
@@ -1763,7 +1774,6 @@
                 ]
             },
             mclaren: {
-                vimeo: '1171150653',
                 items: [
                     {type:'image',src:'images/MCLAREN/F2258683-D32C-484F-864E-2F81FE5CD269.jpg',position:'50% 45%'},
                     {type:'image',src:'images/MCLAREN/IMG_0108.jpeg'},
@@ -1784,7 +1794,6 @@
                 ]
             },
             explorer: {
-                vimeo: '1171318976',
                 items: [
                     {type:'image',src:'images/explorer-1.jpg',position:'50% 40%'},
                     {type:'image',src:'images/explorer-2.jpg',position:'50% 10%'},
@@ -1815,7 +1824,6 @@
                 ]
             },
             everest: {
-                vimeo: '1171320476',
                 items: [
                     {type:'image',src:'images/EVEREST1.JPG',position:'50% 35%'},
                     {type:'image',src:'images/EVEREST2.JPG',position:'50% 60%'},
@@ -1861,7 +1869,6 @@
                 ]
             },
             tata: {
-                vimeo: '1171541065',
                 items: [
                     {type:'image',src:'images/tata-1.jpeg',position:'50% 20%'},
                     {type:'image',src:'images/tata-2.jpeg',position:'50% 25%'},
@@ -1889,7 +1896,6 @@
                 ]
             },
             tata2: {
-                vimeo: '1171541476',
                 items: [
                     {type:'image',src:'images/tata-1.jpeg',position:'50% 20%'},
                     {type:'image',src:'images/tata-2.jpeg',position:'50% 25%'},
