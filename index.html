@@ -565,18 +565,17 @@
         .work-expand { display: none; grid-column: 1 / -1; border-top: 1px solid var(--rule); padding-top: clamp(20px, 2.5vw, 32px); padding-bottom: clamp(8px, 1vw, 16px); width: 100vw; position: relative; left: 50%; transform: translateX(-50%); padding-left: var(--pad); padding-right: var(--pad); }
         .work-item.expanded .work-expand { display: block; }
         .work-item.expanded .work-arrow { color: var(--gold); transform: rotate(90deg); }
-        .work-expand-inner { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2.5vw, 36px); align-items: start; }
-        .work-expand-inner.single { display: block; }
+        .work-expand-inner { display: block; }
         .expand-film { position: relative; padding-bottom: 56.25%; height: 0; background: #000; }
         .expand-film iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-        .expand-gallery-stage { aspect-ratio: 16/9; background: #000; overflow: hidden; }
-        .expand-gallery-stage img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; opacity: 0; transition: opacity 0.6s ease; }
-        .expand-gallery-stage video { width: 100%; height: 100%; object-fit: contain; display: block; }
+        .expand-gallery-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 4px; }
+        .expand-gallery-thumb { aspect-ratio: 16/9; overflow: hidden; background: #000; }
+        .expand-gallery-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; opacity: 0; transition: opacity 0.6s ease; }
+        .expand-gallery-thumb video { width: 100%; height: 100%; object-fit: contain; display: block; }
         .expand-gallery-bar { display: flex; align-items: center; justify-content: space-between; padding: 10px 0 0; }
         .expand-gallery-bar button { background: none; border: none; color: var(--mid); cursor: pointer; font-size: 18px; padding: 2px 6px; transition: color 0.2s; }
         .expand-gallery-bar button:hover { color: var(--gold); }
         .expand-gallery-bar span { font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.1em; color: var(--mid); }
-        @media (max-width: 700px) { .work-expand-inner { grid-template-columns: 1fr; } }
 
         /* MEDIA BUTTON */
         .media-btn {
@@ -1814,50 +1813,54 @@
         }, {passive:true});
 
         // GENERIC ACCORDION
+        const STRIP_SIZE = 3;
         let currentlyExpanded = null;
         document.querySelectorAll('.work-item.accordion').forEach(article => {
             const vimeoId = article.dataset.vimeo;
             const galleryKey = article.dataset.gallery;
             const expandPanel = article.querySelector('.work-expand');
             const items = (galleryKey && galleries[galleryKey]) ? galleries[galleryKey].items : [];
-            const hasBoth = vimeoId && items.length > 0;
-            const innerClass = hasBoth ? 'work-expand-inner' : 'work-expand-inner single';
-            let html = '<div class="' + innerClass + '">';
-            if (vimeoId) html += '<div><div class="expand-film"><iframe class="expand-frame" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div></div>';
-            if (items.length > 0) html += '<div><div class="expand-gallery-stage"></div><div class="expand-gallery-bar"><button class="expand-gal-prev">←</button><span class="expand-gal-counter"></span><button class="expand-gal-next">→</button></div></div>';
+            let html = '<div class="work-expand-inner">';
+            if (vimeoId) html += '<div class="expand-film"><iframe class="expand-frame" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>';
+            if (items.length > 0) html += '<div class="expand-gallery-strip"></div><div class="expand-gallery-bar"><button class="expand-gal-prev">←</button><span class="expand-gal-counter"></span><button class="expand-gal-next">→</button></div>';
             html += '</div>';
             expandPanel.innerHTML = html;
             const frame = expandPanel.querySelector('.expand-frame');
-            const stage = expandPanel.querySelector('.expand-gallery-stage');
+            const strip = expandPanel.querySelector('.expand-gallery-strip');
             const counter = expandPanel.querySelector('.expand-gal-counter');
-            const galleryCol = stage ? stage.closest('.work-expand-inner > div:last-child') : null;
-            const inner = expandPanel.querySelector('.work-expand-inner');
-            let expanded = false, idx = 0, slideTimer = null, slideVideo = null, slidesShown = 0, vimeoPlayer = null;
-            function stopSlide() { clearTimeout(slideTimer); if (slideVideo) { slideVideo.pause(); slideVideo = null; } }
+            const bar = expandPanel.querySelector('.expand-gallery-bar');
+            let expanded = false, idx = 0, slideTimer = null, slidesShown = 0, vimeoPlayer = null;
+            function stopSlide() { clearTimeout(slideTimer); }
             function hideGallery() {
                 stopSlide();
-                if (galleryCol) galleryCol.style.display = 'none';
-                if (inner && vimeoId) inner.classList.add('single');
+                if (strip) strip.style.display = 'none';
+                if (bar) bar.style.display = 'none';
             }
             function showSlide(i, auto) {
                 stopSlide();
                 if (auto) {
-                    slidesShown++;
+                    slidesShown += STRIP_SIZE;
                     if (vimeoId && slidesShown > items.length) { hideGallery(); return; }
                 }
-                idx = (i + items.length) % items.length;
-                const item = items[idx];
+                idx = ((i % items.length) + items.length) % items.length;
                 if (counter) counter.textContent = (idx + 1) + ' / ' + items.length;
-                if (item.type === 'image') {
-                    stage.innerHTML = '<img src="' + item.src + '" alt=""' + (item.position ? ' style="object-position:' + item.position + '"' : '') + '>';
-                    const img = stage.querySelector('img');
-                    requestAnimationFrame(() => requestAnimationFrame(() => { img.style.opacity = '1'; }));
-                    slideTimer = setTimeout(() => showSlide(idx + 1, true), 3000);
-                } else {
-                    stage.innerHTML = '<video src="' + item.src + '" autoplay playsinline muted></video>';
-                    slideVideo = stage.querySelector('video');
-                    slideVideo.addEventListener('ended', () => showSlide(idx + 1, true), { once: true });
+                if (!strip) return;
+                strip.innerHTML = '';
+                for (let t = 0; t < STRIP_SIZE; t++) {
+                    const item = items[(idx + t) % items.length];
+                    const thumb = document.createElement('div');
+                    thumb.className = 'expand-gallery-thumb';
+                    if (item.type === 'image') {
+                        const posStyle = item.position ? ' style="object-position:' + item.position + '"' : '';
+                        thumb.innerHTML = '<img src="' + item.src + '" alt=""' + posStyle + '>';
+                        const img = thumb.querySelector('img');
+                        requestAnimationFrame(() => requestAnimationFrame(() => { img.style.opacity = '1'; }));
+                    } else {
+                        thumb.innerHTML = '<video src="' + item.src + '" playsinline muted></video>';
+                    }
+                    strip.appendChild(thumb);
                 }
+                slideTimer = setTimeout(() => showSlide(idx + STRIP_SIZE, true), 3500);
             }
             function collapse() {
                 expanded = false;
@@ -1866,7 +1869,7 @@
                 article.classList.remove('expanded');
                 if (frame) frame.src = '';
                 stopSlide();
-                if (stage) stage.innerHTML = '';
+                if (strip) strip.innerHTML = '';
                 if (counter) counter.textContent = '';
             }
             function expand() {
@@ -1874,8 +1877,8 @@
                 expanded = true;
                 currentlyExpanded = collapse;
                 slidesShown = 0;
-                if (galleryCol) galleryCol.style.display = '';
-                if (inner) inner.classList.remove('single');
+                if (strip) { strip.style.display = ''; strip.innerHTML = ''; }
+                if (bar) bar.style.display = '';
                 article.classList.add('expanded');
                 if (frame) {
                     frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?autoplay=1&title=0&byline=0&portrait=0';
@@ -1893,8 +1896,8 @@
             });
             const prev = expandPanel.querySelector('.expand-gal-prev');
             const next = expandPanel.querySelector('.expand-gal-next');
-            if (prev) prev.addEventListener('click', (e) => { e.stopPropagation(); showSlide(idx - 1, false); });
-            if (next) next.addEventListener('click', (e) => { e.stopPropagation(); showSlide(idx + 1, false); });
+            if (prev) prev.addEventListener('click', (e) => { e.stopPropagation(); showSlide(idx - STRIP_SIZE, false); });
+            if (next) next.addEventListener('click', (e) => { e.stopPropagation(); showSlide(idx + STRIP_SIZE, false); });
         });
 
         // Shared Vimeo modal
