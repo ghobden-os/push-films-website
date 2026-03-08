@@ -882,7 +882,7 @@
                         </div>
                         <div class="work-expand"></div>
                     </article>
-                    <article class="work-item accordion" data-vimeo="1171318976" data-gallery="explorer">
+                    <article class="work-item accordion" data-vimeo="1171318976" data-gallery="explorer" data-start="1140">
                         <div class="work-image"><img src="images/ford-explorer-world-record.png" alt="Ford Explorer World Record"></div>
                         <div class="work-info">
                             <h3>Ford Explorer: Lexie Limitless World Record Finale</h3>
@@ -1819,6 +1819,7 @@
         let currentlyExpanded = null;
         document.querySelectorAll('.work-item.accordion').forEach(article => {
             const vimeoId = article.dataset.vimeo;
+            const vimeoStart = article.dataset.start ? '#t=' + article.dataset.start + 's' : '';
             const galleryKey = article.dataset.gallery;
             const expandPanel = article.querySelector('.work-expand');
             const items = (galleryKey && galleries[galleryKey]) ? galleries[galleryKey].items : [];
@@ -1883,7 +1884,7 @@
                 if (bar) bar.style.display = '';
                 article.classList.add('expanded');
                 if (frame) {
-                    frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?autoplay=1&title=0&byline=0&portrait=0';
+                    frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?autoplay=1&title=0&byline=0&portrait=0' + vimeoStart;
                     vimeoPlayer = new Vimeo.Player(frame);
                     vimeoPlayer.on('ended', () => collapse());
                 }
