@@ -564,7 +564,7 @@
         /* ACCORDION EXPAND */
         .work-item.accordion { cursor: pointer; align-items: start; }
         .work-item.accordion .work-image { margin-top: 6px; }
-        .work-expand { display: none; grid-column: 1 / -1; border-top: 1px solid var(--rule); padding-top: clamp(20px, 2.5vw, 32px); padding-bottom: clamp(8px, 1vw, 16px); width: 100vw; position: relative; left: 50%; transform: translateX(-50%); padding-left: var(--pad); padding-right: var(--pad); }
+        .work-expand { display: none; grid-column: 1 / -1; border-top: 1px solid var(--rule); padding-top: clamp(20px, 2.5vw, 32px); padding-bottom: clamp(8px, 1vw, 16px); margin-left: calc(var(--pad) * -1); margin-right: calc(var(--pad) * -1); padding-left: var(--pad); padding-right: var(--pad); }
         .work-item.expanded .work-expand { display: block; }
         .work-item.expanded .work-arrow { color: var(--gold); transform: rotate(90deg); }
         .work-expand-inner { display: block; }
