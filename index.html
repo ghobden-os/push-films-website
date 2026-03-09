@@ -2163,7 +2163,7 @@
                     window.scrollTo({ top, behavior: 'smooth' });
                 });
                 if (frame) {
-                    frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?autoplay=1&muted=0&title=0&byline=0&portrait=0' + vimeoStart;
+                    frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?autoplay=1&title=0&byline=0&portrait=0' + vimeoStart;
                     vimeoPlayer = new Vimeo.Player(frame);
                     vimeoPlayer.on('ended', () => collapse());
                     vimeoPlayer.ready().then(() => {
