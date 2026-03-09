@@ -1353,6 +1353,7 @@
         </div>
     </section>
 
+    <script src="https://player.vimeo.com/api/player.js"></script>
     <script>
 
         const nav = document.getElementById('nav');
@@ -2168,8 +2169,11 @@
                 });
                 if (frame) {
                     frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?autoplay=1&playsinline=1&title=0&byline=0&portrait=0' + vimeoStart;
-                    vimeoPlayer = new Vimeo.Player(frame);
-                    vimeoPlayer.on('ended', () => collapse());
+                    if (typeof Vimeo !== 'undefined') {
+                        vimeoPlayer = new Vimeo.Player(frame);
+                        vimeoPlayer.play().catch(() => {});
+                        vimeoPlayer.on('ended', () => collapse());
+                    }
                 }
                 if (items.length > 0) {
                     showSlide(0, false);
@@ -2232,6 +2236,5 @@
             }
         }
     </script>
-    <script src="https://player.vimeo.com/api/player.js"></script>
 </body>
 </html>
