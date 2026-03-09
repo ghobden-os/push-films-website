@@ -2167,7 +2167,8 @@
                     window.scrollTo({ top, behavior: 'smooth' });
                 });
                 if (frame) {
-                    frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?autoplay=1&playsinline=1&title=0&byline=0&portrait=0' + vimeoStart;
+                    const autoplay = /iPhone|iPad|iPod/.test(navigator.userAgent) ? '' : '&autoplay=1';
+                    frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?playsinline=1&title=0&byline=0&portrait=0' + autoplay + vimeoStart;
                     if (typeof Vimeo !== 'undefined') {
                         vimeoPlayer = new Vimeo.Player(frame);
                         vimeoPlayer.on('ended', () => collapse());
