@@ -2171,6 +2171,8 @@
                     frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?playsinline=1&title=0&byline=0&portrait=0' + autoplay + vimeoStart;
                     if (typeof Vimeo !== 'undefined') {
                         vimeoPlayer = new Vimeo.Player(frame);
+                        vimeoPlayer.play().catch(() => {});
+                        vimeoPlayer.ready().then(() => { vimeoPlayer.setVolume(1).catch(() => {}); }).catch(() => {});
                         vimeoPlayer.on('ended', () => collapse());
                     }
                 }
