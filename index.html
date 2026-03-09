@@ -573,7 +573,8 @@
             #vimeoModal iframe { width: 95vw !important; height: 53.5vw !important; }
             .historic { width: 95vw; max-height: 85vh; overflow-y: auto; }
             .expand-film { width: 100%; padding-bottom: 56.25%; }
-            .expand-gallery-strip { gap: 8px; }
+            .expand-gallery-strip { gap: 8px; grid-template-columns: 1fr; }
+            .expand-gallery-thumb { aspect-ratio: unset; height: 52vw; max-height: 260px; }
             .work-expand { margin-left: calc(var(--pad) * -1); margin-right: calc(var(--pad) * -1); padding-left: var(--pad); padding-right: var(--pad); overflow-x: hidden; }
             .expand-gallery-bar span { display: none; }
         }
@@ -1071,6 +1072,10 @@
         </div>
     </section>
 
+
+    <div id="imgLightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:10000;align-items:center;justify-content:center;cursor:pointer;">
+        <img id="imgLightboxImg" src="" style="max-width:92vw;max-height:92vh;object-fit:contain;pointer-events:none;">
+    </div>
 
     <div class="video-modal" id="vimeoModal">
         <button class="video-modal-close" id="vimeoModalClose">Close ✕</button>
@@ -1978,8 +1983,15 @@
             if (Math.abs(dx) > 40) dx < 0 ? galleryShow(galleryIndex + 1) : galleryShow(galleryIndex - 1);
         }, {passive:true});
 
+        // LIGHTBOX
+        const imgLightbox = document.getElementById('imgLightbox');
+        const imgLightboxImg = document.getElementById('imgLightboxImg');
+        function openLightbox(src) { imgLightboxImg.src = src; imgLightbox.style.display = 'flex'; }
+        function closeLightbox() { imgLightbox.style.display = 'none'; imgLightboxImg.src = ''; }
+        imgLightbox.addEventListener('click', closeLightbox);
+
         // GENERIC ACCORDION
-        const STRIP_SIZE = 3;
+        const STRIP_SIZE = window.innerWidth < 640 ? 1 : 3;
         let currentlyExpanded = null;
 
         // POSITION HELPER
@@ -2112,6 +2124,8 @@
                             thumb.innerHTML = '<img src="' + item.src + '" alt=""' + posStyle + '>';
                             const img = thumb.querySelector('img');
                             requestAnimationFrame(() => requestAnimationFrame(() => { img.style.opacity = '1'; }));
+                            thumb.style.cursor = 'zoom-in';
+                            thumb.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(item.src); });
                         } else {
                             thumb.innerHTML = '<video src="' + item.src + '" autoplay playsinline muted></video>';
                         }
