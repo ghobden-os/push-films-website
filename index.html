@@ -572,9 +572,9 @@
             .video-modal video { max-width: 95vw; max-height: 70vh; }
             #vimeoModal iframe { width: 95vw !important; height: 53.5vw !important; }
             .historic { width: 95vw; max-height: 85vh; overflow-y: auto; }
-            .expand-film { width: 100%; padding-bottom: 56.25%; }
-            .expand-gallery-strip { gap: 8px; grid-template-columns: 1fr; }
-            .expand-gallery-thumb { aspect-ratio: unset; height: 52vw; max-height: 260px; }
+            .expand-film { width: 100%; padding-bottom: 56.25%; margin: 0; }
+            .expand-gallery-strip { gap: 0; grid-template-columns: 1fr; margin-top: 10px; }
+            .expand-gallery-thumb { aspect-ratio: 16/9; height: auto; max-height: none; }
             .work-expand { margin-left: calc(var(--pad) * -1); margin-right: calc(var(--pad) * -1); padding-left: var(--pad); padding-right: var(--pad); overflow-x: hidden; }
             .expand-gallery-bar span { display: none; }
         }
@@ -2163,9 +2163,12 @@
                     window.scrollTo({ top, behavior: 'smooth' });
                 });
                 if (frame) {
-                    frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?autoplay=1&title=0&byline=0&portrait=0' + vimeoStart;
+                    frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?autoplay=1&muted=0&title=0&byline=0&portrait=0' + vimeoStart;
                     vimeoPlayer = new Vimeo.Player(frame);
                     vimeoPlayer.on('ended', () => collapse());
+                    vimeoPlayer.ready().then(() => {
+                        vimeoPlayer.setMuted(false).catch(() => {});
+                    });
                 }
                 if (items.length > 0) {
                     showSlide(0, false);
