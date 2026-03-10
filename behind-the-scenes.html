@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Behind the Scenes — Greg Hobden</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500&family=Manrope:wght@300;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080808;
+  --fg: #EDEDE8;
+  --gold: #C4A46B;
+  --mid: #555;
+  --gap: 3px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--fg); font-family: 'Manrope', sans-serif; -webkit-font-smoothing: antialiased; }
+
+/* HERO HEADER */
+.hero {
+  padding: clamp(48px, 8vw, 120px) clamp(20px, 4vw, 72px) clamp(32px, 5vw, 80px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.back-link {
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: opacity 0.2s;
+  display: inline-block;
+}
+.back-link:hover { opacity: 0.5; }
+.hero h1 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  font-size: clamp(36px, 7vw, 96px);
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: var(--fg);
+}
+.hero p {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--mid);
+  letter-spacing: 0.04em;
+  max-width: 400px;
+}
+
+/* MOSAIC WALL — seamless full-width grid */
+.wall {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+  padding: 0 var(--gap);
+}
+
+/* SECTION LABEL — full-width row inside the wall */
+.wall-label {
+  grid-column: 1 / -1;
+  padding: clamp(28px, 4vw, 56px) 0 12px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border-top: 1px solid #1a1a1a;
+}
+.wall-label:first-child { border-top: none; }
+
+.wall img {
+  width: 100%;
+  display: block;
+  cursor: zoom-in;
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.3s ease;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+.wall img.loaded { opacity: 1; }
+.wall img:hover { transform: scale(1.02); z-index: 1; position: relative; }
+
+/* LIGHTBOX */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.97);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+#lightbox.open { display: flex; }
+#lightbox img {
+  max-width: 92vw;
+  max-height: 92vh;
+  object-fit: contain;
+  pointer-events: none;
+  display: block;
+}
+.lb-btn {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(237,237,232,0.4);
+  font-size: 32px;
+  cursor: pointer;
+  padding: 24px 16px;
+  z-index: 10000;
+  transition: color 0.2s;
+  line-height: 1;
+}
+.lb-btn:hover { color: var(--fg); }
+.lb-prev { left: 8px; }
+.lb-next { right: 8px; }
+.lb-close {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  background: none;
+  border: none;
+  color: rgba(237,237,232,0.4);
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 10000;
+  padding: 8px;
+  transition: color 0.2s;
+}
+.lb-close:hover { color: var(--fg); }
+.lb-counter {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: #444;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+/* FOOTER */
+footer {
+  padding: clamp(32px, 5vw, 64px) clamp(20px, 4vw, 72px);
+  border-top: 1px solid #1a1a1a;
+  margin-top: clamp(32px, 5vw, 64px);
+}
+footer a {
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+footer a:hover { opacity: 0.6; }
+
+@media (max-width: 900px) { .wall { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 600px) { .wall { grid-template-columns: repeat(2, 1fr); } .wall img { aspect-ratio: 1; } }
+@media (max-width: 380px) { .wall { grid-template-columns: repeat(1, 1fr); } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <a href="index.html" class="back-link">← Greg Hobden</a>
+  <h1>Behind<br>the Scenes</h1>
+  <p>Photographs from across three decades of production.</p>
+</div>
+
+<div class="wall">
+
+<!-- EVEREST -->
+<div class="wall-label">Everest — West Ridge Expedition</div>
+    <img loading="lazy" src="images/EVEREST1.JPG">
+    <img loading="lazy" src="images/EVEREST2.JPG">
+    <img loading="lazy" src="images/EVEREST3.JPG">
+    <img loading="lazy" src="images/EVEREST5.JPG">
+    <img loading="lazy" src="images/EVEREST6.JPG">
+    <img loading="lazy" src="images/EVEREST7.JPG">
+    <img loading="lazy" src="images/EVEREST8.JPG">
+    <img loading="lazy" src="images/EVEREST9.JPG">
+    <img loading="lazy" src="images/EVEREST10.JPG">
+    <img loading="lazy" src="images/EVEREST11.jpg">
+    <img loading="lazy" src="images/EVEREST12.jpg">
+    <img loading="lazy" src="images/EVEREST14.jpg">
+    <img loading="lazy" src="images/EVEREST16.jpg">
+    <img loading="lazy" src="images/EVEREST17.jpg">
+    <img loading="lazy" src="images/EVEREST20.JPG">
+    <img loading="lazy" src="images/EVEREST21.JPG">
+    <img loading="lazy" src="images/EVEREST22.jpg">
+    <img loading="lazy" src="images/EVEREST23.jpg">
+    <img loading="lazy" src="images/EVEREST24.JPG">
+    <img loading="lazy" src="images/EVEREST25.JPG">
+    <img loading="lazy" src="images/EVEREST26.JPG">
+    <img loading="lazy" src="images/EVEREST27.JPG">
+    <img loading="lazy" src="images/EVEREST29.JPG">
+    <img loading="lazy" src="images/EVEREST30.jpg">
+    <img loading="lazy" src="images/EVEREST34.jpg">
+    <img loading="lazy" src="images/EVEREST35.jpg">
+    <img loading="lazy" src="images/EVEREST36.JPG">
+    <img loading="lazy" src="images/EVEREST38.JPG">
+    <img loading="lazy" src="images/EVEREST40.JPG">
+    <img loading="lazy" src="images/EVEREST41.jpg">
+    <img loading="lazy" src="images/EVEREST43.jpg">
+    <img loading="lazy" src="images/EVEREST45.jpg">
+    <img loading="lazy" src="images/EVEREST47.jpg">
+    <img loading="lazy" src="images/EVEREST125.JPG">
+    <img loading="lazy" src="images/EVEREST131.jpg">
+    <img loading="lazy" src="images/%20EVEREST19.jpg">
+    <img loading="lazy" src="images/C2%20with%20Everest%20(2).jpg">
+    <img loading="lazy" src="images/C2%20with%20Everest%20copy.jpg">
+    <img loading="lazy" src="images/Views%20along%20ridge%20with%20Everest%20behind%20(40).jpg">
+    <img loading="lazy" src="images/Views%20of%20C1%20and%20Everest%20(12).jpg">
+    <img loading="lazy" src="images/Views%20of%20C1%20and%20Everest%20(45).jpg">
+    <img loading="lazy" src="images/Views%20of%20Everest%20from%20C1%20(12).jpg">
+    <img loading="lazy" src="images/Tingri%20to%20Roadhead%20BC%20(12).JPG">
+    <img loading="lazy" src="images/Tingri%20to%20Roadhead%20BC%20(21).JPG">
+    <img loading="lazy" src="images/Tingri%20to%20Roadhead%20BC%20(28).JPG">
+    <img loading="lazy" src="images/Tingri%20to%20Roadhead%20BC%20(37).jpg">
+    <img loading="lazy" src="images/Tingri%20to%20Roadhead%20BC%20(42).JPG">
+    <img loading="lazy" src="images/Tingri%20to%20Roadhead%20BC%20(43).JPG">
+    <img loading="lazy" src="images/Tingri%20to%20Roadhead%20BC%20(57).JPG">
+    <img loading="lazy" src="images/Tingri%20to%20Roadhead%20BC%20(67).JPG">
+    <img loading="lazy" src="images/Tingri%20to%20Roadhead%20BC%20(73).JPG">
+    <img loading="lazy" src="images/Tingri%20to%20Roadhead%20BC%20(77).JPG">
+    <img loading="lazy" src="images/Tingri%20to%20Roadhead%20BC%20(78).JPG">
+    <img loading="lazy" src="images/Trekking%20around%20Roadhead%20BC%20(2).jpg">
+    <img loading="lazy" src="images/Trekking%20around%20Roadhead%20BC%20(26).jpg">
+    <img loading="lazy" src="images/Trekking%20around%20Roadhead%20BC%20(34).jpg">
+    <img loading="lazy" src="images/Around%20BC%20(10).jpg">
+    <img loading="lazy" src="images/Around%20BC%20(15).jpg">
+    <img loading="lazy" src="images/Around%20BC%20(16).jpg">
+    <img loading="lazy" src="images/Around%20C1%20(68).jpg">
+    <img loading="lazy" src="images/Around%20Summit%20at%20start%20(3).JPG">
+    <img loading="lazy" src="images/Around%20Summit%20at%20start%20(7).JPG">
+    <img loading="lazy" src="images/Around%20Summit%20at%20start%20(27).JPG">
+    <img loading="lazy" src="images/Around%20Tilman_s%20Camp%20(2).jpg">
+    <img loading="lazy" src="images/Around%20Tilman_s%20Camp%20(9).JPG">
+    <img loading="lazy" src="images/Around%20Tilman_s%20Camp%20(14).JPG">
+    <img loading="lazy" src="images/Around%20Tilman_s%20Camp%20(41).JPG">
+    <img loading="lazy" src="images/Around%20Tilman_s%20Camp%20(83).JPG">
+    <img loading="lazy" src="images/Around%20Tilman_s%20Camp%20(85).JPG">
+    <img loading="lazy" src="images/Around%20Tilman_s%20Camp%20(90).JPG">
+    <img loading="lazy" src="images/Around%20Tilman_s%20Camp%20(98).jpg">
+    <img loading="lazy" src="images/Around%20Tilman_s%20Camp%20(101).jpg">
+    <img loading="lazy" src="images/Around%20Tilman_s%20Camp%20(108).JPG">
+    <img loading="lazy" src="images/Around%20Tilman_s%20Camp%20(117).JPG">
+    <img loading="lazy" src="images/Around%20the%20city%20at%20start%20(58).JPG">
+    <img loading="lazy" src="images/Arrival%20at%20Tilman's%20(21).jpg">
+    <img loading="lazy" src="images/On%20route%20to%20Tilman's%20with%20people%20(19).jpg">
+    <img loading="lazy" src="images/On%20route%20to%20Tilman's%20with%20people%20(29).jpg">
+    <img loading="lazy" src="images/On%20the%20Spur%20(49).jpg">
+    <img loading="lazy" src="images/On%20the%20Spur%20(51).jpg">
+    <img loading="lazy" src="images/On%20the%20Spur%20(62).jpg">
+    <img loading="lazy" src="images/On%20the%20Spur%20(65).jpg">
+    <img loading="lazy" src="images/On%20the%20Spur%20(72).jpg">
+    <img loading="lazy" src="images/On%20the%20Spur%20(76).jpg">
+    <img loading="lazy" src="images/On%20the%20Spur%20(84).jpg">
+    <img loading="lazy" src="images/On%20the%20Spur%20(89).jpg">
+    <img loading="lazy" src="images/On%20the%20Spur%20(94).jpg">
+    <img loading="lazy" src="images/On%20the%20Spur%20(97).jpg">
+    <img loading="lazy" src="images/On%20the%20Spur%20(98).jpg">
+    <img loading="lazy" src="images/On%20the%20Spur%20(99).jpg">
+    <img loading="lazy" src="images/Scenery%20from%20the%20Spur%20(9).jpg">
+    <img loading="lazy" src="images/Scenery%20from%20the%20Spur%20(18).jpg">
+    <img loading="lazy" src="images/Scenes%20around%20C1%20(5).jpg">
+    <img loading="lazy" src="images/Scenes%20around%20C1%20(7).jpg">
+    <img loading="lazy" src="images/Looking%20down%20(21).jpg">
+    <img loading="lazy" src="images/Camp%205%20and%20above%20(7).jpg">
+    <img loading="lazy" src="images/In%20descent%20(1).jpg">
+    <img loading="lazy" src="images/In%20the%20tents.jpg">
+    <img loading="lazy" src="images/In%20the%20tents%20(6).JPG">
+    <img loading="lazy" src="images/In%20the%20tents%20(15).JPG">
+    <img loading="lazy" src="images/In%20the%20tents%20(21).JPG">
+    <img loading="lazy" src="images/In%20the%20tents%20(26).JPG">
+    <img loading="lazy" src="images/In%20the%20tents%20(39).JPG">
+    <img loading="lazy" src="images/In%20the%20tents%20(40).JPG">
+    <img loading="lazy" src="images/In%20tents%20at%20C2%20(4).jpg">
+    <img loading="lazy" src="images/In%20tents%20at%20C2%20(14).jpg">
+    <img loading="lazy" src="images/In%20and%20after%20storms.jpg">
+    <img loading="lazy" src="images/Dark%20and%20storms%20(1).jpg">
+    <img loading="lazy" src="images/Faces%20(11).JPG">
+    <img loading="lazy" src="images/Faces%20(13).JPG">
+    <img loading="lazy" src="images/Faces%20(17).JPG">
+    <img loading="lazy" src="images/Faces%20(34).JPG">
+    <img loading="lazy" src="images/Faces%20(38).JPG">
+    <img loading="lazy" src="images/Faces%20(48).JPG">
+    <img loading="lazy" src="images/Faces%20(53).JPG">
+    <img loading="lazy" src="images/People%20(4).jpg">
+    <img loading="lazy" src="images/People%20(5).jpg">
+    <img loading="lazy" src="images/People%20(13).jpg">
+    <img loading="lazy" src="images/People%20close%20ups%20(6).jpg">
+    <img loading="lazy" src="images/People%20close%20ups%20(22).jpg">
+    <img loading="lazy" src="images/Puja.jpg">
+    <img loading="lazy" src="images/Puja%20(17).jpg">
+    <img loading="lazy" src="images/Puja%20(26).jpg">
+    <img loading="lazy" src="images/Puja%20(29).jpg">
+    <img loading="lazy" src="images/Amongst%20penatants%20(4).JPG">
+    <img loading="lazy" src="images/Amongst%20penatants%20(9).JPG">
+
+
+<!-- LAND ROVER DEFENDER -->
+
+<div class="wall-label">Land Rover Defender</div>
+
+    <img loading="lazy" src="images/DEFENDER%20/IMG_0456.JPG">
+    <img loading="lazy" src="images/DEFENDER%20/IMG_0651.jpeg">
+    <img loading="lazy" src="images/DEFENDER%20/IMG_2348.jpeg">
+    <img loading="lazy" src="images/DEFENDER%20/IMG_2685.jpeg">
+    <img loading="lazy" src="images/DEFENDER%20/IMG_2703.JPG">
+    <img loading="lazy" src="images/DEFENDER%20/IMG_2718.jpeg">
+    <img loading="lazy" src="images/DEFENDER%20/IMG_2723.jpeg">
+    <img loading="lazy" src="images/DEFENDER%20/IMG_2735.jpeg">
+    <img loading="lazy" src="images/DEFENDER%20/IMG_2739.jpeg">
+    <img loading="lazy" src="images/DEFENDER%20/IMG_2823.jpeg">
+    <img loading="lazy" src="images/DEFENDER%20/IMG_2837.jpeg">
+    <img loading="lazy" src="images/DEFENDER%20/IMG_2898.jpeg">
+    <img loading="lazy" src="images/DEFENDER%20/IMG_2908.jpeg">
+    <img loading="lazy" src="images/DEFENDER%20/IMG_2937.jpeg">
+    <img loading="lazy" src="images/DEFENDER%20/IMG_2946.jpeg">
+    <img loading="lazy" src="images/DEFENDER%20/IMG_3051.jpeg">
+    <img loading="lazy" src="images/DEFENDER%20/IMG_3086.jpeg">
+    <img loading="lazy" src="images/DEFENDER%20/3404c432-a1ae-48e7-9d0e-bc8100c25a1e.jpg">
+    <img loading="lazy" src="images/DEFENDER%20/6649ce78-8414-4c00-ae81-a168533d2203.jpg">
+    <img loading="lazy" src="images/defender-10.jpg">
+    <img loading="lazy" src="images/defender-11.jpeg">
+    <img loading="lazy" src="images/defender-12.jpg">
+    <img loading="lazy" src="images/defender-13.jpg">
+    <img loading="lazy" src="images/defender-14.jpeg">
+    <img loading="lazy" src="images/defender-15.jpeg">
+    <img loading="lazy" src="images/defender-16.jpeg">
+    <img loading="lazy" src="images/defender-17.jpg">
+    <img loading="lazy" src="images/defender-18.jpeg">
+    <img loading="lazy" src="images/defender-19.jpeg">
+    <img loading="lazy" src="images/defender-20.jpeg">
+
+
+<!-- LAND ROVER DISCOVERY SPORT -->
+
+<div class="wall-label">Land Rover Discovery Sport</div>
+
+    <img loading="lazy" src="images/DISCOVERY%20/DiscoverySport_Accessories_026.jpg">
+    <img loading="lazy" src="images/DISCOVERY%20/DiscoverySport_Accessories_027.jpg">
+    <img loading="lazy" src="images/DISCOVERY%20/IMG_4080.jpeg">
+    <img loading="lazy" src="images/DISCOVERY%20/IMG_4100.jpeg">
+    <img loading="lazy" src="images/DISCOVERY%20/IMG_4101.jpeg">
+    <img loading="lazy" src="images/DISCOVERY%20/IMG_4102.jpeg">
+
+
+<!-- MCLAREN -->
+
+<div class="wall-label">McLaren Spider</div>
+
+    <img loading="lazy" src="images/MCLAREN/F2258683-D32C-484F-864E-2F81FE5CD269.jpg">
+    <img loading="lazy" src="images/MCLAREN/IMG_0067.jpeg">
+    <img loading="lazy" src="images/MCLAREN/IMG_0108.jpeg">
+    <img loading="lazy" src="images/MCLAREN/IMG_0111.jpeg">
+    <img loading="lazy" src="images/MCLAREN/IMG_0112.jpeg">
+    <img loading="lazy" src="images/MCLAREN/IMG_0113.jpeg">
+    <img loading="lazy" src="images/MCLAREN/IMG_0114.jpeg">
+    <img loading="lazy" src="images/MCLAREN/IMG_0116.jpeg">
+    <img loading="lazy" src="images/MCLAREN/IMG_0119.jpeg">
+    <img loading="lazy" src="images/MCLAREN/IMG_0123.jpeg">
+    <img loading="lazy" src="images/MCLAREN/IMG_0130.jpeg">
+    <img loading="lazy" src="images/MCLAREN/IMG_0479.JPG">
+
+
+<!-- LEXIE LIMITLESS -->
+
+<div class="wall-label">Lexie Limitless — Ford Explorer</div>
+
+    <img loading="lazy" src="images/LEXIE%20/IMG_1749.jpeg">
+    <img loading="lazy" src="images/LEXIE%20/IMG_1755.jpeg">
+    <img loading="lazy" src="images/LEXIE%20/IMG_1758.jpeg">
+    <img loading="lazy" src="images/LEXIE%20/IMG_1762.jpeg">
+    <img loading="lazy" src="images/LEXIE%20/IMG_1764.jpeg">
+    <img loading="lazy" src="images/LEXIE%20/IMG_1765.jpeg">
+    <img loading="lazy" src="images/LEXIE%20/IMG_1767.jpeg">
+    <img loading="lazy" src="images/LEXIE%20/IMG_1768.jpeg">
+    <img loading="lazy" src="images/LEXIE%20/IMG_1769.jpeg">
+    <img loading="lazy" src="images/LEXIE%20/IMG_1770.jpeg">
+    <img loading="lazy" src="images/LEXIE%20/IMG_1771.jpeg">
+    <img loading="lazy" src="images/LEXIE%20/IMG_1772.jpeg">
+    <img loading="lazy" src="images/LEXIE%20/IMG_1776.jpeg">
+    <img loading="lazy" src="images/LEXIE%20LAUNCH%20FILM%20/IMG_1673.jpeg">
+    <img loading="lazy" src="images/LEXIE%20LAUNCH%20FILM%20/IMG_1675.jpeg">
+    <img loading="lazy" src="images/LEXIE%20LAUNCH%20FILM%20/IMG_1677.jpeg">
+    <img loading="lazy" src="images/LEXIE%20LAUNCH%20FILM%20/IMG_1678.jpeg">
+    <img loading="lazy" src="images/LEXIE%20LAUNCH%20FILM%20/IMG_1683.jpeg">
+    <img loading="lazy" src="images/LEXIE%20LAUNCH%20FILM%20/IMG_1684.jpeg">
+    <img loading="lazy" src="images/LEXIE%20LAUNCH%20FILM%20/IMG_1686.jpeg">
+    <img loading="lazy" src="images/LEXIE%20LAUNCH%20FILM%20/IMG_1688.jpeg">
+    <img loading="lazy" src="images/LEXIE%20LAUNCH%20FILM%20/IMG_1695.jpeg">
+    <img loading="lazy" src="images/LEXIE%20LAUNCH%20FILM%20/IMG_1699.jpeg">
+    <img loading="lazy" src="images/LEXIE%20LAUNCH%20FILM%20/IMG_1702.jpeg">
+    <img loading="lazy" src="images/LEXIE%20LAUNCH%20FILM%20/IMG_1704.jpeg">
+    <img loading="lazy" src="images/LEXIE%20LAUNCH%20FILM%20/IMG_1706.jpeg">
+    <img loading="lazy" src="images/LEXIE%20LAUNCH%20FILM%20/IMG_1721.jpeg">
+    <img loading="lazy" src="images/LEXIE%20LAUNCH%20FILM%20/IMG_1728.jpeg">
+    <img loading="lazy" src="images/LEXIE%20LAUNCH%20FILM%20/IMG_1729.jpeg">
+    <img loading="lazy" src="images/LEXIE%20LAUNCH%20FILM%20/IMG_1733.jpeg">
+    <img loading="lazy" src="images/LEXIE%20LAUNCH%20FILM%20/IMG_1737.jpeg">
+    <img loading="lazy" src="images/FRANCE%20/IMG_1140.jpeg">
+    <img loading="lazy" src="images/FRANCE%20/IMG_1150.jpeg">
+    <img loading="lazy" src="images/FRANCE%20/IMG_1166.jpeg">
+    <img loading="lazy" src="images/FRANCE%20/IMG_1209.jpeg">
+    <img loading="lazy" src="images/FRANCE%20/IMG_1251.jpeg">
+    <img loading="lazy" src="images/FRANCE%20/IMG_1252.jpeg">
+    <img loading="lazy" src="images/FRANCE%20/IMG_1272.jpeg">
+    <img loading="lazy" src="images/FRANCE%20/IMG_1276.jpeg">
+    <img loading="lazy" src="images/FRANCE%20/IMG_1306.jpeg">
+    <img loading="lazy" src="images/FRANCE%20/IMG_1343.jpeg">
+    <img loading="lazy" src="images/explorer-1.jpg">
+    <img loading="lazy" src="images/explorer-2.jpg">
+    <img loading="lazy" src="images/explorer-3.jpg">
+    <img loading="lazy" src="images/explorer-4.jpg">
+    <img loading="lazy" src="images/explorer-5.jpg">
+    <img loading="lazy" src="images/explorer-6.jpg">
+    <img loading="lazy" src="images/explorer-7.jpg">
+    <img loading="lazy" src="images/explorer-8.jpg">
+    <img loading="lazy" src="images/explorer-9.jpg">
+    <img loading="lazy" src="images/explorer-10.jpg">
+    <img loading="lazy" src="images/explorer-11.jpg">
+    <img loading="lazy" src="images/explorer-12.jpg">
+    <img loading="lazy" src="images/explorer-13.jpg">
+    <img loading="lazy" src="images/explorer-14.jpg">
+    <img loading="lazy" src="images/lexie-green-screen-3.jpg">
+    <img loading="lazy" src="images/lexie-green-screen-4.jpg">
+    <img loading="lazy" src="images/EXPLORER%20100.jpeg">
+    <img loading="lazy" src="images/EXPLORER%2015.jpeg">
+
+
+<!-- RANGE ROVER SPORT -->
+
+<div class="wall-label">Range Rover Sport</div>
+
+    <img loading="lazy" src="images/TEST%20TRACK%20/IMG_9094.jpeg">
+    <img loading="lazy" src="images/TEST%20TRACK%20/IMG_9101.jpeg">
+    <img loading="lazy" src="images/TEST%20TRACK%20/IMG_9104.jpeg">
+    <img loading="lazy" src="images/TEST%20TRACK%20/IMG_9146.jpeg">
+    <img loading="lazy" src="images/rr-sport-prep-3.jpg">
+    <img loading="lazy" src="images/rr-sport-prep-5.jpg">
+    <img loading="lazy" src="images/rr-sport-prep-8.jpg">
+    <img loading="lazy" src="images/rr-sport-prep-10.jpg">
+    <img loading="lazy" src="images/rr-sport-prep-11.jpg">
+    <img loading="lazy" src="images/rr-sport-prep-12.jpg">
+    <img loading="lazy" src="images/rr-sport-prep-14.jpg">
+
+
+<!-- RANGE ROVER — JAMES CORDEN -->
+
+<div class="wall-label">Range Rover — James Corden</div>
+
+    <img loading="lazy" src="images/JAMES%20CORDEN/IMG_9291.jpeg">
+    <img loading="lazy" src="images/JAMES%20CORDEN/IMG_9371.jpeg">
+    <img loading="lazy" src="images/JAMES%20CORDEN/IMG_9387.jpeg">
+    <img loading="lazy" src="images/james-corden.jpeg">
+    <img loading="lazy" src="images/James%20Corden.jpeg">
+    <img loading="lazy" src="images/range-rover-james-corden-1.jpg">
+    <img loading="lazy" src="images/range-rover-james-corden-3.jpg">
+    <img loading="lazy" src="images/range-rover-james-corden-4.jpg">
+    <img loading="lazy" src="images/range-rover-james-corden-5.jpg">
+    <img loading="lazy" src="images/range-rover-james-corden-7.jpg">
+    <img loading="lazy" src="images/range-rover-james-corden-8.jpg">
+    <img loading="lazy" src="images/range-rover-james-corden-9.jpg">
+    <img loading="lazy" src="images/range-rover-james-corden-10.jpg">
+    <img loading="lazy" src="images/range-rover-james-corden-11.jpg">
+    <img loading="lazy" src="images/range-rover-james-corden-12.jpg">
+
+
+<!-- FORD RANGER RAPTOR -->
+
+<div class="wall-label">Ford Ranger Raptor</div>
+
+    <img loading="lazy" src="images/RAPTOR%20/IMG_8372.jpeg">
+    <img loading="lazy" src="images/RAPTOR%20/IMG_8380.jpeg">
+    <img loading="lazy" src="images/RAPTOR%20/IMG_8444.jpeg">
+    <img loading="lazy" src="images/RAPTOR%20/IMG_8463.jpeg">
+    <img loading="lazy" src="images/RAPTOR%20/IMG_8482.jpeg">
+    <img loading="lazy" src="images/RAPTOR%20/IMG_8513.jpeg">
+    <img loading="lazy" src="images/RAPTOR%20/IMG_8595.jpeg">
+    <img loading="lazy" src="images/RAPTOR%20/IMG_8605.jpeg">
+    <img loading="lazy" src="images/RAPTOR%20/2391CBE2-C9A5-402F-B727-B1C2CABD56AE.jpg">
+    <img loading="lazy" src="images/RAPTOR%20/5A1AE96E-0003-4884-BC7B-25738AE3B39E.jpg">
+    <img loading="lazy" src="images/RAPTOR%20/79522D37-59D7-4640-AA7B-C968F7DD5964.jpg">
+    <img loading="lazy" src="images/RAPTOR%20/A1335C08-C6F1-4AFD-ADA0-CD230D69D21C.jpg">
+    <img loading="lazy" src="images/raptor-4.jpeg">
+    <img loading="lazy" src="images/raptor-11.jpeg">
+    <img loading="lazy" src="images/raptor-12.jpeg">
+    <img loading="lazy" src="images/raptor-13.jpeg">
+    <img loading="lazy" src="images/raptor-14.jpeg">
+    <img loading="lazy" src="images/raptor-15.jpeg">
+    <img loading="lazy" src="images/raptor-16.jpeg">
+    <img loading="lazy" src="images/raptor-17.jpeg">
+    <img loading="lazy" src="images/raptor-52.jpg">
+    <img loading="lazy" src="images/raptor-53.jpg">
+    <img loading="lazy" src="images/raptor-55.jpg">
+
+
+<!-- FORD WHEELS -->
+
+<div class="wall-label">Ford Wheels</div>
+
+    <img loading="lazy" src="images/WHEELS%20/IMG_0799.JPG">
+    <img loading="lazy" src="images/WHEELS%20/IMG_0801.JPG">
+    <img loading="lazy" src="images/WHEELS%20/IMG_0814.JPG">
+    <img loading="lazy" src="images/WHEELS%20/IMG_0821.JPG">
+    <img loading="lazy" src="images/WHEELS%20/IMG_0826.JPG">
+    <img loading="lazy" src="images/WHEELS%20/IMG_0827.JPG">
+    <img loading="lazy" src="images/WHEELS%20/IMG_0829.JPG">
+    <img loading="lazy" src="images/WHEELS%20/IMG_0835.JPG">
+    <img loading="lazy" src="images/WHEELS%20/IMG_0836.JPG">
+    <img loading="lazy" src="images/WHEELS%20/IMG_0837.JPG">
+    <img loading="lazy" src="images/WHEELS%20/IMG_0838.JPG">
+    <img loading="lazy" src="images/WHEELS%20/IMG_0840.JPG">
+    <img loading="lazy" src="images/WHEELS%20/IMG_0841.JPG">
+    <img loading="lazy" src="images/WHEELS%20/IMG_0856.JPG">
+    <img loading="lazy" src="images/WHEELS%20/IMG_0868.JPG">
+    <img loading="lazy" src="images/WHEELS%20/IMG_0883.JPG">
+    <img loading="lazy" src="images/WHEELS%20/IMG_0883%202.JPG">
+    <img loading="lazy" src="images/WHEELS%20/IMG_3668.jpeg">
+    <img loading="lazy" src="images/WHEELS%20/IMG_3680.jpeg">
+    <img loading="lazy" src="images/WHEELS%20/IMG_3704.jpeg">
+    <img loading="lazy" src="images/WHEELS%20/IMG_3709.jpeg">
+    <img loading="lazy" src="images/WHEELS%20/IMG_3711.jpeg">
+    <img loading="lazy" src="images/WHEELS%20/IMG_3716.jpeg">
+    <img loading="lazy" src="images/WHEELS%20/IMG_3724.jpeg">
+    <img loading="lazy" src="images/WHEELS%20/IMG_3727.jpeg">
+    <img loading="lazy" src="images/WHEELS%20/IMG_3741.jpeg">
+
+
+<!-- FORD MUSTANG -->
+
+<div class="wall-label">Ford Mustang</div>
+
+    <img loading="lazy" src="images/MUSTANG%20/IMG_0127.jpeg">
+    <img loading="lazy" src="images/MUSTANG%20/IMG_0786.jpeg">
+    <img loading="lazy" src="images/MUSTANG%20/IMG_0789.jpeg">
+    <img loading="lazy" src="images/MUSTANG%20/IMG_0794.jpeg">
+    <img loading="lazy" src="images/MUSTANG%20/IMG_0803.jpeg">
+    <img loading="lazy" src="images/MUSTANG%20/IMG_0805.jpeg">
+    <img loading="lazy" src="images/MUSTANG%20/45b173be-014c-4e8b-8da0-b2af5f5d0d31.jpg">
+
+
+<!-- VASHI DIAMONDS -->
+
+<div class="wall-label">Vashi Diamonds</div>
+
+    <img loading="lazy" src="images/VASHI/IMG_5430.jpeg">
+    <img loading="lazy" src="images/VASHI/IMG_5499.jpeg">
+    <img loading="lazy" src="images/VASHI/IMG_5504.jpeg">
+    <img loading="lazy" src="images/VASHI/IMG_5538.jpeg">
+    <img loading="lazy" src="images/VASHI/IMG_5540.jpeg">
+    <img loading="lazy" src="images/VASHI/IMG_5543.jpeg">
+    <img loading="lazy" src="images/vashi-1.jpg">
+    <img loading="lazy" src="images/vashi-2.jpg">
+    <img loading="lazy" src="images/vashi-3.jpg">
+    <img loading="lazy" src="images/vashi-4.jpg">
+    <img loading="lazy" src="images/vashi-5.jpg">
+    <img loading="lazy" src="images/vashi-6.jpg">
+    <img loading="lazy" src="images/vashi-7.jpg">
+    <img loading="lazy" src="images/vashi-8.jpg">
+    <img loading="lazy" src="images/vashi-9.jpg">
+    <img loading="lazy" src="images/vashi-10.jpg">
+    <img loading="lazy" src="images/vashi-11.jpg">
+    <img loading="lazy" src="images/vashi-12.jpg">
+    <img loading="lazy" src="images/vashi-13.jpg">
+    <img loading="lazy" src="images/vashi-14.jpg">
+    <img loading="lazy" src="images/vashi-15.jpg">
+    <img loading="lazy" src="images/vashi-16.jpg">
+    <img loading="lazy" src="images/vashi-17.jpg">
+    <img loading="lazy" src="images/vashi-18.jpg">
+
+
+<!-- TATA NEXON -->
+
+<div class="wall-label">Tata Nexon</div>
+
+    <img loading="lazy" src="images/INDIA/DSCF3986.jpeg">
+    <img loading="lazy" src="images/INDIA/DSCF3990.jpeg">
+    <img loading="lazy" src="images/INDIA/DSCF3995.jpeg">
+    <img loading="lazy" src="images/INDIA/DSCF3999.jpeg">
+    <img loading="lazy" src="images/INDIA/DSCF4002.jpeg">
+    <img loading="lazy" src="images/INDIA/DSCF4004.jpeg">
+    <img loading="lazy" src="images/INDIA/DSCF4018.jpeg">
+    <img loading="lazy" src="images/INDIA/DSCF4031.jpeg">
+    <img loading="lazy" src="images/INDIA/DSCF4032.jpeg">
+    <img loading="lazy" src="images/INDIA/DSCF4036.jpeg">
+    <img loading="lazy" src="images/INDIA/DSCF4081.JPG">
+    <img loading="lazy" src="images/INDIA/DSCF4090.JPG">
+    <img loading="lazy" src="images/INDIA/DSCF4103.JPG">
+    <img loading="lazy" src="images/INDIA/DSCF4176.JPG">
+    <img loading="lazy" src="images/INDIA/DSCF4191.JPG">
+    <img loading="lazy" src="images/INDIA/DSCF4215.JPG">
+    <img loading="lazy" src="images/INDIA/DSCF4221.JPG">
+    <img loading="lazy" src="images/INDIA/DSCF4224.JPG">
+    <img loading="lazy" src="images/INDIA/DSCF4236.JPG">
+    <img loading="lazy" src="images/INDIA/IMG_3020.jpeg">
+    <img loading="lazy" src="images/INDIA/IMG_3033.jpeg">
+    <img loading="lazy" src="images/tata-1.jpeg">
+    <img loading="lazy" src="images/tata-2.jpeg">
+    <img loading="lazy" src="images/tata-3.jpeg">
+    <img loading="lazy" src="images/tata-4.jpeg">
+    <img loading="lazy" src="images/tata-6.jpeg">
+    <img loading="lazy" src="images/tata-7.jpeg">
+    <img loading="lazy" src="images/tata-8.jpeg">
+    <img loading="lazy" src="images/tata-9.jpeg">
+    <img loading="lazy" src="images/tata-10.jpeg">
+    <img loading="lazy" src="images/tata-11.jpeg">
+    <img loading="lazy" src="images/tata-12.jpg">
+
+
+</div><!-- end .wall -->
+
+<footer>
+  <a href="index.html" class="back-link">← Back to Greg Hobden</a>
+</footer>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button class="lb-btn lb-prev" id="lb-prev">&#8592;</button>
+  <img id="lb-img" src="" alt="">
+  <button class="lb-btn lb-next" id="lb-next">&#8594;</button>
+  <button class="lb-close" id="lb-close">&#215;</button>
+  <span class="lb-counter" id="lb-counter"></span>
+</div>
+
+<script>
+  // Fade in images on load
+  document.querySelectorAll('.wall img').forEach(img => {
+    if (img.complete && img.naturalWidth) img.classList.add('loaded');
+    else img.addEventListener('load', () => img.classList.add('loaded'));
+  });
+
+  // Lightbox
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const lbCounter = document.getElementById('lb-counter');
+  let imgs = [], idx = 0;
+
+  // Collect all masonry images
+  document.querySelectorAll('.wall img').forEach((el, i) => {
+    imgs.push(el.src);
+    el.addEventListener('click', () => open(i));
+  });
+
+  function open(i) {
+    idx = i;
+    lbImg.src = imgs[idx];
+    lbCounter.textContent = (idx + 1) + ' / ' + imgs.length;
+    lb.classList.add('open');
+  }
+
+  function nav(dir) {
+    idx = ((idx + dir) + imgs.length) % imgs.length;
+    lbImg.src = imgs[idx];
+    lbCounter.textContent = (idx + 1) + ' / ' + imgs.length;
+  }
+
+  function close() { lb.classList.remove('open'); }
+
+  document.getElementById('lb-prev').addEventListener('click', e => { e.stopPropagation(); nav(-1); });
+  document.getElementById('lb-next').addEventListener('click', e => { e.stopPropagation(); nav(1); });
+  document.getElementById('lb-close').addEventListener('click', e => { e.stopPropagation(); close(); });
+  lb.addEventListener('click', close);
+
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'ArrowLeft') nav(-1);
+    else if (e.key === 'ArrowRight') nav(1);
+    else if (e.key === 'Escape' || e.key === ' ') { e.preventDefault(); close(); }
+  });
+</script>
+
+</body>
+</html>
