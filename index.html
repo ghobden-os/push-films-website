@@ -1654,6 +1654,7 @@
         videoOverlay.addEventListener('touchend', () => { if (revealActive) finishReveal(1.5); }, { passive: true });
 
         document.getElementById('earlyYearsBtn').addEventListener('click', () => {
+            if (currentlyExpanded) currentlyExpanded();
             audioCtx.resume();
             triggerReveal();
         });
