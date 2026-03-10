@@ -285,6 +285,29 @@ body:not(.edit-mode) .tile:hover img { transform: scale(1.02); transition: opaci
   pointer-events: none;
 }
 
+/* VARIABLE GRID — wide tiles */
+.tile.wide { grid-column: span 2; }
+
+/* LIGHTBOX IMAGE TRANSITION */
+#lightbox img { transition: opacity 0.18s ease; }
+
+/* LIGHTBOX SECTION LABEL */
+#lb-section {
+  position: fixed;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Outfit', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  z-index: 10000;
+  pointer-events: none;
+  white-space: nowrap;
+  opacity: 0.75;
+}
+
 /* FOOTER */
 footer {
   padding: clamp(32px, 5vw, 64px) clamp(20px, 4vw, 72px);
@@ -770,6 +793,7 @@ footer a:hover { opacity: 0.6; }
   <img id="lb-img" src="" alt="">
   <button class="lb-btn lb-next" id="lb-next">&#8594;</button>
   <button class="lb-close" id="lb-close">&#215;</button>
+  <span class="lb-section" id="lb-section"></span>
   <span class="lb-counter" id="lb-counter"></span>
 </div>
 
@@ -794,6 +818,29 @@ footer a:hover { opacity: 0.6; }
     hint.textContent = 'Drag to reframe';
     tile.appendChild(hint);
   });
+
+  // ─── VARIABLE GRID + SECTION MAP ────────────────────────────────────────────
+  const sectionMap = new Map();
+  let _sectionLabel = 'Behind the Scenes', _secTileIdx = 0;
+  document.querySelectorAll('.wall > *').forEach(child => {
+    if (child.classList.contains('wall-label')) {
+      _sectionLabel = child.textContent.trim();
+      _secTileIdx = 0;
+    } else if (child.classList.contains('tile')) {
+      sectionMap.set(child, _sectionLabel);
+      if (_secTileIdx === 0 || _secTileIdx % 7 === 0) child.classList.add('wide');
+      _secTileIdx++;
+    }
+  });
+
+  function getTileSection(img) {
+    const tile = img.closest('.tile');
+    return tile ? (sectionMap.get(tile) || '') : '';
+  }
+  function updateLbSection() {
+    const img = lbImgs[lbIdx];
+    document.getElementById('lb-section').textContent = img ? getTileSection(img) : '';
+  }
 
   // ─── APPLY SAVED EDITS ON LOAD ───────────────────────────────────────────────
   const edits = loadEdits();
@@ -826,14 +873,22 @@ footer a:hover { opacity: 0.6; }
     rebuildLbImgs();
     lbIdx = lbImgs.indexOf(img);
     if (lbIdx < 0) lbIdx = 0;
+    lbImg.style.opacity = '0';
     lbImg.src = lbImgs[lbIdx].src;
     lbCounter.textContent = (lbIdx + 1) + ' / ' + lbImgs.length;
+    updateLbSection();
     lb.classList.add('open');
+    requestAnimationFrame(() => requestAnimationFrame(() => { lbImg.style.opacity = '1'; }));
   }
   function lbNav(dir) {
     lbIdx = ((lbIdx + dir) + lbImgs.length) % lbImgs.length;
-    lbImg.src = lbImgs[lbIdx].src;
-    lbCounter.textContent = (lbIdx + 1) + ' / ' + lbImgs.length;
+    lbImg.style.opacity = '0';
+    setTimeout(() => {
+      lbImg.src = lbImgs[lbIdx].src;
+      lbCounter.textContent = (lbIdx + 1) + ' / ' + lbImgs.length;
+      updateLbSection();
+      lbImg.style.opacity = '1';
+    }, 160);
   }
   function lbClose() { lb.classList.remove('open'); }
 
