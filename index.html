@@ -2180,6 +2180,7 @@
                     if (typeof Vimeo !== 'undefined') {
                         vimeoPlayer = new Vimeo.Player(frame);
                         vimeoPlayer.on('ended', () => collapse());
+                        vimeoPlayer.on('pause', () => collapse());
                     }
                 }
                 if (items.length > 0) {
