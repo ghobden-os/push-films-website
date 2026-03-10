@@ -93,7 +93,7 @@ raptor: {
 - Family Tree Milan: `1171151872`
 - The Turtle Yeosu: `1171157242`
 - Vashi: `1171158700` / gallery: `vashi`
-- Ford Wheels: gallery: `fordWheels` (no vimeo)
+- Ford Wheels: `1172076463` / gallery: `fordWheels`
 - Lexie Limitless: `1171318976` / gallery: `explorer` (data-start="1140", data-last-hold="12000")
 - Everest: `1171320476` / gallery: `everest`
 - Bridgestone: `1171158800`
