@@ -6,6 +6,7 @@ Portfolio website for Greg Hobden, film producer. Single-page site with sections
 ## File Structure
 - **Sole file**: `/Users/greghobden/push-films-website/index.html` — all HTML, CSS, and JS inline in one file
 - **Images**: `/Users/greghobden/push-films-website/images/` — all images and video clips
+- **Title cards**: `title-card.html` (name + Producer) and `title-card-2.html` (name + Producer + disciplines) — 1920×1080 HTML files for screenshotting into showreel
 
 ## Deployment Pipeline
 - Git → GitHub (`ghobden-os/push-films-website`) → Netlify (auto-deploys on push to `main`)
@@ -32,7 +33,7 @@ When clicked it expands to show:
 - **Film** (Vimeo iframe) — 87.5% width centred on desktop, 100% width on mobile
 - **Gallery strip** of thumbnails below — 3 at a time on desktop, 1 at a time on mobile — auto-advancing every **7s** by default
 - After one full loop the gallery hides and the film plays solo full width
-- When the film ends the accordion auto-collapses
+- When the film ends **or is paused**, the accordion auto-collapses
 - Only one accordion can be open at a time (`currentlyExpanded` global)
 
 Gallery items support a `position` property for per-image `object-position` cropping:
@@ -42,6 +43,16 @@ Gallery items support a `position` property for per-image `object-position` crop
 All gallery images default to `object-position: top` via CSS.
 
 Clicking a gallery image opens a full-screen lightbox (`#imgLightbox`).
+
+### Lightbox
+- Click a gallery image → opens fullscreen lightbox
+- **← →** arrow keys navigate between images in the gallery (skips video items)
+- **Space** or **Escape** or click anywhere → closes lightbox
+- State tracked in `lightboxItems` (array) and `lightboxIndex` (int) module-level variables
+- `openLightbox(items, index)` — takes the full items array and the rawIdx of the clicked image
+
+### Work Section Category Order
+Documentary → Automotive → Experiential → Luxury → Expo → Sport → Comedy → Everest → The Early Years → Music Videos → Commercials
 
 ### Mobile Layout
 - `STRIP_SIZE = window.innerWidth < 640 ? 1 : 3` — set once at page load
@@ -90,8 +101,8 @@ raptor: {
 - Tata Nexon — 3 Spot Cutdown: `1171541476` / gallery: `tata2`
 - Tata Nexon — Performance: `1171541065` / gallery: `tata`
 - I Am Ali: `1171150609`
-- Family Tree Milan: `1171151872`
-- The Turtle Yeosu: `1171157242`
+- Family Tree Milan World Expo: `1171151872`
+- The Turtle Yeosu Expo: `1171157242`
 - Vashi: `1171158700` / gallery: `vashi`
 - Ford Wheels: `1172076463` / gallery: `fordWheels`
 - Lexie Limitless: `1171318976` / gallery: `explorer` (data-start="1140", data-last-hold="12000")
@@ -108,19 +119,21 @@ raptor: {
 - Film grid hides when a film plays; click the playing screen to return to film selection
 - Five video (`1171163096`): plays for 10 seconds from first frame before triggering reveal
 
+### Hero Image
+- Background image: `images/Ford%20Mustang%20223.jpg` (1MB JPEG, down from 7MB PNG)
+- Preloaded via `<link rel="preload" as="image" href="images/Ford%20Mustang%20223.jpg">` in `<head>`
+
 ### Typewriter Effect
 Hero section has a typewriter animation synced to Web Audio API click sounds via `scheduleClick(atTime)`.
 
 ### Contact Section
-Email and LinkedIn are styled as gold filled buttons:
-```css
-.contact-link { background: var(--gold); color: #080808; border: 1px solid var(--gold); padding: 16px 32px; }
-```
-LinkedIn URL: `https://www.linkedin.com/in/greg-hobden-340a913/`
+- Email: `pushfilms@icloud.com`
+- LinkedIn URL: `https://www.linkedin.com/in/greg-hobden-340a913/`
+- Both styled as gold filled buttons: `.contact-link { background: var(--gold); color: #080808; }`
 
 ## Key CSS Variables
 ```css
---bg: #080808; --fg: #EDEDE8; --mid: #555555; --dim: #1C1C1C;
+--bg: #080808; --fg: #EDEDE8; --mid: #888888; --dim: #1C1C1C;
 --rule: #1E1E1E; --gold: #C4A46B;
 --font-serif: 'Outfit', sans-serif;
 --font-sans: 'Manrope', sans-serif;
@@ -151,3 +164,4 @@ Two fonts loaded via Google Fonts:
 - The `work-expand` full-bleed technique: negative margins + padding (`margin-left: calc(var(--pad) * -1)` etc.) — not `100vw/transform`
 - iOS autoplay is permanently blocked for cross-origin Vimeo iframes — any attempt to force it (play(), setMuted(), autoplay=1, controls=0) causes an infinite spinner. Leave it as-is.
 - The accordion desktop CSS comes after the first mobile media query — always use the second `!important` media block at end of `<style>` for mobile accordion overrides
+- Pausing a film collapses the accordion (same as ending) — this is intentional
