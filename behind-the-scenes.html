@@ -371,6 +371,49 @@ footer a:hover { opacity: 0.6; }
 @media (max-width: 900px) { .wall { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 600px) { .wall { grid-template-columns: repeat(2, 1fr); } .tile { aspect-ratio: 1; } }
 @media (max-width: 380px) { .wall { grid-template-columns: repeat(1, 1fr); } }
+
+/* TILE SCROLL REVEAL */
+.tile { opacity: 0; transform: translateY(10px); transition: opacity 0.55s ease, transform 0.55s ease; }
+.tile.visible { opacity: 1; transform: none; }
+
+/* VIDEO TILES */
+.tile-video { cursor: pointer; }
+.tile-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tile-video::after {
+  content: '▶';
+  position: absolute; bottom: 10px; right: 12px;
+  font-size: 8px; color: rgba(255,255,255,0.4);
+  pointer-events: none; z-index: 2;
+  font-family: 'Manrope', sans-serif; letter-spacing: 0.05em;
+}
+
+/* VIDEO MODAL */
+#videoModal {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.97); z-index: 9999;
+  align-items: center; justify-content: center;
+}
+#videoModal.open { display: flex; }
+#videoModal video { max-width: 90vw; max-height: 86vh; display: block; outline: none; }
+#vm-close {
+  position: fixed; top: 20px; right: 24px;
+  background: none; border: none; color: rgba(237,237,232,0.4);
+  font-size: 28px; cursor: pointer; z-index: 10000;
+  padding: 8px; transition: color 0.2s;
+}
+#vm-close:hover { color: var(--fg); }
+
+/* HERO ENTRANCE */
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+.hero h1 { animation: heroIn 0.9s cubic-bezier(0.22,1,0.36,1) 0.2s both; }
+.hero p  { animation: heroIn 0.9s cubic-bezier(0.22,1,0.36,1) 0.5s both; }
+@media (prefers-reduced-motion: reduce) {
+  .hero h1, .hero p { animation: none; opacity: 1; transform: none; }
+  .tile { opacity: 1; transform: none; transition: none; }
+}
 </style>
 </head>
 <body>
@@ -430,6 +473,7 @@ footer a:hover { opacity: 0.6; }
     <img loading="lazy" src="images/raptor-52.jpg" style="object-position:49% 26.8%">
     <img loading="lazy" src="images/raptor-53.jpg" style="object-position:52% 11.6%">
     <img loading="lazy" src="images/raptor-55.jpg" style="object-position:53.6% 19.7%">
+    <div class="tile tile-video"><video src="images/raptor-50.mov" muted loop playsinline></video></div>
 
 
 
@@ -553,7 +597,10 @@ footer a:hover { opacity: 0.6; }
     <img loading="lazy" src="images/explorer-14.jpg">
     <img loading="lazy" src="images/lexie-green-screen-3.jpg" style="object-position:51.4% 17.9%">
     <img loading="lazy" src="images/lexie-green-screen-4.jpg">
+    <div class="tile tile-video"><video src="images/lexie-green-screen-1.mov" muted loop playsinline></video></div>
+    <div class="tile tile-video"><video src="images/lexie-green-screen-2.mov" muted loop playsinline></video></div>
     <img loading="lazy" src="images/EXPLORER%2015.jpeg">
+    <div class="tile tile-video"><video src="images/explorer-17.mov" muted loop playsinline></video></div>
 
 
 <!-- RANGE ROVER SPORT -->
@@ -695,6 +742,7 @@ footer a:hover { opacity: 0.6; }
     <img loading="lazy" src="images/tata-10.jpeg" style="object-position:50.5% 31.4%">
     <img loading="lazy" src="images/tata-11.jpeg">
     <img loading="lazy" src="images/tata-12.jpg">
+    <div class="tile tile-video"><video src="images/tata-1.mov" muted loop playsinline></video></div>
 
 
 
@@ -833,6 +881,12 @@ footer a:hover { opacity: 0.6; }
   <a href="index.html" class="back-link">← Back to Greg Hobden</a>
 </footer>
 
+<!-- VIDEO MODAL -->
+<div id="videoModal">
+  <video id="vm-video" controls playsinline></video>
+  <button id="vm-close">&#215;</button>
+</div>
+
 <!-- LIGHTBOX -->
 <div id="lightbox">
   <button class="lb-btn lb-prev" id="lb-prev">&#8592;</button>
@@ -911,9 +965,54 @@ footer a:hover { opacity: 0.6; }
 
   function rebuildLbImgs() {
     lbImgs = [];
-    document.querySelectorAll('.tile:not([style*="display: none"]) img').forEach(img => lbImgs.push(img));
+    document.querySelectorAll('.tile:not(.tile-video):not([style*="display: none"]) img').forEach(img => lbImgs.push(img));
   }
   rebuildLbImgs();
+
+  // ─── TILE SCROLL REVEAL ──────────────────────────────────────────────────────
+  const tileObs = new IntersectionObserver((entries, obs) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+  document.querySelectorAll('.tile').forEach(t => tileObs.observe(t));
+
+  // ─── VIDEO AUTOPLAY IN VIEWPORT ──────────────────────────────────────────────
+  const videoObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      const v = e.target.querySelector('video');
+      if (!v) return;
+      if (e.isIntersecting) v.play().catch(() => {});
+      else { v.pause(); v.currentTime = 0; }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.tile-video').forEach(t => videoObs.observe(t));
+
+  // ─── VIDEO MODAL ─────────────────────────────────────────────────────────────
+  const videoModal = document.getElementById('videoModal');
+  const vmVideo = document.getElementById('vm-video');
+  document.querySelectorAll('.tile-video').forEach(tile => {
+    tile.addEventListener('click', () => {
+      const src = tile.querySelector('video').src;
+      vmVideo.src = src;
+      vmVideo.currentTime = 0;
+      videoModal.classList.add('open');
+      vmVideo.play().catch(() => {});
+    });
+  });
+  document.getElementById('vm-close').addEventListener('click', e => {
+    e.stopPropagation();
+    vmVideo.pause();
+    videoModal.classList.remove('open');
+  });
+  videoModal.addEventListener('click', e => {
+    if (e.target === videoModal) { vmVideo.pause(); videoModal.classList.remove('open'); }
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && videoModal.classList.contains('open')) {
+      vmVideo.pause(); videoModal.classList.remove('open');
+    }
+  });
 
   function lbOpen(img) {
     rebuildLbImgs();
@@ -983,6 +1082,7 @@ footer a:hover { opacity: 0.6; }
 
   // ─── DELETE ──────────────────────────────────────────────────────────────────
   function addDeleteButton(tile) {
+    if (tile.classList.contains('tile-video')) return;
     if (tile.querySelector('.tile-del')) return;
     const btn = document.createElement('button');
     btn.className = 'tile-del';
@@ -1002,7 +1102,7 @@ footer a:hover { opacity: 0.6; }
   document.querySelectorAll('.tile').forEach(addDeleteButton);
 
   // ─── DRAG-TO-REFRAME ─────────────────────────────────────────────────────────
-  document.querySelectorAll('.tile').forEach(tile => {
+  document.querySelectorAll('.tile:not(.tile-video)').forEach(tile => {
     const img = tile.querySelector('img');
     let dragging = false, moved = false;
     let startX, startY, posX, posY;
