@@ -674,6 +674,7 @@
             .expand-film { width: 100% !important; padding-bottom: 56.25% !important; margin: 0 !important; }
             .expand-gallery-strip { grid-template-columns: 1fr !important; gap: 0 !important; margin-top: 10px !important; }
             .expand-gallery-thumb { aspect-ratio: unset !important; height: calc((100vw - 2 * var(--pad)) * 0.5625) !important; max-height: none !important; }
+            .hero-main { margin-left: 0 !important; }
         }
 
         /* === HERO ENTRANCE === */
@@ -802,7 +803,7 @@
 
     <section id="about">
         <div class="container about-grid">
-            <div class="about-label"><span>My Story</span></div>
+            <div class="about-label"><span>About</span></div>
             <div class="about-content">
                 <p class="about-lead">I grew up in the Middle East and the Sussex countryside. I knew nobody in the film business. I knew nobody in London. I had no plan.</p>
                 <p>At nineteen I moved to the city anyway. One evening I went to a party and got talking to a French cameraman. He told me to go to Soho and find a job as a tea boy. Make tea. Carry things. That was the advice.</p>
@@ -2445,6 +2446,25 @@
                 }
             }
             window.addEventListener('scroll', onScroll, { passive: true });
+        })();
+
+        // === PAGE TRANSITION ===
+        (function () {
+            document.body.style.opacity = '0';
+            requestAnimationFrame(() => {
+                document.body.style.transition = 'opacity 0.5s ease';
+                document.body.style.opacity = '1';
+            });
+            document.querySelectorAll('a[href]').forEach(link => {
+                const href = link.getAttribute('href');
+                if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('http') || link.target === '_blank') return;
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    document.body.style.transition = 'opacity 0.35s ease';
+                    document.body.style.opacity = '0';
+                    setTimeout(() => { window.location.href = href; }, 350);
+                });
+            });
         })();
 
     </script>
