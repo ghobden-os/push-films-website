@@ -676,6 +676,80 @@
             .expand-gallery-thumb { aspect-ratio: unset !important; height: calc((100vw - 2 * var(--pad)) * 0.5625) !important; max-height: none !important; }
         }
 
+        /* === HERO ENTRANCE === */
+        @keyframes heroSlideUp {
+            from { opacity: 0; transform: translateY(32px); }
+            to   { opacity: 1; transform: none; }
+        }
+        @media (prefers-reduced-motion: no-preference) {
+            .hero-rule-top { animation: heroSlideUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.1s  both; }
+            .hero-name     { animation: heroSlideUp 1.1s cubic-bezier(0.16,1,0.3,1) 0.3s  both; }
+            .hero-divider  { animation: heroSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.65s both; }
+            .hero-sub      { animation: heroSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.85s both; }
+            .hero-reel-btn { animation: heroSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 1.05s both; }
+        }
+
+        /* === CUSTOM CURSOR === */
+        * { cursor: none; }
+        #cursor {
+            position: fixed;
+            width: 20px; height: 20px;
+            border: 1px solid rgba(196,164,107,0.75);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: width 0.22s ease, height 0.22s ease, background 0.22s ease, border-color 0.22s ease, opacity 0.35s ease;
+            top: -40px; left: -40px;
+            opacity: 0;
+        }
+        #cursor.hovering {
+            width: 38px; height: 38px;
+            background: rgba(196,164,107,0.08);
+            border-color: var(--gold);
+        }
+        @media (pointer: coarse) { #cursor { display: none; } * { cursor: auto; } }
+
+        /* === WORK ITEM NUMBERING === */
+        .work-category { counter-reset: work-num; }
+        .work-item { counter-increment: work-num; }
+        .work-info::before {
+            content: counter(work-num, decimal-leading-zero);
+            display: block;
+            font-family: var(--font-sans);
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            color: var(--gold);
+            opacity: 0.5;
+            margin-bottom: 10px;
+        }
+
+        /* === SCROLL PROGRESS === */
+        #scrollProgress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 1px;
+            background: var(--gold);
+            width: 0%;
+            z-index: 10001;
+            pointer-events: none;
+            opacity: 0.75;
+        }
+
+        /* === ABOUT PULL QUOTE === */
+        .about-pull {
+            font-family: var(--font-serif);
+            font-size: clamp(20px, 2.4vw, 32px);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--fg);
+            line-height: 1.3;
+            border-left: 2px solid var(--gold);
+            padding-left: 24px;
+            margin: 44px 0 32px;
+            max-width: 560px;
+        }
+
         /* SCROLL REVEAL */
         .reveal {
             opacity: 0;
@@ -699,6 +773,8 @@
     </style>
 </head>
 <body>
+    <div id="cursor"></div>
+    <div id="scrollProgress"></div>
 
     <nav id="nav">
         <div class="nav-inner">
@@ -737,7 +813,8 @@
                 <hr class="about-section-break">
                 <p>Three theatrical feature documentaries for Universal Pictures. A decade of automotive work for Rolls-Royce, Jaguar Land Rover, Ford and McLaren. Nearly a decade producing all film and media for the UAE pavilions across three World Expos — Shanghai, Yeosu and Milan. Twelve weeks at 6,000 metres on Everest, managing camera teams embedded with the British Army's attempt on the West Ridge. More people have died on that route than have reached the summit.</p>
                 <p>A growing part of my work has been experiential — film that puts the audience inside the story rather than in front of it. Not content about a product. An experience built around one. Some of that work is on this website.</p>
-                <p>Tea boy. Runner. 2nd AD. First AD. Producer. That career path has helped me understand exactly what it takes to deliver a great film.</p>
+                <blockquote class="about-pull">Tea boy. Runner. 2nd AD. First AD. Producer.</blockquote>
+                <p>That career path has helped me understand exactly what it takes to deliver a great film.</p>
                 <p>The work is on this website. Have a look around.</p>
                 <div class="about-links">
                     <a href="https://www.linkedin.com/in/greg-hobden-340a913/" target="_blank" rel="noopener">LinkedIn →</a>
@@ -2282,6 +2359,37 @@
                 });
             }
         }
+
+        // === CUSTOM CURSOR ===
+        (function () {
+            const cursor = document.getElementById('cursor');
+            if (!cursor || window.matchMedia('(pointer: coarse)').matches) return;
+            let tx = -40, ty = -40, cx = -40, cy = -40;
+            document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; cursor.style.opacity = '1'; });
+            document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; });
+            function animate() {
+                cx += (tx - cx) * 0.14;
+                cy += (ty - cy) * 0.14;
+                cursor.style.left = cx + 'px';
+                cursor.style.top  = cy + 'px';
+                requestAnimationFrame(animate);
+            }
+            animate();
+            document.querySelectorAll('a, button, .work-item, .restricted-film-card, [data-vimeo]').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+            });
+        })();
+
+        // === SCROLL PROGRESS ===
+        (function () {
+            const bar = document.getElementById('scrollProgress');
+            if (!bar) return;
+            window.addEventListener('scroll', () => {
+                const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+                bar.style.width = pct + '%';
+            }, { passive: true });
+        })();
 
         // === SCROLL REVEAL ===
         (function () {
