@@ -1275,7 +1275,7 @@
                             <span class="work-arrow">→</span>
                         </div>
                     </article>
-                    <article class="work-item" data-vimeo="1171144521">
+                    <article class="work-item" data-youtube="Tu7HoGZaspo">
                         <div class="work-image"><img loading="lazy" src="images/busted.png" alt="Busted — Year 3000"></div>
                         <div class="work-info">
                             <h3>Busted — Year 3000</h3>
@@ -2210,6 +2210,14 @@
         document.querySelectorAll('.work-item:not(.accordion)[data-vimeo]').forEach(article => {
             article.style.cursor = 'pointer';
             article.addEventListener('click', () => openVimeo(article.dataset.vimeo));
+        });
+        document.querySelectorAll('.work-item:not(.accordion)[data-youtube]').forEach(article => {
+            article.style.cursor = 'pointer';
+            article.addEventListener('click', () => {
+                if (vimeoLocked) return;
+                vimeoFrame.src = 'https://www.youtube.com/embed/' + article.dataset.youtube + '?autoplay=1&rel=0';
+                vimeoModal.classList.add('open');
+            });
         });
 
         document.querySelectorAll('.work-item.accordion').forEach(article => {
