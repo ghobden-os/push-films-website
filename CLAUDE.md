@@ -207,6 +207,30 @@ Two fonts loaded via Google Fonts:
 - Work descriptions are `color: #999`
 - All `<img src="images/...">` tags have `loading="lazy"`
 
+## Logo / Brand Identity — Status & Process
+
+### What's been tried (do not repeat these)
+Three batches of logo concepts have been built in HTML/SVG and are live at:
+- `logo-preview.html` — Batch I: 3 GH monogram concepts, Outfit font. User disliked the font.
+- `logo-preview-2.html` — Batch II: 4 cinematic concepts (Widescreen, Iris, Title Card, Hairline), Cormorant Garamond. User disliked the font. Gold was also unreadable on light panels.
+- `logo-preview-3.html` — Batch III: 4 concepts (Leader, Stamp, Wipe, Title Card), Cinzel font, dark bronze `#7A5C1E` for gold on light panels. User still not happy with direction overall.
+
+### Key lesson: wrong tool for this job
+Generating logos in SVG/HTML is designing blind — Claude cannot see what it produces. Each iteration requires a commit, deploy wait, and browser review. This is a poor design loop.
+
+### Recommended process going forward
+1. **Find a direction first** — use an AI image generator (Adobe Firefly, Midjourney, DALL-E) to rapidly explore visual feelings. Prompt: *"Minimal film producer logo, initials GH, [style reference], dark background, cinematic"*. Bring a reference image back.
+2. **Or use Figma (free)** — Figma Community has free logo kit templates. Drag type, try fonts, arrange marks, see it instantly.
+3. **Then bring it to Claude** — once a direction is chosen visually, implement it precisely in code.
+
+### Gold on light backgrounds
+`#C4A46B` (screen gold) is unreadable on pale backgrounds. Use `#7A5C1E` (dark bronze) on light panels — same hue family, legible. This is established in logo-preview-3.html.
+
+### Fonts tried and rejected
+- **Outfit** — too generic, not cinematic enough
+- **Cormorant Garamond** — too editorial/literary, not quite right
+- **Cinzel** — Roman inscription, genuinely cinematic but user still not satisfied with overall direction
+
 ## Known Quirks
 - Vimeo IDs were historically swapped between Raptor and Explorer — double-check if something plays the wrong film
 - HEIC files don't work in browsers — always use the `.jpg` equivalent
