@@ -8,6 +8,8 @@ Portfolio website for Greg Hobden, film producer. Single-page site with sections
 - **BTS page**: `/Users/greghobden/push-films-website/behind-the-scenes.html` — standalone mosaic photo gallery page, linked from nav
 - **Images**: `/Users/greghobden/push-films-website/images/` — all images and video clips
 - **Title cards**: `title-card.html` (name + Producer) and `title-card-2.html` (name + Producer + disciplines) — 1920×1080 HTML files for screenshotting into showreel
+- **Design system**: `design-system.html` — full visual reference (colours, typography, 34 components, dos & don'ts, handoff guide). Viewable at greghobden.com/design-system.html
+- **Design tokens**: `design-tokens.json` — canonical W3C-format token file (colours, type scale, spacing, motion, grid)
 
 ## Deployment Pipeline
 - Git → GitHub (`ghobden-os/push-films-website`) → Netlify (auto-deploys on push to `main`)
