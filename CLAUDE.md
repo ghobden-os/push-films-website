@@ -6,10 +6,13 @@ Portfolio website for Greg Hobden, film producer. Single-page site with sections
 ## File Structure
 - **Sole file**: `/Users/greghobden/push-films-website/index.html` — all HTML, CSS, and JS inline in one file
 - **BTS page**: `/Users/greghobden/push-films-website/behind-the-scenes.html` — standalone mosaic photo gallery page, linked from nav
+- **Redesign experiment**: `redesign.html` — white/minimal experimental layout (DM Sans, 3-col grid, Vimeo modal). Not linked from nav; accessible at greghobden.com/redesign.html
 - **Images**: `/Users/greghobden/push-films-website/images/` — all images and video clips
 - **Title cards**: `title-card.html` (name + Producer) and `title-card-2.html` (name + Producer + disciplines) — 1920×1080 HTML files for screenshotting into showreel
-- **Design system**: `design-system.html` — full visual reference (colours, typography, 34 components, dos & don'ts, handoff guide). Viewable at greghobden.com/design-system.html
-- **Design tokens**: `design-tokens.json` — canonical W3C-format token file (colours, type scale, spacing, motion, grid)
+- **Favicon**: `favicon.svg` — yellow disc with G, used as browser tab icon on all pages
+- **Design system**: `design-system.html` — full visual reference (colours, typography, components, dos & don'ts, handoff guide). Viewable at greghobden.com/design-system.html
+- **Design tokens**: `design-tokens.json` — canonical W3C-format token file (colours, type scale, spacing, motion, grid). Currently v1.1.0
+- **Logo assets**: `files/logo.html` — yellow disc mark + full lockup variants (DM Sans). `files/favicon.svg` — source SVG
 
 ## Deployment Pipeline
 - Git → GitHub (`ghobden-os/push-films-website`) → Netlify (auto-deploys on push to `main`)
@@ -158,8 +161,17 @@ The hero has significant mobile-specific overrides in the final `@media (max-wid
 - Showreel button significantly smaller: `font-size: 8px`, `padding: 10px 18px`
 - `.hero-sub` has extra `margin-top` to push it away from the name
 
+### Nav Logo
+- Yellow disc mark: `<a href="#" class="nav-logo">G</a>` — 38px circle, `background: var(--gold)`, DM Sans weight 300, font-size 22px, color `#111111`
+- Animates in on page load: `discIn` keyframe — scale from 0 + rotate −720° to full size over 1.2s, `cubic-bezier(0.22, 1, 0.36, 1)`, 0.3s delay
+- `favicon.svg` — same yellow disc with G, at repo root
+
+### Custom Cursor
+- Hidden on iframe `mouseenter` to prevent cursor getting stranded over Vimeo embeds
+- A `MutationObserver` on `document.body` catches dynamically inserted iframes (Vimeo embeds added on accordion open)
+
 ### Scroll Progress Bar
-- `#scrollProgress` — gold 2px line at top of page showing scroll position
+- `#scrollProgress` — yellow 2px line at top of page showing scroll position
 - `height: 2px; opacity: 0.75`
 
 ### Behind the Scenes Page (`behind-the-scenes.html`)
@@ -178,21 +190,23 @@ Hero section has a typewriter animation synced to Web Audio API click sounds via
 ### Contact Section
 - Email: `pushfilms@icloud.com`
 - LinkedIn URL: `https://www.linkedin.com/in/greg-hobden-340a913/`
-- Both styled as gold filled buttons: `.contact-link { background: var(--gold); color: #080808; }`
+- Both styled as yellow filled buttons: `.contact-link { background: var(--gold); color: #080808; }`
 
 ## Key CSS Variables
 ```css
 --bg: #080808; --fg: #EDEDE8; --mid: #888888; --dim: #1C1C1C;
---rule: #1E1E1E; --gold: #C4A46B;
---font-serif: 'Outfit', sans-serif;
---font-sans: 'Manrope', sans-serif;
+--rule: #1E1E1E; --gold: #F5D800;
+--font-serif: 'DM Sans', sans-serif;
+--font-sans: 'DM Sans', sans-serif;
 --pad: clamp(24px, 5vw, 80px); --gap: clamp(72px, 10vw, 140px);
 ```
 
 ## Typography
-Two fonts loaded via Google Fonts:
-- **Outfit** (weights 400, 500) — `var(--font-serif)` — headings, hero name, work titles, category headers
-- **Manrope** (weights 300, 500) — `var(--font-sans)` — body text, descriptions, nav
+Single font loaded via Google Fonts:
+- **DM Sans** (weights 300, 400, 500) — both `var(--font-serif)` and `var(--font-sans)` — used throughout for all text
+  - Weight 300: captions, fine detail
+  - Weight 400: body text, hero sub-headings
+  - Weight 500: headings, nav links, UI labels
 
 ## Working Conventions
 - Always read a file before editing it
@@ -209,11 +223,14 @@ Two fonts loaded via Google Fonts:
 
 ## Logo / Brand Identity — Status & Process
 
+### Current live mark
+The nav uses a **yellow disc G** — `background: #F5D800`, DM Sans weight 300, 38px circle, dark G letterform. This is the active brand mark on the site. Reference assets in `files/logo.html` (disc + full lockup variants) and `files/favicon.svg`.
+
 ### What's been tried (do not repeat these)
-Three batches of logo concepts have been built in HTML/SVG and are live at:
+Three batches of cinematic logo concepts were built in HTML/SVG and are live at:
 - `logo-preview.html` — Batch I: 3 GH monogram concepts, Outfit font. User disliked the font.
-- `logo-preview-2.html` — Batch II: 4 cinematic concepts (Widescreen, Iris, Title Card, Hairline), Cormorant Garamond. User disliked the font. Gold was also unreadable on light panels.
-- `logo-preview-3.html` — Batch III: 4 concepts (Leader, Stamp, Wipe, Title Card), Cinzel font, dark bronze `#7A5C1E` for gold on light panels. User still not happy with direction overall.
+- `logo-preview-2.html` — Batch II: 4 cinematic concepts (Widescreen, Iris, Title Card, Hairline), Cormorant Garamond. User disliked the font.
+- `logo-preview-3.html` — Batch III: 4 concepts (Leader, Stamp, Wipe, Title Card), Cinzel font, dark bronze `#7A5C1E` for accent on light panels. User still not happy with overall direction.
 
 ### Key lesson: wrong tool for this job
 Generating logos in SVG/HTML is designing blind — Claude cannot see what it produces. Each iteration requires a commit, deploy wait, and browser review. This is a poor design loop.
@@ -223,10 +240,10 @@ Generating logos in SVG/HTML is designing blind — Claude cannot see what it pr
 2. **Or use Figma (free)** — Figma Community has free logo kit templates. Drag type, try fonts, arrange marks, see it instantly.
 3. **Then bring it to Claude** — once a direction is chosen visually, implement it precisely in code.
 
-### Gold on light backgrounds
-`#C4A46B` (screen gold) is unreadable on pale backgrounds. Use `#7A5C1E` (dark bronze) on light panels — same hue family, legible. This is established in logo-preview-3.html.
+### Yellow on light backgrounds
+`#F5D800` is unreadable on pale backgrounds. Use `#7A5C1E` (dark bronze) on light panels — same hue family, legible. Established in logo-preview-3.html and documented in `color.semantic.accent.onLight` token.
 
-### Fonts tried and rejected
+### Fonts tried and rejected (for logo work)
 - **Outfit** — too generic, not cinematic enough
 - **Cormorant Garamond** — too editorial/literary, not quite right
 - **Cinzel** — Roman inscription, genuinely cinematic but user still not satisfied with overall direction
