@@ -264,6 +264,129 @@ a { color: inherit; text-decoration: none; }
 
 /* Shared hidden state for filter */
 .film-card.hidden, .film-row.hidden { display: none; }
+
+
+/* ======================================================
+   CONCEPT C — Mosaic Grid
+   ====================================================== */
+
+.nav-c {
+  position: sticky; top: 49px; z-index: 100;
+  background: rgba(8,8,8,0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(24px, 5vw, 80px); height: 60px;
+}
+.nav-c-name { font-size: 13px; font-weight: 400; letter-spacing: 0.06em; }
+.nav-c-name span { color: var(--gold); }
+.nav-c-links { display: flex; gap: 32px; }
+.nav-c-links a { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); transition: color 0.2s; }
+.nav-c-links a:hover { color: var(--fg); }
+
+.hero-c {
+  height: 55vh; position: relative; display: flex; align-items: flex-end;
+  padding: clamp(24px, 5vw, 80px) clamp(24px, 5vw, 80px) clamp(32px, 5vw, 64px);
+  background: url('images/Ford%20Mustang%20223.jpg') center 30% / cover no-repeat;
+}
+.hero-c::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(8,8,8,0.9) 0%, rgba(8,8,8,0.15) 55%, transparent 100%);
+}
+.hero-c-content { position: relative; z-index: 1; }
+.hero-c-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+.hero-c-name { font-size: clamp(40px, 6vw, 80px); font-weight: 300; line-height: 1; letter-spacing: -0.02em; }
+
+/* Mosaic section */
+.mosaic-section { background: var(--bg); padding: clamp(40px, 5vw, 80px) 0 clamp(60px, 8vw, 120px); }
+.mosaic-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 0 clamp(24px, 5vw, 80px); margin-bottom: 24px; flex-wrap: wrap; gap: 16px;
+}
+.mosaic-title { font-size: clamp(24px, 3vw, 36px); font-weight: 300; letter-spacing: -0.02em; }
+.mosaic-hint { font-size: 11px; color: var(--mid); letter-spacing: 0.06em; }
+
+/* The grid itself — edge to edge */
+.mosaic-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: calc((100vw / 4) * 0.5625);
+  gap: 3px;
+  grid-auto-flow: dense;
+}
+.mosaic-card {
+  position: relative; overflow: hidden; cursor: pointer; background: #0d0d0d;
+}
+.mosaic-card.wide  { grid-column: span 2; }
+.mosaic-card.tall  { grid-row: span 2; }
+.mosaic-card.hero  { grid-column: span 2; grid-row: span 2; }
+
+.mosaic-card img {
+  width: 100%; height: 100%; object-fit: cover;
+  opacity: 0.65; transition: opacity 0.4s ease, transform 0.6s ease;
+}
+.mosaic-card:hover img { opacity: 1; transform: scale(1.04); }
+
+/* Label — slides up on hover */
+.mosaic-label {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 40px 20px 18px;
+  background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, transparent 100%);
+  transform: translateY(6px); opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+}
+.mosaic-card:hover .mosaic-label { opacity: 1; transform: translateY(0); }
+.mosaic-label-cat { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 5px; }
+.mosaic-label-title { font-size: 14px; font-weight: 300; line-height: 1.3; }
+
+/* Play icon — always visible on hero/wide cards */
+.mosaic-play {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 48px; height: 48px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.3s;
+}
+.mosaic-card:hover .mosaic-play { opacity: 1; }
+
+/* Size badge — purely for this concept preview */
+.mosaic-size-tag {
+  position: absolute; top: 12px; left: 12px;
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 3px 8px; background: rgba(245,216,0,0.15);
+  border: 1px solid rgba(245,216,0,0.3); color: var(--gold);
+  pointer-events: none;
+}
+
+/* Modal C (reuse same style as A) */
+.modal-c {
+  display: none; position: fixed; inset: 0; z-index: 10000;
+  background: rgba(0,0,0,0.96); align-items: center; justify-content: center;
+}
+.modal-c.open { display: flex; }
+.modal-c-inner { position: relative; width: 90vw; max-width: 1100px; }
+.modal-c-close {
+  position: absolute; top: -48px; right: 0;
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--mid); cursor: pointer; background: none; border: none;
+  font-family: var(--font); transition: color 0.2s;
+}
+.modal-c-close:hover { color: var(--fg); }
+.modal-c-title { position: absolute; top: -48px; left: 0; font-size: 13px; color: var(--mid); }
+.modal-c-frame { position: relative; padding-bottom: 56.25%; height: 0; }
+.modal-c-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* About C */
+.about-c {
+  background: var(--bg); padding: clamp(60px, 8vw, 120px) clamp(24px, 5vw, 80px);
+  border-top: 1px solid var(--rule);
+  display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 100px);
+}
+.about-c-heading { font-size: clamp(28px, 3vw, 40px); font-weight: 300; letter-spacing: -0.02em; margin-bottom: 24px; }
+.about-c p { font-size: 15px; font-weight: 300; color: #bbb; line-height: 1.8; margin-bottom: 16px; }
+.contact-c-heading { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
+.contact-links-c { display: flex; flex-direction: column; gap: 12px; }
+.contact-links-c a { font-size: 14px; color: var(--fg); font-weight: 300; transition: color 0.2s; }
+.contact-links-c a:hover { color: var(--gold); }
 </style>
 </head>
 <body>
@@ -273,6 +396,7 @@ a { color: inherit; text-decoration: none; }
   <span class="switcher-label">Layout concept</span>
   <button class="sw-btn active" onclick="show('a')">A — Grid</button>
   <button class="sw-btn" onclick="show('b')">B — Split</button>
+  <button class="sw-btn" onclick="show('c')">C — Mosaic</button>
   <span class="sw-note">Concept preview — not the live site</span>
 </div>
 
@@ -409,6 +533,62 @@ a { color: inherit; text-decoration: none; }
 </div>
 
 
+<!-- ===================== CONCEPT C ===================== -->
+<div class="concept" id="concept-c">
+
+  <nav class="nav-c">
+    <div class="nav-c-name">Greg Hobden <span>—</span> Film Producer</div>
+    <div class="nav-c-links">
+      <a href="#">Work</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </div>
+  </nav>
+
+  <div class="hero-c">
+    <div class="hero-c-content">
+      <div class="hero-c-label">Film Producer &amp; Production Consultant</div>
+      <div class="hero-c-name">Greg<br>Hobden</div>
+    </div>
+  </div>
+
+  <div class="mosaic-section">
+    <div class="mosaic-header">
+      <div class="mosaic-title">Work</div>
+      <div class="mosaic-hint">Hover to see details · click to watch</div>
+    </div>
+    <div class="mosaic-grid" id="grid-c"></div>
+  </div>
+
+  <div class="about-c">
+    <div>
+      <div class="about-c-heading">About</div>
+      <p>Greg Hobden is a London-based film producer and production consultant with thirty years of experience across theatrical documentary, automotive commercial production, and large-scale live experiential.</p>
+      <p>From arena-scale live events and theatrical releases to prestige automotive campaigns, Greg brings a calm, experienced hand to complex productions worldwide.</p>
+    </div>
+    <div>
+      <div class="contact-c-heading">Get in touch</div>
+      <div class="contact-links-c">
+        <a href="mailto:pushfilms@icloud.com">pushfilms@icloud.com →</a>
+        <a href="#">greghobden.com →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal C -->
+  <div class="modal-c" id="modal-c" onclick="closeModalC(event)">
+    <div class="modal-c-inner">
+      <div class="modal-c-title" id="modal-c-title"></div>
+      <button class="modal-c-close" onclick="closeModalC()">✕ Close</button>
+      <div class="modal-c-frame">
+        <iframe id="modal-c-frame" src="" allowfullscreen allow="autoplay"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
 <script>
 const films = [
   { id: '1171157858', title: 'Ford Ranger Raptor',      cat: 'Automotive'    },
@@ -505,17 +685,61 @@ function closeModalB(e) {
   document.getElementById('modal-b').classList.remove('open');
 }
 
-// Switcher
+// Build mosaic grid C
+// Assign a size to each film: hero (2×2), wide (2×1), tall (1×2), standard (1×1)
+const filmSizes = {
+  '1171157858': { size: 'hero',     label: 'Featured' },    // Raptor
+  '1171150609': { size: 'hero',     label: 'Featured' },    // Ali
+  '1171318976': { size: 'wide',     label: 'Wide' },        // Lexie
+  '1171170029': { size: 'wide',     label: 'Wide' },        // Explorer
+  '1171151872': { size: 'wide',     label: 'Wide' },        // Family Tree
+  '1171158700': { size: 'tall',     label: 'Tall' },        // Vashi
+  '1171320476': { size: 'tall',     label: 'Tall' },        // Everest
+};
+
+const gridC = document.getElementById('grid-c');
+films.forEach(f => {
+  const meta = filmSizes[f.id] || { size: 'standard', label: 'Standard' };
+  const card = document.createElement('div');
+  card.className = 'mosaic-card ' + meta.size;
+  card.innerHTML = `
+    <img src="https://vumbnail.com/${f.id}.jpg" alt="${f.title}" loading="lazy">
+    <div class="mosaic-play">
+      <svg width="12" height="14" viewBox="0 0 12 14" fill="white"><path d="M0 0L12 7L0 14V0Z"/></svg>
+    </div>
+    <div class="mosaic-label">
+      <div class="mosaic-label-cat">${f.cat}</div>
+      <div class="mosaic-label-title">${f.title}</div>
+    </div>
+    <div class="mosaic-size-tag">${meta.label}</div>`;
+  card.addEventListener('click', () => openModalC(f));
+  gridC.appendChild(card);
+});
+
+function openModalC(f) {
+  document.getElementById('modal-c-title').textContent = f.title;
+  document.getElementById('modal-c-frame').src = `https://player.vimeo.com/video/${f.id}?autoplay=1&title=0&byline=0&portrait=0`;
+  document.getElementById('modal-c').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModalC(e) {
+  if (e && e.target !== document.getElementById('modal-c') && !e.target.classList.contains('modal-c-close')) return;
+  document.getElementById('modal-c-frame').src = '';
+  document.getElementById('modal-c').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Switcher — update to handle 3 buttons
 function show(id) {
   document.querySelectorAll('.concept').forEach(c => c.classList.remove('active'));
   document.getElementById('concept-' + id).classList.add('active');
-  document.querySelectorAll('.sw-btn').forEach((b, i) => b.classList.toggle('active', ['a','b'][i] === id));
+  document.querySelectorAll('.sw-btn').forEach((b, i) => b.classList.toggle('active', ['a','b','c'][i] === id));
   window.scrollTo(0, 0);
 }
 
 // Escape key
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeModalA(); closeModalB(); }
+  if (e.key === 'Escape') { closeModalA(); closeModalB(); closeModalC(); }
 });
 </script>
 </body>
