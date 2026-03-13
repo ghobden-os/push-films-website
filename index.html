@@ -214,7 +214,7 @@
         .reel-play-btn {
             width: clamp(64px, 8vw, 96px);
             height: clamp(64px, 8vw, 96px);
-            border: 1px solid rgba(196,164,107,0.4);
+            border: 1px solid rgba(245,216,0,0.4);
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             color: var(--gold);
@@ -236,7 +236,7 @@
         .about-grid { display: grid; grid-template-columns: 180px 1fr; gap: clamp(40px, 6vw, 120px); align-items: start; }
         .about-label { padding-top: 5px; position: sticky; top: calc(var(--nav-h) + 24px); }
         .about-label span { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); }
-        .about-content p { font-size: clamp(15px, 1.3vw, 17px); line-height: 2.0; color: #999; margin-bottom: 28px; max-width: 640px; }
+        .about-content p { font-size: clamp(15px, 1.3vw, 17px); line-height: 2.0; color: #CCCCCC; margin-bottom: 28px; max-width: 640px; }
         .about-section-break { border: none; border-top: 1px solid var(--rule); margin: 44px 0; max-width: 640px; }
         .about-lead {
             font-family: var(--font-serif) !important; font-size: clamp(20px, 2.4vw, 28px) !important; font-weight: 500 !important;
@@ -253,12 +253,12 @@
         .work-category { margin-bottom: clamp(56px, 8vw, 96px); }
         .work-category:last-child { margin-bottom: 0; }
         .work-category-header { display: flex; align-items: baseline; gap: 20px; margin-bottom: clamp(24px, 3vw, 36px); }
-        .work-category-header span { font-family: var(--font-serif); font-size: clamp(20px, 2.2vw, 26px); font-weight: 500; color: var(--gold); }
+        .work-category-header span { font-family: var(--font-serif); font-size: clamp(20px, 2.2vw, 26px); font-weight: 500; color: var(--fg); }
         .work-category-header::after { content: ''; display: block; flex: 1; height: 1px; background: var(--rule); }
 
         /* EARLY YEARS */
         .early-years-link-wrap { padding: clamp(24px, 3vw, 40px) 0; display: flex; align-items: center; gap: 48px; flex-wrap: wrap; }
-        .early-years-text { font-size: 14px; line-height: 1.8; color: #666; max-width: 520px; }
+        .early-years-text { font-size: 14px; line-height: 1.8; color: #BBBBBB; max-width: 520px; }
         .early-years-btn {
             font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
             color: var(--gold); background: none; border: 1px solid var(--gold);
@@ -302,8 +302,8 @@
         .work-image.placeholder span { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rule); }
         .work-info { display: flex; flex-direction: column; gap: 8px; padding-right: 40px; }
         .work-info h3 { font-family: var(--font-serif); font-size: clamp(22px, 2.2vw, 30px); font-weight: 500; color: var(--fg); line-height: 1.1; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
-        .work-meta { font-size: 10px !important; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold) !important; line-height: 1.5 !important; }
-        .work-desc { font-size: 14px !important; line-height: 1.7 !important; color: #999 !important; margin-bottom: 0 !important; }
+        .work-meta { font-size: 12px !important; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold) !important; line-height: 1.5 !important; }
+        .work-desc { font-size: 14px !important; line-height: 1.7 !important; color: #BBBBBB !important; margin-bottom: 0 !important; }
         .work-desc + .work-desc { margin-top: 12px !important; }
         .work-arrow { font-size: 20px; color: var(--rule); margin-top: 16px; transition: all 0.3s; }
         .work-item:hover .work-arrow { color: var(--gold); transform: translateX(6px); }
@@ -375,7 +375,7 @@
             transition: all 0.2s; flex-shrink: 0; margin: 0 20px;
         }
         .carousel-btn:hover { border-color: var(--gold); color: var(--gold); }
-        .carousel-counter { font-size: 10px; letter-spacing: 0.18em; color: var(--mid); margin-top: 16px; }
+        .carousel-counter { font-size: 12px; letter-spacing: 0.12em; color: #CCCCCC; margin-top: 16px; }
         .carousel-close {
             position: absolute; top: 24px; right: 32px;
             background: none; border: none; color: rgba(255,255,255,0.3);
@@ -410,7 +410,7 @@
         /* RESTRICTED FILM */
         #restricted { border-top: 1px solid var(--rule); }
         .restricted-grid { display: grid; grid-template-columns: 180px 1fr; gap: clamp(40px, 6vw, 120px); align-items: start; }
-        .restricted-lead { font-family: var(--font-sans); font-size: 14px; font-weight: 300; color: #666; line-height: 1.7; margin-bottom: clamp(32px, 4vw, 48px); }
+        .restricted-lead { font-family: var(--font-sans); font-size: 14px; font-weight: 400; color: #BBBBBB; line-height: 1.7; margin-bottom: clamp(32px, 4vw, 48px); }
         .restricted-lead em { font-style: italic; color: var(--gold); }
         .password-form { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
         .password-input {
@@ -608,7 +608,7 @@
         .expand-gallery-bar { display: flex; align-items: center; justify-content: space-between; padding: 10px 0 0; }
         .expand-gallery-bar button { background: none; border: none; color: var(--mid); cursor: pointer; font-size: 18px; padding: 2px 6px; transition: color 0.2s; }
         .expand-gallery-bar button:hover { color: var(--gold); }
-        .expand-gallery-bar span { font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.1em; color: var(--mid); }
+        .expand-gallery-bar span { font-family: var(--font-sans); font-size: 12px; letter-spacing: 0.08em; color: #CCCCCC; }
 
         /* MEDIA BUTTON */
         .media-btn {
