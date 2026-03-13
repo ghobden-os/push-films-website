@@ -2,7 +2,7 @@
   "$schema": "https://tr.designtokens.org/format/",
   "$metadata": {
     "name": "Push Films Design System",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "date": "2026-03-13",
     "author": "Greg Hobden / Push Films"
   },
@@ -19,13 +19,13 @@
         "type": "color",
         "description": "Absolute white"
       },
-      "gold": {
-        "100": { "value": "#F5ECD8", "type": "color", "description": "Gold 100 — lightest tint" },
-        "200": { "value": "#EAD8B0", "type": "color", "description": "Gold 200" },
-        "300": { "value": "#D9C28A", "type": "color", "description": "Gold 300" },
-        "400": { "value": "#C4A46B", "type": "color", "description": "Gold 400 — brand gold" },
-        "500": { "value": "#A8894F", "type": "color", "description": "Gold 500 — pressed/active" },
-        "600": { "value": "#8C7040", "type": "color", "description": "Gold 600 — darkest" }
+      "yellow": {
+        "100": { "value": "#FFFDE0", "type": "color", "description": "Yellow 100 — lightest tint" },
+        "200": { "value": "#FFF9A6", "type": "color", "description": "Yellow 200" },
+        "300": { "value": "#FAF04D", "type": "color", "description": "Yellow 300" },
+        "400": { "value": "#F5D800", "type": "color", "description": "Yellow 400 — brand yellow (accent)" },
+        "500": { "value": "#D4B800", "type": "color", "description": "Yellow 500 — hover/pressed state" },
+        "600": { "value": "#7A5C1E", "type": "color", "description": "Yellow 600 — dark bronze (legible on light backgrounds)" }
       },
       "grey": {
         "50":  { "value": "#EDEDE8", "type": "color", "description": "Grey 50 — foreground" },
@@ -72,10 +72,11 @@
         "inverse":   { "value": "{color.primitive.grey.900}", "type": "color", "description": "Text on gold backgrounds" }
       },
       "accent": {
-        "default": { "value": "{color.primitive.gold.400}", "type": "color", "description": "Primary accent — brand gold" },
-        "hover":   { "value": "#D4B47E",                    "type": "color", "description": "Gold hover state" },
-        "pressed": { "value": "{color.primitive.gold.500}", "type": "color", "description": "Gold pressed/active" },
-        "subtle":  { "value": "rgba(196,164,107,0.08)",     "type": "color", "description": "Gold tint overlay" }
+        "default": { "value": "{color.primitive.yellow.400}", "type": "color", "description": "Primary accent — brand yellow" },
+        "hover":   { "value": "{color.primitive.yellow.500}", "type": "color", "description": "Yellow hover state (#D4B800)" },
+        "pressed": { "value": "{color.primitive.yellow.500}", "type": "color", "description": "Yellow pressed/active" },
+        "subtle":  { "value": "rgba(245,216,0,0.06)",         "type": "color", "description": "Yellow tint overlay" },
+        "onLight":  { "value": "{color.primitive.yellow.600}", "type": "color", "description": "Dark bronze — accent on light/paper backgrounds" }
       },
       "rule": {
         "default": { "value": "{color.primitive.grey.800}", "type": "color", "description": "Horizontal rules, borders" },
@@ -90,7 +91,7 @@
         "warning-bg":     { "value": "rgba(212,160,23,0.12)",       "type": "color", "description": "Warning background tint" }
       },
       "focus": {
-        "ring": { "value": "{color.primitive.gold.400}", "type": "color", "description": "Focus ring color" }
+        "ring": { "value": "{color.primitive.yellow.400}", "type": "color", "description": "Focus ring color" }
       }
     }
   },
@@ -98,14 +99,14 @@
   "typography": {
     "fontFamily": {
       "display": {
-        "value": "'Outfit', sans-serif",
+        "value": "'DM Sans', sans-serif",
         "type": "fontFamily",
-        "description": "Display and heading font — Outfit from Google Fonts, weights 400/500"
+        "description": "Display and heading font — DM Sans from Google Fonts, weights 300/400/500"
       },
       "body": {
-        "value": "'Manrope', sans-serif",
+        "value": "'DM Sans', sans-serif",
         "type": "fontFamily",
-        "description": "Body and UI font — Manrope from Google Fonts, weights 300/500"
+        "description": "Body and UI font — DM Sans from Google Fonts, weights 300/400/500 (same as display; single-font system)"
       },
       "mono": {
         "value": "'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace",
@@ -115,9 +116,9 @@
     },
 
     "fontWeight": {
-      "light":   { "value": "300", "type": "fontWeight", "description": "Light — Manrope body" },
-      "regular": { "value": "400", "type": "fontWeight", "description": "Regular — Outfit display" },
-      "medium":  { "value": "500", "type": "fontWeight", "description": "Medium — headings, UI labels" }
+      "light":   { "value": "300", "type": "fontWeight", "description": "Light — DM Sans body, captions" },
+      "regular": { "value": "400", "type": "fontWeight", "description": "Regular — DM Sans body text, hero sub-text" },
+      "medium":  { "value": "500", "type": "fontWeight", "description": "Medium — headings, UI labels, nav" }
     },
 
     "scale": {
@@ -295,10 +296,10 @@
       "type": "shadow",
       "description": "Overlay elevation — large"
     },
-    "glow-gold": {
-      "value": "0 0 24px rgba(196,164,107,0.3)",
+    "glow-yellow": {
+      "value": "0 0 24px rgba(245,216,0,0.3)",
       "type": "shadow",
-      "description": "Gold glow — accent focus or highlight"
+      "description": "Yellow glow — accent focus or highlight"
     }
   },
 

@@ -6,7 +6,7 @@
 <title>Push Films — Design System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500&family=Outfit:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -16,12 +16,12 @@
   --mid:        #888888;
   --dim:        #1C1C1C;
   --rule:       #1E1E1E;
-  --gold:       #C4A46B;
-  --gold-hover: #D4B47E;
+  --gold:       #F5D800;
+  --gold-hover: #D4B800;
   --red:        #C0392B;
   --green:      #27AE60;
-  --font-serif: 'Outfit', sans-serif;
-  --font-sans:  'Manrope', sans-serif;
+  --font-serif: 'DM Sans', sans-serif;
+  --font-sans:  'DM Sans', sans-serif;
   --font-mono:  'SF Mono', 'Fira Code', monospace;
   --pad:        clamp(24px, 5vw, 80px);
   --gap:        clamp(72px, 10vw, 140px);
@@ -438,7 +438,7 @@ a { color: inherit; text-decoration: none; }
 .spacing-bar-wrap { flex: 1; }
 .spacing-bar {
   height: 8px;
-  background: rgba(196,164,107,0.3);
+  background: rgba(245,216,0,0.3);
   border-right: 2px solid var(--gold);
   border-radius: 0 2px 2px 0;
 }
@@ -460,13 +460,13 @@ a { color: inherit; text-decoration: none; }
 }
 .grid-col {
   height: 40px;
-  background: rgba(196,164,107,0.12);
-  border: 1px solid rgba(196,164,107,0.2);
+  background: rgba(245,216,0,0.12);
+  border: 1px solid rgba(245,216,0,0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 8px;
-  color: rgba(196,164,107,0.6);
+  color: rgba(245,216,0,0.6);
   letter-spacing: 0.06em;
 }
 
@@ -476,7 +476,7 @@ a { color: inherit; text-decoration: none; }
 .bp-name { font-family: var(--font-mono); font-size: 11px; color: var(--gold); width: 48px; }
 .bp-px { font-family: var(--font-mono); font-size: 11px; color: var(--fg); width: 80px; }
 .bp-bar-wrap { flex: 1; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; }
-.bp-bar { height: 100%; background: rgba(196,164,107,0.4); border-radius: 3px; }
+.bp-bar { height: 100%; background: rgba(245,216,0,0.4); border-radius: 3px; }
 .bp-desc { font-size: 11px; color: #666; width: 180px; text-align: right; }
 
 /* ── CODE BLOCKS ── */
@@ -494,7 +494,7 @@ a { color: inherit; text-decoration: none; }
 }
 .ds-code .c-comment { color: #555; }
 .ds-code .c-key     { color: #7EC8E3; }
-.ds-code .c-val     { color: #C4A46B; }
+.ds-code .c-val     { color: #F5D800; }
 .ds-code .c-str     { color: #A8C97F; }
 .ds-code .c-punct   { color: #666; }
 .ds-code .c-sel     { color: #D4A0FF; }
@@ -582,8 +582,8 @@ a { color: inherit; text-decoration: none; }
 .state-desc { font-size: 11px; color: #777; line-height: 1.5; }
 
 .a11y-box {
-  background: rgba(196,164,107,0.06);
-  border: 1px solid rgba(196,164,107,0.2);
+  background: rgba(245,216,0,0.06);
+  border: 1px solid rgba(245,216,0,0.2);
   border-radius: 4px;
   padding: 14px 18px;
   margin-bottom: 16px;
@@ -634,7 +634,7 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid var(--gold); padding: 16px 32px;
   cursor: pointer; transition: all 0.3s ease;
 }
-.btn-secondary:hover { background: rgba(196,164,107,0.08); }
+.btn-secondary:hover { background: rgba(245,216,0,0.08); }
 
 .btn-ghost {
   display: inline-flex; align-items: center; gap: 12px;
@@ -786,7 +786,7 @@ a { color: inherit; text-decoration: none; }
 .demo-work-cat-header::after { content: ''; display: block; flex: 1; height: 1px; background: var(--rule); }
 
 /* Work number */
-.demo-work-num { font-size: 10px; color: rgba(196,164,107,0.5); letter-spacing: 0.08em; }
+.demo-work-num { font-size: 10px; color: rgba(245,216,0,0.5); letter-spacing: 0.08em; }
 
 /* Restricted film card */
 .demo-restricted-card { width: 180px; cursor: pointer; }
@@ -925,7 +925,7 @@ a { color: inherit; text-decoration: none; }
 /* JSON highlight */
 .json-hl { font-family: var(--font-mono); font-size: 11px; line-height: 1.7; color: #ccc; }
 .jk { color: #7EC8E3; }
-.jv { color: #C4A46B; }
+.jv { color: #F5D800; }
 .js { color: #A8C97F; }
 .jc { color: #555; }
 .jp { color: #666; }
@@ -1083,33 +1083,33 @@ a { color: inherit; text-decoration: none; }
         </div>
       </div>
       <div class="swatch">
-        <div class="swatch-color" style="background:#C4A46B;"></div>
+        <div class="swatch-color" style="background:#F5D800;"></div>
         <div class="swatch-info">
           <span class="swatch-name">--gold</span>
-          <span class="swatch-hex">#C4A46B</span>
+          <span class="swatch-hex">#F5D800</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Gold scale -->
+  <!-- Yellow scale -->
   <div class="ds-subsection">
-    <h3>Gold Scale</h3>
+    <h3>Yellow Scale</h3>
     <div class="swatch-row">
-      <div class="swatch-row-item" style="background:#F5ECD8;" data-hex="#F5ECD8 / gold.100" title="gold.100 #F5ECD8"></div>
-      <div class="swatch-row-item" style="background:#EAD8B0;" data-hex="#EAD8B0 / gold.200" title="gold.200 #EAD8B0"></div>
-      <div class="swatch-row-item" style="background:#D9C28A;" data-hex="#D9C28A / gold.300" title="gold.300 #D9C28A"></div>
-      <div class="swatch-row-item" style="background:#C4A46B;" data-hex="#C4A46B / gold.400 ★" title="gold.400 #C4A46B — brand"></div>
-      <div class="swatch-row-item" style="background:#A8894F;" data-hex="#A8894F / gold.500" title="gold.500 #A8894F"></div>
-      <div class="swatch-row-item" style="background:#8C7040;" data-hex="#8C7040 / gold.600" title="gold.600 #8C7040"></div>
+      <div class="swatch-row-item" style="background:#FFFDE0;" data-hex="#FFFDE0 / yellow.100" title="yellow.100 #FFFDE0"></div>
+      <div class="swatch-row-item" style="background:#FFF9A6;" data-hex="#FFF9A6 / yellow.200" title="yellow.200 #FFF9A6"></div>
+      <div class="swatch-row-item" style="background:#FAF04D;" data-hex="#FAF04D / yellow.300" title="yellow.300 #FAF04D"></div>
+      <div class="swatch-row-item" style="background:#F5D800;" data-hex="#F5D800 / yellow.400 ★" title="yellow.400 #F5D800 — brand"></div>
+      <div class="swatch-row-item" style="background:#D4B800;" data-hex="#D4B800 / yellow.500" title="yellow.500 #D4B800 — hover"></div>
+      <div class="swatch-row-item" style="background:#7A5C1E;" data-hex="#7A5C1E / yellow.600" title="yellow.600 #7A5C1E — dark bronze (on light)"></div>
     </div>
     <div class="swatch-grid">
-      <div class="swatch"><div class="swatch-color" style="background:#F5ECD8;height:40px;"></div><div class="swatch-info"><span class="swatch-name">gold.100</span><span class="swatch-hex">#F5ECD8</span></div></div>
-      <div class="swatch"><div class="swatch-color" style="background:#EAD8B0;height:40px;"></div><div class="swatch-info"><span class="swatch-name">gold.200</span><span class="swatch-hex">#EAD8B0</span></div></div>
-      <div class="swatch"><div class="swatch-color" style="background:#D9C28A;height:40px;"></div><div class="swatch-info"><span class="swatch-name">gold.300</span><span class="swatch-hex">#D9C28A</span></div></div>
-      <div class="swatch"><div class="swatch-color" style="background:#C4A46B;height:40px;border:2px solid rgba(255,255,255,0.3);"></div><div class="swatch-info"><span class="swatch-name">gold.400 ★</span><span class="swatch-hex">#C4A46B</span></div></div>
-      <div class="swatch"><div class="swatch-color" style="background:#A8894F;height:40px;"></div><div class="swatch-info"><span class="swatch-name">gold.500</span><span class="swatch-hex">#A8894F</span></div></div>
-      <div class="swatch"><div class="swatch-color" style="background:#8C7040;height:40px;"></div><div class="swatch-info"><span class="swatch-name">gold.600</span><span class="swatch-hex">#8C7040</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#FFFDE0;height:40px;"></div><div class="swatch-info"><span class="swatch-name">yellow.100</span><span class="swatch-hex">#FFFDE0</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#FFF9A6;height:40px;"></div><div class="swatch-info"><span class="swatch-name">yellow.200</span><span class="swatch-hex">#FFF9A6</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#FAF04D;height:40px;"></div><div class="swatch-info"><span class="swatch-name">yellow.300</span><span class="swatch-hex">#FAF04D</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#F5D800;height:40px;border:2px solid rgba(255,255,255,0.3);"></div><div class="swatch-info"><span class="swatch-name">yellow.400 ★</span><span class="swatch-hex">#F5D800</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#D4B800;height:40px;"></div><div class="swatch-info"><span class="swatch-name">yellow.500</span><span class="swatch-hex">#D4B800</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#7A5C1E;height:40px;"></div><div class="swatch-info"><span class="swatch-name">yellow.600</span><span class="swatch-hex">#7A5C1E</span></div></div>
     </div>
   </div>
 
@@ -1153,8 +1153,8 @@ a { color: inherit; text-decoration: none; }
         <tr><td class="token">--mid</td><td><span class="swatch-dot" style="background:#888888;"></span>#888888</td><td>Section labels, nav links, secondary UI</td></tr>
         <tr><td class="token">--dim</td><td><span class="swatch-dot" style="background:#1C1C1C;"></span>#1C1C1C</td><td>Elevated surfaces, sidebar, component bg</td></tr>
         <tr><td class="token">--rule</td><td><span class="swatch-dot" style="background:#1E1E1E;"></span>#1E1E1E</td><td>Horizontal rules, borders, dividers</td></tr>
-        <tr><td class="token">--gold</td><td><span class="swatch-dot" style="background:#C4A46B;"></span>#C4A46B</td><td>Accent, CTA buttons, labels, active states, gold text</td></tr>
-        <tr><td class="token">--gold-hover</td><td><span class="swatch-dot" style="background:#D4B47E;"></span>#D4B47E</td><td>Gold hover state (buttons, links)</td></tr>
+        <tr><td class="token">--gold</td><td><span class="swatch-dot" style="background:#F5D800;"></span>#F5D800</td><td>Accent, CTA buttons, labels, active states, gold text</td></tr>
+        <tr><td class="token">--gold-hover</td><td><span class="swatch-dot" style="background:#D4B800;"></span>#D4B800</td><td>Gold hover state (buttons, links)</td></tr>
         <tr><td style="color:#999;">work desc</td><td>#999999</td><td>Work item descriptions — de-emphasised body</td></tr>
         <tr><td style="color:#999;">overlay</td><td>rgba(0,0,0,0.92)</td><td>Lightbox and modal overlays</td></tr>
         <tr><td style="color:#999;">nav scrolled</td><td>rgba(8,8,8,0.95)</td><td>Nav background after scroll, with backdrop-filter blur</td></tr>
@@ -1177,7 +1177,7 @@ a { color: inherit; text-decoration: none; }
           <td class="pass-aaa">Pass</td><td class="pass-aaa">Pass</td><td class="pass-aaa">AAA</td>
         </tr>
         <tr>
-          <td><span class="swatch-dot" style="background:#C4A46B;"></span>#C4A46B (--gold)</td>
+          <td><span class="swatch-dot" style="background:#F5D800;"></span>#F5D800 (--gold)</td>
           <td><span class="swatch-dot" style="background:#080808;"></span>#080808</td>
           <td class="ratio">6.8:1</td>
           <td class="pass-aaa">Pass</td><td class="pass-aaa">Pass</td><td class="pass-aa">AA large</td>
@@ -1190,7 +1190,7 @@ a { color: inherit; text-decoration: none; }
         </tr>
         <tr>
           <td><span class="swatch-dot" style="background:#080808;"></span>#080808 (--bg)</td>
-          <td><span class="swatch-dot" style="background:#C4A46B;"></span>#C4A46B</td>
+          <td><span class="swatch-dot" style="background:#F5D800;"></span>#F5D800</td>
           <td class="ratio">6.8:1</td>
           <td class="pass-aaa">Pass</td><td class="pass-aaa">Pass</td><td class="pass-aa">AA large</td>
         </tr>
@@ -1202,7 +1202,7 @@ a { color: inherit; text-decoration: none; }
         </tr>
       </tbody>
     </table>
-    <p style="font-size:11px;color:#555;margin-top:8px;">Note: --mid (#888888) at 3.4:1 is used exclusively for small-caps labels at 10px. It meets AA Large (≥3:1) which applies to text 18px+ or bold 14px+. All interactive states resolve to gold (#C4A46B, 6.8:1) which passes AA.</p>
+    <p style="font-size:11px;color:#555;margin-top:8px;">Note: --mid (#888888) at 3.4:1 is used exclusively for small-caps labels at 10px. It meets AA Large (≥3:1) which applies to text 18px+ or bold 14px+. All interactive states resolve to yellow (#F5D800, 6.8:1) which passes AA.</p>
   </div>
 </section>
 
@@ -1220,13 +1220,13 @@ a { color: inherit; text-decoration: none; }
     <table class="ds-table">
       <thead><tr><th>Variable</th><th>Family</th><th>Weights</th><th>Role</th></tr></thead>
       <tbody>
-        <tr><td class="token">--font-serif</td><td style="font-family:'Outfit',sans-serif;font-size:15px;">Outfit</td><td>400, 500</td><td>Display, headings, nav logo, work titles, category headers</td></tr>
-        <tr><td class="token">--font-sans</td><td style="font-family:'Manrope',sans-serif;font-size:14px;">Manrope</td><td>300, 500</td><td>Body text, UI labels, descriptions, nav links, buttons</td></tr>
+        <tr><td class="token">--font-serif</td><td style="font-family:'DM Sans',sans-serif;font-size:15px;">DM Sans</td><td>300, 400, 500</td><td>Display, headings, nav logo, work titles, category headers</td></tr>
+        <tr><td class="token">--font-sans</td><td style="font-family:'DM Sans',sans-serif;font-size:14px;">DM Sans</td><td>300, 400, 500</td><td>Body text, UI labels, descriptions, nav links, buttons (single-font system)</td></tr>
         <tr><td class="token">--font-mono</td><td style="font-family:monospace;font-size:13px;">SF Mono / Fira Code</td><td>400</td><td>Code blocks, token values, developer tooling</td></tr>
       </tbody>
     </table>
     <div class="ds-code"><span class="c-comment">/* Google Fonts import — both fonts in one request */</span>
-<span class="c-key">&lt;link</span> href=<span class="c-str">"https://fonts.googleapis.com/css2?family=Manrope:wght@300;500&amp;family=Outfit:wght@400;500&amp;display=swap"</span> rel=<span class="c-str">"stylesheet"</span><span class="c-key">&gt;</span></div>
+<span class="c-key">&lt;link</span> href=<span class="c-str">"https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&amp;display=swap"</span> rel=<span class="c-str">"stylesheet"</span><span class="c-key">&gt;</span></div>
   </div>
 
   <div class="ds-subsection">
@@ -1236,7 +1236,7 @@ a { color: inherit; text-decoration: none; }
       <!-- display-xl -->
       <div class="type-specimen">
         <div class="type-specimen-demo" style="background:#050505;">
-          <div style="font-family:'Outfit',sans-serif;font-size:clamp(56px,8vw,100px);font-weight:400;line-height:0.85;letter-spacing:-0.02em;color:#EDEDE8;overflow:hidden;white-space:nowrap;">Greg Hobden</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:clamp(56px,8vw,100px);font-weight:400;line-height:0.85;letter-spacing:-0.02em;color:#EDEDE8;overflow:hidden;white-space:nowrap;">Greg Hobden</div>
         </div>
         <div class="type-specimen-meta">
           <div class="type-meta-cell"><div class="type-meta-label">Size</div><div class="type-meta-value">clamp(80–200px)</div></div>
@@ -1244,13 +1244,13 @@ a { color: inherit; text-decoration: none; }
           <div class="type-meta-cell"><div class="type-meta-label">Line Height</div><div class="type-meta-value">0.85</div></div>
           <div class="type-meta-cell"><div class="type-meta-label">Tracking</div><div class="type-meta-value">−0.02em</div></div>
         </div>
-        <div class="type-token">display-xl · Outfit<span class="usage">Hero name — largest display</span></div>
+        <div class="type-token">display-xl · DM Sans<span class="usage">Hero name — largest display</span></div>
       </div>
 
       <!-- display-lg -->
       <div class="type-specimen">
         <div class="type-specimen-demo" style="background:#050505;">
-          <div style="font-family:'Outfit',sans-serif;font-size:clamp(40px,6vw,72px);font-weight:400;line-height:0.85;letter-spacing:-0.02em;color:#EDEDE8;">Greg Hobden</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:clamp(40px,6vw,72px);font-weight:400;line-height:0.85;letter-spacing:-0.02em;color:#EDEDE8;">Greg Hobden</div>
         </div>
         <div class="type-specimen-meta">
           <div class="type-meta-cell"><div class="type-meta-label">Size</div><div class="type-meta-value">clamp(56–155px)</div></div>
@@ -1258,13 +1258,13 @@ a { color: inherit; text-decoration: none; }
           <div class="type-meta-cell"><div class="type-meta-label">Line Height</div><div class="type-meta-value">0.85</div></div>
           <div class="type-meta-cell"><div class="type-meta-label">Tracking</div><div class="type-meta-value">−0.02em</div></div>
         </div>
-        <div class="type-token">display-lg · Outfit<span class="usage">Hero variant — mobile / alternate layouts</span></div>
+        <div class="type-token">display-lg · DM Sans<span class="usage">Hero variant — mobile / alternate layouts</span></div>
       </div>
 
       <!-- display-md -->
       <div class="type-specimen">
         <div class="type-specimen-demo">
-          <div style="font-family:'Outfit',sans-serif;font-size:clamp(32px,4vw,56px);font-weight:400;line-height:0.9;letter-spacing:-0.015em;color:#EDEDE8;">Film Producer</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:clamp(32px,4vw,56px);font-weight:400;line-height:0.9;letter-spacing:-0.015em;color:#EDEDE8;">Film Producer</div>
         </div>
         <div class="type-specimen-meta">
           <div class="type-meta-cell"><div class="type-meta-label">Size</div><div class="type-meta-value">clamp(36–96px)</div></div>
@@ -1272,13 +1272,13 @@ a { color: inherit; text-decoration: none; }
           <div class="type-meta-cell"><div class="type-meta-label">Line Height</div><div class="type-meta-value">0.9</div></div>
           <div class="type-meta-cell"><div class="type-meta-label">Tracking</div><div class="type-meta-value">−0.015em</div></div>
         </div>
-        <div class="type-token">display-md · Outfit<span class="usage">Large section display, title card</span></div>
+        <div class="type-token">display-md · DM Sans<span class="usage">Large section display, title card</span></div>
       </div>
 
       <!-- heading-xl -->
       <div class="type-specimen">
         <div class="type-specimen-demo">
-          <div style="font-family:'Outfit',sans-serif;font-size:clamp(24px,3vw,40px);font-weight:500;line-height:1.1;letter-spacing:-0.01em;color:#EDEDE8;">Thirty years in film.</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:clamp(24px,3vw,40px);font-weight:500;line-height:1.1;letter-spacing:-0.01em;color:#EDEDE8;">Thirty years in film.</div>
         </div>
         <div class="type-specimen-meta">
           <div class="type-meta-cell"><div class="type-meta-label">Size</div><div class="type-meta-value">clamp(28–48px)</div></div>
@@ -1286,13 +1286,13 @@ a { color: inherit; text-decoration: none; }
           <div class="type-meta-cell"><div class="type-meta-label">Line Height</div><div class="type-meta-value">1.1</div></div>
           <div class="type-meta-cell"><div class="type-meta-label">Tracking</div><div class="type-meta-value">−0.01em</div></div>
         </div>
-        <div class="type-token">heading-xl · Outfit<span class="usage">Major section headings</span></div>
+        <div class="type-token">heading-xl · DM Sans<span class="usage">Major section headings</span></div>
       </div>
 
       <!-- heading-lg -->
       <div class="type-specimen">
         <div class="type-specimen-demo">
-          <div style="font-family:'Outfit',sans-serif;font-size:clamp(18px,2vw,24px);font-weight:500;line-height:1.2;color:#EDEDE8;">Automotive</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:clamp(18px,2vw,24px);font-weight:500;line-height:1.2;color:#EDEDE8;">Automotive</div>
         </div>
         <div class="type-specimen-meta">
           <div class="type-meta-cell"><div class="type-meta-label">Size</div><div class="type-meta-value">clamp(20–26px)</div></div>
@@ -1300,13 +1300,13 @@ a { color: inherit; text-decoration: none; }
           <div class="type-meta-cell"><div class="type-meta-label">Line Height</div><div class="type-meta-value">1.2</div></div>
           <div class="type-meta-cell"><div class="type-meta-label">Tracking</div><div class="type-meta-value">0</div></div>
         </div>
-        <div class="type-token">heading-lg · Outfit<span class="usage">Work category headers</span></div>
+        <div class="type-token">heading-lg · DM Sans<span class="usage">Work category headers</span></div>
       </div>
 
       <!-- heading-md -->
       <div class="type-specimen">
         <div class="type-specimen-demo">
-          <div style="font-family:'Outfit',sans-serif;font-size:clamp(16px,1.8vw,24px);font-weight:300;line-height:1.3;color:#EDEDE8;">Get in touch.</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:clamp(16px,1.8vw,24px);font-weight:300;line-height:1.3;color:#EDEDE8;">Get in touch.</div>
         </div>
         <div class="type-specimen-meta">
           <div class="type-meta-cell"><div class="type-meta-label">Size</div><div class="type-meta-value">clamp(18–28px)</div></div>
@@ -1314,13 +1314,13 @@ a { color: inherit; text-decoration: none; }
           <div class="type-meta-cell"><div class="type-meta-label">Line Height</div><div class="type-meta-value">1.3</div></div>
           <div class="type-meta-cell"><div class="type-meta-label">Tracking</div><div class="type-meta-value">0</div></div>
         </div>
-        <div class="type-token">heading-md · Outfit<span class="usage">Contact lead, about lead paragraph</span></div>
+        <div class="type-token">heading-md · DM Sans<span class="usage">Contact lead, about lead paragraph</span></div>
       </div>
 
       <!-- heading-sm -->
       <div class="type-specimen">
         <div class="type-specimen-demo">
-          <div style="font-family:'Outfit',sans-serif;font-size:clamp(14px,1.4vw,18px);font-weight:500;line-height:1.4;color:#EDEDE8;">Ford Ranger Raptor</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:clamp(14px,1.4vw,18px);font-weight:500;line-height:1.4;color:#EDEDE8;">Ford Ranger Raptor</div>
         </div>
         <div class="type-specimen-meta">
           <div class="type-meta-cell"><div class="type-meta-label">Size</div><div class="type-meta-value">clamp(15–20px)</div></div>
@@ -1328,13 +1328,13 @@ a { color: inherit; text-decoration: none; }
           <div class="type-meta-cell"><div class="type-meta-label">Line Height</div><div class="type-meta-value">1.4</div></div>
           <div class="type-meta-cell"><div class="type-meta-label">Tracking</div><div class="type-meta-value">0</div></div>
         </div>
-        <div class="type-token">heading-sm · Outfit<span class="usage">Work item titles (mobile), card headings</span></div>
+        <div class="type-token">heading-sm · DM Sans<span class="usage">Work item titles (mobile), card headings</span></div>
       </div>
 
       <!-- body-lg -->
       <div class="type-specimen">
         <div class="type-specimen-demo">
-          <div style="font-family:'Manrope',sans-serif;font-size:clamp(14px,1.2vw,16px);font-weight:300;line-height:2.0;color:#fff;max-width:480px;">Greg Hobden is a film producer and production consultant with thirty years in film across theatrical documentary, automotive commercial production and large-scale live experiential.</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:clamp(14px,1.2vw,16px);font-weight:300;line-height:2.0;color:#fff;max-width:480px;">Greg Hobden is a film producer and production consultant with thirty years in film across theatrical documentary, automotive commercial production and large-scale live experiential.</div>
         </div>
         <div class="type-specimen-meta">
           <div class="type-meta-cell"><div class="type-meta-label">Size</div><div class="type-meta-value">clamp(15–17px)</div></div>
@@ -1342,13 +1342,13 @@ a { color: inherit; text-decoration: none; }
           <div class="type-meta-cell"><div class="type-meta-label">Line Height</div><div class="type-meta-value">2.0</div></div>
           <div class="type-meta-cell"><div class="type-meta-label">Tracking</div><div class="type-meta-value">0</div></div>
         </div>
-        <div class="type-token">body-lg · Manrope<span class="usage">About body, hero sub-heading — generous leading</span></div>
+        <div class="type-token">body-lg · DM Sans<span class="usage">About body, hero sub-heading — generous leading</span></div>
       </div>
 
       <!-- body-md -->
       <div class="type-specimen">
         <div class="type-specimen-demo">
-          <div style="font-family:'Manrope',sans-serif;font-size:14px;font-weight:300;line-height:1.7;color:#999;max-width:500px;">Six-part theatrical documentary following the first ascent of Everest's North Ridge. Co-produced with BBC and National Geographic.</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:300;line-height:1.7;color:#999;max-width:500px;">Six-part theatrical documentary following the first ascent of Everest's North Ridge. Co-produced with BBC and National Geographic.</div>
         </div>
         <div class="type-specimen-meta">
           <div class="type-meta-cell"><div class="type-meta-label">Size</div><div class="type-meta-value">14px</div></div>
@@ -1356,13 +1356,13 @@ a { color: inherit; text-decoration: none; }
           <div class="type-meta-cell"><div class="type-meta-label">Line Height</div><div class="type-meta-value">1.7</div></div>
           <div class="type-meta-cell"><div class="type-meta-label">Tracking</div><div class="type-meta-value">0</div></div>
         </div>
-        <div class="type-token">body-md · Manrope<span class="usage">Work descriptions (.work-desc), general body copy</span></div>
+        <div class="type-token">body-md · DM Sans<span class="usage">Work descriptions (.work-desc), general body copy</span></div>
       </div>
 
       <!-- body-sm -->
       <div class="type-specimen">
         <div class="type-specimen-demo">
-          <div style="font-family:'Manrope',sans-serif;font-size:13px;font-weight:300;line-height:1.6;color:#777;">Producer · Director of Photography · Editor</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;line-height:1.6;color:#777;">Producer · Director of Photography · Editor</div>
         </div>
         <div class="type-specimen-meta">
           <div class="type-meta-cell"><div class="type-meta-label">Size</div><div class="type-meta-value">13px</div></div>
@@ -1370,13 +1370,13 @@ a { color: inherit; text-decoration: none; }
           <div class="type-meta-cell"><div class="type-meta-label">Line Height</div><div class="type-meta-value">1.6</div></div>
           <div class="type-meta-cell"><div class="type-meta-label">Tracking</div><div class="type-meta-value">0</div></div>
         </div>
-        <div class="type-token">body-sm · Manrope<span class="usage">Fine print, client lists, footnotes</span></div>
+        <div class="type-token">body-sm · DM Sans<span class="usage">Fine print, client lists, footnotes</span></div>
       </div>
 
       <!-- label -->
       <div class="type-specimen">
         <div class="type-specimen-demo">
-          <div style="font-family:'Manrope',sans-serif;font-size:10px;font-weight:500;line-height:1.5;letter-spacing:0.22em;text-transform:uppercase;color:#C4A46B;">Film Producer</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;line-height:1.5;letter-spacing:0.22em;text-transform:uppercase;color:#F5D800;">Film Producer</div>
         </div>
         <div class="type-specimen-meta">
           <div class="type-meta-cell"><div class="type-meta-label">Size</div><div class="type-meta-value">10px</div></div>
@@ -1384,13 +1384,13 @@ a { color: inherit; text-decoration: none; }
           <div class="type-meta-cell"><div class="type-meta-label">Line Height</div><div class="type-meta-value">1.5</div></div>
           <div class="type-meta-cell"><div class="type-meta-label">Tracking</div><div class="type-meta-value">0.22em</div></div>
         </div>
-        <div class="type-token">label · Manrope · UPPERCASE<span class="usage">Hero label, button text, nav links, section labels</span></div>
+        <div class="type-token">label · DM Sans · UPPERCASE<span class="usage">Hero label, button text, nav links, section labels</span></div>
       </div>
 
       <!-- caption -->
       <div class="type-specimen">
         <div class="type-specimen-demo">
-          <div style="font-family:'Manrope',sans-serif;font-size:10px;font-weight:300;line-height:1.5;letter-spacing:0.08em;color:#666;">© 2026 Push Films</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:10px;font-weight:300;line-height:1.5;letter-spacing:0.08em;color:#666;">© 2026 Push Films</div>
         </div>
         <div class="type-specimen-meta">
           <div class="type-meta-cell"><div class="type-meta-label">Size</div><div class="type-meta-value">10px</div></div>
@@ -1398,13 +1398,13 @@ a { color: inherit; text-decoration: none; }
           <div class="type-meta-cell"><div class="type-meta-label">Line Height</div><div class="type-meta-value">1.5</div></div>
           <div class="type-meta-cell"><div class="type-meta-label">Tracking</div><div class="type-meta-value">0.08em</div></div>
         </div>
-        <div class="type-token">caption · Manrope<span class="usage">Footer text, metadata, timestamps</span></div>
+        <div class="type-token">caption · DM Sans<span class="usage">Footer text, metadata, timestamps</span></div>
       </div>
 
       <!-- overline -->
       <div class="type-specimen">
         <div class="type-specimen-demo">
-          <div style="font-family:'Manrope',sans-serif;font-size:9px;font-weight:500;line-height:1.5;letter-spacing:0.18em;text-transform:uppercase;color:#888;">Documentary · Automotive · Experiential</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;line-height:1.5;letter-spacing:0.18em;text-transform:uppercase;color:#888;">Documentary · Automotive · Experiential</div>
         </div>
         <div class="type-specimen-meta">
           <div class="type-meta-cell"><div class="type-meta-label">Size</div><div class="type-meta-value">9px</div></div>
@@ -1412,7 +1412,7 @@ a { color: inherit; text-decoration: none; }
           <div class="type-meta-cell"><div class="type-meta-label">Line Height</div><div class="type-meta-value">1.5</div></div>
           <div class="type-meta-cell"><div class="type-meta-label">Tracking</div><div class="type-meta-value">0.18em</div></div>
         </div>
-        <div class="type-token">overline · Manrope · UPPERCASE<span class="usage">Hero rule text, micro-labels, overlines</span></div>
+        <div class="type-token">overline · DM Sans · UPPERCASE<span class="usage">Hero rule text, micro-labels, overlines</span></div>
       </div>
 
     </div>
@@ -1498,7 +1498,7 @@ a { color: inherit; text-decoration: none; }
   <div class="ds-subsection">
     <h3>Page Anatomy</h3>
     <div style="border:1px solid var(--rule);border-radius:6px;overflow:hidden;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;">
-      <div style="background:rgba(196,164,107,0.12);border-bottom:1px solid var(--rule);padding:12px 20px;color:var(--gold);">Navigation Bar — fixed top, full width, z-index 100</div>
+      <div style="background:rgba(245,216,0,0.12);border-bottom:1px solid var(--rule);padding:12px 20px;color:var(--gold);">Navigation Bar — fixed top, full width, z-index 100</div>
       <div style="background:var(--bg);border-bottom:1px solid var(--rule);padding:40px 20px;color:#444;text-align:center;">Hero Section — 100vh, bg image center/cover, rgba(0,0,0,0.45) overlay</div>
       <div style="background:var(--dim);border-bottom:1px solid var(--rule);padding:20px;color:#555;text-align:center;">About — 2-col grid (180px label + 1fr content)</div>
       <div style="background:var(--bg);border-bottom:1px solid var(--rule);padding:20px;color:#555;text-align:center;">Work — accordion list, category headers, full-bleed expand panels</div>
@@ -1545,14 +1545,14 @@ a { color: inherit; text-decoration: none; }
     <div class="spacing-row"><span class="spacing-label">space-24</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:96px;"></div></div><span class="spacing-values">96px / 6rem</span></div>
     <div class="spacing-row"><span class="spacing-label">space-32</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:128px;"></div></div><span class="spacing-values">128px / 8rem</span></div>
     <div class="spacing-row"><span class="spacing-label">space-40</span><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:160px;"></div></div><span class="spacing-values">160px / 10rem</span></div>
-    <div class="spacing-row" style="border-bottom:1px solid rgba(196,164,107,0.2);">
+    <div class="spacing-row" style="border-bottom:1px solid rgba(245,216,0,0.2);">
       <span class="spacing-label" style="color:var(--gold);">--pad</span>
-      <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:clamp(24px,5vw,80px);background:rgba(196,164,107,0.5);border-right-color:var(--gold-hover);"></div></div>
+      <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:clamp(24px,5vw,80px);background:rgba(245,216,0,0.5);border-right-color:var(--gold-hover);"></div></div>
       <span class="spacing-values" style="color:var(--gold);">clamp(24–80px)</span>
     </div>
     <div class="spacing-row">
       <span class="spacing-label" style="color:var(--gold);">--gap</span>
-      <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:140px;background:rgba(196,164,107,0.5);border-right-color:var(--gold-hover);"></div></div>
+      <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:140px;background:rgba(245,216,0,0.5);border-right-color:var(--gold-hover);"></div></div>
       <span class="spacing-values" style="color:var(--gold);">clamp(72–140px)</span>
     </div>
   </div>
@@ -1601,15 +1601,15 @@ a { color: inherit; text-decoration: none; }
     <div class="component-body">
       <div class="anatomy-list">
         <div class="anatomy-item"><span class="a-name">container</span><span class="a-desc">inline-flex, gap 12px, gold bg, sharp corners (border-radius: 0)</span></div>
-        <div class="anatomy-item"><span class="a-name">label</span><span class="a-desc">10px Manrope 500, 0.22em tracking, uppercase, color #080808</span></div>
+        <div class="anatomy-item"><span class="a-name">label</span><span class="a-desc">10px DM Sans 500, 0.22em tracking, uppercase, color #080808 (on yellow)</span></div>
         <div class="anatomy-item"><span class="a-name">optional icon</span><span class="a-desc">Any inline SVG or unicode symbol, inherits color</span></div>
         <div class="anatomy-item"><span class="a-name">padding</span><span class="a-desc">16px vertical × 32px horizontal</span></div>
       </div>
       <div class="states-grid">
-        <div class="state-item"><div class="state-name">Default</div><div class="state-desc">bg #C4A46B, border #C4A46B, text #080808</div></div>
-        <div class="state-item"><div class="state-name">Hover</div><div class="state-desc">bg #D4B47E, border #D4B47E, transition 0.3s</div></div>
-        <div class="state-item"><div class="state-name">Focus</div><div class="state-desc">outline: 2px solid #C4A46B, offset 2px</div></div>
-        <div class="state-item"><div class="state-name">Active</div><div class="state-desc">bg gold.500 #A8894F</div></div>
+        <div class="state-item"><div class="state-name">Default</div><div class="state-desc">bg #F5D800 (yellow), border #F5D800, text #080808</div></div>
+        <div class="state-item"><div class="state-name">Hover</div><div class="state-desc">bg #D4B800, border #D4B800, transition 0.3s</div></div>
+        <div class="state-item"><div class="state-name">Focus</div><div class="state-desc">outline: 2px solid #F5D800, offset 2px</div></div>
+        <div class="state-item"><div class="state-name">Active</div><div class="state-desc">bg yellow.500 #D4B800</div></div>
         <div class="state-item"><div class="state-name">Disabled</div><div class="state-desc">opacity 0.45, cursor not-allowed</div></div>
       </div>
       <div class="a11y-box">
@@ -1635,7 +1635,7 @@ a { color: inherit; text-decoration: none; }
   <span class="c-prop">cursor</span><span class="c-punct">:</span> <span class="c-val">pointer</span><span class="c-punct">;</span>
   <span class="c-prop">transition</span><span class="c-punct">:</span> <span class="c-val">all 0.3s ease</span><span class="c-punct">;</span>
 <span class="c-punct">}</span>
-<span class="c-sel">.btn-primary:hover</span> <span class="c-punct">{</span> <span class="c-prop">background</span><span class="c-punct">:</span> <span class="c-val">#D4B47E</span><span class="c-punct">;</span> <span class="c-prop">border-color</span><span class="c-punct">:</span> <span class="c-val">#D4B47E</span><span class="c-punct">;</span> <span class="c-punct">}</span></div>
+<span class="c-sel">.btn-primary:hover</span> <span class="c-punct">{</span> <span class="c-prop">background</span><span class="c-punct">:</span> <span class="c-val">#D4B800</span><span class="c-punct">;</span> <span class="c-prop">border-color</span><span class="c-punct">:</span> <span class="c-val">#D4B800</span><span class="c-punct">;</span> <span class="c-punct">}</span></div>
     </div>
   </div>
 
@@ -1648,7 +1648,7 @@ a { color: inherit; text-decoration: none; }
     <div class="component-body">
       <div class="anatomy-list">
         <div class="anatomy-item"><span class="a-name">container</span><span class="a-desc">inline-flex, transparent bg, 1px solid gold border</span></div>
-        <div class="anatomy-item"><span class="a-name">label</span><span class="a-desc">10px Manrope 500, 0.16em tracking, uppercase, color gold</span></div>
+        <div class="anatomy-item"><span class="a-name">label</span><span class="a-desc">10px DM Sans 500, 0.16em tracking, uppercase, color gold</span></div>
         <div class="anatomy-item"><span class="a-name">padding</span><span class="a-desc">12px × 24px (early-years variant) or 16px × 32px (full size)</span></div>
       </div>
       <div class="states-grid">
@@ -1679,7 +1679,7 @@ a { color: inherit; text-decoration: none; }
     <div class="component-body">
       <div class="anatomy-list">
         <div class="anatomy-item"><span class="a-name">container</span><span class="a-desc">inline-flex, no bg, 1px solid --rule border</span></div>
-        <div class="anatomy-item"><span class="a-name">label</span><span class="a-desc">10px Manrope, 0.18em tracking, uppercase, color --mid</span></div>
+        <div class="anatomy-item"><span class="a-name">label</span><span class="a-desc">10px DM Sans, 0.18em tracking, uppercase, color --mid</span></div>
       </div>
       <div class="states-grid">
         <div class="state-item"><div class="state-name">Default</div><div class="state-desc">border rule, text --mid</div></div>
@@ -1746,7 +1746,7 @@ a { color: inherit; text-decoration: none; }
     <div class="component-body">
       <div class="anatomy-list">
         <div class="anatomy-item"><span class="a-name">container</span><span class="a-desc">background none, border none — only a 1px bottom border</span></div>
-        <div class="anatomy-item"><span class="a-name">text</span><span class="a-desc">14px Manrope 300, color --fg, letter-spacing 0.06em</span></div>
+        <div class="anatomy-item"><span class="a-name">text</span><span class="a-desc">14px DM Sans 300, color --fg, letter-spacing 0.06em</span></div>
         <div class="anatomy-item"><span class="a-name">placeholder</span><span class="a-desc">color --mid</span></div>
         <div class="anatomy-item"><span class="a-name">focus ring</span><span class="a-desc">border-bottom-color: gold (not outline — intentional underline style)</span></div>
         <div class="anatomy-item"><span class="a-name">width</span><span class="a-desc">180px fixed (password form context)</span></div>
@@ -1800,9 +1800,9 @@ a { color: inherit; text-decoration: none; }
       <div class="anatomy-list">
         <div class="anatomy-item"><span class="a-name">#nav</span><span class="a-desc">position fixed, top 0, z-index 100, height 64px (--nav-h)</span></div>
         <div class="anatomy-item"><span class="a-name">.nav-inner</span><span class="a-desc">max-width 1200px, flex space-between, align-items center</span></div>
-        <div class="anatomy-item"><span class="a-name">.nav-logo</span><span class="a-desc">Outfit 500, 17px, letter-spacing 0.03em — hover gold</span></div>
+        <div class="anatomy-item"><span class="a-name">.nav-logo</span><span class="a-desc">DM Sans 500, 17px, letter-spacing 0.03em — hover gold</span></div>
         <div class="anatomy-item"><span class="a-name">.nav-links</span><span class="a-desc">flex, gap 40px, hidden on mobile</span></div>
-        <div class="anatomy-item"><span class="a-name">nav link</span><span class="a-desc">10px Manrope, 0.14em tracking, uppercase, white → gold on hover</span></div>
+        <div class="anatomy-item"><span class="a-name">nav link</span><span class="a-desc">10px DM Sans, 0.14em tracking, uppercase, white → gold on hover</span></div>
         <div class="anatomy-item"><span class="a-name">.scrolled state</span><span class="a-desc">bg rgba(8,8,8,0.95), backdrop-filter blur(16px), border-bottom 1px rule</span></div>
       </div>
       <div class="states-grid">
@@ -1889,8 +1889,8 @@ a { color: inherit; text-decoration: none; }
         <div class="anatomy-item"><span class="a-name">#hero</span><span class="a-desc">min-height 100vh, flex column center, bg image center/cover</span></div>
         <div class="anatomy-item"><span class="a-name">#hero::before</span><span class="a-desc">absolute overlay rgba(0,0,0,0.45) — darkens image for text legibility</span></div>
         <div class="anatomy-item"><span class="a-name">.hero-main</span><span class="a-desc">flex column, align flex-start (left-aligned), margin-left calc(50% + 20px)</span></div>
-        <div class="anatomy-item"><span class="a-name">.hero-label</span><span class="a-desc">10px Manrope, 0.22em tracking, uppercase, gold — sits above name</span></div>
-        <div class="anatomy-item"><span class="a-name">.hero-name</span><span class="a-desc">Outfit 300, clamp(56px–155px), line-height 0.85, letter-spacing −0.02em</span></div>
+        <div class="anatomy-item"><span class="a-name">.hero-label</span><span class="a-desc">10px DM Sans, 0.22em tracking, uppercase, gold — sits above name</span></div>
+        <div class="anatomy-item"><span class="a-name">.hero-name</span><span class="a-desc">DM Sans 300, clamp(56px–155px), line-height 0.85, letter-spacing −0.02em</span></div>
         <div class="anatomy-item"><span class="a-name">bg image</span><span class="a-desc">Preloaded via &lt;link rel="preload"&gt;, Ford Mustang 223.jpg, center/cover</span></div>
       </div>
       <div class="do-dont-grid">
@@ -1913,7 +1913,7 @@ a { color: inherit; text-decoration: none; }
     </div>
     <div class="component-body">
       <div class="anatomy-list">
-        <div class="anatomy-item"><span class="a-name">.hero-label</span><span class="a-desc">10px Manrope 500, 0.22em tracking, uppercase, gold, margin-bottom clamp(24px–36px)</span></div>
+        <div class="anatomy-item"><span class="a-name">.hero-label</span><span class="a-desc">10px DM Sans 500, 0.22em tracking, uppercase, gold, margin-bottom clamp(24px–36px)</span></div>
       </div>
       <div class="ds-code"><span class="c-sel">.hero-label</span> <span class="c-punct">{</span>
   <span class="c-prop">font-family</span><span class="c-punct">:</span> <span class="c-val">var(--font-sans)</span><span class="c-punct">;</span>
@@ -1970,9 +1970,9 @@ a { color: inherit; text-decoration: none; }
       <div class="anatomy-list">
         <div class="anatomy-item"><span class="a-name">.work-item</span><span class="a-desc">2-col grid (44% image, 1fr info), padding clamp(24–40px) 0, border-bottom rule</span></div>
         <div class="anatomy-item"><span class="a-name">.work-image</span><span class="a-desc">16:9 aspect-ratio, overflow hidden, bg --dim — image scales on hover</span></div>
-        <div class="anatomy-item"><span class="a-name">.work-meta</span><span class="a-desc">10px Manrope, 0.1em tracking, uppercase, gold</span></div>
-        <div class="anatomy-item"><span class="a-name">.work-info h3</span><span class="a-desc">Outfit 500, clamp(22–30px), line-height 1.1</span></div>
-        <div class="anatomy-item"><span class="a-name">.work-desc</span><span class="a-desc">14px Manrope 300, line-height 1.7, color #999</span></div>
+        <div class="anatomy-item"><span class="a-name">.work-meta</span><span class="a-desc">10px DM Sans, 0.1em tracking, uppercase, gold</span></div>
+        <div class="anatomy-item"><span class="a-name">.work-info h3</span><span class="a-desc">DM Sans 500, clamp(22–30px), line-height 1.1</span></div>
+        <div class="anatomy-item"><span class="a-name">.work-desc</span><span class="a-desc">14px DM Sans 300, line-height 1.7, color #999</span></div>
         <div class="anatomy-item"><span class="a-name">.work-arrow</span><span class="a-desc">20px →, color --rule default, gold + translateX(6px) on hover</span></div>
       </div>
       <div class="states-grid">
@@ -2220,7 +2220,7 @@ document.addEventListener(<span class="c-str">'keydown'</span>, e => <span class
     <div class="component-body">
       <div class="anatomy-list">
         <div class="anatomy-item"><span class="a-name">.section-header</span><span class="a-desc">flex space-between, align baseline, padding-bottom 20px, border-bottom rule</span></div>
-        <div class="anatomy-item"><span class="a-name">.section-label</span><span class="a-desc">10px Manrope, 0.14em tracking, uppercase, color --mid</span></div>
+        <div class="anatomy-item"><span class="a-name">.section-label</span><span class="a-desc">10px DM Sans, 0.14em tracking, uppercase, color --mid</span></div>
       </div>
       <div class="ds-code"><span class="c-sel">.section-header</span> <span class="c-punct">{</span>
   <span class="c-prop">margin-bottom</span><span class="c-punct">:</span> <span class="c-val">clamp(40px, 5vw, 64px)</span><span class="c-punct">;</span>
@@ -2239,7 +2239,7 @@ document.addEventListener(<span class="c-str">'keydown'</span>, e => <span class
     <div class="component-body">
       <div class="anatomy-list">
         <div class="anatomy-item"><span class="a-name">.about-label</span><span class="a-desc">position sticky, top: calc(var(--nav-h) + 24px), width 180px</span></div>
-        <div class="anatomy-item"><span class="a-name">span</span><span class="a-desc">10px Manrope, 0.14em tracking, uppercase, --mid</span></div>
+        <div class="anatomy-item"><span class="a-name">span</span><span class="a-desc">10px DM Sans, 0.14em tracking, uppercase, --mid</span></div>
         <div class="anatomy-item"><span class="a-name">mobile</span><span class="a-desc">position static at max-width 960px</span></div>
       </div>
     </div>
@@ -2275,7 +2275,7 @@ document.addEventListener(<span class="c-str">'keydown'</span>, e => <span class
       <div class="anatomy-list">
         <div class="anatomy-item"><span class="a-name">.work-category</span><span class="a-desc">margin-bottom clamp(56–96px), counter-reset for item numbering</span></div>
         <div class="anatomy-item"><span class="a-name">.work-category-header</span><span class="a-desc">flex baseline gap 20px, margin-bottom clamp(24–36px)</span></div>
-        <div class="anatomy-item"><span class="a-name">category name</span><span class="a-desc">Outfit 500, clamp(20–26px), color --fg</span></div>
+        <div class="anatomy-item"><span class="a-name">category name</span><span class="a-desc">DM Sans 500, clamp(20–26px), color --fg</span></div>
         <div class="anatomy-item"><span class="a-name">::after rule</span><span class="a-desc">flex:1, height 1px, background --rule — extends line to edge</span></div>
       </div>
       <div class="ds-code"><span class="c-sel">.work-category-header</span> <span class="c-punct">{</span> <span class="c-prop">display</span><span class="c-punct">:</span> <span class="c-val">flex</span><span class="c-punct">;</span> <span class="c-prop">align-items</span><span class="c-punct">:</span> <span class="c-val">baseline</span><span class="c-punct">;</span> <span class="c-prop">gap</span><span class="c-punct">:</span> <span class="c-val">20px</span><span class="c-punct">;</span> <span class="c-punct">}</span>
@@ -2293,7 +2293,7 @@ document.addEventListener(<span class="c-str">'keydown'</span>, e => <span class
     </div>
     <div class="component-body">
       <div class="anatomy-list">
-        <div class="anatomy-item"><span class="a-name">::before counter</span><span class="a-desc">counter(work-item), 10px Manrope, color gold opacity 0.5, letter-spacing 0.08em</span></div>
+        <div class="anatomy-item"><span class="a-name">::before counter</span><span class="a-desc">counter(work-item), 10px DM Sans, color gold opacity 0.5, letter-spacing 0.08em</span></div>
         <div class="anatomy-item"><span class="a-name">counter-reset</span><span class="a-desc">Applied on .work-category; incremented by .work-item::before</span></div>
       </div>
       <div class="ds-code"><span class="c-sel">.work-category</span> <span class="c-punct">{</span> <span class="c-prop">counter-reset</span><span class="c-punct">:</span> <span class="c-val">work-item</span><span class="c-punct">;</span> <span class="c-punct">}</span>
@@ -2301,7 +2301,7 @@ document.addEventListener(<span class="c-str">'keydown'</span>, e => <span class
   <span class="c-prop">counter-increment</span><span class="c-punct">:</span> <span class="c-val">work-item</span><span class="c-punct">;</span>
   <span class="c-prop">content</span><span class="c-punct">:</span> <span class="c-val">counter(work-item, decimal-leading-zero)</span><span class="c-punct">;</span>
   <span class="c-prop">font-size</span><span class="c-punct">:</span> <span class="c-val">10px</span><span class="c-punct">;</span>
-  <span class="c-prop">color</span><span class="c-punct">:</span> <span class="c-val">rgba(196,164,107,0.5)</span><span class="c-punct">;</span>
+  <span class="c-prop">color</span><span class="c-punct">:</span> <span class="c-val">rgba(245,216,0,0.5)</span><span class="c-punct">;</span>
 <span class="c-punct">}</span></div>
     </div>
   </div>
@@ -2339,7 +2339,7 @@ document.addEventListener(<span class="c-str">'keydown'</span>, e => <span class
     </div>
     <div class="component-body">
       <div class="anatomy-list">
-        <div class="anatomy-item"><span class="a-name">.password-error</span><span class="a-desc">11px Manrope, 0.1em tracking, uppercase, color red.500 #C0392B</span></div>
+        <div class="anatomy-item"><span class="a-name">.password-error</span><span class="a-desc">11px DM Sans, 0.1em tracking, uppercase, color red.500 #C0392B</span></div>
         <div class="anatomy-item"><span class="a-name">visibility</span><span class="a-desc">display:none by default; .show class sets display:block</span></div>
       </div>
       <div class="a11y-box">
@@ -2368,7 +2368,7 @@ document.addEventListener(<span class="c-str">'keydown'</span>, e => <span class
       <div class="anatomy-list">
         <div class="anatomy-item"><span class="a-name">.restricted-film-card</span><span class="a-desc">cursor pointer, image opacity 0.7 → 1.0 on hover</span></div>
         <div class="anatomy-item"><span class="a-name">image</span><span class="a-desc">16:9 aspect, object-fit cover, opacity 0.7 default</span></div>
-        <div class="anatomy-item"><span class="a-name">title</span><span class="a-desc">11px Manrope, 0.12em tracking, uppercase, --mid → gold on hover</span></div>
+        <div class="anatomy-item"><span class="a-name">title</span><span class="a-desc">11px DM Sans, 0.12em tracking, uppercase, --mid → gold on hover</span></div>
         <div class="anatomy-item"><span class="a-name">.restricted-play-btn</span><span class="a-desc">Ghost style button, border rule, text mid → gold on hover</span></div>
       </div>
     </div>
@@ -2383,7 +2383,7 @@ document.addEventListener(<span class="c-str">'keydown'</span>, e => <span class
     <div class="component-body">
       <div class="anatomy-list">
         <div class="anatomy-item"><span class="a-name">prefix</span><span class="a-desc">← character with gap 8px</span></div>
-        <div class="anatomy-item"><span class="a-name">text</span><span class="a-desc">12px Manrope, 0.1em tracking, uppercase, gold</span></div>
+        <div class="anatomy-item"><span class="a-name">text</span><span class="a-desc">12px DM Sans, 0.1em tracking, uppercase, gold</span></div>
         <div class="anatomy-item"><span class="a-name">hover</span><span class="a-desc">opacity 0.5 — gold dims, not colour change</span></div>
       </div>
     </div>
@@ -2405,7 +2405,7 @@ document.addEventListener(<span class="c-str">'keydown'</span>, e => <span class
       <div class="anatomy-list">
         <div class="anatomy-item"><span class="a-name">.contact-link</span><span class="a-desc">inline-flex, gap 10px, gold bg, dark text — same as btn-primary</span></div>
         <div class="anatomy-item"><span class="a-name">icon</span><span class="a-desc">Optional symbol or SVG, gap 10px from text</span></div>
-        <div class="anatomy-item"><span class="a-name">hover</span><span class="a-desc">bg #D4B47E, border-color #D4B47E</span></div>
+        <div class="anatomy-item"><span class="a-name">hover</span><span class="a-desc">bg #D4B800, border-color #D4B800</span></div>
       </div>
       <div class="ds-code"><span class="c-sel">.contact-link</span> <span class="c-punct">{</span>
   <span class="c-prop">display</span><span class="c-punct">:</span> <span class="c-val">inline-flex</span><span class="c-punct">;</span>
@@ -2430,7 +2430,7 @@ document.addEventListener(<span class="c-str">'keydown'</span>, e => <span class
       <div class="anatomy-list">
         <div class="anatomy-item"><span class="a-name">footer</span><span class="a-desc">padding 28px 0, border-top 1px rule</span></div>
         <div class="anatomy-item"><span class="a-name">.footer-inner</span><span class="a-desc">flex space-between, align-items center</span></div>
-        <div class="anatomy-item"><span class="a-name">text</span><span class="a-desc">10px Manrope, 0.08em tracking, color --mid</span></div>
+        <div class="anatomy-item"><span class="a-name">text</span><span class="a-desc">10px DM Sans, 0.08em tracking, color --mid</span></div>
         <div class="anatomy-item"><span class="a-name">mobile</span><span class="a-desc">flex-direction column, gap 8px, text-align center</span></div>
       </div>
     </div>
@@ -2471,7 +2471,7 @@ document.addEventListener(<span class="c-str">'keydown'</span>, e => <span class
     <div class="component-body">
       <div class="anatomy-list">
         <div class="anatomy-item"><span class="a-name">grid-column</span><span class="a-desc">1 / -1 — spans full BTS wall width</span></div>
-        <div class="anatomy-item"><span class="a-name">typography</span><span class="a-desc">13px Manrope 500, 0.14em tracking, uppercase, gold, text-align center</span></div>
+        <div class="anatomy-item"><span class="a-name">typography</span><span class="a-desc">13px DM Sans 500, 0.14em tracking, uppercase, gold, text-align center</span></div>
       </div>
     </div>
   </div>
@@ -2539,9 +2539,9 @@ document.addEventListener(<span class="c-str">'keydown'</span>, e => <span class
   <span class="c-prop">--mid</span><span class="c-punct">:</span>        <span class="c-val">#888888</span><span class="c-punct">;</span>
   <span class="c-prop">--dim</span><span class="c-punct">:</span>        <span class="c-val">#1C1C1C</span><span class="c-punct">;</span>
   <span class="c-prop">--rule</span><span class="c-punct">:</span>       <span class="c-val">#1E1E1E</span><span class="c-punct">;</span>
-  <span class="c-prop">--gold</span><span class="c-punct">:</span>       <span class="c-val">#C4A46B</span><span class="c-punct">;</span>
-  <span class="c-prop">--font-serif</span><span class="c-punct">:</span> <span class="c-val">'Outfit', sans-serif</span><span class="c-punct">;</span>
-  <span class="c-prop">--font-sans</span><span class="c-punct">:</span>  <span class="c-val">'Manrope', sans-serif</span><span class="c-punct">;</span>
+  <span class="c-prop">--gold</span><span class="c-punct">:</span>       <span class="c-val">#F5D800</span><span class="c-punct">;</span>
+  <span class="c-prop">--font-serif</span><span class="c-punct">:</span> <span class="c-val">'DM Sans', sans-serif</span><span class="c-punct">;</span>
+  <span class="c-prop">--font-sans</span><span class="c-punct">:</span>  <span class="c-val">'DM Sans', sans-serif</span><span class="c-punct">;</span>
   <span class="c-prop">--nav-h</span><span class="c-punct">:</span>      <span class="c-val">64px</span><span class="c-punct">;</span>
   <span class="c-prop">--pad</span><span class="c-punct">:</span>        <span class="c-val">clamp(24px, 5vw, 80px)</span><span class="c-punct">;</span>
   <span class="c-prop">--gap</span><span class="c-punct">:</span>        <span class="c-val">clamp(72px, 10vw, 140px)</span><span class="c-punct">;</span>
@@ -2557,8 +2557,8 @@ document.addEventListener(<span class="c-str">'keydown'</span>, e => <span class
         <span class="jk">"base"</span><span class="jp">:</span> <span class="jp">{</span> <span class="jk">"value"</span><span class="jp">:</span> <span class="js">"{color.primitive.grey.900}"</span><span class="jp">,</span> <span class="jk">"type"</span><span class="jp">:</span> <span class="js">"color"</span> <span class="jp">}</span>
       <span class="jp">}</span><span class="jp">,</span>
       <span class="jk">"accent"</span><span class="jp">:</span> <span class="jp">{</span>
-        <span class="jk">"default"</span><span class="jp">:</span> <span class="jp">{</span> <span class="jk">"value"</span><span class="jp">:</span> <span class="js">"{color.primitive.gold.400}"</span><span class="jp">,</span> <span class="jk">"type"</span><span class="jp">:</span> <span class="js">"color"</span> <span class="jp">}</span><span class="jp">,</span>
-        <span class="jk">"hover"</span><span class="jp">:</span>   <span class="jp">{</span> <span class="jk">"value"</span><span class="jp">:</span> <span class="js">"#D4B47E"</span><span class="jp">,</span>                           <span class="jk">"type"</span><span class="jp">:</span> <span class="js">"color"</span> <span class="jp">}</span>
+        <span class="jk">"default"</span><span class="jp">:</span> <span class="jp">{</span> <span class="jk">"value"</span><span class="jp">:</span> <span class="js">"{color.primitive.yellow.400}"</span><span class="jp">,</span> <span class="jk">"type"</span><span class="jp">:</span> <span class="js">"color"</span> <span class="jp">}</span><span class="jp">,</span>
+        <span class="jk">"hover"</span><span class="jp">:</span>   <span class="jp">{</span> <span class="jk">"value"</span><span class="jp">:</span> <span class="js">"#D4B800"</span><span class="jp">,</span>                           <span class="jk">"type"</span><span class="jp">:</span> <span class="js">"color"</span> <span class="jp">}</span>
       <span class="jp">}</span>
     <span class="jp">}</span>
   <span class="jp">}</span><span class="jp">,</span>
@@ -2600,7 +2600,7 @@ document.addEventListener(<span class="c-str">'keydown'</span>, e => <span class
     <div class="dd-card do-card">
       <span class="dd-badge">Do</span>
       <h4>Use gold exclusively for accent and CTA</h4>
-      <p>Gold (#C4A46B) signals interactivity. Apply it to active states, buttons, and labels. Its restraint is what makes it powerful.</p>
+      <p>Gold (#F5D800) signals interactivity. Apply it to active states, buttons, and labels. Its restraint is what makes it powerful.</p>
     </div>
     <div class="dd-card dont-card">
       <span class="dd-badge">Don't</span>
@@ -2610,13 +2610,13 @@ document.addEventListener(<span class="c-str">'keydown'</span>, e => <span class
 
     <div class="dd-card do-card">
       <span class="dd-badge">Do</span>
-      <h4>Mix Outfit (display) and Manrope (body) intentionally</h4>
-      <p>Outfit for any text that communicates identity or hierarchy. Manrope for everything a user needs to read and act on.</p>
+      <h4>Use DM Sans weight intentionally</h4>
+      <p>Weight 300 for captions and fine detail. Weight 400 for body text and hero sub-headings. Weight 500 for headings, UI labels, and navigation.</p>
     </div>
     <div class="dd-card dont-card">
       <span class="dd-badge">Don't</span>
-      <h4>Use Outfit for long body copy</h4>
-      <p>Outfit at small sizes and paragraph lengths loses legibility. Manrope's open apertures and generous x-height are optimised for reading.</p>
+      <h4>Mix in other typefaces without a strong reason</h4>
+      <p>The single-font system (DM Sans only) is intentional. Its geometric clarity works across display and body sizes — adding a second face risks undermining the clean identity.</p>
     </div>
 
     <div class="dd-card do-card">
