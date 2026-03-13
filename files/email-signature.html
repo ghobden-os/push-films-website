@@ -118,7 +118,7 @@
 
       <!-- Disc -->
       <td valign="middle" style="padding-right:18px;">
-        <div style="width:44px;height:44px;border-radius:50%;background:#F5D800;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;font-size:26px;font-weight:300;color:#111111;line-height:1;text-align:center;">G</div>
+        <img src="https://greghobden.com/files/g-disc.svg" width="44" height="44" alt="G" style="display:block;border:0;">
       </td>
 
       <!-- Name + details -->
@@ -164,13 +164,16 @@
 ════════════════════════════════════════════ -->
 <div class="instructions">
 
-  <h2>How to install — Apple Mail</h2>
+  <h2>How to install — Apple Mail (direct file method — required for full styling)</h2>
   <ul>
-    <li>Open Mail → <strong>Settings</strong> → <strong>Signatures</strong></li>
-    <li>Click <strong>+</strong> to create a new signature</li>
-    <li>Open the light-background preview above in your browser, select the entire signature (click and drag), and copy it (<code>⌘C</code>)</li>
-    <li>Paste directly into the signature box in Mail — the formatting carries over</li>
-    <li>Assign the signature to your account in the left column</li>
+    <li>Open Mail → <strong>Settings</strong> → <strong>Signatures</strong> → click <strong>+</strong> → type any placeholder text (e.g. "sig") → close Settings</li>
+    <li><strong>Quit Mail completely</strong> — <code>⌘Q</code></li>
+    <li>In Finder press <code>⇧⌘G</code> and go to: <code>~/Library/Mail/</code></li>
+    <li>Open the <code>V10</code> folder (or V9/V8 depending on your macOS) → <code>MailData</code> → <code>Signatures</code></li>
+    <li>Sort by Date Modified — open the most recent <code>.mailsignature</code> file in TextEdit</li>
+    <li>Find the <code>&lt;body&gt;</code> tag and replace everything between <code>&lt;body&gt;</code> and <code>&lt;/body&gt;</code> with the HTML source block below</li>
+    <li>Save the file, then <strong>lock it</strong>: right-click → Get Info → tick <strong>Locked</strong> (prevents Mail overwriting it)</li>
+    <li>Reopen Mail — your signature will appear correctly with the disc and yellow line</li>
   </ul>
 
   <h2>How to install — Gmail</h2>
@@ -189,17 +192,36 @@
     <li>Outlook on Windows uses Word rendering — <code>border-radius</code> is not supported, so the disc will appear as a square. Still fully branded; just not circular.</li>
   </ul>
 
-  <h2>Compatibility notes</h2>
-  <ul>
-    <li>The yellow disc is CSS-rendered — it's circular in Apple Mail, Gmail (web), and modern Outlook (Mac). Outlook on Windows renders it square.</li>
-    <li>DM Sans loads from Google Fonts in browsers; email clients fall back to system fonts (<code>-apple-system</code> / Segoe UI) which look very similar.</li>
-    <li>The yellow dots between contact details are a brand touch — if they appear as boxes in a client, replace them with a plain <code>|</code> separator.</li>
-    <li>Links are unstyled (<code>text-decoration:none</code>) — some clients will override this and show underlines. That's fine.</li>
-  </ul>
+  <h2>HTML source — paste into the .mailsignature file body</h2>
+  <p style="margin-bottom:12px;">Copy everything in the box below and paste it between <code>&lt;body&gt;</code> and <code>&lt;/body&gt;</code> in the signature file.</p>
 
-  <div class="note">
-    <strong>Tip:</strong> Select just the white card above (click and drag from the disc to the last link), copy, and paste directly into your email client's signature box. Do not include the grey page background.
-  </div>
+</div>
+
+<div class="source-box">&lt;table cellpadding="0" cellspacing="0" border="0" style="font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;"&gt;
+  &lt;tr&gt;
+    &lt;td valign="middle" style="padding-right:18px;"&gt;
+      &lt;img src="https://greghobden.com/files/g-disc.svg" width="44" height="44" alt="G" style="display:block;border:0;"&gt;
+    &lt;/td&gt;
+    &lt;td valign="middle" style="border-left:2px solid #F5D800;padding-left:18px;"&gt;
+      &lt;div style="font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;font-size:17px;font-weight:300;letter-spacing:-0.01em;color:#111111;line-height:1.1;margin-bottom:5px;"&gt;
+        Greg &lt;span style="font-style:italic;"&gt;Hobden&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div style="font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:#888888;margin-bottom:10px;"&gt;
+        Film Producer
+      &lt;/div&gt;
+      &lt;div style="height:1px;background:#e0e0e0;width:100%;margin-bottom:10px;"&gt;&lt;/div&gt;
+      &lt;div style="font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;font-size:10px;font-weight:400;letter-spacing:0.08em;color:#888888;"&gt;
+        &lt;a href="mailto:ghobden@mac.com" style="color:#111111;text-decoration:none;"&gt;ghobden@mac.com&lt;/a&gt;
+        &amp;nbsp;&amp;nbsp;&lt;span style="color:#F5D800;"&gt;&amp;middot;&lt;/span&gt;&amp;nbsp;&amp;nbsp;
+        &lt;a href="tel:07802179515" style="color:#888888;text-decoration:none;"&gt;07802 179 515&lt;/a&gt;
+        &amp;nbsp;&amp;nbsp;&lt;span style="color:#F5D800;"&gt;&amp;middot;&lt;/span&gt;&amp;nbsp;&amp;nbsp;
+        &lt;a href="https://greghobden.com" style="color:#888888;text-decoration:none;"&gt;greghobden.com&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</div>
+
+<div class="instructions">
 
 </div>
 
