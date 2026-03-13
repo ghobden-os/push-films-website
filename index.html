@@ -15,6 +15,12 @@
     <meta name="twitter:title" content="Greg Hobden — Film Producer">
     <meta name="twitter:description" content="Film Producer and Production Consultant. Thirty years in film across theatrical documentary, automotive commercial, and large-scale live experiential.">
     <meta name="twitter:image" content="https://greghobden.com/images/Ford%20Mustang%20223.jpg">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#080808">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Greg Hobden">
+    <link rel="apple-touch-icon" href="/favicon.svg">
     <link rel="preload" as="image" href="images/Ford%20Mustang%20223.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2501,5 +2507,10 @@
 
     </script>
     <script src="https://player.vimeo.com/api/player.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
+    }
+  </script>
 </body>
 </html>
