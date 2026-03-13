@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layout Concepts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #080808; --fg: #EDEDE8; --mid: #888888; --rule: #1E1E1E;
+  --gold: #F5D800; --dim: #141414;
+  --font: 'DM Sans', sans-serif;
+}
+html { -webkit-font-smoothing: antialiased; }
+body { background: #111; font-family: var(--font); color: var(--fg); }
+a { color: inherit; text-decoration: none; }
+
+/* SWITCHER */
+.switcher {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+  background: #000; border-bottom: 1px solid #222;
+  display: flex; align-items: center; gap: 16px; padding: 12px 24px;
+}
+.switcher-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); }
+.sw-btn {
+  font-family: var(--font); font-size: 11px; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 6px 16px; border: 1px solid #333;
+  background: none; color: var(--mid); cursor: pointer; transition: all 0.2s;
+}
+.sw-btn.active { border-color: var(--gold); color: var(--gold); }
+.sw-btn:hover:not(.active) { border-color: #555; color: var(--fg); }
+.sw-note { margin-left: auto; font-size: 11px; color: #444; }
+
+/* CONCEPT WRAPPER */
+.concept { display: none; padding-top: 49px; }
+.concept.active { display: block; }
+
+
+/* ======================================================
+   CONCEPT A — Grid + Modal
+   ====================================================== */
+
+/* Nav A */
+.nav-a {
+  position: sticky; top: 49px; z-index: 100;
+  background: rgba(8,8,8,0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(24px, 5vw, 80px); height: 60px;
+}
+.nav-a-name { font-size: 13px; font-weight: 400; letter-spacing: 0.06em; }
+.nav-a-name span { color: var(--gold); }
+.nav-a-links { display: flex; gap: 32px; }
+.nav-a-links a { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); transition: color 0.2s; }
+.nav-a-links a:hover { color: var(--fg); }
+
+/* Hero A */
+.hero-a {
+  height: 85vh; position: relative; display: flex; align-items: flex-end;
+  padding: clamp(24px, 5vw, 80px); padding-bottom: clamp(40px, 6vw, 80px);
+  background: url('images/Ford%20Mustang%20223.jpg') center center / cover no-repeat;
+}
+.hero-a::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(8,8,8,0.85) 0%, rgba(8,8,8,0.2) 50%, transparent 100%);
+}
+.hero-a-content { position: relative; z-index: 1; }
+.hero-a-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+.hero-a-name { font-size: clamp(48px, 7vw, 96px); font-weight: 300; line-height: 1; letter-spacing: -0.02em; margin-bottom: 16px; }
+.hero-a-sub { font-size: 14px; color: var(--mid); font-weight: 300; max-width: 440px; line-height: 1.6; }
+
+/* Work section A */
+.work-a { background: var(--bg); padding: clamp(60px, 8vw, 120px) clamp(24px, 5vw, 80px); }
+.work-a-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 40px; flex-wrap: wrap; gap: 20px; }
+.work-a-title { font-size: clamp(28px, 4vw, 48px); font-weight: 300; letter-spacing: -0.02em; }
+.filters { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-btn {
+  font-family: var(--font); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 6px 14px; border: 1px solid #2a2a2a; background: none; color: var(--mid);
+  cursor: pointer; transition: all 0.2s;
+}
+.filter-btn.active, .filter-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+/* Film grid */
+.film-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+}
+.film-card {
+  position: relative; cursor: pointer; overflow: hidden; aspect-ratio: 16/9;
+  background: #111;
+}
+.film-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease, opacity 0.3s; opacity: 0.75; }
+.film-card:hover img { transform: scale(1.04); opacity: 1; }
+.film-card-info {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 50%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 16px; opacity: 0; transition: opacity 0.3s;
+}
+.film-card:hover .film-card-info { opacity: 1; }
+.film-card-cat { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+.film-card-title { font-size: 13px; font-weight: 400; color: var(--fg); line-height: 1.3; }
+.film-card-play {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.5);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.3s;
+}
+.film-card:hover .film-card-play { opacity: 1; }
+.film-card-play svg { margin-left: 3px; }
+
+/* Modal A */
+.modal-a {
+  display: none; position: fixed; inset: 0; z-index: 10000;
+  background: rgba(0,0,0,0.96); align-items: center; justify-content: center;
+}
+.modal-a.open { display: flex; }
+.modal-a-inner { position: relative; width: 90vw; max-width: 1100px; }
+.modal-a-close {
+  position: absolute; top: -48px; right: 0;
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--mid); cursor: pointer; background: none; border: none;
+  font-family: var(--font); transition: color 0.2s;
+}
+.modal-a-close:hover { color: var(--fg); }
+.modal-a-title { position: absolute; top: -48px; left: 0; font-size: 13px; color: var(--mid); }
+.modal-a-frame { position: relative; padding-bottom: 56.25%; height: 0; }
+.modal-a-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* About + Contact A */
+.about-a {
+  background: var(--bg); padding: clamp(60px, 8vw, 120px) clamp(24px, 5vw, 80px);
+  border-top: 1px solid var(--rule);
+  display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 100px);
+  align-items: start;
+}
+.about-a-heading { font-size: clamp(28px, 3vw, 40px); font-weight: 300; letter-spacing: -0.02em; margin-bottom: 24px; }
+.about-a p { font-size: 15px; font-weight: 300; color: #bbb; line-height: 1.8; margin-bottom: 16px; }
+.contact-a { padding-top: 8px; }
+.contact-a-heading { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
+.contact-a-links { display: flex; flex-direction: column; gap: 12px; }
+.contact-link-a {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 14px; color: var(--fg); font-weight: 300; transition: color 0.2s;
+}
+.contact-link-a:hover { color: var(--gold); }
+
+
+/* ======================================================
+   CONCEPT B — Split Layout
+   ====================================================== */
+
+.split-b { display: flex; min-height: calc(100vh - 49px); background: var(--bg); }
+
+/* Left panel */
+.left-b {
+  width: 300px; flex-shrink: 0; position: sticky; top: 49px;
+  height: calc(100vh - 49px); display: flex; flex-direction: column;
+  padding: 48px 40px; border-right: 1px solid var(--rule);
+  background: var(--bg);
+}
+.left-b-disc {
+  width: 48px; height: 48px; border-radius: 50%; background: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: 300; color: #080808; margin-bottom: 32px;
+}
+.left-b-name { font-size: 20px; font-weight: 300; line-height: 1.2; margin-bottom: 8px; letter-spacing: -0.01em; }
+.left-b-role { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); margin-bottom: 48px; }
+.left-b-nav { display: flex; flex-direction: column; gap: 4px; margin-bottom: auto; }
+.left-b-nav a {
+  font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid);
+  padding: 10px 0; border-bottom: 1px solid transparent; transition: all 0.2s;
+  display: flex; align-items: center; gap: 10px;
+}
+.left-b-nav a:hover, .left-b-nav a.active { color: var(--fg); }
+.left-b-nav a.active::before { content: ''; width: 20px; height: 1px; background: var(--gold); display: inline-block; }
+.left-b-contact { display: flex; flex-direction: column; gap: 10px; }
+.left-b-contact a { font-size: 11px; color: var(--mid); letter-spacing: 0.04em; transition: color 0.2s; }
+.left-b-contact a:hover { color: var(--gold); }
+
+/* Right panel */
+.right-b { flex: 1; overflow-y: auto; }
+
+/* Hero B (inside right panel) */
+.hero-b {
+  height: 60vh; position: relative; display: flex; align-items: flex-end;
+  padding: 48px;
+  background: url('images/Ford%20Mustang%20223.jpg') 30% center / cover no-repeat;
+}
+.hero-b::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(8,8,8,0.9) 0%, rgba(8,8,8,0.1) 60%, transparent 100%);
+}
+.hero-b-content { position: relative; z-index: 1; }
+.hero-b-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+.hero-b-tagline { font-size: clamp(24px, 4vw, 48px); font-weight: 300; letter-spacing: -0.02em; line-height: 1.1; }
+
+/* Films B */
+.films-b { padding: 0; }
+.films-b-header {
+  padding: 32px 48px 24px; display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--rule); position: sticky; top: 0;
+  background: var(--bg); z-index: 10;
+}
+.films-b-heading { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+.films-b-count { font-size: 11px; color: var(--mid); }
+
+/* Film rows */
+.film-row {
+  display: grid; grid-template-columns: 200px 1fr auto;
+  align-items: center; gap: 32px; padding: 20px 48px;
+  border-bottom: 1px solid var(--rule); cursor: pointer; transition: background 0.2s;
+}
+.film-row:hover { background: rgba(255,255,255,0.02); }
+.film-row:hover .film-row-num { color: var(--gold); }
+.film-row:hover .film-row-thumb img { opacity: 1; }
+.film-row-thumb { aspect-ratio: 16/9; overflow: hidden; background: #111; }
+.film-row-thumb img { width: 100%; height: 100%; object-fit: cover; opacity: 0.65; transition: opacity 0.3s; }
+.film-row-info { }
+.film-row-cat { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mid); margin-bottom: 6px; }
+.film-row-title { font-size: 17px; font-weight: 300; letter-spacing: -0.01em; }
+.film-row-num { font-size: 11px; color: #333; font-weight: 300; transition: color 0.2s; }
+.film-row-arrow { font-size: 16px; color: #333; transition: color 0.2s; }
+.film-row:hover .film-row-arrow { color: var(--fg); }
+
+/* About B */
+.about-b { padding: 64px 48px; border-top: 1px solid var(--rule); }
+.about-b-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 32px; }
+.about-b h2 { font-size: clamp(24px, 3vw, 36px); font-weight: 300; letter-spacing: -0.02em; margin-bottom: 24px; line-height: 1.2; }
+.about-b p { font-size: 15px; color: #bbb; font-weight: 300; line-height: 1.8; margin-bottom: 16px; max-width: 600px; }
+
+/* Contact B */
+.contact-b { padding: 48px; border-top: 1px solid var(--rule); display: flex; gap: 16px; flex-wrap: wrap; }
+.contact-btn-b {
+  display: inline-block; font-family: var(--font); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; padding: 14px 28px;
+  background: var(--gold); color: #080808; cursor: pointer; border: none; font-weight: 500;
+  transition: opacity 0.2s;
+}
+.contact-btn-b:hover { opacity: 0.85; }
+
+/* Modal B (shared) */
+.modal-b {
+  display: none; position: fixed; inset: 0; z-index: 10000;
+  background: rgba(0,0,0,0.96); align-items: center; justify-content: center;
+}
+.modal-b.open { display: flex; }
+.modal-b-inner { position: relative; width: 85vw; max-width: 1000px; }
+.modal-b-close {
+  position: absolute; top: -44px; right: 0;
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--mid); cursor: pointer; background: none; border: none;
+  font-family: var(--font); transition: color 0.2s;
+}
+.modal-b-close:hover { color: var(--fg); }
+.modal-b-title { position: absolute; top: -44px; left: 0; font-size: 13px; color: var(--mid); }
+.modal-b-frame { position: relative; padding-bottom: 56.25%; height: 0; }
+.modal-b-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* Shared hidden state for filter */
+.film-card.hidden, .film-row.hidden { display: none; }
+</style>
+</head>
+<body>
+
+<!-- SWITCHER -->
+<div class="switcher">
+  <span class="switcher-label">Layout concept</span>
+  <button class="sw-btn active" onclick="show('a')">A — Grid</button>
+  <button class="sw-btn" onclick="show('b')">B — Split</button>
+  <span class="sw-note">Concept preview — not the live site</span>
+</div>
+
+
+<!-- ===================== CONCEPT A ===================== -->
+<div class="concept active" id="concept-a">
+
+  <nav class="nav-a">
+    <div class="nav-a-name">Greg Hobden <span>—</span> Film Producer</div>
+    <div class="nav-a-links">
+      <a href="#">Work</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </div>
+  </nav>
+
+  <div class="hero-a">
+    <div class="hero-a-content">
+      <div class="hero-a-label">Film Producer &amp; Production Consultant</div>
+      <div class="hero-a-name">Greg<br>Hobden</div>
+      <div class="hero-a-sub">Thirty years in film. Documentary, automotive, branded content, and large-scale live experiential.</div>
+    </div>
+  </div>
+
+  <div class="work-a">
+    <div class="work-a-header">
+      <div class="work-a-title">Work</div>
+      <div class="filters">
+        <button class="filter-btn active" onclick="filterA('all', this)">All</button>
+        <button class="filter-btn" onclick="filterA('Automotive', this)">Automotive</button>
+        <button class="filter-btn" onclick="filterA('Documentary', this)">Documentary</button>
+        <button class="filter-btn" onclick="filterA('Experiential', this)">Experiential</button>
+        <button class="filter-btn" onclick="filterA('Luxury', this)">Luxury</button>
+        <button class="filter-btn" onclick="filterA('Sport', this)">Sport</button>
+      </div>
+    </div>
+
+    <div class="film-grid" id="grid-a"></div>
+  </div>
+
+  <div class="about-a">
+    <div>
+      <div class="about-a-heading">About</div>
+      <p>Greg Hobden is a London-based film producer and production consultant with thirty years of experience across theatrical documentary, automotive commercial production, and large-scale live experiential.</p>
+      <p>From arena-scale live events and theatrical releases to prestige automotive campaigns, Greg brings a calm, experienced hand to complex productions worldwide.</p>
+    </div>
+    <div class="contact-a">
+      <div class="contact-a-heading">Get in touch</div>
+      <div class="contact-a-links">
+        <a class="contact-link-a" href="mailto:pushfilms@icloud.com">pushfilms@icloud.com →</a>
+        <a class="contact-link-a" href="#">greghobden.com →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal A -->
+  <div class="modal-a" id="modal-a" onclick="closeModalA(event)">
+    <div class="modal-a-inner">
+      <div class="modal-a-title" id="modal-a-title"></div>
+      <button class="modal-a-close" onclick="closeModalA()">✕ Close</button>
+      <div class="modal-a-frame">
+        <iframe id="modal-a-frame" src="" allowfullscreen allow="autoplay"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===================== CONCEPT B ===================== -->
+<div class="concept" id="concept-b">
+
+  <div class="split-b">
+    <!-- Left panel -->
+    <aside class="left-b">
+      <div class="left-b-disc">G</div>
+      <div class="left-b-name">Greg<br>Hobden</div>
+      <div class="left-b-role">Film Producer</div>
+      <nav class="left-b-nav">
+        <a href="#" class="active">Work</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="behind-the-scenes.html">Behind the Scenes</a>
+      </nav>
+      <div class="left-b-contact">
+        <a href="mailto:pushfilms@icloud.com">pushfilms@icloud.com</a>
+        <a href="#">greghobden.com</a>
+      </div>
+    </aside>
+
+    <!-- Right panel -->
+    <div class="right-b" id="right-b">
+
+      <div class="hero-b">
+        <div class="hero-b-content">
+          <div class="hero-b-label">Thirty years in film</div>
+          <div class="hero-b-tagline">Documentary.<br>Automotive.<br>Experiential.</div>
+        </div>
+      </div>
+
+      <div class="films-b">
+        <div class="films-b-header">
+          <div class="films-b-heading">Selected Work</div>
+          <div class="films-b-count" id="film-count-b"></div>
+        </div>
+        <div id="rows-b"></div>
+      </div>
+
+      <div class="about-b" id="about-b">
+        <div class="about-b-label">About</div>
+        <h2>Film producer and production consultant</h2>
+        <p>Thirty years of experience across theatrical documentary, automotive commercial production, and large-scale live experiential.</p>
+        <p>From arena-scale live events and theatrical releases to prestige automotive campaigns, Greg brings a calm, experienced hand to complex productions worldwide.</p>
+      </div>
+
+      <div class="contact-b" id="contact-b">
+        <a class="contact-btn-b" href="mailto:pushfilms@icloud.com">Email</a>
+        <a class="contact-btn-b" href="#">greghobden.com</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal B -->
+  <div class="modal-b" id="modal-b" onclick="closeModalB(event)">
+    <div class="modal-b-inner">
+      <div class="modal-b-title" id="modal-b-title"></div>
+      <button class="modal-b-close" onclick="closeModalB()">✕ Close</button>
+      <div class="modal-b-frame">
+        <iframe id="modal-b-frame" src="" allowfullscreen allow="autoplay"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<script>
+const films = [
+  { id: '1171157858', title: 'Ford Ranger Raptor',      cat: 'Automotive'    },
+  { id: '1171318976', title: 'Lexie Limitless',          cat: 'Automotive'    },
+  { id: '1171151952', title: 'Land Rover Defender',      cat: 'Automotive'    },
+  { id: '1171150653', title: 'McLaren Spider',           cat: 'Automotive'    },
+  { id: '1171178087', title: 'Range Rover Sport',        cat: 'Automotive'    },
+  { id: '1171151324', title: 'Range Rover — James Corden', cat: 'Automotive' },
+  { id: '1171150533', title: 'Discovery Sport',          cat: 'Automotive'    },
+  { id: '1171170029', title: 'Ford Explorer',            cat: 'Automotive'    },
+  { id: '1171150609', title: 'I Am Ali',                 cat: 'Documentary'   },
+  { id: '1171320476', title: 'Everest',                  cat: 'Documentary'   },
+  { id: '1171151872', title: 'Family Tree — Milan Expo', cat: 'Experiential'  },
+  { id: '1171157242', title: 'The Turtle — Yeosu Expo',  cat: 'Experiential'  },
+  { id: '1171158700', title: 'Vashi Diamonds',           cat: 'Luxury'        },
+  { id: '1172076463', title: 'Ford Wheels',              cat: 'Automotive'    },
+  { id: '1171158800', title: 'Bridgestone',              cat: 'Sport'         },
+  { id: '1171158741', title: 'Football League',          cat: 'Sport'         },
+  { id: '1171158957', title: 'Golfing 4 Life',           cat: 'Sport'         },
+];
+
+// Build grid A
+const gridA = document.getElementById('grid-a');
+films.forEach((f, i) => {
+  const card = document.createElement('div');
+  card.className = 'film-card';
+  card.dataset.cat = f.cat;
+  card.innerHTML = `
+    <img src="https://vumbnail.com/${f.id}.jpg" alt="${f.title}" loading="lazy">
+    <div class="film-card-info">
+      <div class="film-card-cat">${f.cat}</div>
+      <div class="film-card-title">${f.title}</div>
+    </div>
+    <div class="film-card-play">
+      <svg width="12" height="14" viewBox="0 0 12 14" fill="white"><path d="M0 0L12 7L0 14V0Z"/></svg>
+    </div>`;
+  card.addEventListener('click', () => openModalA(f));
+  gridA.appendChild(card);
+});
+
+// Build rows B
+const rowsB = document.getElementById('rows-b');
+const countB = document.getElementById('film-count-b');
+countB.textContent = films.length + ' films';
+films.forEach((f, i) => {
+  const row = document.createElement('div');
+  row.className = 'film-row';
+  row.dataset.cat = f.cat;
+  row.innerHTML = `
+    <div class="film-row-thumb">
+      <img src="https://vumbnail.com/${f.id}.jpg" alt="${f.title}" loading="lazy">
+    </div>
+    <div class="film-row-info">
+      <div class="film-row-cat">${f.cat}</div>
+      <div class="film-row-title">${f.title}</div>
+    </div>
+    <div class="film-row-arrow">→</div>`;
+  row.addEventListener('click', () => openModalB(f));
+  rowsB.appendChild(row);
+});
+
+// Filter A
+function filterA(cat, btn) {
+  document.querySelectorAll('#concept-a .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.film-card').forEach(c => {
+    c.classList.toggle('hidden', cat !== 'all' && c.dataset.cat !== cat);
+  });
+}
+
+// Modal A
+function openModalA(f) {
+  document.getElementById('modal-a-title').textContent = f.title;
+  document.getElementById('modal-a-frame').src = `https://player.vimeo.com/video/${f.id}?autoplay=1&title=0&byline=0&portrait=0`;
+  document.getElementById('modal-a').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModalA(e) {
+  if (e && e.target !== document.getElementById('modal-a') && !e.target.classList.contains('modal-a-close')) return;
+  document.getElementById('modal-a-frame').src = '';
+  document.getElementById('modal-a').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Modal B
+function openModalB(f) {
+  document.getElementById('modal-b-title').textContent = f.title;
+  document.getElementById('modal-b-frame').src = `https://player.vimeo.com/video/${f.id}?autoplay=1&title=0&byline=0&portrait=0`;
+  document.getElementById('modal-b').classList.add('open');
+}
+function closeModalB(e) {
+  if (e && e.target !== document.getElementById('modal-b') && !e.target.classList.contains('modal-b-close')) return;
+  document.getElementById('modal-b-frame').src = '';
+  document.getElementById('modal-b').classList.remove('open');
+}
+
+// Switcher
+function show(id) {
+  document.querySelectorAll('.concept').forEach(c => c.classList.remove('active'));
+  document.getElementById('concept-' + id).classList.add('active');
+  document.querySelectorAll('.sw-btn').forEach((b, i) => b.classList.toggle('active', ['a','b'][i] === id));
+  window.scrollTo(0, 0);
+}
+
+// Escape key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModalA(); closeModalB(); }
+});
+</script>
+</body>
+</html>
