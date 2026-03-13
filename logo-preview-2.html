@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Push Films — Logo Concepts II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:   #080808;
+    --fg:   #EDEDE8;
+    --gold: #C4A46B;
+    --mid:  #444;
+    --rule: #181818;
+    --pad:  clamp(24px, 5vw, 72px);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px var(--pad);
+    border-bottom: 1px solid var(--rule);
+  }
+  nav a { color: var(--gold); text-decoration: none; font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.7; transition: opacity 0.2s; }
+  nav a:hover { opacity: 1; }
+  nav span { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); }
+
+  .page-header {
+    padding: clamp(56px, 8vw, 110px) var(--pad) clamp(40px, 5vw, 72px);
+    border-bottom: 1px solid var(--rule);
+    max-width: 760px;
+  }
+  .page-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(36px, 7vw, 86px);
+    letter-spacing: -0.01em;
+    line-height: 1;
+    color: var(--fg);
+    margin-bottom: 24px;
+  }
+  .page-header p {
+    font-size: 12px;
+    color: var(--mid);
+    letter-spacing: 0.06em;
+    line-height: 1.9;
+    max-width: 480px;
+  }
+
+  /* CONCEPT LAYOUT */
+  .concept {
+    padding: clamp(64px, 9vw, 110px) var(--pad);
+    border-bottom: 1px solid var(--rule);
+  }
+  .concept-header {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 20px;
+    align-items: start;
+    margin-bottom: clamp(48px, 6vw, 80px);
+  }
+  .concept-num {
+    font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); padding-top: 4px;
+  }
+  .concept-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(22px, 3vw, 36px);
+    color: var(--fg);
+    line-height: 1.1;
+    margin-bottom: 14px;
+  }
+  .concept-desc {
+    font-size: 12px; color: var(--mid); line-height: 1.9;
+    max-width: 520px; letter-spacing: 0.03em;
+  }
+  .concept-inspiration {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: #333;
+    margin-top: 10px;
+  }
+
+  /* PANELS */
+  .previews {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 28px;
+  }
+  @media (max-width: 600px) { .previews { grid-template-columns: 1fr; } }
+
+  .panel {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 300px; padding: 56px 40px;
+    position: relative;
+  }
+  .panel--dark  { background: #050505; }
+  .panel--light { background: #EEEBE4; }
+  .panel-tag {
+    position: absolute; top: 16px; left: 18px;
+    font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+  }
+  .panel--dark  .panel-tag { color: #222; }
+  .panel--light .panel-tag { color: #bbb; }
+
+  /* REPLAY */
+  .replay-btn {
+    background: none; border: 1px solid #1a1a1a; color: #333;
+    font-family: 'Manrope', sans-serif; font-size: 8px;
+    letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer;
+    padding: 10px 20px; transition: border-color 0.2s, color 0.2s;
+  }
+  .replay-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* NOTES */
+  .notes {
+    margin-top: 28px; padding: 22px 24px;
+    background: #0a0a0a; border-left: 1px solid var(--gold);
+  }
+  .notes h4 {
+    font-size: 8px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 14px;
+  }
+  .notes ul { list-style: none; }
+  .notes li {
+    font-size: 11px; color: #555; padding: 5px 0;
+    border-bottom: 1px solid #111; line-height: 1.8;
+  }
+  .notes li:last-child { border-bottom: none; }
+  .notes li::before { content: '— '; color: #222; }
+
+  /* DRAW PATHS */
+  .dp { fill: none; }
+
+  /* C3: Iris clip */
+  #iris-gh-d, #iris-gh-l { clip-path: circle(0% at 50% 50%); }
+
+  /* C4: Title lines start hidden */
+  .title-line { opacity: 0; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="logo-preview.html">← Concepts I</a>
+  <span>Logo Concepts II — Cinematic</span>
+</nav>
+
+<div class="page-header">
+  <h1>Second Act.</h1>
+  <p>Four new directions. More cinematic. Referencing film titles, lens optics, and the visual grammar of the screen. Cormorant Garamond for any set type — a proper film serif.</p>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- A: WIDESCREEN — letterbox bars + GH in cinema aspect ratio   -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section class="concept" id="c-a">
+  <div class="concept-header">
+    <span class="concept-num">A</span>
+    <div>
+      <div class="concept-title">Widescreen</div>
+      <p class="concept-desc">Two thin gold bars close in from the edges — the letterbox of cinema. The mark lives inside a 2.39:1 frame. GH appears as the bars lock into position. Restrained, authoritative. The format itself does the talking.</p>
+      <p class="concept-inspiration">Reference: Fincher titles. Nolan main-on-ends. 2001.</p>
+    </div>
+  </div>
+
+  <div class="previews">
+    <div class="panel panel--dark">
+      <span class="panel-tag">Screen</span>
+      <svg id="svgA-d" viewBox="0 0 280 117" width="280" height="117" style="overflow:visible" aria-label="Greg Hobden widescreen logo">
+        <!-- Top letterbox bar -->
+        <rect id="Ad-bar-top" x="0" y="0" width="280" height="18" fill="#050505"/>
+        <!-- Bottom letterbox bar -->
+        <rect id="Ad-bar-bot" x="0" y="99" width="280" height="18" fill="#050505"/>
+        <!-- Gold border lines -->
+        <line class="dp" id="Ad-line-top" x1="0" y1="18" x2="0" y2="18" stroke="#C4A46B" stroke-width="0.6"/>
+        <line class="dp" id="Ad-line-bot" x1="0" y1="99" x2="0" y2="99" stroke="#C4A46B" stroke-width="0.6"/>
+        <!-- G -->
+        <path class="dp" id="Ad-G"
+          d="M 88,44 A 19,19 0 1,0 92,57 L 78,57"
+          stroke="#C4A46B" stroke-width="1.4" stroke-linecap="butt"/>
+        <!-- H -->
+        <path class="dp" id="Ad-H1" d="M 107,35 L 107,83" stroke="#EDEDE8" stroke-width="1.4" stroke-linecap="butt"/>
+        <path class="dp" id="Ad-H2" d="M 107,59 L 137,59" stroke="#EDEDE8" stroke-width="1.4" stroke-linecap="butt"/>
+        <path class="dp" id="Ad-H3" d="M 137,35 L 137,83" stroke="#EDEDE8" stroke-width="1.4" stroke-linecap="butt"/>
+        <!-- Name in top bar -->
+        <text id="Ad-name" x="140" y="13" text-anchor="middle"
+          font-family="'Cormorant Garamond', serif" font-weight="300"
+          font-size="9" letter-spacing="5" fill="#C4A46B" opacity="0">GREG HOBDEN</text>
+        <!-- Discipline in bottom bar -->
+        <text id="Ad-disc" x="140" y="112" text-anchor="middle"
+          font-family="'Manrope', sans-serif" font-weight="300"
+          font-size="6" letter-spacing="4" fill="#444" opacity="0">FILM PRODUCER · PRODUCTION CONSULTANT</text>
+      </svg>
+    </div>
+    <div class="panel panel--light">
+      <span class="panel-tag">Print</span>
+      <svg id="svgA-l" viewBox="0 0 280 117" width="280" height="117" style="overflow:visible" aria-label="Greg Hobden widescreen logo">
+        <rect id="Al-bar-top" x="0" y="0" width="280" height="18" fill="#EEEBE4"/>
+        <rect id="Al-bar-bot" x="0" y="99" width="280" height="18" fill="#EEEBE4"/>
+        <line class="dp" id="Al-line-top" x1="0" y1="18" x2="0" y2="18" stroke="#C4A46B" stroke-width="0.6"/>
+        <line class="dp" id="Al-line-bot" x1="0" y1="99" x2="0" y2="99" stroke="#C4A46B" stroke-width="0.6"/>
+        <path class="dp" id="Al-G"
+          d="M 88,44 A 19,19 0 1,0 92,57 L 78,57"
+          stroke="#C4A46B" stroke-width="1.4" stroke-linecap="butt"/>
+        <path class="dp" id="Al-H1" d="M 107,35 L 107,83" stroke="#1a1a1a" stroke-width="1.4" stroke-linecap="butt"/>
+        <path class="dp" id="Al-H2" d="M 107,59 L 137,59" stroke="#1a1a1a" stroke-width="1.4" stroke-linecap="butt"/>
+        <path class="dp" id="Al-H3" d="M 137,35 L 137,83" stroke="#1a1a1a" stroke-width="1.4" stroke-linecap="butt"/>
+        <text id="Al-name" x="140" y="13" text-anchor="middle"
+          font-family="'Cormorant Garamond', serif" font-weight="300"
+          font-size="9" letter-spacing="5" fill="#C4A46B" opacity="0">GREG HOBDEN</text>
+        <text id="Al-disc" x="140" y="112" text-anchor="middle"
+          font-family="'Manrope', sans-serif" font-weight="300"
+          font-size="6" letter-spacing="4" fill="#bbb" opacity="0">FILM PRODUCER · PRODUCTION CONSULTANT</text>
+      </svg>
+    </div>
+  </div>
+  <button class="replay-btn" data-anim="A">↺ Replay</button>
+  <div class="notes">
+    <h4>Notes</h4>
+    <ul>
+      <li>The gold lines slide in from left to right — the frame arrives before the content.</li>
+      <li>Bars act as letterboxing — referencing widescreen cinema, not a design choice but a format.</li>
+      <li>On print: the bars read as natural margins. The whole thing fits a business card perfectly.</li>
+      <li>Name in top bar / discipline in bottom — like a film's opening and closing credits positions.</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- B: IRIS — lens aperture opens to reveal the mark             -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section class="concept" id="c-b">
+  <div class="concept-header">
+    <span class="concept-num">B</span>
+    <div>
+      <div class="concept-title">Iris</div>
+      <p class="concept-desc">A circle draws itself — the lens ring. Then the aperture opens, revealing the initials inside. Camera. Projection. Cinema as optics. The iris is the first thing a frame sees.</p>
+      <p class="concept-inspiration">Reference: Kubrick's eye. Saul Bass. The Criterion Collection.</p>
+    </div>
+  </div>
+
+  <div class="previews">
+    <div class="panel panel--dark">
+      <span class="panel-tag">Screen</span>
+      <svg id="svgB-d" viewBox="0 0 140 140" width="200" height="200" aria-label="Greg Hobden iris logo">
+        <!-- Lens ring -->
+        <circle class="dp" id="Bd-ring" cx="70" cy="70" r="58"
+          stroke="#C4A46B" stroke-width="0.8"/>
+        <!-- Inner tick marks (aperture indicators) -->
+        <g id="Bd-ticks" opacity="0">
+          <line x1="70" y1="12" x2="70" y2="18" stroke="#C4A46B" stroke-width="0.5"/>
+          <line x1="70" y1="122" x2="70" y2="128" stroke="#C4A46B" stroke-width="0.5"/>
+          <line x1="12" y1="70" x2="18" y2="70" stroke="#C4A46B" stroke-width="0.5"/>
+          <line x1="122" y1="70" x2="128" y2="70" stroke="#C4A46B" stroke-width="0.5"/>
+          <line x1="28.3" y1="28.3" x2="32.5" y2="32.5" stroke="#C4A46B" stroke-width="0.5"/>
+          <line x1="107.5" y1="107.5" x2="111.7" y2="111.7" stroke="#C4A46B" stroke-width="0.5"/>
+          <line x1="107.5" y1="32.5" x2="111.7" y2="28.3" stroke="#C4A46B" stroke-width="0.5"/>
+          <line x1="28.3" y1="111.7" x2="32.5" y2="107.5" stroke="#C4A46B" stroke-width="0.5"/>
+        </g>
+        <!-- GH revealed by iris opening -->
+        <g id="iris-gh-d">
+          <!-- G -->
+          <path class="dp" id="Bd-G"
+            d="M 52,57 A 18,18 0 1,0 56,70 L 43,70"
+            stroke="#EDEDE8" stroke-width="1.6" stroke-linecap="butt"/>
+          <!-- H -->
+          <path class="dp" id="Bd-H1" d="M 74,44 L 74,96" stroke="#EDEDE8" stroke-width="1.6" stroke-linecap="butt"/>
+          <path class="dp" id="Bd-H2" d="M 74,70 L 102,70" stroke="#EDEDE8" stroke-width="1.6" stroke-linecap="butt"/>
+          <path class="dp" id="Bd-H3" d="M 102,44 L 102,96" stroke="#EDEDE8" stroke-width="1.6" stroke-linecap="butt"/>
+        </g>
+      </svg>
+    </div>
+    <div class="panel panel--light">
+      <span class="panel-tag">Print</span>
+      <svg id="svgB-l" viewBox="0 0 140 140" width="200" height="200" aria-label="Greg Hobden iris logo">
+        <circle class="dp" id="Bl-ring" cx="70" cy="70" r="58"
+          stroke="#C4A46B" stroke-width="0.8"/>
+        <g id="Bl-ticks" opacity="0">
+          <line x1="70" y1="12" x2="70" y2="18" stroke="#C4A46B" stroke-width="0.5"/>
+          <line x1="70" y1="122" x2="70" y2="128" stroke="#C4A46B" stroke-width="0.5"/>
+          <line x1="12" y1="70" x2="18" y2="70" stroke="#C4A46B" stroke-width="0.5"/>
+          <line x1="122" y1="70" x2="128" y2="70" stroke="#C4A46B" stroke-width="0.5"/>
+          <line x1="28.3" y1="28.3" x2="32.5" y2="32.5" stroke="#C4A46B" stroke-width="0.5"/>
+          <line x1="107.5" y1="107.5" x2="111.7" y2="111.7" stroke="#C4A46B" stroke-width="0.5"/>
+          <line x1="107.5" y1="32.5" x2="111.7" y2="28.3" stroke="#C4A46B" stroke-width="0.5"/>
+          <line x1="28.3" y1="111.7" x2="32.5" y2="107.5" stroke="#C4A46B" stroke-width="0.5"/>
+        </g>
+        <g id="iris-gh-l">
+          <path class="dp" id="Bl-G"
+            d="M 52,57 A 18,18 0 1,0 56,70 L 43,70"
+            stroke="#1a1a1a" stroke-width="1.6" stroke-linecap="butt"/>
+          <path class="dp" id="Bl-H1" d="M 74,44 L 74,96" stroke="#1a1a1a" stroke-width="1.6" stroke-linecap="butt"/>
+          <path class="dp" id="Bl-H2" d="M 74,70 L 102,70" stroke="#1a1a1a" stroke-width="1.6" stroke-linecap="butt"/>
+          <path class="dp" id="Bl-H3" d="M 102,44 L 102,96" stroke="#1a1a1a" stroke-width="1.6" stroke-linecap="butt"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <button class="replay-btn" data-anim="B">↺ Replay</button>
+  <div class="notes">
+    <h4>Notes</h4>
+    <ul>
+      <li>The lens ring draws first (0.8s). Tick marks appear. Then the iris opens and GH draws inside.</li>
+      <li>In print: the circle reads as a clean seal or badge. Strong on embossed letterhead.</li>
+      <li>Works well at all sizes — the ring provides a clear boundary at small scale.</li>
+      <li>Could animate on hover on the website (subtle re-draw on mouse enter).</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- C: TITLE CARD — pure Cormorant typography, no mark           -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section class="concept" id="c-c">
+  <div class="concept-header">
+    <span class="concept-num">C</span>
+    <div>
+      <div class="concept-title">Title Card</div>
+      <p class="concept-desc">No mark. No monogram. Just the name — set in Cormorant Garamond, stacked, spaced perfectly. Each line arrives from below. A rule draws between them. This is how films begin. The name is the mark.</p>
+      <p class="concept-inspiration">Reference: A24. Mubi. The Criterion spine. Powell &amp; Pressburger.</p>
+    </div>
+  </div>
+
+  <div class="previews">
+    <div class="panel panel--dark" style="min-height: 340px;">
+      <span class="panel-tag">Screen</span>
+      <svg id="svgC-d" viewBox="0 0 220 130" width="280" height="166" aria-label="Greg Hobden title card">
+        <!-- GREG -->
+        <text class="title-line" id="Cd-greg"
+          x="110" y="42" text-anchor="middle"
+          font-family="'Cormorant Garamond', serif"
+          font-weight="300" font-size="38"
+          letter-spacing="10" fill="#EDEDE8">GREG</text>
+        <!-- rule -->
+        <path class="dp" id="Cd-rule" d="M 30,60 L 30,60" stroke="#C4A46B" stroke-width="0.6"/>
+        <!-- HOBDEN -->
+        <text class="title-line" id="Cd-hob"
+          x="110" y="92" text-anchor="middle"
+          font-family="'Cormorant Garamond', serif"
+          font-weight="300" font-size="38"
+          letter-spacing="10" fill="#EDEDE8">HOBDEN</text>
+        <!-- discipline -->
+        <text class="title-line" id="Cd-disc"
+          x="110" y="118" text-anchor="middle"
+          font-family="'Manrope', sans-serif"
+          font-weight="300" font-size="6.5"
+          letter-spacing="5" fill="#C4A46B">FILM PRODUCER</text>
+      </svg>
+    </div>
+    <div class="panel panel--light" style="min-height: 340px;">
+      <span class="panel-tag">Print</span>
+      <svg id="svgC-l" viewBox="0 0 220 130" width="280" height="166" aria-label="Greg Hobden title card">
+        <text class="title-line" id="Cl-greg"
+          x="110" y="42" text-anchor="middle"
+          font-family="'Cormorant Garamond', serif"
+          font-weight="300" font-size="38"
+          letter-spacing="10" fill="#1a1a1a">GREG</text>
+        <path class="dp" id="Cl-rule" d="M 30,60 L 30,60" stroke="#C4A46B" stroke-width="0.6"/>
+        <text class="title-line" id="Cl-hob"
+          x="110" y="92" text-anchor="middle"
+          font-family="'Cormorant Garamond', serif"
+          font-weight="300" font-size="38"
+          letter-spacing="10" fill="#1a1a1a">HOBDEN</text>
+        <text class="title-line" id="Cl-disc"
+          x="110" y="118" text-anchor="middle"
+          font-family="'Manrope', sans-serif"
+          font-weight="300" font-size="6.5"
+          letter-spacing="5" fill="#C4A46B">FILM PRODUCER</text>
+      </svg>
+    </div>
+  </div>
+  <button class="replay-btn" data-anim="C">↺ Replay</button>
+  <div class="notes">
+    <h4>Notes</h4>
+    <ul>
+      <li>Cormorant Garamond 300 weight — one of the most cinematic typefaces available. Used widely in arthouse film.</li>
+      <li>No mark needed at this size — the letterforms carry the identity entirely.</li>
+      <li>"GREG" and "HOBDEN" arrive independently, with the rule drawing between them.</li>
+      <li>On print: this is a letterhead. Set at 72pt on A4, nothing else on the page.</li>
+      <li>The GH monogram from concepts 1–3 can pair with this as a compact variant.</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- D: HAIRLINE — ultra-thin GH, almost calligraphic             -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section class="concept" id="c-d">
+  <div class="concept-header">
+    <span class="concept-num">D</span>
+    <div>
+      <div class="concept-title">Hairline</div>
+      <p class="concept-desc">The same GH geometry but at hairline weight — the thinnest possible stroke. Precision over personality. The mark feels like it was drawn with a single hair. Confident enough to need almost nothing.</p>
+      <p class="concept-inspiration">Reference: Bottega Veneta. Jil Sander. Early Helmut Lang.</p>
+    </div>
+  </div>
+
+  <div class="previews">
+    <div class="panel panel--dark">
+      <span class="panel-tag">Screen</span>
+      <svg id="svgD-d" viewBox="0 0 160 84" width="240" height="126" aria-label="GH hairline logo">
+        <!-- G hairline -->
+        <path class="dp" id="Dd-G"
+          d="M 63,27 A 28,28 0 1,0 68,42 L 46,42"
+          stroke="#C4A46B" stroke-width="0.75" stroke-linecap="butt"/>
+        <!-- H hairline -->
+        <path class="dp" id="Dd-H1" d="M 90,14 L 90,70" stroke="#EDEDE8" stroke-width="0.75" stroke-linecap="butt"/>
+        <path class="dp" id="Dd-H2" d="M 90,42 L 132,42" stroke="#EDEDE8" stroke-width="0.75" stroke-linecap="butt"/>
+        <path class="dp" id="Dd-H3" d="M 132,14 L 132,70" stroke="#EDEDE8" stroke-width="0.75" stroke-linecap="butt"/>
+        <!-- Baseline rule -->
+        <path class="dp" id="Dd-base" d="M 12,76 L 148,76" stroke="#C4A46B" stroke-width="0.4"/>
+        <!-- Name -->
+        <text id="Dd-name" x="80" y="84" text-anchor="middle"
+          font-family="'Cormorant Garamond', serif" font-weight="300"
+          font-size="7" letter-spacing="6" fill="#555" opacity="0">GREG HOBDEN</text>
+      </svg>
+    </div>
+    <div class="panel panel--light">
+      <span class="panel-tag">Print</span>
+      <svg id="svgD-l" viewBox="0 0 160 84" width="240" height="126" aria-label="GH hairline logo">
+        <path class="dp" id="Dl-G"
+          d="M 63,27 A 28,28 0 1,0 68,42 L 46,42"
+          stroke="#C4A46B" stroke-width="0.75" stroke-linecap="butt"/>
+        <path class="dp" id="Dl-H1" d="M 90,14 L 90,70" stroke="#1a1a1a" stroke-width="0.75" stroke-linecap="butt"/>
+        <path class="dp" id="Dl-H2" d="M 90,42 L 132,42" stroke="#1a1a1a" stroke-width="0.75" stroke-linecap="butt"/>
+        <path class="dp" id="Dl-H3" d="M 132,14 L 132,70" stroke="#1a1a1a" stroke-width="0.75" stroke-linecap="butt"/>
+        <path class="dp" id="Dl-base" d="M 12,76 L 148,76" stroke="#C4A46B" stroke-width="0.4"/>
+        <text id="Dl-name" x="80" y="84" text-anchor="middle"
+          font-family="'Cormorant Garamond', serif" font-weight="300"
+          font-size="7" letter-spacing="6" fill="#aaa" opacity="0">GREG HOBDEN</text>
+      </svg>
+    </div>
+  </div>
+  <button class="replay-btn" data-anim="D">↺ Replay</button>
+  <div class="notes">
+    <h4>Notes</h4>
+    <ul>
+      <li>Stroke-width 0.75px — at the very limit of what a printer can reproduce. Print minimum: 0.5pt.</li>
+      <li>The hairline draws very slowly — 2.2s for the G alone. The slowness is intentional.</li>
+      <li>Pairs with Concept C (Title Card) — use this as the small mark, the full name as the wordmark.</li>
+      <li>On screen at small sizes (nav): renders cleanly on retina displays. May thin out on non-retina.</li>
+    </ul>
+  </div>
+</section>
+
+
+<script>
+const SPRING = 'cubic-bezier(0.22, 1, 0.36, 1)';
+const EASE   = 'ease-out';
+
+function pLen(el) {
+  return el && el.getTotalLength ? el.getTotalLength() : 200;
+}
+function prep(el) {
+  if (!el) return;
+  const l = pLen(el);
+  el.style.strokeDasharray  = l;
+  el.style.strokeDashoffset = l;
+  el.style.transition = 'none';
+}
+function draw(el, delay, dur, ease = SPRING) {
+  if (!el) return;
+  setTimeout(() => {
+    el.style.transition = `stroke-dashoffset ${dur}ms ${ease}`;
+    el.style.strokeDashoffset = '0';
+  }, delay);
+}
+function fade(el, delay, dur = 700, to = 1) {
+  if (!el) return;
+  el.style.transition = 'none';
+  el.style.opacity = '0';
+  setTimeout(() => {
+    el.style.transition = `opacity ${dur}ms ${EASE}`;
+    el.style.opacity = String(to);
+  }, delay);
+}
+function slide(el, delay, dur = 700) {
+  if (!el) return;
+  el.style.transition = 'none';
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(12px)';
+  setTimeout(() => {
+    el.style.transition = `opacity ${dur}ms ${EASE}, transform ${dur}ms ${SPRING}`;
+    el.style.opacity = '1';
+    el.style.transform = 'translateY(0)';
+  }, delay);
+}
+function irisOpen(el, delay, dur = 900) {
+  if (!el) return;
+  el.style.clipPath = 'circle(0% at 50% 50%)';
+  el.style.transition = 'none';
+  setTimeout(() => {
+    el.style.transition = `clip-path ${dur}ms ${SPRING}`;
+    el.style.clipPath = 'circle(52% at 50% 50%)';
+  }, delay);
+}
+
+// ── A: Widescreen ───────────────────────────────────────────────
+function animA(s) {
+  const barTop = document.getElementById(`${s}-bar-top`);
+  const barBot = document.getElementById(`${s}-bar-bot`);
+  const lTop   = document.getElementById(`${s}-line-top`);
+  const lBot   = document.getElementById(`${s}-line-bot`);
+  const G  = document.getElementById(`${s}-G`);
+  const H1 = document.getElementById(`${s}-H1`);
+  const H2 = document.getElementById(`${s}-H2`);
+  const H3 = document.getElementById(`${s}-H3`);
+  const nm = document.getElementById(`${s}-name`);
+  const dc = document.getElementById(`${s}-disc`);
+
+  // Reset bars (slide from top/bottom)
+  if (barTop) { barTop.style.transform = 'translateY(-100%)'; barTop.style.transition = 'none'; }
+  if (barBot) { barBot.style.transform = 'translateY(100%)';  barBot.style.transition = 'none'; }
+
+  [lTop, lBot, G, H1, H2, H3].forEach(prep);
+  if (nm) { nm.style.opacity = '0'; nm.style.transition = 'none'; }
+  if (dc) { dc.style.opacity = '0'; dc.style.transition = 'none'; }
+
+  // Bars slide in
+  setTimeout(() => {
+    if (barTop) { barTop.style.transition = `transform 600ms ${SPRING}`; barTop.style.transform = 'translateY(0)'; }
+    if (barBot) { barBot.style.transition = `transform 600ms ${SPRING}`; barBot.style.transform = 'translateY(0)'; }
+  }, 100);
+
+  // Gold lines draw
+  draw(lTop, 400, 800, EASE);
+  draw(lBot, 400, 800, EASE);
+
+  // Name / disc fade into bars
+  fade(nm, 900, 600);
+  fade(dc, 1100, 600, 1);
+
+  // GH draws
+  draw(G,  800,  1300, SPRING);
+  draw(H1, 1100, 550,  SPRING);
+  draw(H2, 1470, 430,  SPRING);
+  draw(H3, 1670, 550,  SPRING);
+}
+
+// ── B: Iris ─────────────────────────────────────────────────────
+function animB(s, irId) {
+  const ring = document.getElementById(`${s}-ring`);
+  const ticks = document.getElementById(`${s}-ticks`);
+  const G  = document.getElementById(`${s}-G`);
+  const H1 = document.getElementById(`${s}-H1`);
+  const H2 = document.getElementById(`${s}-H2`);
+  const H3 = document.getElementById(`${s}-H3`);
+  const ir = document.getElementById(irId);
+
+  prep(ring); [G, H1, H2, H3].forEach(prep);
+  if (ir) { ir.style.clipPath = 'circle(0% at 50% 50%)'; ir.style.transition = 'none'; }
+  if (ticks) { ticks.style.opacity = '0'; ticks.style.transition = 'none'; }
+
+  draw(ring, 0, 900, SPRING);
+  fade(ticks, 700, 400);
+  irisOpen(ir, 1000, 1000);
+  draw(G,  1100, 1200, SPRING);
+  draw(H1, 1350, 500,  SPRING);
+  draw(H2, 1680, 400,  SPRING);
+  draw(H3, 1880, 500,  SPRING);
+}
+
+// ── C: Title Card ────────────────────────────────────────────────
+function animC(s) {
+  const greg = document.getElementById(`${s}-greg`);
+  const rule = document.getElementById(`${s}-rule`);
+  const hob  = document.getElementById(`${s}-hob`);
+  const disc = document.getElementById(`${s}-disc`);
+
+  prep(rule);
+  [greg, hob, disc].forEach(el => {
+    if (el) { el.style.opacity = '0'; el.style.transform = 'translateY(14px)'; el.style.transition = 'none'; }
+  });
+
+  slide(greg, 0,    900);
+  draw(rule,  600,  700, EASE);
+  slide(hob,  800,  900);
+  slide(disc, 1500, 700);
+}
+
+// ── D: Hairline ──────────────────────────────────────────────────
+function animD(s) {
+  const G    = document.getElementById(`${s}-G`);
+  const H1   = document.getElementById(`${s}-H1`);
+  const H2   = document.getElementById(`${s}-H2`);
+  const H3   = document.getElementById(`${s}-H3`);
+  const base = document.getElementById(`${s}-base`);
+  const name = document.getElementById(`${s}-name`);
+
+  [G, H1, H2, H3, base].forEach(prep);
+  if (name) { name.style.opacity = '0'; name.style.transition = 'none'; }
+
+  draw(G,    0,    2200, SPRING);
+  draw(H1,   500,  700,  SPRING);
+  draw(H2,   980,  550,  SPRING);
+  draw(H3,   1220, 700,  SPRING);
+  draw(base, 1700, 900,  EASE);
+  fade(name, 2200, 800);
+}
+
+// ── INIT ─────────────────────────────────────────────────────────
+function runA() { animA('Ad'); animA('Al'); }
+function runB() { animB('Bd', 'iris-gh-d'); animB('Bl', 'iris-gh-l'); }
+function runC() { animC('Cd'); animC('Cl'); }
+function runD() { animD('Dd'); animD('Dl'); }
+
+// Replay buttons
+document.querySelectorAll('.replay-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const m = { A: runA, B: runB, C: runC, D: runD };
+    (m[btn.dataset.anim] || (() => {}))();
+  });
+});
+
+// Intersection observer — play on scroll into view
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const m = { 'c-a': runA, 'c-b': runB, 'c-c': runC, 'c-d': runD };
+    (m[e.target.id] || (() => {}))();
+    obs.unobserve(e.target);
+  });
+}, { threshold: 0.25 });
+
+['c-a','c-b','c-c','c-d'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) obs.observe(el);
+});
+</script>
+</body>
+</html>
