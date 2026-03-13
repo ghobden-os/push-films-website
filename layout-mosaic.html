@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layout Concept — Mosaic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg:         #080808;
+  --fg:         #EDEDE8;
+  --mid:        #888888;
+  --rule:       #1E1E1E;
+  --gold:       #F5D800;
+  --font-serif: 'DM Sans', sans-serif;
+  --font-sans:  'DM Sans', sans-serif;
+  --nav-h:      64px;
+  --pad:        clamp(24px, 5vw, 80px);
+  --gap:        clamp(72px, 10vw, 140px);
+}
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 var(--pad); }
+section { padding: var(--gap) 0; }
+
+/* PREVIEW BANNER */
+.preview-banner {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+  background: rgba(0,0,0,0.9); border-top: 1px solid #222;
+  display: flex; align-items: center; justify-content: center; gap: 24px;
+  padding: 10px 24px; font-size: 11px; letter-spacing: 0.08em; color: var(--mid);
+}
+.preview-banner strong { color: var(--gold); }
+
+/* NAV */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--nav-h); background: transparent; transition: background 0.4s ease;
+}
+#nav.scrolled { background: rgba(8,8,8,0.95); backdrop-filter: blur(16px); border-bottom: 1px solid var(--rule); }
+.nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 var(--pad); height: 100%; display: flex; align-items: center; justify-content: space-between; }
+@keyframes discIn { from { opacity: 0; transform: scale(0) rotate(-720deg); } to { opacity: 1; transform: scale(1) rotate(0deg); } }
+.nav-logo { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: var(--gold); font-family: var(--font-serif); font-size: 22px; font-weight: 300; color: #111; flex-shrink: 0; transition: opacity 0.2s; animation: discIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both; }
+.nav-logo:hover { opacity: 0.85; }
+.nav-links { list-style: none; display: flex; gap: 40px; }
+.nav-links a { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; transition: color 0.2s; }
+.nav-links a:hover { color: var(--gold); }
+
+/* HERO */
+#hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+  padding-top: var(--nav-h); padding-left: clamp(24px, 5vw, 80px); padding-right: clamp(24px, 5vw, 80px);
+  position: relative; overflow: hidden;
+  background: url('images/Ford%20Mustang%20223.jpg') center/cover no-repeat;
+}
+#hero::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.45); pointer-events: none; }
+#hero::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+.hero-rule-top { display: flex; align-items: center; gap: 28px; margin-bottom: clamp(40px, 6vw, 80px); color: #fff; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; position: relative; z-index: 1; }
+.hero-rule-top::before, .hero-rule-top::after { content: ''; display: block; width: clamp(40px, 8vw, 120px); height: 1px; background: rgba(255,255,255,0.4); }
+.hero-main { display: flex; flex-direction: column; align-items: flex-start; text-align: left; margin-left: calc(50% + 20px); position: relative; z-index: 1; }
+.hero-label { font-family: var(--font-sans); font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: clamp(24px, 3vw, 36px); }
+.hero-name { font-family: 'DM Sans', sans-serif; font-size: clamp(56px, 11.3vw, 155px); font-weight: 300; line-height: 0.85; letter-spacing: -0.02em; color: var(--fg); margin-bottom: clamp(32px, 4vw, 56px); }
+.hero-name em { font-style: italic; color: var(--gold); }
+.hero-divider { display: flex; align-items: center; gap: 20px; margin-bottom: clamp(28px, 4vw, 48px); }
+.hero-divider::before, .hero-divider::after { content: ''; display: block; flex: 1; max-width: 80px; height: 1px; background: rgba(255,255,255,0.3); }
+.hero-divider span { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: #fff; }
+.hero-sub { font-size: clamp(19px, 1.73vw, 21px); font-weight: 400; color: #fff; max-width: 420px; line-height: 1.8; margin-bottom: clamp(40px, 5vw, 64px); }
+.hero-reel-btn { display: inline-flex; align-items: center; gap: 14px; font-family: var(--font-sans); font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #080808; background: var(--gold); border: 1px solid var(--gold); padding: 16px 32px; cursor: pointer; transition: all 0.3s ease; position: relative; z-index: 1; }
+.hero-reel-btn:hover { background: #D4B800; border-color: #D4B800; }
+.hero-reel-play { width: 28px; height: 28px; border-radius: 50%; border: 1px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 10px; padding-left: 2px; }
+
+/* ABOUT */
+#about { border-top: 1px solid var(--rule); }
+.about-grid { display: grid; grid-template-columns: 180px 1fr; gap: clamp(40px, 6vw, 120px); align-items: start; }
+.about-label { padding-top: 5px; position: sticky; top: calc(var(--nav-h) + 24px); }
+.about-label span { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); }
+.about-content p { font-size: clamp(15px, 1.3vw, 17px); line-height: 2.0; color: #CCCCCC; margin-bottom: 28px; max-width: 640px; }
+.about-section-break { border: none; border-top: 1px solid var(--rule); margin: 44px 0; max-width: 640px; }
+.about-lead { font-family: var(--font-serif) !important; font-size: clamp(20px, 2.4vw, 28px) !important; font-weight: 500 !important; color: var(--fg) !important; line-height: 1.4 !important; margin-bottom: 28px !important; }
+.about-pull { font-family: var(--font-serif); font-size: clamp(20px, 2.4vw, 32px); font-weight: 400; font-style: italic; color: var(--fg); line-height: 1.3; border-left: 2px solid var(--gold); padding-left: 24px; margin: 44px 0 32px; max-width: 560px; }
+.about-links { display: flex; gap: 32px; margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--rule); }
+.about-links a { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg); transition: color 0.2s; }
+.about-links a:hover { color: var(--gold); }
+
+/* WORK — MOSAIC */
+#work { border-top: 1px solid var(--rule); padding-bottom: var(--gap); }
+.work-mosaic-header { padding: clamp(40px, 5vw, 64px) 0 clamp(28px, 3vw, 40px); }
+.work-mosaic-header h2 { font-size: clamp(11px, 1vw, 13px); letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); }
+
+/* Mosaic grid — edge to edge, with a small gap for breathing room */
+.mosaic-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: calc((100vw / 4) * 0.5625);
+  gap: 10px;
+  grid-auto-flow: dense;
+  padding: 0 var(--pad);
+}
+
+.mosaic-card {
+  position: relative; overflow: hidden; cursor: pointer;
+  background: #0d0d0d; border-radius: 2px;
+}
+.mosaic-card.wide  { grid-column: span 2; }
+.mosaic-card.tall  { grid-row: span 2; }
+.mosaic-card.hero  { grid-column: span 2; grid-row: span 2; }
+
+.mosaic-card img {
+  width: 100%; height: 100%; object-fit: cover;
+  opacity: 0.6; transition: opacity 0.45s ease, transform 0.65s ease;
+}
+.mosaic-card:hover img { opacity: 1; transform: scale(1.04); }
+
+/* Info overlay — slides up on hover */
+.mosaic-info {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 48px 20px 20px;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+  transform: translateY(8px); opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.mosaic-card:hover .mosaic-info { opacity: 1; transform: translateY(0); }
+.mosaic-cat { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+.mosaic-title { font-size: 14px; font-weight: 300; line-height: 1.3; color: var(--fg); }
+.mosaic-desc { font-size: 12px; color: #aaa; margin-top: 6px; line-height: 1.5; display: none; }
+.mosaic-card.hero .mosaic-desc,
+.mosaic-card.wide .mosaic-desc { display: block; }
+.mosaic-card.hero .mosaic-title { font-size: 18px; }
+.mosaic-card.hero .mosaic-info { padding: 80px 28px 28px; }
+.mosaic-card.wide .mosaic-info { padding: 60px 24px 22px; }
+
+/* Play button */
+.mosaic-play {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 52px; height: 52px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.3s, border-color 0.2s;
+}
+.mosaic-card:hover .mosaic-play { opacity: 1; }
+.mosaic-card:hover .mosaic-play { border-color: rgba(255,255,255,0.7); }
+
+/* CONTACT */
+#contact { border-top: 1px solid var(--rule); }
+.contact-grid { display: grid; grid-template-columns: 180px 1fr; gap: clamp(40px, 6vw, 120px); align-items: start; }
+.contact-label span { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); }
+.contact-links { display: flex; gap: 16px; flex-wrap: wrap; }
+.contact-link { display: inline-block; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; padding: 14px 28px; background: var(--gold); color: #080808; font-weight: 500; transition: opacity 0.2s; }
+.contact-link:hover { opacity: 0.85; }
+
+/* MODAL */
+.modal {
+  display: none; position: fixed; inset: 0; z-index: 10000;
+  background: rgba(0,0,0,0.96); align-items: center; justify-content: center;
+}
+.modal.open { display: flex; }
+.modal-inner { position: relative; width: 90vw; max-width: 1100px; }
+.modal-meta { position: absolute; top: -48px; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; }
+.modal-film-title { font-size: 13px; color: var(--mid); }
+.modal-close { font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); cursor: pointer; background: none; border: none; transition: color 0.2s; }
+.modal-close:hover { color: var(--fg); }
+.modal-frame { position: relative; padding-bottom: 56.25%; height: 0; }
+.modal-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* Scroll progress */
+#scrollProgress { position: fixed; top: 0; left: 0; height: 2px; background: var(--gold); opacity: 0.75; z-index: 9998; width: 0%; transition: width 0.1s linear; }
+
+@media (max-width: 640px) {
+  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+  .about-label { position: static; }
+  .mosaic-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: calc((100vw / 2) * 0.5625); gap: 6px; padding: 0 16px; }
+  .mosaic-card.hero { grid-column: span 2; grid-row: span 2; }
+  .mosaic-card.wide { grid-column: span 2; }
+  .mosaic-card.tall { grid-row: span 2; }
+  .nav-links { display: none; }
+  .hero-main { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<div id="scrollProgress"></div>
+
+<!-- Preview banner -->
+<div class="preview-banner">
+  <strong>Concept preview</strong> — not the live site &nbsp;·&nbsp; <a href="index.html" style="color:var(--fg)">Back to current site →</a>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">G</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="behind-the-scenes.html">Behind the Scenes</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO — unchanged from current site -->
+<section id="hero">
+  <div class="hero-rule-top">Film Producer &amp; Production Consultant</div>
+  <div class="hero-main">
+    <h1 class="hero-name">Greg<br><em>Hobden</em></h1>
+    <div class="hero-divider"><span>Thirty years in film</span></div>
+    <p class="hero-sub">Theatrical documentary, high-end automotive, live experiential.</p>
+    <button class="hero-reel-btn"><span class="hero-reel-play">&#9654;</span>Showreel</button>
+  </div>
+</section>
+
+<!-- ABOUT — unchanged from current site -->
+<section id="about">
+  <div class="container about-grid">
+    <div class="about-label"><span>About</span></div>
+    <div class="about-content">
+      <p class="about-lead">I grew up in the Middle East and the Sussex countryside. I knew nobody in the film business. I knew nobody in London. I had no plan.</p>
+      <p>At nineteen I moved to the city anyway. One evening I went to a party and got talking to a French cameraman. He told me to go to Soho and find a job as a tea boy. Make tea. Carry things. That was the advice.</p>
+      <p>The following week I wrote a CV, got on the Northern line and spent the afternoon pushing it through every door that looked remotely promising. One of those doors was 25 Noel Street. I walked up to the reception desk and before I could say a word, the girl behind the desk said my name. I'd gone to school with her brother. In a city of eight million people, where I knew practically nobody.</p>
+      <p>I got the job at The Moving Picture Company. I handed in my notice at Barclays and started the following Monday.</p>
+      <p>A different door. A different day. I go back to Barclays. Thirty-five years of film. Gone, just like that.</p>
+      <p>That was 1990. I'm still here.</p>
+      <hr class="about-section-break">
+      <p>Three theatrical feature documentaries for Universal Pictures. A decade of automotive work for Rolls-Royce, Jaguar Land Rover, Ford and McLaren. Nearly a decade producing all film and media for the UAE pavilions across three World Expos — Shanghai, Yeosu and Milan. Twelve weeks at 6,000 metres on Everest, managing camera teams embedded with the British Army's attempt on the West Ridge. More people have died on that route than have reached the summit.</p>
+      <p>A growing part of my work has been experiential — film that puts the audience inside the story rather than in front of it. Not content about a product. An experience built around one. Some of that work is on this website.</p>
+      <blockquote class="about-pull">Tea boy. Runner. 2nd AD. First AD. Production Manager. Producer.</blockquote>
+      <p>That career path has helped me understand exactly what it takes to deliver a great film.</p>
+      <p>The work is on this website. Have a look around.</p>
+      <div class="about-links">
+        <a href="https://www.linkedin.com/in/greg-hobden-340a913/" target="_blank" rel="noopener">LinkedIn →</a>
+        <a href="mailto:pushfilms@icloud.com">Email →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK — mosaic grid replaces accordion -->
+<section id="work">
+  <div class="container">
+    <div class="work-mosaic-header">
+      <h2>Selected Work</h2>
+    </div>
+  </div>
+  <div class="mosaic-grid" id="mosaic-grid"></div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container contact-grid">
+    <div class="contact-label"><span>Contact</span></div>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:pushfilms@icloud.com">Email</a>
+      <a class="contact-link" href="https://www.linkedin.com/in/greg-hobden-340a913/" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<!-- MODAL -->
+<div class="modal" id="modal" onclick="closeModal(event)">
+  <div class="modal-inner">
+    <div class="modal-meta">
+      <span class="modal-film-title" id="modal-film-title"></span>
+      <button class="modal-close" onclick="closeModal()">✕ Close</button>
+    </div>
+    <div class="modal-frame">
+      <iframe id="modal-frame" src="" allowfullscreen allow="autoplay"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+const films = [
+  { id: '1171157858', title: 'Ford Ranger Raptor',         cat: 'Automotive',    size: 'hero',     desc: 'Chained inside a Soviet cargo plane. The brief was simple: show what it can do.' },
+  { id: '1171151952', title: 'Land Rover Defender',        cat: 'Automotive',    size: 'wide',     desc: 'Global launch film shot in Kazakhstan with Kenton Cool — 19 Everest summits.' },
+  { id: '1171150653', title: 'McLaren Spider',             cat: 'Automotive',    size: 'standard', desc: '' },
+  { id: '1171178087', title: 'Range Rover Sport',          cat: 'Automotive',    size: 'standard', desc: '' },
+  { id: '1171151324', title: 'Range Rover — James Corden', cat: 'Automotive',    size: 'standard', desc: '' },
+  { id: '1171150533', title: 'Discovery Sport',            cat: 'Automotive',    size: 'standard', desc: '' },
+  { id: '1171318976', title: 'Lexie Limitless',            cat: 'Automotive',    size: 'wide',     desc: 'Ford Explorer. The car was still a prototype — LED volume and Unreal Engine real-time content.' },
+  { id: '1171170029', title: 'Ford Explorer',              cat: 'Automotive',    size: 'standard', desc: '' },
+  { id: '1171150609', title: 'I Am Ali',                   cat: 'Documentary',   size: 'hero',     desc: 'Theatrical feature documentary for Universal Pictures.' },
+  { id: '1171320476', title: 'Everest',                    cat: 'Documentary',   size: 'tall',     desc: '' },
+  { id: '1171151872', title: 'Family Tree — Milan Expo',   cat: 'Experiential',  size: 'wide',     desc: 'UAE Pavilion, Milan World Expo. Film that puts the audience inside the story.' },
+  { id: '1171157242', title: 'The Turtle — Yeosu Expo',    cat: 'Experiential',  size: 'standard', desc: '' },
+  { id: '1171158700', title: 'Vashi Diamonds',             cat: 'Luxury',        size: 'tall',     desc: '' },
+  { id: '1172076463', title: 'Ford Wheels',                cat: 'Automotive',    size: 'standard', desc: '' },
+  { id: '1171158800', title: 'Bridgestone',                cat: 'Sport',         size: 'standard', desc: '' },
+  { id: '1171158741', title: 'Football League',            cat: 'Sport',         size: 'standard', desc: '' },
+  { id: '1171158957', title: 'Golfing 4 Life',             cat: 'Comedy',        size: 'standard', desc: '' },
+];
+
+const grid = document.getElementById('mosaic-grid');
+
+films.forEach(f => {
+  const card = document.createElement('div');
+  card.className = 'mosaic-card ' + f.size;
+  card.innerHTML = `
+    <img src="https://vumbnail.com/${f.id}.jpg" alt="${f.title}" loading="lazy">
+    <div class="mosaic-play">
+      <svg width="12" height="14" viewBox="0 0 12 14" fill="white"><path d="M0 0L12 7L0 14V0Z"/></svg>
+    </div>
+    <div class="mosaic-info">
+      <div class="mosaic-cat">${f.cat}</div>
+      <div class="mosaic-title">${f.title}</div>
+      ${f.desc ? `<div class="mosaic-desc">${f.desc}</div>` : ''}
+    </div>`;
+  card.addEventListener('click', () => {
+    document.getElementById('modal-film-title').textContent = f.title;
+    document.getElementById('modal-frame').src = `https://player.vimeo.com/video/${f.id}?autoplay=1&title=0&byline=0&portrait=0`;
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+  grid.appendChild(card);
+});
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modal') && !e.target.classList.contains('modal-close')) return;
+  document.getElementById('modal-frame').src = '';
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// Nav scroll behaviour
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+  const h = document.documentElement;
+  const pct = (window.scrollY / (h.scrollHeight - h.clientHeight)) * 100;
+  document.getElementById('scrollProgress').style.width = pct + '%';
+});
+</script>
+</body>
+</html>
