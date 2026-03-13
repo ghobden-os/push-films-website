@@ -313,25 +313,32 @@ body:not(.edit-mode) .tile:hover img { transform: scale(1.02); transition: opaci
 }
 
 /* FIXED BACK LINK */
+@keyframes discIn {
+  from { opacity: 0; transform: scale(0) rotate(-720deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0deg); }
+}
 #bts-back {
   position: fixed;
-  top: 24px;
+  top: 20px;
   left: clamp(20px, 4vw, 72px);
   z-index: 200;
-  color: var(--gold);
-  text-decoration: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: 'DM Sans', sans-serif;
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  background: rgba(8,8,8,0.75);
-  backdrop-filter: blur(10px);
-  padding: 9px 16px;
-  border: 1px solid rgba(245,216,0,0.2);
-  transition: border-color 0.2s, color 0.2s;
+  font-size: 22px;
+  font-weight: 300;
+  color: #111111;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+  animation: discIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
 }
-#bts-back:hover { border-color: var(--gold); }
+#bts-back:hover { opacity: 0.8; }
 
 /* FOOTER */
 footer {
@@ -399,7 +406,7 @@ footer a:hover { opacity: 0.6; }
 </head>
 <body>
 
-<a href="index.html" id="bts-back">← Greg Hobden</a>
+<a href="index.html" id="bts-back">G</a>
 
 <div class="hero">
   <h1>Behind<br>the Scenes</h1>
