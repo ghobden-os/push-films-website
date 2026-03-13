@@ -1,0 +1,337 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "$metadata": {
+    "name": "Push Films Design System",
+    "version": "1.0.0",
+    "date": "2026-03-13",
+    "author": "Greg Hobden / Push Films"
+  },
+
+  "color": {
+    "primitive": {
+      "black": {
+        "value": "#000000",
+        "type": "color",
+        "description": "Absolute black"
+      },
+      "white": {
+        "value": "#FFFFFF",
+        "type": "color",
+        "description": "Absolute white"
+      },
+      "gold": {
+        "100": { "value": "#F5ECD8", "type": "color", "description": "Gold 100 — lightest tint" },
+        "200": { "value": "#EAD8B0", "type": "color", "description": "Gold 200" },
+        "300": { "value": "#D9C28A", "type": "color", "description": "Gold 300" },
+        "400": { "value": "#C4A46B", "type": "color", "description": "Gold 400 — brand gold" },
+        "500": { "value": "#A8894F", "type": "color", "description": "Gold 500 — pressed/active" },
+        "600": { "value": "#8C7040", "type": "color", "description": "Gold 600 — darkest" }
+      },
+      "grey": {
+        "50":  { "value": "#EDEDE8", "type": "color", "description": "Grey 50 — foreground" },
+        "100": { "value": "#D4D4CF", "type": "color", "description": "Grey 100" },
+        "200": { "value": "#BBBBBB", "type": "color", "description": "Grey 200" },
+        "300": { "value": "#A0A0A0", "type": "color", "description": "Grey 300" },
+        "400": { "value": "#888888", "type": "color", "description": "Grey 400 — mid" },
+        "500": { "value": "#666666", "type": "color", "description": "Grey 500" },
+        "600": { "value": "#444444", "type": "color", "description": "Grey 600" },
+        "700": { "value": "#2E2E2E", "type": "color", "description": "Grey 700" },
+        "800": { "value": "#1E1E1E", "type": "color", "description": "Grey 800 — rule" },
+        "850": { "value": "#1C1C1C", "type": "color", "description": "Grey 850 — dim surface" },
+        "900": { "value": "#080808", "type": "color", "description": "Grey 900 — background" }
+      },
+      "red": {
+        "400": { "value": "#E05252", "type": "color", "description": "Red 400 — error light" },
+        "500": { "value": "#C0392B", "type": "color", "description": "Red 500 — error" },
+        "600": { "value": "#992D22", "type": "color", "description": "Red 600 — error dark" }
+      },
+      "green": {
+        "400": { "value": "#4CAF7D", "type": "color", "description": "Green 400 — success light" },
+        "500": { "value": "#27AE60", "type": "color", "description": "Green 500 — success" },
+        "600": { "value": "#1E8449", "type": "color", "description": "Green 600 — success dark" }
+      },
+      "amber": {
+        "400": { "value": "#F0B429", "type": "color", "description": "Amber 400 — warning light" },
+        "500": { "value": "#D4A017", "type": "color", "description": "Amber 500 — warning" },
+        "600": { "value": "#A87A0E", "type": "color", "description": "Amber 600 — warning dark" }
+      }
+    },
+
+    "semantic": {
+      "background": {
+        "base":    { "value": "{color.primitive.grey.900}", "type": "color", "description": "Page background" },
+        "surface": { "value": "{color.primitive.grey.850}", "type": "color", "description": "Elevated surface, dim panels" },
+        "overlay": { "value": "rgba(0,0,0,0.92)",           "type": "color", "description": "Modal / lightbox overlay" },
+        "nav":     { "value": "rgba(8,8,8,0.95)",           "type": "color", "description": "Scrolled nav background" }
+      },
+      "text": {
+        "primary":   { "value": "{color.primitive.grey.50}",  "type": "color", "description": "Primary body copy" },
+        "secondary": { "value": "{color.primitive.grey.400}", "type": "color", "description": "Secondary / supporting text" },
+        "tertiary":  { "value": "#999999",                    "type": "color", "description": "Work descriptions, de-emphasised" },
+        "disabled":  { "value": "{color.primitive.grey.600}", "type": "color", "description": "Disabled / placeholder" },
+        "inverse":   { "value": "{color.primitive.grey.900}", "type": "color", "description": "Text on gold backgrounds" }
+      },
+      "accent": {
+        "default": { "value": "{color.primitive.gold.400}", "type": "color", "description": "Primary accent — brand gold" },
+        "hover":   { "value": "#D4B47E",                    "type": "color", "description": "Gold hover state" },
+        "pressed": { "value": "{color.primitive.gold.500}", "type": "color", "description": "Gold pressed/active" },
+        "subtle":  { "value": "rgba(196,164,107,0.08)",     "type": "color", "description": "Gold tint overlay" }
+      },
+      "rule": {
+        "default": { "value": "{color.primitive.grey.800}", "type": "color", "description": "Horizontal rules, borders" },
+        "strong":  { "value": "{color.primitive.grey.700}", "type": "color", "description": "Stronger dividers" }
+      },
+      "status": {
+        "error":          { "value": "{color.primitive.red.500}",   "type": "color", "description": "Error state" },
+        "error-bg":       { "value": "rgba(192,57,43,0.12)",        "type": "color", "description": "Error background tint" },
+        "success":        { "value": "{color.primitive.green.500}", "type": "color", "description": "Success state" },
+        "success-bg":     { "value": "rgba(39,174,96,0.12)",        "type": "color", "description": "Success background tint" },
+        "warning":        { "value": "{color.primitive.amber.500}", "type": "color", "description": "Warning state" },
+        "warning-bg":     { "value": "rgba(212,160,23,0.12)",       "type": "color", "description": "Warning background tint" }
+      },
+      "focus": {
+        "ring": { "value": "{color.primitive.gold.400}", "type": "color", "description": "Focus ring color" }
+      }
+    }
+  },
+
+  "typography": {
+    "fontFamily": {
+      "display": {
+        "value": "'Outfit', sans-serif",
+        "type": "fontFamily",
+        "description": "Display and heading font — Outfit from Google Fonts, weights 400/500"
+      },
+      "body": {
+        "value": "'Manrope', sans-serif",
+        "type": "fontFamily",
+        "description": "Body and UI font — Manrope from Google Fonts, weights 300/500"
+      },
+      "mono": {
+        "value": "'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace",
+        "type": "fontFamily",
+        "description": "Code and monospace font"
+      }
+    },
+
+    "fontWeight": {
+      "light":   { "value": "300", "type": "fontWeight", "description": "Light — Manrope body" },
+      "regular": { "value": "400", "type": "fontWeight", "description": "Regular — Outfit display" },
+      "medium":  { "value": "500", "type": "fontWeight", "description": "Medium — headings, UI labels" }
+    },
+
+    "scale": {
+      "display-xl": {
+        "fontFamily":   { "value": "{typography.fontFamily.display}", "type": "fontFamily" },
+        "fontSize":     { "value": "clamp(80px, 15.6vw, 200px)",      "type": "dimension" },
+        "fontWeight":   { "value": "{typography.fontWeight.regular}",  "type": "fontWeight" },
+        "lineHeight":   { "value": "0.85",                             "type": "number" },
+        "letterSpacing":{ "value": "-0.02em",                          "type": "dimension" },
+        "description":  "Hero name — largest display level"
+      },
+      "display-lg": {
+        "fontFamily":   { "value": "{typography.fontFamily.display}", "type": "fontFamily" },
+        "fontSize":     { "value": "clamp(56px, 11.3vw, 155px)",      "type": "dimension" },
+        "fontWeight":   { "value": "{typography.fontWeight.regular}",  "type": "fontWeight" },
+        "lineHeight":   { "value": "0.85",                             "type": "number" },
+        "letterSpacing":{ "value": "-0.02em",                          "type": "dimension" },
+        "description":  "Hero name variant — large display"
+      },
+      "display-md": {
+        "fontFamily":   { "value": "{typography.fontFamily.display}", "type": "fontFamily" },
+        "fontSize":     { "value": "clamp(36px, 6vw, 96px)",          "type": "dimension" },
+        "fontWeight":   { "value": "{typography.fontWeight.regular}",  "type": "fontWeight" },
+        "lineHeight":   { "value": "0.9",                              "type": "number" },
+        "letterSpacing":{ "value": "-0.015em",                         "type": "dimension" },
+        "description":  "Large section display"
+      },
+      "heading-xl": {
+        "fontFamily":   { "value": "{typography.fontFamily.display}", "type": "fontFamily" },
+        "fontSize":     { "value": "clamp(28px, 3.6vw, 48px)",        "type": "dimension" },
+        "fontWeight":   { "value": "{typography.fontWeight.medium}",   "type": "fontWeight" },
+        "lineHeight":   { "value": "1.1",                              "type": "number" },
+        "letterSpacing":{ "value": "-0.01em",                          "type": "dimension" },
+        "description":  "Section headings, major titles"
+      },
+      "heading-lg": {
+        "fontFamily":   { "value": "{typography.fontFamily.display}", "type": "fontFamily" },
+        "fontSize":     { "value": "clamp(20px, 2.2vw, 26px)",        "type": "dimension" },
+        "fontWeight":   { "value": "{typography.fontWeight.medium}",   "type": "fontWeight" },
+        "lineHeight":   { "value": "1.2",                              "type": "number" },
+        "letterSpacing":{ "value": "0em",                              "type": "dimension" },
+        "description":  "Work category headers, sub-section headings"
+      },
+      "heading-md": {
+        "fontFamily":   { "value": "{typography.fontFamily.display}", "type": "fontFamily" },
+        "fontSize":     { "value": "clamp(18px, 2vw, 28px)",          "type": "dimension" },
+        "fontWeight":   { "value": "{typography.fontWeight.medium}",   "type": "fontWeight" },
+        "lineHeight":   { "value": "1.3",                              "type": "number" },
+        "letterSpacing":{ "value": "0em",                              "type": "dimension" },
+        "description":  "Contact lead, about lead"
+      },
+      "heading-sm": {
+        "fontFamily":   { "value": "{typography.fontFamily.display}", "type": "fontFamily" },
+        "fontSize":     { "value": "clamp(15px, 1.8vw, 20px)",        "type": "dimension" },
+        "fontWeight":   { "value": "{typography.fontWeight.medium}",   "type": "fontWeight" },
+        "lineHeight":   { "value": "1.4",                              "type": "number" },
+        "letterSpacing":{ "value": "0em",                              "type": "dimension" },
+        "description":  "Small headings, card titles"
+      },
+      "body-lg": {
+        "fontFamily":   { "value": "{typography.fontFamily.body}",    "type": "fontFamily" },
+        "fontSize":     { "value": "clamp(15px, 1.38vw, 17px)",       "type": "dimension" },
+        "fontWeight":   { "value": "{typography.fontWeight.light}",    "type": "fontWeight" },
+        "lineHeight":   { "value": "2.0",                              "type": "number" },
+        "letterSpacing":{ "value": "0em",                              "type": "dimension" },
+        "description":  "About and hero body copy — generous leading"
+      },
+      "body-md": {
+        "fontFamily":   { "value": "{typography.fontFamily.body}",    "type": "fontFamily" },
+        "fontSize":     { "value": "14px",                             "type": "dimension" },
+        "fontWeight":   { "value": "{typography.fontWeight.light}",    "type": "fontWeight" },
+        "lineHeight":   { "value": "1.7",                              "type": "number" },
+        "letterSpacing":{ "value": "0em",                              "type": "dimension" },
+        "description":  "Work descriptions, general body"
+      },
+      "body-sm": {
+        "fontFamily":   { "value": "{typography.fontFamily.body}",    "type": "fontFamily" },
+        "fontSize":     { "value": "13px",                             "type": "dimension" },
+        "fontWeight":   { "value": "{typography.fontWeight.light}",    "type": "fontWeight" },
+        "lineHeight":   { "value": "1.6",                              "type": "number" },
+        "letterSpacing":{ "value": "0em",                              "type": "dimension" },
+        "description":  "Fine print, footnotes, client list items"
+      },
+      "label": {
+        "fontFamily":   { "value": "{typography.fontFamily.body}",    "type": "fontFamily" },
+        "fontSize":     { "value": "10px",                             "type": "dimension" },
+        "fontWeight":   { "value": "{typography.fontWeight.medium}",   "type": "fontWeight" },
+        "lineHeight":   { "value": "1.5",                              "type": "number" },
+        "letterSpacing":{ "value": "0.22em",                           "type": "dimension" },
+        "textTransform":{ "value": "uppercase",                        "type": "other" },
+        "description":  "UI labels, nav links, button text, section labels"
+      },
+      "caption": {
+        "fontFamily":   { "value": "{typography.fontFamily.body}",    "type": "fontFamily" },
+        "fontSize":     { "value": "10px",                             "type": "dimension" },
+        "fontWeight":   { "value": "{typography.fontWeight.light}",    "type": "fontWeight" },
+        "lineHeight":   { "value": "1.5",                              "type": "number" },
+        "letterSpacing":{ "value": "0.08em",                           "type": "dimension" },
+        "description":  "Captions, metadata, work numbers"
+      },
+      "overline": {
+        "fontFamily":   { "value": "{typography.fontFamily.body}",    "type": "fontFamily" },
+        "fontSize":     { "value": "9px",                              "type": "dimension" },
+        "fontWeight":   { "value": "{typography.fontWeight.medium}",   "type": "fontWeight" },
+        "lineHeight":   { "value": "1.5",                              "type": "number" },
+        "letterSpacing":{ "value": "0.18em",                           "type": "dimension" },
+        "textTransform":{ "value": "uppercase",                        "type": "other" },
+        "description":  "Overlines, micro-labels, footer text"
+      }
+    }
+  },
+
+  "spacing": {
+    "0":   { "value": "0px",   "type": "dimension", "description": "No spacing" },
+    "1":   { "value": "4px",   "type": "dimension", "description": "1 unit — 4px" },
+    "2":   { "value": "8px",   "type": "dimension", "description": "2 units — 8px" },
+    "3":   { "value": "12px",  "type": "dimension", "description": "3 units — 12px" },
+    "4":   { "value": "16px",  "type": "dimension", "description": "4 units — 16px" },
+    "5":   { "value": "20px",  "type": "dimension", "description": "5 units — 20px" },
+    "6":   { "value": "24px",  "type": "dimension", "description": "6 units — 24px" },
+    "7":   { "value": "28px",  "type": "dimension", "description": "7 units — 28px" },
+    "8":   { "value": "32px",  "type": "dimension", "description": "8 units — 32px" },
+    "9":   { "value": "36px",  "type": "dimension", "description": "9 units — 36px" },
+    "10":  { "value": "40px",  "type": "dimension", "description": "10 units — 40px" },
+    "12":  { "value": "48px",  "type": "dimension", "description": "12 units — 48px" },
+    "14":  { "value": "56px",  "type": "dimension", "description": "14 units — 56px" },
+    "16":  { "value": "64px",  "type": "dimension", "description": "16 units — 64px (nav height)" },
+    "18":  { "value": "72px",  "type": "dimension", "description": "18 units — 72px" },
+    "20":  { "value": "80px",  "type": "dimension", "description": "20 units — 80px" },
+    "24":  { "value": "96px",  "type": "dimension", "description": "24 units — 96px" },
+    "28":  { "value": "112px", "type": "dimension", "description": "28 units — 112px" },
+    "32":  { "value": "128px", "type": "dimension", "description": "32 units — 128px" },
+    "36":  { "value": "144px", "type": "dimension", "description": "36 units — 144px" },
+    "40":  { "value": "160px", "type": "dimension", "description": "40 units — 160px" },
+    "pad": { "value": "clamp(24px, 5vw, 80px)",   "type": "dimension", "description": "Horizontal page padding — fluid" },
+    "gap": { "value": "clamp(72px, 10vw, 140px)", "type": "dimension", "description": "Section vertical gap — fluid" }
+  },
+
+  "borderRadius": {
+    "none": { "value": "0px",    "type": "borderRadius", "description": "No radius — sharp corners used site-wide" },
+    "sm":   { "value": "2px",    "type": "borderRadius", "description": "Subtle radius — tags, badges" },
+    "md":   { "value": "6px",    "type": "borderRadius", "description": "Gallery thumbnails" },
+    "lg":   { "value": "12px",   "type": "borderRadius", "description": "Cards, modals" },
+    "full": { "value": "9999px", "type": "borderRadius", "description": "Fully rounded — play buttons, icon buttons" }
+  },
+
+  "shadow": {
+    "text-sm": {
+      "value": "0 1px 2px rgba(0,0,0,0.8)",
+      "type": "shadow",
+      "description": "Subtle text shadow for hero text on imagery"
+    },
+    "text-md": {
+      "value": "0 2px 8px rgba(0,0,0,0.9)",
+      "type": "shadow",
+      "description": "Medium text shadow"
+    },
+    "text-lg": {
+      "value": "0 4px 20px rgba(0,0,0,1)",
+      "type": "shadow",
+      "description": "Heavy text shadow for low-contrast backgrounds"
+    },
+    "elevation-sm": {
+      "value": "0 2px 8px rgba(0,0,0,0.6)",
+      "type": "shadow",
+      "description": "Card elevation — small"
+    },
+    "elevation-md": {
+      "value": "0 4px 24px rgba(0,0,0,0.8)",
+      "type": "shadow",
+      "description": "Modal elevation — medium"
+    },
+    "elevation-lg": {
+      "value": "0 8px 48px rgba(0,0,0,0.95)",
+      "type": "shadow",
+      "description": "Overlay elevation — large"
+    },
+    "glow-gold": {
+      "value": "0 0 24px rgba(196,164,107,0.3)",
+      "type": "shadow",
+      "description": "Gold glow — accent focus or highlight"
+    }
+  },
+
+  "motion": {
+    "duration": {
+      "fast":   { "value": "150ms",  "type": "duration", "description": "Fast micro-interactions — hover colour, opacity" },
+      "base":   { "value": "250ms",  "type": "duration", "description": "Base transitions — all 0.25s" },
+      "slow":   { "value": "400ms",  "type": "duration", "description": "Slower transitions — nav bg, accordion" },
+      "hero":   { "value": "1400ms", "type": "duration", "description": "Hero entrance animations" },
+      "reveal": { "value": "1800ms", "type": "duration", "description": "Section fade-in reveal animations" }
+    },
+    "easing": {
+      "standard":    { "value": "cubic-bezier(0.4, 0, 0.2, 1)",    "type": "cubicBezier", "description": "Standard ease — most transitions" },
+      "decelerate":  { "value": "cubic-bezier(0, 0, 0.2, 1)",      "type": "cubicBezier", "description": "Elements entering the screen" },
+      "accelerate":  { "value": "cubic-bezier(0.4, 0, 1, 1)",      "type": "cubicBezier", "description": "Elements leaving the screen" },
+      "spring":      { "value": "cubic-bezier(0.16, 1, 0.3, 1)",   "type": "cubicBezier", "description": "Spring — section reveal, historic fade-in" },
+      "linear":      { "value": "linear",                           "type": "cubicBezier", "description": "Linear — progress bars, typewriter" }
+    }
+  },
+
+  "breakpoint": {
+    "sm":  { "value": "380px",  "type": "dimension", "description": "Small phones" },
+    "md":  { "value": "600px",  "type": "dimension", "description": "Large phones / small tablets — near site's 640px mobile breakpoint" },
+    "lg":  { "value": "900px",  "type": "dimension", "description": "Tablets / small laptops — layout collapses at 960px" },
+    "xl":  { "value": "1200px", "type": "dimension", "description": "Desktops — container max-width" },
+    "2xl": { "value": "1440px", "type": "dimension", "description": "Wide desktops — grid max-width" }
+  },
+
+  "grid": {
+    "columns":   { "value": "12",                            "type": "number",    "description": "12-column grid" },
+    "gutter":    { "value": "24px",                          "type": "dimension", "description": "Gap between columns" },
+    "margin":    { "value": "clamp(24px, 5vw, 80px)",        "type": "dimension", "description": "Outer page margin — same as --pad" },
+    "maxWidth":  { "value": "1440px",                        "type": "dimension", "description": "Maximum content width" },
+    "container": { "value": "1200px",                        "type": "dimension", "description": "Inner container max-width" }
+  }
+}
