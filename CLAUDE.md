@@ -13,6 +13,8 @@ Portfolio website for Greg Hobden, film producer. Single-page site with sections
 - **Design system**: `design-system.html` — full visual reference (colours, typography, components, dos & don'ts, handoff guide). Viewable at greghobden.com/design-system.html
 - **Design tokens**: `design-tokens.json` — canonical W3C-format token file (colours, type scale, spacing, motion, grid). Currently v1.1.0
 - **Logo assets**: `files/logo.html` — yellow disc mark + full lockup variants (DM Sans). `files/favicon.svg` — source SVG
+- **Email signature**: `files/email-signature.html` — live preview + Apple Mail install instructions. `files/g-disc.svg` — hosted yellow G disc image used in the signature (44px circle, `#F5D800`, DM Sans G)
+- **Type spec**: `files/type-spec.html` — A4 print-ready spec sheet for video editors: DM Sans, colours, name layout, disciplines
 
 ## Deployment Pipeline
 - Git → GitHub (`ghobden-os/push-films-website`) → Netlify (auto-deploys on push to `main`)
@@ -176,6 +178,9 @@ The hero has significant mobile-specific overrides in the final `@media (max-wid
 
 ### Behind the Scenes Page (`behind-the-scenes.html`)
 - Standalone dark-theme page, same fonts/CSS variables as index.html
+- NOT in the main nav — accessed via direct URL or links
+- Fixed `← G` back button (top-left): yellow arrow + yellow disc, animates in with `discIn` (same as nav logo). Returns to main site.
+- Yellow scroll progress bar: identical to main site (`#scrollProgress`, 2px, `opacity: 0.75`)
 - Linked from nav: `<li><a href="behind-the-scenes.html">Behind the Scenes</a></li>`
 - CSS Grid mosaic wall: 4 cols desktop, 3 at 900px, 2 at 600px, 1 at 380px, 3px gaps
 - `.wall-label` divs span full width, centred, gold, 13px uppercase — section titles
@@ -188,9 +193,17 @@ The hero has significant mobile-specific overrides in the final `@media (max-wid
 Hero section has a typewriter animation synced to Web Audio API click sounds via `scheduleClick(atTime)`.
 
 ### Contact Section
-- Email: `pushfilms@icloud.com`
-- LinkedIn URL: `https://www.linkedin.com/in/greg-hobden-340a913/`
-- Both styled as yellow filled buttons: `.contact-link { background: var(--gold); color: #080808; }`
+- Email button: `ghobden@mac.com` — styled as yellow filled button
+- LinkedIn button: `https://www.linkedin.com/in/greg-hobden-340a913/` — styled as yellow filled button
+- Both: `.contact-link { background: var(--gold); color: #080808; }`
+
+### Email Signature
+- File: `files/email-signature.html` — preview page + install instructions
+- Disc: hosted SVG at `files/g-disc.svg` (44px, `#F5D800`, DM Sans G) — used as `<img>` in signature so it survives email client rendering
+- Current details: `ghobden@mac.com` · `07802 179 515` · `greghobden.com`
+- Title line: Film Producer (no Push Films, no LinkedIn)
+- Apple Mail install: must edit `.mailsignature` file directly on disk (copy-paste strips CSS). Steps on the page. Lock the file after editing or Mail overwrites it.
+- Yellow vertical rule: `border-left: 2px solid #F5D800` on the `<td>` — only renders correctly via the direct file method, not via paste
 
 ## Key CSS Variables
 ```css
