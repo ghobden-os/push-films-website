@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Push Films — Logo Concepts III</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:        #080808;
+    --fg:        #EDEDE8;
+    --gold:      #C4A46B;          /* Screen / dark panels */
+    --gold-dark: #7A5C1E;          /* Print / light panels — same hue, readable */
+    --mid:       #444;
+    --rule:      #181818;
+    --pad:       clamp(24px, 5vw, 72px);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px var(--pad);
+    border-bottom: 1px solid var(--rule);
+  }
+  nav a { color: var(--gold); text-decoration: none; font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.7; transition: opacity 0.2s; }
+  nav a:hover { opacity: 1; }
+  nav span { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); }
+
+  .page-header {
+    padding: clamp(56px, 8vw, 110px) var(--pad) clamp(40px, 5vw, 72px);
+    border-bottom: 1px solid var(--rule);
+    max-width: 760px;
+  }
+  .page-header h1 {
+    font-family: 'Cinzel', serif;
+    font-weight: 400;
+    font-size: clamp(28px, 5vw, 60px);
+    letter-spacing: 0.08em;
+    line-height: 1;
+    color: var(--fg);
+    margin-bottom: 24px;
+  }
+  .page-header p {
+    font-size: 12px;
+    color: var(--mid);
+    letter-spacing: 0.06em;
+    line-height: 1.9;
+    max-width: 520px;
+  }
+  .page-header .font-note {
+    margin-top: 16px;
+    font-size: 10px;
+    color: #333;
+    letter-spacing: 0.04em;
+  }
+  .page-header .font-note strong { color: var(--gold); font-weight: 400; }
+
+  .concept {
+    padding: clamp(64px, 9vw, 110px) var(--pad);
+    border-bottom: 1px solid var(--rule);
+  }
+  .concept-header {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 20px;
+    align-items: start;
+    margin-bottom: clamp(48px, 6vw, 80px);
+  }
+  .concept-num {
+    font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); padding-top: 4px;
+  }
+  .concept-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 400;
+    font-size: clamp(20px, 3vw, 32px);
+    color: var(--fg);
+    line-height: 1.1;
+    margin-bottom: 14px;
+    letter-spacing: 0.06em;
+  }
+  .concept-desc {
+    font-size: 12px; color: var(--mid); line-height: 1.9;
+    max-width: 520px; letter-spacing: 0.03em;
+  }
+  .concept-inspiration {
+    font-size: 11px;
+    font-style: italic;
+    color: #2e2e2e;
+    margin-top: 10px;
+  }
+
+  .previews {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 28px;
+  }
+  @media (max-width: 600px) { .previews { grid-template-columns: 1fr; } }
+
+  .panel {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 300px; padding: 56px 40px;
+    position: relative; overflow: hidden;
+  }
+  .panel--dark  { background: #050505; }
+  .panel--light { background: #EDEBE3; }
+
+  .panel-tag {
+    position: absolute; top: 16px; left: 18px;
+    font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+  }
+  .panel--dark  .panel-tag { color: #1e1e1e; }
+  .panel--light .panel-tag { color: #c0bdb5; }
+
+  .replay-btn {
+    background: none; border: 1px solid #1a1a1a; color: #333;
+    font-family: 'Manrope', sans-serif; font-size: 8px;
+    letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer;
+    padding: 10px 20px; transition: border-color 0.2s, color 0.2s;
+  }
+  .replay-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  .notes {
+    margin-top: 28px; padding: 22px 24px;
+    background: #0a0a0a; border-left: 1px solid var(--gold);
+  }
+  .notes h4 {
+    font-size: 8px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 14px;
+  }
+  .notes ul { list-style: none; }
+  .notes li {
+    font-size: 11px; color: #555; padding: 5px 0;
+    border-bottom: 1px solid #111; line-height: 1.8;
+  }
+  .notes li:last-child { border-bottom: none; }
+  .notes li::before { content: '— '; color: #222; }
+
+  .dp { fill: none; }
+
+  /* E: Leader — countdown number */
+  .leader-num { opacity: 0; }
+
+  /* G: Wipe clip panels */
+  .wipe-clip { clip-path: inset(0 100% 0 0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="logo-preview-2.html">← Concepts II</a>
+  <span>Logo Concepts III — Cinzel</span>
+</nav>
+
+<div class="page-header">
+  <h1>Third Act.</h1>
+  <p>Four more directions. New font — Cinzel. Roman letterforms designed for film contexts. Gold fixed on light backgrounds. Each concept explores a different cinematic grammar.</p>
+  <p class="font-note">Font: <strong>Cinzel</strong> — drawn from Roman inscriptions. Every letterform is geometric, authoritative, designed to be read at distance. Used across film, documentary, and broadcast title design.</p>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- E: LEADER — film countdown, then the mark resolves           -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section class="concept" id="c-e">
+  <div class="concept-header">
+    <span class="concept-num">E</span>
+    <div>
+      <div class="concept-title">Leader</div>
+      <p class="concept-desc">A film leader countdown — the circle, the crosshair, the flicker of numbers. Then it resolves into the mark. The in-joke for anyone who's been in a cutting room. The signal that something is about to begin.</p>
+      <p class="concept-inspiration">Reference: Universal leader. SMPTE bars. BFI archive.</p>
+    </div>
+  </div>
+
+  <div class="previews">
+    <div class="panel panel--dark" style="min-height:340px;">
+      <span class="panel-tag">Screen</span>
+      <svg id="svgE-d" viewBox="0 0 160 160" width="200" height="200" aria-label="Greg Hobden leader logo">
+        <!-- Outer circle -->
+        <circle class="dp" id="Ed-outer" cx="80" cy="80" r="70" stroke="#C4A46B" stroke-width="0.7"/>
+        <!-- Inner circle -->
+        <circle class="dp" id="Ed-inner" cx="80" cy="80" r="48" stroke="#C4A46B" stroke-width="0.4"/>
+        <!-- Crosshair lines -->
+        <line class="dp" id="Ed-ch1" x1="80" y1="10" x2="80" y2="10" stroke="#C4A46B" stroke-width="0.4"/>
+        <line class="dp" id="Ed-ch2" x1="150" y1="80" x2="150" y2="80" stroke="#C4A46B" stroke-width="0.4"/>
+        <line class="dp" id="Ed-ch3" x1="80" y1="150" x2="80" y2="150" stroke="#C4A46B" stroke-width="0.4"/>
+        <line class="dp" id="Ed-ch4" x1="10" y1="80" x2="10" y2="80" stroke="#C4A46B" stroke-width="0.4"/>
+        <!-- Corner tick marks -->
+        <g id="Ed-ticks" opacity="0">
+          <line x1="18" y1="26" x2="24" y2="32" stroke="#333" stroke-width="0.4"/>
+          <line x1="142" y1="26" x2="136" y2="32" stroke="#333" stroke-width="0.4"/>
+          <line x1="18" y1="134" x2="24" y2="128" stroke="#333" stroke-width="0.4"/>
+          <line x1="142" y1="134" x2="136" y2="128" stroke="#333" stroke-width="0.4"/>
+        </g>
+        <!-- Countdown numbers (flash through 5→1) -->
+        <text class="leader-num" id="Ed-n5" x="80" y="92" text-anchor="middle"
+          font-family="'Cinzel', serif" font-weight="400" font-size="40" fill="#1a1a1a">5</text>
+        <text class="leader-num" id="Ed-n4" x="80" y="92" text-anchor="middle"
+          font-family="'Cinzel', serif" font-weight="400" font-size="40" fill="#1a1a1a">4</text>
+        <text class="leader-num" id="Ed-n3" x="80" y="92" text-anchor="middle"
+          font-family="'Cinzel', serif" font-weight="400" font-size="40" fill="#1a1a1a">3</text>
+        <text class="leader-num" id="Ed-n2" x="80" y="92" text-anchor="middle"
+          font-family="'Cinzel', serif" font-weight="400" font-size="40" fill="#1a1a1a">2</text>
+        <text class="leader-num" id="Ed-n1" x="80" y="92" text-anchor="middle"
+          font-family="'Cinzel', serif" font-weight="400" font-size="40" fill="#1a1a1a">1</text>
+        <!-- The resolved mark: G + H -->
+        <g id="Ed-mark" opacity="0">
+          <path class="dp" id="Ed-G"
+            d="M 58,68 A 22,22 0 1,0 63,80 L 46,80"
+            stroke="#C4A46B" stroke-width="1.5" stroke-linecap="butt"/>
+          <path class="dp" id="Ed-H1" d="M 84,55 L 84,105" stroke="#EDEDE8" stroke-width="1.5" stroke-linecap="butt"/>
+          <path class="dp" id="Ed-H2" d="M 84,80 L 114,80" stroke="#EDEDE8" stroke-width="1.5" stroke-linecap="butt"/>
+          <path class="dp" id="Ed-H3" d="M 114,55 L 114,105" stroke="#EDEDE8" stroke-width="1.5" stroke-linecap="butt"/>
+        </g>
+      </svg>
+    </div>
+    <div class="panel panel--light" style="min-height:340px;">
+      <span class="panel-tag">Print</span>
+      <svg id="svgE-l" viewBox="0 0 160 160" width="200" height="200" aria-label="Greg Hobden leader logo">
+        <circle class="dp" id="El-outer" cx="80" cy="80" r="70" stroke="#7A5C1E" stroke-width="0.7"/>
+        <circle class="dp" id="El-inner" cx="80" cy="80" r="48" stroke="#7A5C1E" stroke-width="0.4"/>
+        <line class="dp" id="El-ch1" x1="80" y1="10" x2="80" y2="10" stroke="#7A5C1E" stroke-width="0.4"/>
+        <line class="dp" id="El-ch2" x1="150" y1="80" x2="150" y2="80" stroke="#7A5C1E" stroke-width="0.4"/>
+        <line class="dp" id="El-ch3" x1="80" y1="150" x2="80" y2="150" stroke="#7A5C1E" stroke-width="0.4"/>
+        <line class="dp" id="El-ch4" x1="10" y1="80" x2="10" y2="80" stroke="#7A5C1E" stroke-width="0.4"/>
+        <g id="El-ticks" opacity="0">
+          <line x1="18" y1="26" x2="24" y2="32" stroke="#bbb" stroke-width="0.4"/>
+          <line x1="142" y1="26" x2="136" y2="32" stroke="#bbb" stroke-width="0.4"/>
+          <line x1="18" y1="134" x2="24" y2="128" stroke="#bbb" stroke-width="0.4"/>
+          <line x1="142" y1="134" x2="136" y2="128" stroke="#bbb" stroke-width="0.4"/>
+        </g>
+        <text class="leader-num" id="El-n5" x="80" y="92" text-anchor="middle"
+          font-family="'Cinzel', serif" font-weight="400" font-size="40" fill="#ccc">5</text>
+        <text class="leader-num" id="El-n4" x="80" y="92" text-anchor="middle"
+          font-family="'Cinzel', serif" font-weight="400" font-size="40" fill="#ccc">4</text>
+        <text class="leader-num" id="El-n3" x="80" y="92" text-anchor="middle"
+          font-family="'Cinzel', serif" font-weight="400" font-size="40" fill="#ccc">3</text>
+        <text class="leader-num" id="El-n2" x="80" y="92" text-anchor="middle"
+          font-family="'Cinzel', serif" font-weight="400" font-size="40" fill="#ccc">2</text>
+        <text class="leader-num" id="El-n1" x="80" y="92" text-anchor="middle"
+          font-family="'Cinzel', serif" font-weight="400" font-size="40" fill="#ccc">1</text>
+        <g id="El-mark" opacity="0">
+          <path class="dp" id="El-G"
+            d="M 58,68 A 22,22 0 1,0 63,80 L 46,80"
+            stroke="#7A5C1E" stroke-width="1.5" stroke-linecap="butt"/>
+          <path class="dp" id="El-H1" d="M 84,55 L 84,105" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="butt"/>
+          <path class="dp" id="El-H2" d="M 84,80 L 114,80" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="butt"/>
+          <path class="dp" id="El-H3" d="M 114,55 L 114,105" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="butt"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <button class="replay-btn" data-anim="E">↺ Replay</button>
+  <div class="notes">
+    <h4>Notes</h4>
+    <ul>
+      <li>The countdown flickers at real film speed — roughly one frame per number then holds on the mark.</li>
+      <li>The circle is a leader ring; it could also work as a simple seal badge at static-only scale.</li>
+      <li>Web-only animation — in print the static version shows the resolved GH inside the ring.</li>
+      <li>Cinzel numerals inside the ring are genuinely cinematic — precise Roman-derived letterforms.</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- F: STAMP — circular seal, name around perimeter              -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section class="concept" id="c-f">
+  <div class="concept-header">
+    <span class="concept-num">F</span>
+    <div>
+      <div class="concept-title">Stamp</div>
+      <p class="concept-desc">A circular seal. The name runs around the perimeter in small Cinzel capitals. GH draws in the centre. Works as an embossed wax seal, a watermark, or a favicon. Clean authority — the kind of mark that's been on correspondence for a century.</p>
+      <p class="concept-inspiration">Reference: BFI. The British Film Commission. Screen Ireland.</p>
+    </div>
+  </div>
+
+  <div class="previews">
+    <div class="panel panel--dark" style="min-height:340px;">
+      <span class="panel-tag">Screen</span>
+      <svg id="svgF-d" viewBox="0 0 180 180" width="200" height="200" aria-label="Greg Hobden stamp logo">
+        <!-- Outer ring -->
+        <circle class="dp" id="Fd-ring1" cx="90" cy="90" r="82" stroke="#C4A46B" stroke-width="0.8"/>
+        <!-- Inner ring -->
+        <circle class="dp" id="Fd-ring2" cx="90" cy="90" r="72" stroke="#C4A46B" stroke-width="0.3"/>
+        <!-- Text on path -->
+        <defs>
+          <path id="Fd-textpath" d="M 90,90 m -67,0 a 67,67 0 1,1 134,0 a 67,67 0 1,1 -134,0"/>
+          <path id="Fl-textpath" d="M 90,90 m -67,0 a 67,67 0 1,1 134,0 a 67,67 0 1,1 -134,0"/>
+        </defs>
+        <text id="Fd-perimeter" opacity="0"
+          font-family="'Cinzel', serif" font-weight="400" font-size="8.5" fill="#C4A46B" letter-spacing="4">
+          <textPath href="#Fd-textpath" startOffset="8%">GREG HOBDEN · FILM PRODUCER · LONDON ·</textPath>
+        </text>
+        <!-- GH centre -->
+        <path class="dp" id="Fd-G"
+          d="M 72,78 A 18,18 0 1,0 76,90 L 60,90"
+          stroke="#C4A46B" stroke-width="1.4" stroke-linecap="butt"/>
+        <path class="dp" id="Fd-H1" d="M 96,68 L 96,112" stroke="#EDEDE8" stroke-width="1.4" stroke-linecap="butt"/>
+        <path class="dp" id="Fd-H2" d="M 96,90 L 124,90" stroke="#EDEDE8" stroke-width="1.4" stroke-linecap="butt"/>
+        <path class="dp" id="Fd-H3" d="M 124,68 L 124,112" stroke="#EDEDE8" stroke-width="1.4" stroke-linecap="butt"/>
+      </svg>
+    </div>
+    <div class="panel panel--light" style="min-height:340px;">
+      <span class="panel-tag">Print</span>
+      <svg id="svgF-l" viewBox="0 0 180 180" width="200" height="200" aria-label="Greg Hobden stamp logo">
+        <circle class="dp" id="Fl-ring1" cx="90" cy="90" r="82" stroke="#7A5C1E" stroke-width="0.8"/>
+        <circle class="dp" id="Fl-ring2" cx="90" cy="90" r="72" stroke="#7A5C1E" stroke-width="0.3"/>
+        <text id="Fl-perimeter" opacity="0"
+          font-family="'Cinzel', serif" font-weight="400" font-size="8.5" fill="#7A5C1E" letter-spacing="4">
+          <textPath href="#Fl-textpath" startOffset="8%">GREG HOBDEN · FILM PRODUCER · LONDON ·</textPath>
+        </text>
+        <path class="dp" id="Fl-G"
+          d="M 72,78 A 18,18 0 1,0 76,90 L 60,90"
+          stroke="#7A5C1E" stroke-width="1.4" stroke-linecap="butt"/>
+        <path class="dp" id="Fl-H1" d="M 96,68 L 96,112" stroke="#1a1a1a" stroke-width="1.4" stroke-linecap="butt"/>
+        <path class="dp" id="Fl-H2" d="M 96,90 L 124,90" stroke="#1a1a1a" stroke-width="1.4" stroke-linecap="butt"/>
+        <path class="dp" id="Fl-H3" d="M 124,68 L 124,112" stroke="#1a1a1a" stroke-width="1.4" stroke-linecap="butt"/>
+      </svg>
+    </div>
+  </div>
+  <button class="replay-btn" data-anim="F">↺ Replay</button>
+  <div class="notes">
+    <h4>Notes</h4>
+    <ul>
+      <li>The outer ring draws first, inner ring second, perimeter text fades in, then GH draws.</li>
+      <li>Gold on light panel: switched to #7A5C1E dark bronze — same hue, readable on pale backgrounds.</li>
+      <li>The circular form works as a wax seal on print, a favicon at 32px, or a watermark on stills.</li>
+      <li>Perimeter text: adjustable — could be "GREG HOBDEN · FILM PRODUCER · EST. 1994 ·" etc.</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- G: WIPE — editorial cut wipe reveals the name               -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section class="concept" id="c-g">
+  <div class="concept-header">
+    <span class="concept-num">G</span>
+    <div>
+      <div class="concept-title">Wipe</div>
+      <p class="concept-desc">A hard vertical wipe sweeps left to right — exactly like an edit cut. The name is revealed behind it. No morph, no dissolve. A wipe is the oldest editing transition. This is a logo for someone who edits.</p>
+      <p class="concept-inspiration">Reference: Star Wars wipes. Hitchcock titles. The edit itself.</p>
+    </div>
+  </div>
+
+  <div class="previews">
+    <div class="panel panel--dark" style="min-height:320px;">
+      <span class="panel-tag">Screen</span>
+      <div id="wipe-d" style="position:relative; width:320px; max-width:100%; overflow:hidden;">
+        <!-- Static background name (hidden until wipe passes) -->
+        <svg viewBox="0 0 320 100" style="display:block; width:100%;" aria-label="Greg Hobden wipe logo">
+          <!-- Gold wipe bar (the cut) -->
+          <rect id="Gd-bar" x="-2" y="0" width="2" height="100" fill="#C4A46B"/>
+          <!-- Name revealed by clip -->
+          <g id="Gd-reveal" style="clip-path: inset(0 100% 0 0);">
+            <!-- GH mark -->
+            <path class="dp" id="Gd-G"
+              d="M 42,30 A 26,26 0 1,0 47,50 L 24,50"
+              stroke="#C4A46B" stroke-width="2" stroke-linecap="butt" stroke-dasharray="1000" stroke-dashoffset="0"/>
+            <path d="M 76,14 L 76,86" stroke="#EDEDE8" stroke-width="2" stroke-linecap="butt" fill="none"/>
+            <path d="M 76,50 L 118,50" stroke="#EDEDE8" stroke-width="2" stroke-linecap="butt" fill="none"/>
+            <path d="M 118,14 L 118,86" stroke="#EDEDE8" stroke-width="2" stroke-linecap="butt" fill="none"/>
+            <!-- Rule -->
+            <line x1="138" y1="50" x2="148" y2="50" stroke="#C4A46B" stroke-width="0.5"/>
+            <!-- Name text -->
+            <text x="154" y="38" font-family="'Cinzel', serif" font-weight="400" font-size="20"
+              letter-spacing="4" fill="#EDEDE8">GREG</text>
+            <text x="154" y="65" font-family="'Cinzel', serif" font-weight="400" font-size="20"
+              letter-spacing="4" fill="#EDEDE8">HOBDEN</text>
+            <text x="154" y="82" font-family="'Manrope', sans-serif" font-weight="300" font-size="7"
+              letter-spacing="4" fill="#C4A46B">FILM PRODUCER</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div class="panel panel--light" style="min-height:320px;">
+      <span class="panel-tag">Print</span>
+      <div id="wipe-l" style="position:relative; width:320px; max-width:100%; overflow:hidden;">
+        <svg viewBox="0 0 320 100" style="display:block; width:100%;" aria-label="Greg Hobden wipe logo">
+          <rect id="Gl-bar" x="-2" y="0" width="2" height="100" fill="#7A5C1E"/>
+          <g id="Gl-reveal" style="clip-path: inset(0 100% 0 0);">
+            <path class="dp"
+              d="M 42,30 A 26,26 0 1,0 47,50 L 24,50"
+              stroke="#7A5C1E" stroke-width="2" stroke-linecap="butt" fill="none"/>
+            <path d="M 76,14 L 76,86" stroke="#1a1a1a" stroke-width="2" stroke-linecap="butt" fill="none"/>
+            <path d="M 76,50 L 118,50" stroke="#1a1a1a" stroke-width="2" stroke-linecap="butt" fill="none"/>
+            <path d="M 118,14 L 118,86" stroke="#1a1a1a" stroke-width="2" stroke-linecap="butt" fill="none"/>
+            <line x1="138" y1="50" x2="148" y2="50" stroke="#7A5C1E" stroke-width="0.5"/>
+            <text x="154" y="38" font-family="'Cinzel', serif" font-weight="400" font-size="20"
+              letter-spacing="4" fill="#1a1a1a">GREG</text>
+            <text x="154" y="65" font-family="'Cinzel', serif" font-weight="400" font-size="20"
+              letter-spacing="4" fill="#1a1a1a">HOBDEN</text>
+            <text x="154" y="82" font-family="'Manrope', sans-serif" font-weight="300" font-size="7"
+              letter-spacing="4" fill="#7A5C1E">FILM PRODUCER</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <button class="replay-btn" data-anim="G">↺ Replay</button>
+  <div class="notes">
+    <h4>Notes</h4>
+    <ul>
+      <li>A single gold vertical line sweeps across — exactly one edit cut. Everything behind it is revealed.</li>
+      <li>The name is fully formed from frame one — the wipe is the reveal, not a draw or fade.</li>
+      <li>In print: the static version shows the name in full with no bar. Clean wordmark.</li>
+      <li>Cinzel's Roman letterforms give "GREG HOBDEN" the weight a wipe reveal deserves.</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- H: TITLE CARD — pure Cinzel, bold stacked                    -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section class="concept" id="c-h">
+  <div class="concept-header">
+    <span class="concept-num">H</span>
+    <div>
+      <div class="concept-title">Title Card</div>
+      <p class="concept-desc">No mark at all. Just the name — in Cinzel, stacked large, with a gold rule between the two lines. Each line arrives from below, one beat apart. This is how films open. The name is the mark. The discipline line sets the register.</p>
+      <p class="concept-inspiration">Reference: Kubrick intertitles. Lean epics. Saul Bass at scale.</p>
+    </div>
+  </div>
+
+  <div class="previews">
+    <div class="panel panel--dark" style="min-height:360px;">
+      <span class="panel-tag">Screen</span>
+      <svg id="svgH-d" viewBox="0 0 300 150" width="340" height="170" aria-label="Greg Hobden title card">
+        <!-- GREG -->
+        <text id="Hd-greg" x="150" y="55" text-anchor="middle"
+          font-family="'Cinzel', serif" font-weight="400" font-size="50"
+          letter-spacing="12" fill="#EDEDE8"
+          style="opacity:0; transform:translateY(16px)">GREG</text>
+        <!-- rule -->
+        <path class="dp" id="Hd-rule" d="M 60,75 L 60,75" stroke="#C4A46B" stroke-width="0.6"/>
+        <!-- HOBDEN -->
+        <text id="Hd-hob" x="150" y="122" text-anchor="middle"
+          font-family="'Cinzel', serif" font-weight="400" font-size="50"
+          letter-spacing="12" fill="#EDEDE8"
+          style="opacity:0; transform:translateY(16px)">HOBDEN</text>
+        <!-- discipline -->
+        <text id="Hd-disc" x="150" y="146" text-anchor="middle"
+          font-family="'Manrope', sans-serif" font-weight="300" font-size="7.5"
+          letter-spacing="6" fill="#C4A46B"
+          style="opacity:0">FILM PRODUCER</text>
+      </svg>
+    </div>
+    <div class="panel panel--light" style="min-height:360px;">
+      <span class="panel-tag">Print</span>
+      <svg id="svgH-l" viewBox="0 0 300 150" width="340" height="170" aria-label="Greg Hobden title card">
+        <text id="Hl-greg" x="150" y="55" text-anchor="middle"
+          font-family="'Cinzel', serif" font-weight="400" font-size="50"
+          letter-spacing="12" fill="#1a1a1a"
+          style="opacity:0; transform:translateY(16px)">GREG</text>
+        <path class="dp" id="Hl-rule" d="M 60,75 L 60,75" stroke="#7A5C1E" stroke-width="0.6"/>
+        <text id="Hl-hob" x="150" y="122" text-anchor="middle"
+          font-family="'Cinzel', serif" font-weight="400" font-size="50"
+          letter-spacing="12" fill="#1a1a1a"
+          style="opacity:0; transform:translateY(16px)">HOBDEN</text>
+        <text id="Hl-disc" x="150" y="146" text-anchor="middle"
+          font-family="'Manrope', sans-serif" font-weight="300" font-size="7.5"
+          letter-spacing="6" fill="#7A5C1E"
+          style="opacity:0">FILM PRODUCER</text>
+      </svg>
+    </div>
+  </div>
+  <button class="replay-btn" data-anim="H">↺ Replay</button>
+  <div class="notes">
+    <h4>Notes</h4>
+    <ul>
+      <li>Cinzel at this scale has genuine authority — the letterforms are derived from Roman stone carvings.</li>
+      <li>No mark needed at display sizes — the name carries everything. GH monogram pairs as a compact variant.</li>
+      <li>Gold rule on light panel is dark bronze #7A5C1E — same hue as the brand gold, readable on pale backgrounds.</li>
+      <li>On print: set at 48pt on A4 white, this is a letterhead. Nothing else on the page.</li>
+    </ul>
+  </div>
+</section>
+
+
+<script>
+const SPRING = 'cubic-bezier(0.22, 1, 0.36, 1)';
+const EASE   = 'ease-out';
+
+function pLen(el) { return el && el.getTotalLength ? el.getTotalLength() : 200; }
+
+function prep(el) {
+  if (!el) return;
+  const l = pLen(el);
+  el.style.strokeDasharray  = l;
+  el.style.strokeDashoffset = l;
+  el.style.transition = 'none';
+}
+
+function draw(el, delay, dur, ease = SPRING) {
+  if (!el) return;
+  setTimeout(() => {
+    el.style.transition = `stroke-dashoffset ${dur}ms ${ease}`;
+    el.style.strokeDashoffset = '0';
+  }, delay);
+}
+
+function fade(el, delay, dur = 700, to = 1) {
+  if (!el) return;
+  el.style.transition = 'none';
+  el.style.opacity = '0';
+  setTimeout(() => {
+    el.style.transition = `opacity ${dur}ms ${EASE}`;
+    el.style.opacity = String(to);
+  }, delay);
+}
+
+function slide(el, delay, dur = 700) {
+  if (!el) return;
+  el.style.transition = 'none';
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(14px)';
+  setTimeout(() => {
+    el.style.transition = `opacity ${dur}ms ${EASE}, transform ${dur}ms ${SPRING}`;
+    el.style.opacity = '1';
+    el.style.transform = 'translateY(0)';
+  }, delay);
+}
+
+// ── E: Leader countdown ──────────────────────────────────────────
+function animE(s) {
+  const outer = document.getElementById(`${s}-outer`);
+  const inner = document.getElementById(`${s}-inner`);
+  const ch1   = document.getElementById(`${s}-ch1`);
+  const ch2   = document.getElementById(`${s}-ch2`);
+  const ch3   = document.getElementById(`${s}-ch3`);
+  const ch4   = document.getElementById(`${s}-ch4`);
+  const ticks = document.getElementById(`${s}-ticks`);
+  const mark  = document.getElementById(`${s}-mark`);
+  const G     = document.getElementById(`${s}-G`);
+  const H1    = document.getElementById(`${s}-H1`);
+  const H2    = document.getElementById(`${s}-H2`);
+  const H3    = document.getElementById(`${s}-H3`);
+
+  // Reset
+  [outer, inner, ch1, ch2, ch3, ch4].forEach(prep);
+  if (ticks) { ticks.style.opacity = '0'; ticks.style.transition = 'none'; }
+  if (mark)  { mark.style.opacity  = '0'; mark.style.transition  = 'none'; }
+  if (G)  prep(G);
+  if (H1) prep(H1);
+  if (H2) prep(H2);
+  if (H3) prep(H3);
+
+  // Numbers reset
+  ['5','4','3','2','1'].forEach(n => {
+    const el = document.getElementById(`${s}-n${n}`);
+    if (el) { el.style.opacity = '0'; el.style.transition = 'none'; }
+  });
+
+  // Draw rings + crosshairs
+  draw(outer, 0,   900, EASE);
+  draw(inner, 200, 700, EASE);
+  draw(ch1,   300, 400, EASE);
+  draw(ch2,   300, 400, EASE);
+  draw(ch3,   300, 400, EASE);
+  draw(ch4,   300, 400, EASE);
+  fade(ticks, 500, 300);
+
+  // Countdown flash
+  const nums = ['5','4','3','2','1'];
+  nums.forEach((n, i) => {
+    const el = document.getElementById(`${s}-n${n}`);
+    if (!el) return;
+    setTimeout(() => {
+      el.style.transition = 'none';
+      el.style.opacity = '1';
+    }, 800 + i * 160);
+    setTimeout(() => {
+      el.style.transition = 'opacity 80ms ease-out';
+      el.style.opacity = '0';
+    }, 800 + i * 160 + 130);
+  });
+
+  // Mark fades in and draws
+  const markStart = 1700;
+  setTimeout(() => {
+    if (mark) { mark.style.transition = 'opacity 300ms ease-out'; mark.style.opacity = '1'; }
+  }, markStart);
+  draw(G,  markStart,        1400, SPRING);
+  draw(H1, markStart + 300,  550,  SPRING);
+  draw(H2, markStart + 680,  440,  SPRING);
+  draw(H3, markStart + 900,  550,  SPRING);
+}
+
+// ── F: Stamp ─────────────────────────────────────────────────────
+function animF(s) {
+  const ring1 = document.getElementById(`${s}-ring1`);
+  const ring2 = document.getElementById(`${s}-ring2`);
+  const perim = document.getElementById(`${s}-perimeter`);
+  const G  = document.getElementById(`${s}-G`);
+  const H1 = document.getElementById(`${s}-H1`);
+  const H2 = document.getElementById(`${s}-H2`);
+  const H3 = document.getElementById(`${s}-H3`);
+
+  [ring1, ring2, G, H1, H2, H3].forEach(prep);
+  if (perim) { perim.style.opacity = '0'; perim.style.transition = 'none'; }
+
+  draw(ring1, 0,    1000, EASE);
+  draw(ring2, 400,  700,  EASE);
+  fade(perim, 900,  800);
+  draw(G,     1000, 1200, SPRING);
+  draw(H1,    1300, 500,  SPRING);
+  draw(H2,    1640, 400,  SPRING);
+  draw(H3,    1840, 500,  SPRING);
+}
+
+// ── G: Wipe ──────────────────────────────────────────────────────
+function animG() {
+  ['d','l'].forEach(v => {
+    const bar    = document.getElementById(`G${v}-bar`);
+    const reveal = document.getElementById(`G${v}-reveal`);
+    const gold   = v === 'd' ? '#C4A46B' : '#7A5C1E';
+
+    if (bar) {
+      bar.setAttribute('x', '-2');
+      bar.setAttribute('fill', gold);
+      bar.style.transition = 'none';
+    }
+    if (reveal) {
+      reveal.style.clipPath = 'inset(0 100% 0 0)';
+      reveal.style.transition = 'none';
+    }
+
+    setTimeout(() => {
+      // Bar sweeps across (thin gold line moving right)
+      if (bar) {
+        bar.style.transition = 'none';
+        // Animate x attribute via a step-through
+        let startTime = null;
+        const dur = 800;
+        const totalW = 322;
+
+        function step(ts) {
+          if (!startTime) startTime = ts;
+          const p = Math.min((ts - startTime) / dur, 1);
+          const ease = p < 0.5 ? 2*p*p : -1+(4-2*p)*p; // ease in-out
+          const x = -2 + ease * totalW;
+          bar.setAttribute('x', x);
+
+          // Clip reveal tracks behind the bar
+          const pct = Math.max(0, (x / totalW) * 100);
+          if (reveal) {
+            reveal.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+          }
+
+          if (p < 1) requestAnimationFrame(step);
+          else {
+            // Bar fades out
+            if (bar) { bar.style.transition = 'opacity 300ms ease-out'; bar.style.opacity = '0'; }
+          }
+        }
+        requestAnimationFrame(step);
+      }
+    }, 100);
+  });
+}
+
+// ── H: Title Card (Cinzel) ────────────────────────────────────────
+function animH(s) {
+  const greg = document.getElementById(`${s}-greg`);
+  const rule = document.getElementById(`${s}-rule`);
+  const hob  = document.getElementById(`${s}-hob`);
+  const disc = document.getElementById(`${s}-disc`);
+
+  prep(rule);
+  [greg, hob, disc].forEach(el => {
+    if (el) { el.style.opacity = '0'; el.style.transform = 'translateY(16px)'; el.style.transition = 'none'; }
+  });
+
+  slide(greg, 0,    1000);
+  draw(rule,  700,  700, EASE);
+  slide(hob,  900,  1000);
+  slide(disc, 1700, 700);
+}
+
+// ── INIT ─────────────────────────────────────────────────────────
+function runE() { animE('Ed'); animE('El'); }
+function runF() { animF('Fd'); animF('Fl'); }
+function runG() {
+  // Reset bars
+  ['d','l'].forEach(v => {
+    const bar = document.getElementById(`G${v}-bar`);
+    const rev = document.getElementById(`G${v}-reveal`);
+    if (bar) { bar.style.opacity = '1'; bar.setAttribute('x', '-2'); }
+    if (rev) { rev.style.clipPath = 'inset(0 100% 0 0)'; }
+  });
+  setTimeout(animG, 50);
+}
+function runH() { animH('Hd'); animH('Hl'); }
+
+document.querySelectorAll('.replay-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const m = { E: runE, F: runF, G: runG, H: runH };
+    (m[btn.dataset.anim] || (() => {}))();
+  });
+});
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const m = { 'c-e': runE, 'c-f': runF, 'c-g': runG, 'c-h': runH };
+    (m[e.target.id] || (() => {}))();
+    obs.unobserve(e.target);
+  });
+}, { threshold: 0.25 });
+
+['c-e','c-f','c-g','c-h'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) obs.observe(el);
+});
+</script>
+</body>
+</html>
