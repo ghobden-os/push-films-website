@@ -21,7 +21,7 @@ body { background: var(--bg); color: var(--fg); font-family: 'DM Sans', sans-ser
 
 /* HERO HEADER */
 .hero {
-  padding: clamp(48px, 8vw, 120px) clamp(20px, 4vw, 72px) clamp(32px, 5vw, 80px);
+  padding: calc(var(--nav-h) + clamp(48px, 8vw, 120px)) clamp(20px, 4vw, 72px) clamp(32px, 5vw, 80px);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -313,43 +313,52 @@ body:not(.edit-mode) .tile:hover img { transform: scale(1.02); transition: opaci
 }
 
 /* FIXED BACK LINK */
+/* NAV */
+--nav-h: 64px;
+--rule: #1E1E1E;
+
 @keyframes discIn {
   from { opacity: 0; transform: scale(0) rotate(-720deg); }
   to   { opacity: 1; transform: scale(1) rotate(0deg); }
 }
-#bts-back {
+#nav {
   position: fixed;
-  top: 20px;
-  left: clamp(20px, 4vw, 72px);
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
   z-index: 200;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
+  transition: background 0.3s, border-color 0.3s;
+}
+#nav.scrolled { background: rgba(8,8,8,0.95); backdrop-filter: blur(16px); border-bottom: 1px solid var(--rule); }
+.nav-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 72px);
+  height: 100%; display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  display: flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; border-radius: 50%; background: var(--gold);
+  font-family: 'DM Sans', sans-serif; font-size: 22px; font-weight: 300;
+  color: #111111; text-decoration: none; flex-shrink: 0;
   transition: opacity 0.2s;
   animation: discIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
 }
-#bts-back:hover { opacity: 0.7; }
-#bts-back .back-arrow {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 18px;
-  font-weight: 300;
-  color: var(--gold);
-  line-height: 1;
+.nav-logo:hover { opacity: 0.85; }
+.nav-links { list-style: none; display: flex; gap: 40px; }
+.nav-links a {
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #fff; text-decoration: none; transition: color 0.2s;
 }
-#bts-back .back-disc {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: var(--gold);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 22px;
-  font-weight: 300;
-  color: #111111;
-  flex-shrink: 0;
+.nav-links a:hover { color: var(--gold); }
+.nav-links a.active { color: var(--gold); }
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 6px; flex-direction: column; gap: 6px; }
+.nav-toggle span { display: block; width: 22px; height: 1px; background: var(--fg); transition: all 0.25s; transform-origin: center; }
+.nav-toggle.open span:nth-child(1) { transform: translateY(3.5px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { transform: translateY(-3.5px) rotate(-45deg); }
+
+@media (max-width: 640px) {
+  .nav-links { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--bg); flex-direction: column; gap: 0; border-bottom: 1px solid var(--rule); padding: 8px 0; }
+  .nav-links.open { display: flex; }
+  .nav-links a { display: block; padding: 14px clamp(20px, 4vw, 72px); }
+  .nav-toggle { display: flex; }
 }
 
 /* FOOTER */
@@ -418,10 +427,18 @@ footer a:hover { opacity: 0.6; }
 </head>
 <body>
 
-<a href="index.html" id="bts-back">
-  <span class="back-arrow">←</span>
-  <span class="back-disc">G</span>
-</a>
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">G</a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="behind-the-scenes.html" class="active">Behind the Scenes</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span></button>
+  </div>
+</nav>
 
 <div class="hero">
   <h1>Behind<br>the Scenes</h1>
@@ -942,7 +959,7 @@ footer a:hover { opacity: 0.6; }
 </div><!-- end .wall -->
 
 <footer>
-  <a href="index.html" class="back-link">← Back to Greg Hobden</a>
+  <a href="index.html" class="back-link">← Greg Hobden</a>
 </footer>
 
 <!-- VIDEO MODAL -->
@@ -1292,6 +1309,25 @@ footer a:hover { opacity: 0.6; }
       document.body.style.opacity = '0';
       setTimeout(() => { window.location.href = href; }, 350);
     });
+  });
+</script>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  // Mobile toggle
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.querySelector('.nav-links');
+  toggle.addEventListener('click', () => {
+    toggle.classList.toggle('open');
+    links.classList.toggle('open');
+  });
+  links.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => { toggle.classList.remove('open'); links.classList.remove('open'); });
   });
 </script>
 
