@@ -440,16 +440,16 @@
         #restrictedFilms { display: none; margin-top: clamp(32px, 4vw, 48px); }
         #restrictedFilms.visible { display: block; }
         .restricted-films-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 40px); margin-bottom: clamp(24px, 3vw, 40px); }
-        .restricted-film-card { cursor: pointer; }
-        .restricted-film-card img { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; opacity: 0.7; transition: opacity 0.3s; }
+        .restricted-film-card { cursor: pointer; display: flex; flex-direction: column; }
+        .restricted-film-card img { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; opacity: 0.7; transition: opacity 0.3s; order: 2; }
         .restricted-film-card:hover img { opacity: 1; }
-        .restricted-film-card h3 { font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); margin-top: 12px; margin-bottom: 8px; }
+        .restricted-film-card h3 { font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); margin: 0 0 10px 0; order: 1; }
         .restricted-film-card:hover h3 { color: var(--gold); }
         .restricted-play-btn {
             background: none; border: 1px solid var(--rule); color: var(--mid);
             font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.14em;
             text-transform: uppercase; padding: 6px 14px; cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s; order: 3; margin-top: 10px; align-self: flex-start;
         }
         .restricted-play-btn:hover { border-color: var(--gold); color: var(--gold); }
         .restricted-desc { margin-bottom: clamp(28px, 3vw, 44px); }
@@ -1182,7 +1182,6 @@
                     <div class="restricted-frame-wrap" id="restrictedFrameWrap">
                         <button id="restrictedBack" style="display:none; background:none; border:none; color:var(--mid); font-family:var(--font-sans); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer; padding:0 0 14px 0;">← Back to films</button>
                         <iframe id="restrictedFrame" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-                        <div id="restrictedClickOverlay" style="display:none; position:absolute; inset:0; cursor:pointer;"></div>
                     </div>
                 </div>
             </div>
@@ -1716,27 +1715,26 @@
 
         const restrictedGrid = document.querySelector('.restricted-films-grid');
         const restrictedBack = document.getElementById('restrictedBack');
-        const restrictedClickOverlay = document.getElementById('restrictedClickOverlay');
 
         function restrictedGoBack() {
             restrictedFrame.src = '';
             restrictedFrameWrap.classList.remove('visible');
             restrictedBack.style.display = 'none';
-            restrictedClickOverlay.style.display = 'none';
             restrictedGrid.style.display = '';
         }
 
         restrictedBack.addEventListener('click', restrictedGoBack);
-        restrictedClickOverlay.addEventListener('click', restrictedGoBack);
+
+        const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
 
         document.querySelectorAll('.restricted-film-card').forEach(card => {
             card.addEventListener('click', () => {
                 const vimeoId = card.dataset.vimeo;
+                const autoplay = isIOS ? '' : '&autoplay=1';
                 restrictedGrid.style.display = 'none';
-                restrictedFrame.src = `https://player.vimeo.com/video/${vimeoId}?autoplay=1`;
+                restrictedFrame.src = `https://player.vimeo.com/video/${vimeoId}?playsinline=1&title=0&byline=0&portrait=0${autoplay}`;
                 restrictedFrameWrap.classList.add('visible');
                 restrictedBack.style.display = 'block';
-                restrictedClickOverlay.style.display = 'block';
                 restrictedFrameWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
