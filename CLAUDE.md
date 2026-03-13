@@ -5,6 +5,7 @@ Portfolio website for Greg Hobden, film producer. Single-page site with sections
 
 ## File Structure
 - **Sole file**: `/Users/greghobden/push-films-website/index.html` — all HTML, CSS, and JS inline in one file
+- **BTS page**: `/Users/greghobden/push-films-website/behind-the-scenes.html` — standalone mosaic photo gallery page, linked from nav
 - **Images**: `/Users/greghobden/push-films-website/images/` — all images and video clips
 - **Title cards**: `title-card.html` (name + Producer) and `title-card-2.html` (name + Producer + disciplines) — 1920×1080 HTML files for screenshotting into showreel
 
@@ -52,7 +53,7 @@ Clicking a gallery image opens a full-screen lightbox (`#imgLightbox`).
 - `openLightbox(items, index)` — takes the full items array and the rawIdx of the clicked image
 
 ### Work Section Category Order
-Documentary → Automotive → Experiential → Luxury → Expo → Sport → Comedy → Everest → The Early Years → Music Videos → Commercials
+Automotive → Experiential → Documentary → Luxury → Expo → Sport → Comedy → Everest → The Early Years → Music Videos → Commercials
 
 ### Mobile Layout
 - `STRIP_SIZE = window.innerWidth < 640 ? 1 : 3` — set once at page load
@@ -113,6 +114,29 @@ raptor: {
 - Sexy Tuesdays: `1171300697`
 - Waiting for Conkers: `1171300442`
 
+### YouTube Embeds
+Some music videos have been muted by Vimeo's ContentID system (copyrighted audio). These use `data-youtube="VIDEO_ID"` instead of `data-vimeo` and open in the same `#vimeoModal` via a separate click handler that builds a YouTube embed URL:
+```js
+vimeoFrame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+```
+- Busted — Year 3000: YouTube `Tu7HoGZaspo` (switched from Vimeo `1171144521` due to muted audio)
+- If other music videos lose audio, switch them to YouTube the same way.
+
+### Music Video Vimeo IDs (Early Years section)
+- Amy Winehouse — In My Bed: `1171159898`
+- Diana Ross — Not Over You Yet: `1171144740`
+- Will Young — Friday's Child: `1171146333`
+- Busted — Year 3000: YouTube `Tu7HoGZaspo` (not Vimeo)
+- Five — Keep On Movin': `1171163096` (special 10s reveal behaviour)
+- Girls Aloud — Sound of the Underground: `1171149068`
+- Klonhertz — Three Girl Rhumba: `1171142626`
+- Oasis — Lyla: `1171141536`
+- Primal Scream — Kowalski: `1171148695`
+- Sugababes — Round Round: `1171145556`
+- The Streets — Fit But You Know It: `1171146145`
+- The Streets — Blinded by the Lights: `1171145969`
+- Westlife — Flying Without Wings: `1171147332`
+
 ### Early Years (Password-Protected Section)
 - Password: hashed with SHA-256 via Web Crypto API; plain text never in source
 - Hash stored as `PASSWORD_HASH` constant; `checkPassword()` is async
@@ -122,6 +146,29 @@ raptor: {
 ### Hero Image
 - Background image: `images/Ford%20Mustang%20223.jpg` (1MB JPEG, down from 7MB PNG)
 - Preloaded via `<link rel="preload" as="image" href="images/Ford%20Mustang%20223.jpg">` in `<head>`
+
+### Mobile Hero Layout
+The hero has significant mobile-specific overrides in the final `@media (max-width: 640px)` block:
+- Background panned to `18% center` to show the car body (not just the wheel/bumper)
+- `justify-content: space-between` with `padding-top: calc(var(--nav-h) + 20px)` and `padding-bottom: 52px` — pins label to top, name/content to bottom
+- Dual gradient overlay: dark at top (for label legibility), clear in middle (car visible), dark at bottom (for name legibility)
+- Text shadows on all hero text elements for legibility over the image
+- Showreel button significantly smaller: `font-size: 8px`, `padding: 10px 18px`
+- `.hero-sub` has extra `margin-top` to push it away from the name
+
+### Scroll Progress Bar
+- `#scrollProgress` — gold 2px line at top of page showing scroll position
+- `height: 2px; opacity: 0.75`
+
+### Behind the Scenes Page (`behind-the-scenes.html`)
+- Standalone dark-theme page, same fonts/CSS variables as index.html
+- Linked from nav: `<li><a href="behind-the-scenes.html">Behind the Scenes</a></li>`
+- CSS Grid mosaic wall: 4 cols desktop, 3 at 900px, 2 at 600px, 1 at 380px, 3px gaps
+- `.wall-label` divs span full width, centred, gold, 13px uppercase — section titles
+- Sections (in order): Ford Ranger Raptor, Land Rover Defender, Land Rover Discovery Sport, McLaren Spider, Lexie Limitless, Range Rover Sport, Range Rover James Corden, Go Faster (Ford Wheels), Ford Mustang, Vashi Diamonds, Tata Nexon, Everest
+- Edit mode toolbar: drag-to-reframe + delete tiles, localStorage persistence (`bts-edits-v1`), export report
+- Lightbox with ← → arrow navigation, counter, spacebar/Escape to close
+- Object-position reframes baked directly into `style` attributes on `<img>` tags after each edit session export
 
 ### Typewriter Effect
 Hero section has a typewriter animation synced to Web Audio API click sounds via `scheduleClick(atTime)`.
@@ -165,3 +212,5 @@ Two fonts loaded via Google Fonts:
 - iOS autoplay is permanently blocked for cross-origin Vimeo iframes — any attempt to force it (play(), setMuted(), autoplay=1, controls=0) causes an infinite spinner. Leave it as-is.
 - The accordion desktop CSS comes after the first mobile media query — always use the second `!important` media block at end of `<style>` for mobile accordion overrides
 - Pausing a film collapses the accordion (same as ending) — this is intentional
+- Vimeo ContentID auto-mutes copyrighted music — if a music video has no audio, switch it to a YouTube embed using `data-youtube` attribute
+- BTS section label "Go Faster" = Ford Wheels shoot (not a separate project)
