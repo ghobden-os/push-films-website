@@ -224,7 +224,7 @@
         }
         .reel-poster:hover .reel-play-btn {
             border-color: var(--gold);
-            background: rgba(196,164,107,0.08);
+            background: rgba(245,216,0,0.06);
             transform: scale(1.06);
         }
         .reel-poster-label {
@@ -249,11 +249,11 @@
         /* WORK */
         #work { border-top: 1px solid var(--rule); }
         .section-header { margin-bottom: clamp(40px, 5vw, 64px); padding-bottom: 20px; border-bottom: 1px solid var(--rule); display: flex; align-items: baseline; justify-content: space-between; }
-        .section-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); }
+        .section-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
         .work-category { margin-bottom: clamp(56px, 8vw, 96px); }
         .work-category:last-child { margin-bottom: 0; }
         .work-category-header { display: flex; align-items: baseline; gap: 20px; margin-bottom: clamp(24px, 3vw, 36px); }
-        .work-category-header span { font-family: var(--font-serif); font-size: clamp(20px, 2.2vw, 26px); font-weight: 500; color: var(--fg); }
+        .work-category-header span { font-family: var(--font-serif); font-size: clamp(20px, 2.2vw, 26px); font-weight: 500; color: var(--gold); }
         .work-category-header::after { content: ''; display: block; flex: 1; height: 1px; background: var(--rule); }
 
         /* EARLY YEARS */
@@ -308,7 +308,10 @@
         .work-arrow { font-size: 20px; color: var(--rule); margin-top: 16px; transition: all 0.3s; }
         .work-item:hover .work-arrow { color: var(--gold); transform: translateX(6px); }
         .work-image--placeholder { background: var(--dim); border: 1px solid var(--rule); }
-        .work-item--coming-soon { opacity: 0.5; pointer-events: none; }
+        .work-image--coming-soon { background: var(--dim); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; }
+        .work-image--coming-soon::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); opacity: 0.7; }
+        .work-image--coming-soon span { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
+        .work-item--coming-soon { opacity: 0.6; pointer-events: none; }
         .coming-soon-label { font-size: 10px !important; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mid) !important; }
 
         /* PHOTO / VIDEO BUTTONS */
@@ -462,7 +465,7 @@
         .contact-lead { font-family: var(--font-serif); font-size: clamp(18px, 2vw, 28px); font-weight: 300; color: var(--fg); line-height: 1.1; margin-bottom: clamp(24px, 3vw, 36px); }
         .contact-details { display: flex; flex-direction: row; gap: 16px; flex-wrap: wrap; }
         .contact-link { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: #080808; background: var(--gold); border: 1px solid var(--gold); padding: 16px 32px; transition: all 0.3s ease; }
-        .contact-link:hover { background: #d4b47e; border-color: #d4b47e; }
+        .contact-link:hover { background: #D4B800; border-color: #D4B800; }
         .contact-type { display: none; }
 
         /* FOOTER */
@@ -716,7 +719,7 @@
         }
         #cursor.hovering {
             width: 38px; height: 38px;
-            background: rgba(196,164,107,0.08);
+            background: rgba(245,216,0,0.06);
             border-color: var(--gold);
         }
         @media (pointer: coarse) { #cursor { display: none; } * { cursor: auto; } }
@@ -998,7 +1001,7 @@
                         </div>
                     </article>
                     <article class="work-item work-item--coming-soon">
-                        <div class="work-image"><img loading="lazy" src="images/coming-soon_1.png" alt="Coming Soon"></div>
+                        <div class="work-image work-image--coming-soon"><span>Coming Soon</span></div>
                         <div class="work-info">
                             <h3>Feature Documentary</h3>
                             <p class="work-meta">Feature Documentary — Universal Pictures</p>
