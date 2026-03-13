@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Push Films — Typography Spec</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #ffffff;
+      color: #111111;
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      padding: 14mm 16mm 14mm 16mm;
+      position: relative;
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 8mm;
+      border-bottom: 0.5px solid #e0e0e0;
+      margin-bottom: 10mm;
+    }
+    .header-title {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #999;
+    }
+    .header-disc {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #F5D800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 17px;
+      color: #111111;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    /* ── Section heading ── */
+    .section-label {
+      font-size: 8px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 5mm;
+    }
+
+    /* ── Live preview ── */
+    .preview-block {
+      background: #080808;
+      padding: 12mm 14mm;
+      margin-bottom: 8mm;
+      border-radius: 2px;
+    }
+    .preview-name {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 64px;
+      line-height: 0.85;
+      letter-spacing: -0.02em;
+      margin-bottom: 7mm;
+    }
+    .preview-name .white  { color: #EDEDE8; }
+    .preview-name .yellow { color: #F5D800; font-style: italic; }
+
+    .preview-divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 5mm;
+    }
+    .preview-divider::before,
+    .preview-divider::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 0.5px;
+      background: rgba(255,255,255,0.3);
+    }
+    .preview-divider span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .preview-disciplines {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .preview-disciplines span {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 13px;
+      color: #BBBBBB;
+      letter-spacing: 0.04em;
+    }
+    .preview-disciplines .dot {
+      color: #F5D800;
+      font-size: 13px;
+      margin: 1px 0;
+    }
+
+    /* ── Spec table ── */
+    .spec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5mm;
+      margin-bottom: 8mm;
+    }
+    .spec-card {
+      border: 0.5px solid #e8e8e8;
+      border-radius: 2px;
+      padding: 5mm 6mm;
+    }
+    .spec-card-title {
+      font-size: 8px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 4mm;
+      padding-bottom: 3mm;
+      border-bottom: 0.5px solid #f0f0f0;
+    }
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 1.5mm 0;
+      border-bottom: 0.5px solid #f5f5f5;
+    }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-key {
+      font-size: 9px;
+      font-weight: 400;
+      color: #888;
+    }
+    .spec-val {
+      font-size: 9px;
+      font-weight: 500;
+      color: #111;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+
+    /* ── Colour swatches ── */
+    .swatch-row {
+      display: flex;
+      gap: 4mm;
+      margin-bottom: 8mm;
+    }
+    .swatch-item {
+      flex: 1;
+    }
+    .swatch-colour {
+      height: 14mm;
+      border-radius: 2px;
+      margin-bottom: 2mm;
+    }
+    .swatch-name {
+      font-size: 8px;
+      font-weight: 500;
+      color: #555;
+      display: block;
+      margin-bottom: 1mm;
+    }
+    .swatch-hex {
+      font-size: 9px;
+      font-weight: 400;
+      color: #111;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      display: block;
+    }
+
+    /* ── Font download ── */
+    .download-box {
+      background: #f9f9f9;
+      border: 0.5px solid #e8e8e8;
+      border-radius: 2px;
+      padding: 5mm 6mm;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8mm;
+    }
+    .download-box-left { }
+    .download-label {
+      font-size: 8px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 2mm;
+    }
+    .download-name {
+      font-size: 15px;
+      font-weight: 300;
+      color: #111;
+    }
+    .download-weights {
+      font-size: 9px;
+      color: #888;
+      margin-top: 1mm;
+    }
+    .download-url {
+      font-size: 9px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      color: #7A5C1E;
+      text-decoration: none;
+      border: 0.5px solid #e0e0e0;
+      padding: 3mm 5mm;
+      border-radius: 2px;
+      background: #fff;
+    }
+
+    /* ── Notes ── */
+    .notes-box {
+      border-left: 2px solid #F5D800;
+      padding: 3mm 5mm;
+      background: #fffdf0;
+      margin-bottom: 8mm;
+    }
+    .notes-box p {
+      font-size: 9px;
+      color: #555;
+      line-height: 1.7;
+    }
+    .notes-box p + p { margin-top: 2mm; }
+
+    /* ── Footer ── */
+    .footer {
+      position: absolute;
+      bottom: 10mm;
+      left: 16mm;
+      right: 16mm;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 4mm;
+      border-top: 0.5px solid #e0e0e0;
+    }
+    .footer span {
+      font-size: 8px;
+      color: #bbb;
+      letter-spacing: 0.08em;
+    }
+
+    @media print {
+      body { margin: 0; }
+      .page { page-break-after: always; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <div class="header-title">Push Films — Screen Credit Typography Spec</div>
+    </div>
+    <div class="header-disc">G</div>
+  </div>
+
+  <!-- Live Preview -->
+  <div class="section-label">Live preview — as it appears on screen</div>
+  <div class="preview-block">
+    <div class="preview-name">
+      <span class="white">Greg</span><br>
+      <span class="yellow">Hobden</span>
+    </div>
+    <div class="preview-divider"><span>Film Producer</span></div>
+    <div class="preview-disciplines">
+      <span>Documentary</span>
+      <span class="dot">·</span>
+      <span>Branded Content</span>
+      <span class="dot">·</span>
+      <span>Commercial</span>
+    </div>
+  </div>
+
+  <!-- Spec cards -->
+  <div class="section-label">Type specifications</div>
+  <div class="spec-grid">
+
+    <div class="spec-card">
+      <div class="spec-card-title">Greg Hobden — Name</div>
+      <div class="spec-row"><span class="spec-key">Font</span><span class="spec-val">DM Sans</span></div>
+      <div class="spec-row"><span class="spec-key">Weight</span><span class="spec-val">Light 300</span></div>
+      <div class="spec-row"><span class="spec-key">"Greg" style</span><span class="spec-val">Normal (upright)</span></div>
+      <div class="spec-row"><span class="spec-key">"Hobden" style</span><span class="spec-val">Italic</span></div>
+      <div class="spec-row"><span class="spec-key">"Greg" colour</span><span class="spec-val">#EDEDE8</span></div>
+      <div class="spec-row"><span class="spec-key">"Hobden" colour</span><span class="spec-val">#F5D800</span></div>
+      <div class="spec-row"><span class="spec-key">Letter spacing</span><span class="spec-val">−2%</span></div>
+      <div class="spec-row"><span class="spec-key">Line height</span><span class="spec-val">0.85 (85%)</span></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Documentary · Branded Content · Commercial</div>
+      <div class="spec-row"><span class="spec-key">Font</span><span class="spec-val">DM Sans</span></div>
+      <div class="spec-row"><span class="spec-key">Weight</span><span class="spec-val">Regular 400</span></div>
+      <div class="spec-row"><span class="spec-key">Style</span><span class="spec-val">Normal (upright)</span></div>
+      <div class="spec-row"><span class="spec-key">Text colour</span><span class="spec-val">#BBBBBB</span></div>
+      <div class="spec-row"><span class="spec-key">Dot ( · ) colour</span><span class="spec-val">#F5D800</span></div>
+      <div class="spec-row"><span class="spec-key">Letter spacing</span><span class="spec-val">+4%</span></div>
+      <div class="spec-row"><span class="spec-key">Layout</span><span class="spec-val">Stacked, centred dots</span></div>
+    </div>
+
+  </div>
+
+  <!-- Colour swatches -->
+  <div class="section-label">Colours</div>
+  <div class="swatch-row">
+    <div class="swatch-item">
+      <div class="swatch-colour" style="background:#080808; border: 0.5px solid #e0e0e0;"></div>
+      <span class="swatch-name">Background</span>
+      <span class="swatch-hex">#080808</span>
+    </div>
+    <div class="swatch-item">
+      <div class="swatch-colour" style="background:#EDEDE8;"></div>
+      <span class="swatch-name">"Greg" — off-white</span>
+      <span class="swatch-hex">#EDEDE8</span>
+    </div>
+    <div class="swatch-item">
+      <div class="swatch-colour" style="background:#F5D800;"></div>
+      <span class="swatch-name">"Hobden" + dots — yellow</span>
+      <span class="swatch-hex">#F5D800</span>
+    </div>
+    <div class="swatch-item">
+      <div class="swatch-colour" style="background:#BBBBBB;"></div>
+      <span class="swatch-name">Disciplines — light grey</span>
+      <span class="swatch-hex">#BBBBBB</span>
+    </div>
+    <div class="swatch-item">
+      <div class="swatch-colour" style="background:#ffffff; border: 0.5px solid #e0e0e0;"></div>
+      <span class="swatch-name">"Film Producer" label</span>
+      <span class="swatch-hex">#FFFFFF</span>
+    </div>
+  </div>
+
+  <!-- Font download -->
+  <div class="section-label">Font</div>
+  <div class="download-box">
+    <div class="download-box-left">
+      <div class="download-label">Google Fonts — free download</div>
+      <div class="download-name">DM Sans</div>
+      <div class="download-weights">Download: Light 300 + Light 300 Italic + Regular 400</div>
+    </div>
+    <span class="download-url">fonts.google.com/specimen/DM+Sans</span>
+  </div>
+
+  <!-- Notes -->
+  <div class="notes-box">
+    <p><strong>Name layout:</strong> "Greg" and "Hobden" sit on separate lines with very tight leading (line height 0.85 — the lines almost touch). This is intentional.</p>
+    <p><strong>"Hobden" italic:</strong> Select just the word Hobden and apply italic. Do not apply italic to "Greg".</p>
+    <p><strong>Disciplines layout:</strong> Each discipline sits on its own line. The yellow dot ( · ) is on its own line between each, centred. Stack them vertically.</p>
+    <p><strong>Colour format:</strong> Hex values above. In Adobe tools: #F5D800 = R 245 / G 216 / B 0. #EDEDE8 = R 237 / G 237 / B 232. #BBBBBB = R 187 / G 187 / B 187.</p>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span>Push Films · greghobden.com</span>
+    <span>Typography Spec · March 2026</span>
+  </div>
+
+</div>
+</body>
+</html>
