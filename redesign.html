@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Greg Hobden — Film Producer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --mid: #888888;
+      --dim: #f4f4f4;
+      --border: #e6e6e6;
+      --font: 'DM Sans', sans-serif;
+      --nav-h: 58px;
+      --pad: clamp(20px, 5vw, 80px);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font);
+      font-weight: 400;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--pad);
+    }
+
+    .nav-logo {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--fg);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      text-decoration: none;
+      color: var(--mid);
+      letter-spacing: 0.02em;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--fg); }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding-top: calc(var(--nav-h) + 72px);
+      padding-bottom: 72px;
+      padding-left: var(--pad);
+      padding-right: var(--pad);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 22px;
+    }
+
+    .hero-name {
+      font-size: clamp(52px, 9vw, 104px);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -0.025em;
+      margin-bottom: 24px;
+    }
+
+    .hero-sub {
+      font-size: clamp(14px, 1.6vw, 18px);
+      font-weight: 300;
+      color: var(--mid);
+      letter-spacing: 0.01em;
+    }
+
+    /* ─── WORK ─── */
+    .work {
+      padding: 56px var(--pad) 80px;
+    }
+
+    .work-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    .filters {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      padding: 5px 13px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--mid);
+      cursor: pointer;
+      transition: all 0.15s;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    .filter-btn:hover {
+      border-color: #bbb;
+      color: var(--fg);
+    }
+
+    .filter-btn.active {
+      background: var(--fg);
+      border-color: var(--fg);
+      color: var(--bg);
+    }
+
+    /* ─── GRID ─── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      cursor: pointer;
+    }
+
+    .card-thumb {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: var(--dim);
+    }
+
+    .card-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .card:hover .card-thumb img {
+      transform: scale(1.04);
+    }
+
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.25s;
+    }
+
+    .card:hover .card-overlay {
+      background: rgba(0, 0, 0, 0.32);
+    }
+
+    .play-icon {
+      width: 46px;
+      height: 46px;
+      border: 1.5px solid rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity 0.25s, transform 0.25s;
+    }
+
+    .play-icon svg {
+      width: 16px;
+      height: 16px;
+      fill: white;
+      margin-left: 3px;
+    }
+
+    .card:hover .play-icon {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .card-info {
+      padding: 13px 0 0;
+    }
+
+    .card-category {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 4px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--fg);
+      line-height: 1.35;
+    }
+
+    /* ─── MODAL ─── */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, 0.88);
+      align-items: center;
+      justify-content: center;
+      padding: 48px var(--pad);
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-inner {
+      position: relative;
+      width: 100%;
+      max-width: 1080px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -36px;
+      right: 0;
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 12px;
+      font-family: var(--font);
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 0.15s;
+      padding: 0;
+    }
+
+    .modal-close:hover { color: #fff; }
+
+    .modal-video {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #000;
+    }
+
+    .modal-video iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ─── CONTACT ─── */
+    .contact {
+      padding: 80px var(--pad);
+      border-top: 1px solid var(--border);
+    }
+
+    .contact .section-label {
+      margin-bottom: 32px;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--fg);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: border-color 0.15s;
+    }
+
+    .contact-link:hover {
+      border-color: var(--fg);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 22px var(--pad);
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--mid);
+      letter-spacing: 0.02em;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 960px) {
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    }
+
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; gap: 20px; }
+      .nav-links { gap: 20px; }
+      .modal { padding: 24px 16px; }
+      .modal-close { top: -30px; font-size: 11px; }
+      .hero { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 48px; }
+      .contact-links { flex-direction: column; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">Push Films</a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Film Producer — London</p>
+    <h1 class="hero-name">Greg Hobden</h1>
+    <p class="hero-sub">Automotive &nbsp;&middot;&nbsp; Documentary &nbsp;&middot;&nbsp; Branded Content</p>
+  </section>
+
+  <!-- WORK -->
+  <section class="work" id="work">
+    <div class="work-header">
+      <span class="section-label">Selected Work</span>
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="Automotive">Automotive</button>
+        <button class="filter-btn" data-filter="Documentary">Documentary</button>
+        <button class="filter-btn" data-filter="Luxury">Luxury</button>
+        <button class="filter-btn" data-filter="Expo">Expo</button>
+        <button class="filter-btn" data-filter="Sport">Sport</button>
+        <button class="filter-btn" data-filter="Comedy">Comedy</button>
+        <button class="filter-btn" data-filter="Music">Music Videos</button>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <p class="section-label">Get in touch</p>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:pushfilms@icloud.com">pushfilms@icloud.com</a>
+      <a class="contact-link" href="https://www.linkedin.com/in/greg-hobden-340a913/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">&copy; 2026 Push Films</span>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal">
+    <div class="modal-inner">
+      <button class="modal-close" id="modalClose">Close ×</button>
+      <div class="modal-video">
+        <iframe id="modalFrame" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const projects = [
+      { id: '1171157858', title: 'Ford Ranger Raptor',              category: 'Automotive' },
+      { id: '1171151952', title: 'Land Rover Defender',             category: 'Automotive' },
+      { id: '1171318976', title: 'Lexie Limitless',                 category: 'Automotive' },
+      { id: '1171170029', title: 'Ford Explorer',                   category: 'Automotive' },
+      { id: '1171150533', title: 'Discovery Sport',                 category: 'Automotive' },
+      { id: '1171150653', title: 'McLaren Spider',                  category: 'Automotive' },
+      { id: '1171178087', title: 'Range Rover Sport — Test Track',  category: 'Automotive' },
+      { id: '1171150941', title: 'Range Rover Sport — Reveal',      category: 'Automotive' },
+      { id: '1171151324', title: 'Range Rover — James Corden',      category: 'Automotive' },
+      { id: '1172076463', title: 'Ford Wheels',                     category: 'Automotive' },
+      { id: '1171541476', title: 'Tata Nexon — 3 Spot Cutdown',    category: 'Automotive' },
+      { id: '1171541065', title: 'Tata Nexon — Performance',       category: 'Automotive' },
+      { id: '1171150609', title: 'I Am Ali',                        category: 'Documentary' },
+      { id: '1171320476', title: 'Everest',                         category: 'Documentary' },
+      { id: '1171158700', title: 'Vashi Diamonds',                  category: 'Luxury' },
+      { id: '1171151872', title: 'Family Tree — Milan World Expo',  category: 'Expo' },
+      { id: '1171157242', title: 'The Turtle — Yeosu Expo',        category: 'Expo' },
+      { id: '1171158800', title: 'Bridgestone',                     category: 'Sport' },
+      { id: '1171158741', title: 'Football League',                 category: 'Sport' },
+      { id: '1171158957', title: 'Golfing 4 Life',                 category: 'Comedy' },
+      { id: '1171300697', title: 'Sexy Tuesdays',                  category: 'Comedy' },
+      { id: '1171300442', title: 'Waiting for Conkers',            category: 'Comedy' },
+      { id: '1171159898', title: 'Amy Winehouse — In My Bed',      category: 'Music' },
+      { id: '1171144740', title: 'Diana Ross — Not Over You Yet',  category: 'Music' },
+      { id: '1171146333', title: "Will Young — Friday's Child",    category: 'Music' },
+      { youtube: 'Tu7HoGZaspo', title: 'Busted — Year 3000',      category: 'Music' },
+      { id: '1171163096', title: "Five — Keep On Movin'",          category: 'Music' },
+      { id: '1171149068', title: 'Girls Aloud — Sound of the Underground', category: 'Music' },
+      { id: '1171142626', title: 'Klonhertz — Three Girl Rhumba',  category: 'Music' },
+      { id: '1171141536', title: 'Oasis — Lyla',                   category: 'Music' },
+      { id: '1171148695', title: 'Primal Scream — Kowalski',       category: 'Music' },
+      { id: '1171145556', title: 'Sugababes — Round Round',        category: 'Music' },
+      { id: '1171146145', title: 'The Streets — Fit But You Know It', category: 'Music' },
+      { id: '1171145969', title: 'The Streets — Blinded by the Lights', category: 'Music' },
+      { id: '1171147332', title: 'Westlife — Flying Without Wings', category: 'Music' },
+    ];
+
+    const grid       = document.getElementById('grid');
+    const modal      = document.getElementById('modal');
+    const modalFrame = document.getElementById('modalFrame');
+    const modalClose = document.getElementById('modalClose');
+
+    function thumbUrl(p) {
+      if (p.youtube) return `https://img.youtube.com/vi/${p.youtube}/maxresdefault.jpg`;
+      return `https://vumbnail.com/${p.id}.jpg`;
+    }
+
+    function buildGrid(filter) {
+      grid.innerHTML = '';
+      const list = filter === 'all' ? projects : projects.filter(p => p.category === filter);
+      list.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="card-thumb">
+            <img src="${thumbUrl(p)}" alt="${p.title}" loading="lazy">
+            <div class="card-overlay">
+              <div class="play-icon">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="card-info">
+            <p class="card-category">${p.category}</p>
+            <p class="card-title">${p.title}</p>
+          </div>`;
+        card.addEventListener('click', () => openModal(p));
+        grid.appendChild(card);
+      });
+    }
+
+    function openModal(p) {
+      const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+      const autoplay = isIOS ? '' : '&autoplay=1';
+      if (p.youtube) {
+        modalFrame.src = `https://www.youtube.com/embed/${p.youtube}?autoplay=1&rel=0`;
+      } else {
+        modalFrame.src = `https://player.vimeo.com/video/${p.id}?playsinline=1&title=0&byline=0&portrait=0${autoplay}`;
+      }
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modalFrame.src = '';
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        buildGrid(btn.dataset.filter);
+      });
+    });
+
+    buildGrid('all');
+  </script>
+
+</body>
+</html>
