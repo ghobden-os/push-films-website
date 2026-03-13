@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Push Films — Logo Concepts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&family=Manrope:wght@300;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:   #080808;
+    --fg:   #EDEDE8;
+    --gold: #C4A46B;
+    --mid:  #555;
+    --rule: #1E1E1E;
+    --pad:  clamp(24px, 5vw, 72px);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px var(--pad);
+    border-bottom: 1px solid var(--rule);
+  }
+  nav a { color: var(--gold); text-decoration: none; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.8; }
+  nav a:hover { opacity: 1; }
+  nav span { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); }
+
+  /* ── HEADER ── */
+  .page-header {
+    padding: clamp(48px, 7vw, 100px) var(--pad) clamp(32px, 5vw, 64px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .page-header h1 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    font-size: clamp(32px, 6vw, 72px);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--fg);
+    margin-bottom: 20px;
+  }
+  .page-header p {
+    font-size: 13px; color: var(--mid); letter-spacing: 0.04em; max-width: 480px;
+  }
+
+  /* ── CONCEPT SECTIONS ── */
+  .concept {
+    padding: clamp(56px, 8vw, 96px) var(--pad);
+    border-bottom: 1px solid var(--rule);
+  }
+  .concept-meta {
+    display: flex; align-items: baseline; gap: 20px;
+    margin-bottom: clamp(40px, 5vw, 64px);
+  }
+  .concept-num {
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
+  }
+  .concept-title {
+    font-family: 'Outfit', sans-serif; font-weight: 400;
+    font-size: clamp(18px, 2.5vw, 26px); color: var(--fg);
+  }
+  .concept-desc {
+    font-size: 13px; color: var(--mid); letter-spacing: 0.02em; max-width: 540px;
+    line-height: 1.8; margin-top: 8px;
+  }
+
+  /* ── PREVIEW PANELS ── */
+  .previews {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 640px) { .previews { grid-template-columns: 1fr; } }
+
+  .preview-panel {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 280px; padding: 48px 32px;
+    position: relative;
+  }
+  .preview-panel--dark  { background: #080808; }
+  .preview-panel--light { background: #F0EDE6; }
+  .panel-label {
+    position: absolute; top: 14px; left: 18px;
+    font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+  }
+  .preview-panel--dark  .panel-label { color: #333; }
+  .preview-panel--light .panel-label { color: #aaa; }
+
+  /* ── SVG LOGOS ── */
+  .logo-svg {
+    overflow: visible;
+  }
+  /* draw paths start hidden */
+  .draw-path {
+    fill: none;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+  }
+
+  /* ── REPLAY BUTTON ── */
+  .replay-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: none; border: 1px solid #2a2a2a; color: var(--mid);
+    font-family: 'Manrope', sans-serif; font-size: 9px; letter-spacing: 0.18em;
+    text-transform: uppercase; cursor: pointer; padding: 10px 18px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .replay-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── SIZES STRIP ── */
+  .sizes-strip {
+    display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+    padding: 32px 0 0;
+    border-top: 1px solid var(--rule);
+    margin-top: 32px;
+  }
+  .size-item { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .size-label { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mid); }
+
+  /* ── NOTES ── */
+  .notes {
+    margin-top: 32px; padding: 24px; background: #0f0f0f; border: 1px solid var(--rule);
+  }
+  .notes h4 { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .notes ul { list-style: none; }
+  .notes li { font-size: 12px; color: #666; padding: 5px 0; border-bottom: 1px solid #141414; line-height: 1.7; }
+  .notes li:last-child { border-bottom: none; }
+  .notes li::before { content: '— '; color: #333; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">← Greg Hobden</a>
+  <span>Logo Concepts — v1.0</span>
+</nav>
+
+<div class="page-header">
+  <h1>Logo Concepts</h1>
+  <p>Three directions for an animated GH mark. Each uses SVG stroke animation — the same file works for web (animated) and print (static). Click Replay to watch the draw again.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CONCEPT 1: GH MONOGRAM — pure geometric initials       -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="concept" id="concept-1">
+  <div class="concept-meta">
+    <span class="concept-num">01</span>
+    <div>
+      <div class="concept-title">GH — Pure Monogram</div>
+      <p class="concept-desc">The initials as a single geometric mark. Architectural, minimal. G draws first, H follows. Gold on dark for screen; black on white for print. The most versatile — works at any size from a favicon to a banner.</p>
+    </div>
+  </div>
+
+  <div class="previews">
+    <!-- DARK -->
+    <div class="preview-panel preview-panel--dark">
+      <span class="panel-label">Web / Screen</span>
+      <svg class="logo-svg" id="c1-dark" viewBox="0 0 160 84" width="200" height="105" aria-label="GH monogram">
+        <!-- G -->
+        <path class="draw-path" id="c1d-g"
+          d="M 63,27 A 28,28 0 1,0 68,42 L 46,42"
+          stroke="#C4A46B" stroke-width="2.2"/>
+        <!-- H left stem -->
+        <path class="draw-path" id="c1d-h1"
+          d="M 90,14 L 90,70"
+          stroke="#EDEDE8" stroke-width="2.2"/>
+        <!-- H crossbar -->
+        <path class="draw-path" id="c1d-h2"
+          d="M 90,42 L 132,42"
+          stroke="#EDEDE8" stroke-width="2.2"/>
+        <!-- H right stem -->
+        <path class="draw-path" id="c1d-h3"
+          d="M 132,14 L 132,70"
+          stroke="#EDEDE8" stroke-width="2.2"/>
+      </svg>
+    </div>
+    <!-- LIGHT / PRINT -->
+    <div class="preview-panel preview-panel--light">
+      <span class="panel-label">Print / Light</span>
+      <svg class="logo-svg" id="c1-light" viewBox="0 0 160 84" width="200" height="105" aria-label="GH monogram">
+        <path class="draw-path" id="c1l-g"
+          d="M 63,27 A 28,28 0 1,0 68,42 L 46,42"
+          stroke="#C4A46B" stroke-width="2.2"/>
+        <path class="draw-path" id="c1l-h1"
+          d="M 90,14 L 90,70"
+          stroke="#1a1a1a" stroke-width="2.2"/>
+        <path class="draw-path" id="c1l-h2"
+          d="M 90,42 L 132,42"
+          stroke="#1a1a1a" stroke-width="2.2"/>
+        <path class="draw-path" id="c1l-h3"
+          d="M 132,14 L 132,70"
+          stroke="#1a1a1a" stroke-width="2.2"/>
+      </svg>
+    </div>
+  </div>
+
+  <button class="replay-btn" data-concept="1">↺ Replay animation</button>
+
+  <!-- Sizes -->
+  <div class="sizes-strip">
+    <div class="size-item">
+      <svg viewBox="0 0 160 84" width="40" height="21" style="display:block">
+        <path d="M 63,27 A 28,28 0 1,0 68,42 L 46,42" fill="none" stroke="#C4A46B" stroke-width="3"/>
+        <path d="M 90,14 L 90,70 M 90,42 L 132,42 M 132,14 L 132,70" fill="none" stroke="#EDEDE8" stroke-width="3"/>
+      </svg>
+      <span class="size-label">Favicon</span>
+    </div>
+    <div class="size-item">
+      <svg viewBox="0 0 160 84" width="80" height="42" style="display:block">
+        <path d="M 63,27 A 28,28 0 1,0 68,42 L 46,42" fill="none" stroke="#C4A46B" stroke-width="2.5"/>
+        <path d="M 90,14 L 90,70 M 90,42 L 132,42 M 132,14 L 132,70" fill="none" stroke="#EDEDE8" stroke-width="2.5"/>
+      </svg>
+      <span class="size-label">Nav</span>
+    </div>
+    <div class="size-item">
+      <svg viewBox="0 0 160 84" width="160" height="84" style="display:block">
+        <path d="M 63,27 A 28,28 0 1,0 68,42 L 46,42" fill="none" stroke="#C4A46B" stroke-width="2.2"/>
+        <path d="M 90,14 L 90,70 M 90,42 L 132,42 M 132,14 L 132,70" fill="none" stroke="#EDEDE8" stroke-width="2.2"/>
+      </svg>
+      <span class="size-label">Card / Footer</span>
+    </div>
+    <div class="size-item">
+      <svg viewBox="0 0 160 84" width="300" height="158" style="display:block">
+        <path d="M 63,27 A 28,28 0 1,0 68,42 L 46,42" fill="none" stroke="#C4A46B" stroke-width="2"/>
+        <path d="M 90,14 L 90,70 M 90,42 L 132,42 M 132,14 L 132,70" fill="none" stroke="#EDEDE8" stroke-width="2"/>
+      </svg>
+      <span class="size-label">Hero / Large</span>
+    </div>
+  </div>
+
+  <div class="notes">
+    <h4>Design notes</h4>
+    <ul>
+      <li>G draws in gold — it's the primary mark. H follows in white, subordinate.</li>
+      <li>Stroke-width 2.2px at native size. Scale freely — SVG is resolution-independent.</li>
+      <li>Animation: G 1.4s, H stems staggered, total runtime ~2.0s.</li>
+      <li>For print: export as PDF or EPS. The SVG static state is the finished logo.</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CONCEPT 2: GH + WORDMARK — initials with name below   -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="concept" id="concept-2">
+  <div class="concept-meta">
+    <span class="concept-num">02</span>
+    <div>
+      <div class="concept-title">GH + Wordmark</div>
+      <p class="concept-desc">The monogram mark with "Greg Hobden" set below in Outfit light. A rule line draws between them. Ideal for letterheads, email signatures, and the site footer — contexts where the full name adds clarity.</p>
+    </div>
+  </div>
+
+  <div class="previews">
+    <div class="preview-panel preview-panel--dark">
+      <span class="panel-label">Web / Screen</span>
+      <svg class="logo-svg" id="c2-dark" viewBox="0 0 200 130" width="220" height="143" aria-label="Greg Hobden logo">
+        <!-- G -->
+        <path class="draw-path" id="c2d-g"
+          d="M 63,27 A 28,28 0 1,0 68,42 L 46,42"
+          stroke="#C4A46B" stroke-width="2.2"/>
+        <!-- H -->
+        <path class="draw-path" id="c2d-h1" d="M 90,14 L 90,70" stroke="#EDEDE8" stroke-width="2.2"/>
+        <path class="draw-path" id="c2d-h2" d="M 90,42 L 132,42" stroke="#EDEDE8" stroke-width="2.2"/>
+        <path class="draw-path" id="c2d-h3" d="M 132,14 L 132,70" stroke="#EDEDE8" stroke-width="2.2"/>
+        <!-- Rule line -->
+        <path class="draw-path" id="c2d-rule" d="M 12,84 L 188,84" stroke="#C4A46B" stroke-width="0.75"/>
+        <!-- Name -->
+        <text id="c2d-text"
+          x="100" y="108"
+          text-anchor="middle"
+          font-family="'Outfit', sans-serif"
+          font-weight="300"
+          font-size="13"
+          letter-spacing="5"
+          fill="#EDEDE8"
+          opacity="0"
+          style="text-transform: uppercase;">GREG HOBDEN</text>
+        <!-- Sub -->
+        <text id="c2d-sub"
+          x="100" y="124"
+          text-anchor="middle"
+          font-family="'Manrope', sans-serif"
+          font-weight="300"
+          font-size="7.5"
+          letter-spacing="3.5"
+          fill="#C4A46B"
+          opacity="0">FILM PRODUCER</text>
+      </svg>
+    </div>
+    <div class="preview-panel preview-panel--light">
+      <span class="panel-label">Print / Light</span>
+      <svg class="logo-svg" id="c2-light" viewBox="0 0 200 130" width="220" height="143" aria-label="Greg Hobden logo">
+        <path class="draw-path" id="c2l-g"
+          d="M 63,27 A 28,28 0 1,0 68,42 L 46,42"
+          stroke="#C4A46B" stroke-width="2.2"/>
+        <path class="draw-path" id="c2l-h1" d="M 90,14 L 90,70" stroke="#1a1a1a" stroke-width="2.2"/>
+        <path class="draw-path" id="c2l-h2" d="M 90,42 L 132,42" stroke="#1a1a1a" stroke-width="2.2"/>
+        <path class="draw-path" id="c2l-h3" d="M 132,14 L 132,70" stroke="#1a1a1a" stroke-width="2.2"/>
+        <path class="draw-path" id="c2l-rule" d="M 12,84 L 188,84" stroke="#C4A46B" stroke-width="0.75"/>
+        <text id="c2l-text"
+          x="100" y="108"
+          text-anchor="middle"
+          font-family="'Outfit', sans-serif"
+          font-weight="300"
+          font-size="13"
+          letter-spacing="5"
+          fill="#1a1a1a"
+          opacity="0">GREG HOBDEN</text>
+        <text id="c2l-sub"
+          x="100" y="124"
+          text-anchor="middle"
+          font-family="'Manrope', sans-serif"
+          font-weight="300"
+          font-size="7.5"
+          letter-spacing="3.5"
+          fill="#C4A46B"
+          opacity="0">FILM PRODUCER</text>
+      </svg>
+    </div>
+  </div>
+
+  <button class="replay-btn" data-concept="2">↺ Replay animation</button>
+
+  <div class="notes">
+    <h4>Design notes</h4>
+    <ul>
+      <li>Rule line draws after the mark completes — a deliberate pause before the name appears.</li>
+      <li>"GREG HOBDEN" fades in rather than drawing — text-to-path is complex; opacity fade is cleaner.</li>
+      <li>"FILM PRODUCER" in gold provides the subtitle / discipline line.</li>
+      <li>On paper: perfect for letterhead — mark upper-left, wordmark centred or aligned.</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CONCEPT 3: GH IN FRAME — mark inside a drawing border  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="concept" id="concept-3">
+  <div class="concept-meta">
+    <span class="concept-num">03</span>
+    <div>
+      <div class="concept-title">GH — Framed Mark</div>
+      <p class="concept-desc">The initials sit inside a rectangular frame that draws itself first — like a title card coming to life. More structured and cinematic. References the format of film slates and title sequences. Strong as a stamp or seal on print materials.</p>
+    </div>
+  </div>
+
+  <div class="previews">
+    <div class="preview-panel preview-panel--dark">
+      <span class="panel-label">Web / Screen</span>
+      <svg class="logo-svg" id="c3-dark" viewBox="0 0 180 120" width="220" height="147" aria-label="GH framed logo">
+        <!-- Outer frame -->
+        <path class="draw-path" id="c3d-frame"
+          d="M 10,10 L 170,10 L 170,110 L 10,110 Z"
+          stroke="#C4A46B" stroke-width="1"/>
+        <!-- Inner frame lines (corners) -->
+        <path class="draw-path" id="c3d-corners"
+          d="M 10,30 L 10,10 L 30,10 M 150,10 L 170,10 L 170,30 M 170,90 L 170,110 L 150,110 M 30,110 L 10,110 L 10,90"
+          stroke="#C4A46B" stroke-width="0.75" opacity="0.5"/>
+        <!-- G (shifted right slightly to centre the pair) -->
+        <path class="draw-path" id="c3d-g"
+          d="M 66,37 A 22,22 0 1,0 70,52 L 52,52"
+          stroke="#EDEDE8" stroke-width="2"/>
+        <!-- H -->
+        <path class="draw-path" id="c3d-h1" d="M 84,25 L 84,75" stroke="#EDEDE8" stroke-width="2"/>
+        <path class="draw-path" id="c3d-h2" d="M 84,50 L 120,50" stroke="#EDEDE8" stroke-width="2"/>
+        <path class="draw-path" id="c3d-h3" d="M 120,25 L 120,75" stroke="#EDEDE8" stroke-width="2"/>
+        <!-- Bottom text inside frame -->
+        <text
+          x="90" y="96"
+          text-anchor="middle"
+          font-family="'Manrope', sans-serif"
+          font-weight="300"
+          font-size="6"
+          letter-spacing="4"
+          fill="#C4A46B"
+          opacity="0"
+          id="c3d-sub">FILM PRODUCER</text>
+      </svg>
+    </div>
+    <div class="preview-panel preview-panel--light">
+      <span class="panel-label">Print / Light</span>
+      <svg class="logo-svg" id="c3-light" viewBox="0 0 180 120" width="220" height="147" aria-label="GH framed logo">
+        <path class="draw-path" id="c3l-frame"
+          d="M 10,10 L 170,10 L 170,110 L 10,110 Z"
+          stroke="#C4A46B" stroke-width="1"/>
+        <path class="draw-path" id="c3l-corners"
+          d="M 10,30 L 10,10 L 30,10 M 150,10 L 170,10 L 170,30 M 170,90 L 170,110 L 150,110 M 30,110 L 10,110 L 10,90"
+          stroke="#C4A46B" stroke-width="0.75" opacity="0.5"/>
+        <path class="draw-path" id="c3l-g"
+          d="M 66,37 A 22,22 0 1,0 70,52 L 52,52"
+          stroke="#1a1a1a" stroke-width="2"/>
+        <path class="draw-path" id="c3l-h1" d="M 84,25 L 84,75" stroke="#1a1a1a" stroke-width="2"/>
+        <path class="draw-path" id="c3l-h2" d="M 84,50 L 120,50" stroke="#1a1a1a" stroke-width="2"/>
+        <path class="draw-path" id="c3l-h3" d="M 120,25 L 120,75" stroke="#1a1a1a" stroke-width="2"/>
+        <text
+          x="90" y="96"
+          text-anchor="middle"
+          font-family="'Manrope', sans-serif"
+          font-weight="300"
+          font-size="6"
+          letter-spacing="4"
+          fill="#C4A46B"
+          opacity="0"
+          id="c3l-sub">FILM PRODUCER</text>
+      </svg>
+    </div>
+  </div>
+
+  <button class="replay-btn" data-concept="3">↺ Replay animation</button>
+
+  <div class="notes">
+    <h4>Design notes</h4>
+    <ul>
+      <li>Frame draws first (1.2s) — the container arrives before the content. Deliberately cinematic.</li>
+      <li>Corner accent marks reference film/camera viewfinder aesthetics.</li>
+      <li>GH draws inside the frame as a second act. Total runtime ~2.4s.</li>
+      <li>Works beautifully as a wax seal, embossed stamp, or business card centrepiece on print.</li>
+      <li>On screen: could sit in the hero section as a pre-loader mark before content reveals.</li>
+    </ul>
+  </div>
+</section>
+
+
+<script>
+// ── EASING ──────────────────────────────────────────────────────────
+// Apple spring easing approximated via CSS animation-timing-function
+// We use JS to set up the stroke-dasharray / dashoffset, then trigger
+// CSS transitions for smooth GPU-accelerated animation.
+
+const EASING = 'cubic-bezier(0.22, 1, 0.36, 1)';
+const EASE_OUT = 'ease-out';
+
+// ── HELPERS ─────────────────────────────────────────────────────────
+function initPath(el) {
+  if (!el) return 0;
+  const len = el.getTotalLength ? el.getTotalLength() : 200;
+  el.style.strokeDasharray  = len;
+  el.style.strokeDashoffset = len;
+  el.style.transition = 'none';
+  return len;
+}
+
+function drawPath(el, delay, duration, easing = EASING) {
+  if (!el) return;
+  setTimeout(() => {
+    el.style.transition = `stroke-dashoffset ${duration}ms ${easing}`;
+    el.style.strokeDashoffset = '0';
+  }, delay);
+}
+
+function fadeIn(el, delay, duration = 600) {
+  if (!el) return;
+  el.style.transition = 'none';
+  el.style.opacity = '0';
+  setTimeout(() => {
+    el.style.transition = `opacity ${duration}ms ${EASE_OUT}`;
+    el.style.opacity = '1';
+  }, delay);
+}
+
+// ── CONCEPT 1: Pure GH ──────────────────────────────────────────────
+function animateConcept1(suffix) {
+  const g  = document.getElementById(`c1${suffix}-g`);
+  const h1 = document.getElementById(`c1${suffix}-h1`);
+  const h2 = document.getElementById(`c1${suffix}-h2`);
+  const h3 = document.getElementById(`c1${suffix}-h3`);
+
+  [g, h1, h2, h3].forEach(initPath);
+
+  drawPath(g,   0,    1400, EASING);  // G draws
+  drawPath(h1,  300,  600,  EASING);  // H left stem
+  drawPath(h2,  720,  480,  EASING);  // H crossbar
+  drawPath(h3,  920,  600,  EASING);  // H right stem
+}
+
+// ── CONCEPT 2: GH + Wordmark ─────────────────────────────────────────
+function animateConcept2(suffix) {
+  const g    = document.getElementById(`c2${suffix}-g`);
+  const h1   = document.getElementById(`c2${suffix}-h1`);
+  const h2   = document.getElementById(`c2${suffix}-h2`);
+  const h3   = document.getElementById(`c2${suffix}-h3`);
+  const rule = document.getElementById(`c2${suffix}-rule`);
+  const text = document.getElementById(`c2${suffix}-text`);
+  const sub  = document.getElementById(`c2${suffix}-sub`);
+
+  [g, h1, h2, h3, rule].forEach(initPath);
+  if (text) { text.style.opacity = '0'; text.style.transition = 'none'; }
+  if (sub)  { sub.style.opacity  = '0'; sub.style.transition  = 'none'; }
+
+  drawPath(g,    0,    1400, EASING);
+  drawPath(h1,   300,  600,  EASING);
+  drawPath(h2,   720,  480,  EASING);
+  drawPath(h3,   920,  600,  EASING);
+  drawPath(rule, 1400, 700,  EASING);  // rule draws after H completes
+  fadeIn(text, 2000, 700);
+  fadeIn(sub,  2400, 600);
+}
+
+// ── CONCEPT 3: Framed GH ─────────────────────────────────────────────
+function animateConcept3(suffix) {
+  const frame   = document.getElementById(`c3${suffix}-frame`);
+  const corners = document.getElementById(`c3${suffix}-corners`);
+  const g       = document.getElementById(`c3${suffix}-g`);
+  const h1      = document.getElementById(`c3${suffix}-h1`);
+  const h2      = document.getElementById(`c3${suffix}-h2`);
+  const h3      = document.getElementById(`c3${suffix}-h3`);
+  const sub     = document.getElementById(`c3${suffix}-sub`);
+
+  [frame, corners, g, h1, h2, h3].forEach(initPath);
+  if (sub) { sub.style.opacity = '0'; sub.style.transition = 'none'; }
+
+  drawPath(frame,   0,    1200, EASING);   // frame draws
+  drawPath(corners, 600,  800,  EASE_OUT); // corner accents
+  drawPath(g,       1100, 1200, EASING);   // G draws inside frame
+  drawPath(h1,      1300, 550,  EASING);   // H left stem
+  drawPath(h2,      1660, 430,  EASING);   // H crossbar
+  drawPath(h3,      1860, 550,  EASING);   // H right stem
+  fadeIn(sub, 2300, 600);
+}
+
+// ── INIT ALL ──────────────────────────────────────────────────────────
+function initAll() {
+  // Concept 1
+  animateConcept1('d');
+  animateConcept1('l');
+  // Concept 2
+  animateConcept2('d');
+  animateConcept2('l');
+  // Concept 3
+  animateConcept3('d');
+  animateConcept3('l');
+}
+
+// ── REPLAY BUTTONS ────────────────────────────────────────────────────
+document.querySelectorAll('.replay-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const c = btn.dataset.concept;
+    if (c === '1') { animateConcept1('d'); animateConcept1('l'); }
+    if (c === '2') { animateConcept2('d'); animateConcept2('l'); }
+    if (c === '3') { animateConcept3('d'); animateConcept3('l'); }
+  });
+});
+
+// ── INTERSECTION OBSERVER — play when scrolled into view ───────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const c = entry.target.dataset.trigger;
+      if (c === '1') { animateConcept1('d'); animateConcept1('l'); }
+      if (c === '2') { animateConcept2('d'); animateConcept2('l'); }
+      if (c === '3') { animateConcept3('d'); animateConcept3('l'); }
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.concept').forEach((el, i) => {
+  el.dataset.trigger = String(i + 1);
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
