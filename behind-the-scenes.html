@@ -489,10 +489,10 @@ footer a:hover { opacity: 0.6; }
     <img loading="lazy" src="images/raptor-52.jpg" style="object-position:49% 26.8%">
     <img loading="lazy" src="images/raptor-53.jpg" style="object-position:52% 11.6%">
     <img loading="lazy" src="images/raptor-55.jpg" style="object-position:53.6% 19.7%">
-    <div class="tile tile-video"><video src="images/raptor-50.mov" muted loop playsinline></video></div>
-    <div class="tile tile-video"><video src="images/raptor-51.mov" muted loop playsinline></video></div>
-    <div class="tile tile-video"><video src="images/RAPTOR%20/8f1e2815-cb84-43f8-bd78-4f12f0b593d1.mp4" muted loop playsinline></video></div>
-    <div class="tile tile-video"><video src="images/RAPTOR%20/video_1_b3daed4da2584be7b413960f4c0209f8.mp4" muted loop playsinline></video></div>
+    <div class="tile tile-video"><video data-src="images/raptor-50.mov" preload="none" muted loop playsinline></video></div>
+    <div class="tile tile-video"><video data-src="images/raptor-51.mov" preload="none" muted loop playsinline></video></div>
+    <div class="tile tile-video"><video data-src="images/RAPTOR%20/8f1e2815-cb84-43f8-bd78-4f12f0b593d1.mp4" preload="none" muted loop playsinline></video></div>
+    <div class="tile tile-video"><video data-src="images/RAPTOR%20/video_1_b3daed4da2584be7b413960f4c0209f8.mp4" preload="none" muted loop playsinline></video></div>
 
 
 
@@ -529,7 +529,7 @@ footer a:hover { opacity: 0.6; }
     <img loading="lazy" src="images/defender-18.jpeg" style="object-position:47.6% 8.5%">
     <img loading="lazy" src="images/defender-19.jpeg" style="object-position:53.8% 100%">
     <img loading="lazy" src="images/defender-20.jpeg" style="object-position:51.4% 19.6%">
-    <div class="tile tile-video"><video src="images/defender-9.mov" muted loop playsinline></video></div>
+    <div class="tile tile-video"><video data-src="images/defender-9.mov" preload="none" muted loop playsinline></video></div>
 
 
 <!-- LAND ROVER DISCOVERY SPORT -->
@@ -617,10 +617,10 @@ footer a:hover { opacity: 0.6; }
     <img loading="lazy" src="images/explorer-14.jpg">
     <img loading="lazy" src="images/lexie-green-screen-3.jpg" style="object-position:59.1% 0%">
     <img loading="lazy" src="images/lexie-green-screen-4.jpg">
-    <div class="tile tile-video"><video src="images/lexie-green-screen-1.mov" muted loop playsinline></video></div>
-    <div class="tile tile-video"><video src="images/lexie-green-screen-2.mov" muted loop playsinline></video></div>
+    <div class="tile tile-video"><video data-src="images/lexie-green-screen-1.mov" preload="none" muted loop playsinline></video></div>
+    <div class="tile tile-video"><video data-src="images/lexie-green-screen-2.mov" preload="none" muted loop playsinline></video></div>
     <img loading="lazy" src="images/EXPLORER%2015.jpeg">
-    <div class="tile tile-video"><video src="images/explorer-17.mov" muted loop playsinline></video></div>
+    <div class="tile tile-video"><video data-src="images/explorer-17.mov" preload="none" muted loop playsinline></video></div>
 
 
 <!-- RANGE ROVER SPORT -->
@@ -723,7 +723,7 @@ footer a:hover { opacity: 0.6; }
     <img loading="lazy" src="images/vashi-16.jpg">
     <img loading="lazy" src="images/vashi-17.jpg">
     <img loading="lazy" src="images/vashi-18.jpg">
-    <div class="tile tile-video"><video src="images/VASHI/IMG_5518.MOV" muted loop playsinline></video></div>
+    <div class="tile tile-video"><video data-src="images/VASHI/IMG_5518.MOV" preload="none" muted loop playsinline></video></div>
 
 
 <!-- TATA NEXON -->
@@ -762,7 +762,7 @@ footer a:hover { opacity: 0.6; }
     <img loading="lazy" src="images/tata-10.jpeg" style="object-position:50.5% 31.4%">
     <img loading="lazy" src="images/tata-11.jpeg">
     <img loading="lazy" src="images/tata-12.jpg">
-    <div class="tile tile-video"><video src="images/tata-1.mov" muted loop playsinline></video></div>
+    <div class="tile tile-video"><video data-src="images/tata-1.mov" preload="none" muted loop playsinline></video></div>
 
 
 <!-- MISCELLANEOUS -->
@@ -803,7 +803,7 @@ footer a:hover { opacity: 0.6; }
     <img loading="lazy" src="images/MISC/IMG_3714.jpeg">
     <img loading="lazy" src="images/MISC/IMG_3724.jpeg" style="object-position:50.8% 26%">
     <img loading="lazy" src="images/MISC/IMG_3728.jpeg">
-    <div class="tile tile-video"><video src="images/MISC/IMG_3735.MOV" muted loop playsinline></video></div>
+    <div class="tile tile-video"><video data-src="images/MISC/IMG_3735.MOV" preload="none" muted loop playsinline></video></div>
     <img loading="lazy" src="images/MISC/IMG_3744.jpeg" style="object-position:49.9% 31.3%">
     <img loading="lazy" src="images/MISC/IMG_3753.jpeg" style="object-position:51.6% 37.3%">
     <img loading="lazy" src="images/MISC/IMG_3754.jpeg" style="object-position:53.9% 60.2%">
@@ -1060,8 +1060,10 @@ footer a:hover { opacity: 0.6; }
     entries.forEach(e => {
       const v = e.target.querySelector('video');
       if (!v) return;
-      if (e.isIntersecting) v.play().catch(() => {});
-      else { v.pause(); v.currentTime = 0; }
+      if (e.isIntersecting) {
+        if (!v.src && v.dataset.src) { v.src = v.dataset.src; }
+        v.play().catch(() => {});
+      } else { v.pause(); v.currentTime = 0; }
     });
   }, { threshold: 0.3 });
   document.querySelectorAll('.tile-video').forEach(t => videoObs.observe(t));
@@ -1071,7 +1073,8 @@ footer a:hover { opacity: 0.6; }
   const vmVideo = document.getElementById('vm-video');
   document.querySelectorAll('.tile-video').forEach(tile => {
     tile.addEventListener('click', () => {
-      const src = tile.querySelector('video').src;
+      const v = tile.querySelector('video');
+      const src = v.src || v.dataset.src;
       vmVideo.src = src;
       vmVideo.currentTime = 0;
       videoModal.classList.add('open');
