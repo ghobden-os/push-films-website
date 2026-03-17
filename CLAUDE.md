@@ -13,6 +13,7 @@ Portfolio website for Greg Hobden, film producer. Single-page site with sections
 - **Design system**: `design-system.html` — full visual reference (colours, typography, components, dos & don'ts, handoff guide). Viewable at greghobden.com/design-system.html
 - **Design tokens**: `design-tokens.json` — canonical W3C-format token file (colours, type scale, spacing, motion, grid). Currently v1.1.0
 - **Logo assets**: `files/logo.html` — yellow disc mark + full lockup variants (DM Sans). `files/favicon.svg` — source SVG
+- **PWA**: `manifest.json`, `sw.js`, `apple-touch-icon.svg`, `icon-maskable.svg` — makes site installable as home screen app on iOS/Android
 - **Email signature**: `files/email-signature.html` — live preview + Apple Mail install instructions. `files/g-disc.svg` — hosted yellow G disc image used in the signature (44px circle, `#F5D800`, DM Sans G)
 - **Type spec**: `files/type-spec.html` — A4 print-ready spec sheet for video editors: DM Sans, colours, name layout, disciplines
 
@@ -60,7 +61,7 @@ Clicking a gallery image opens a full-screen lightbox (`#imgLightbox`).
 - `openLightbox(items, index)` — takes the full items array and the rawIdx of the clicked image
 
 ### Work Section Category Order
-Automotive → Experiential → Documentary → Luxury → Expo → Sport → Comedy → Everest → The Early Years → Music Videos → Commercials
+Automotive → Documentary → Experiential → Luxury → Expo → Sport → Comedy → Everest → The Early Years → Music Videos → Commercials
 
 ### Mobile Layout
 - `STRIP_SIZE = window.innerWidth < 640 ? 1 : 3` — set once at page load
@@ -108,13 +109,15 @@ raptor: {
 - Discovery Sport: `1171150533` / gallery: `discovery`
 - Tata Nexon — 3 Spot Cutdown: `1171541476` / gallery: `tata2`
 - Tata Nexon — Performance: `1171541065` / gallery: `tata`
-- I Am Ali: `1171150609`
-- Family Tree Milan World Expo: `1171151872`
-- The Turtle Yeosu Expo: `1171157242`
+- Iron Maiden: Burning Ambition: no Vimeo (not yet released) — credit is **Co-Producer**, meta: "Co-Producer — Feature Documentary — Universal Pictures". Has thumbnail `images/burning-ambition.png` and "Cinemas May 7" sub-label.
+- I Am Ali: `1171150609` — meta: "Producer — Feature Documentary — Universal Pictures"
+- Family Tree Milan World Expo: `1171151872` — meta: "Senior Producer — UAE"
+- The Turtle Yeosu Expo: `1171157242` — meta: "Senior Producer — UAE"
+- Expo 2020 — Dubai: no Vimeo — static entry, image: `images/Dubai 2020 /Expo.png`, no work-meta, `object-position: 52.4% 100%`
 - Vashi: `1171158700` / gallery: `vashi`
 - Ford Wheels: `1172076463` / gallery: `fordWheels`
-- Lexie Limitless: `1171318976` / gallery: `explorer` (data-start="1140", data-last-hold="12000")
-- Everest: `1171320476` / gallery: `everest`
+- Lexie Limitless: `1171318976` / gallery: `explorer` (data-start="1140", data-last-hold="12000") — meta: "Producer — French Riviera"
+- Everest: `1171320476` / gallery: `everest` — meta: "On-Mountain Producer — Nepal / China", thumbnail `object-position: center top`
 - Bridgestone: `1171158800`
 - Football League: `1171158741`
 - Golfing 4 Life: `1171158957`
@@ -171,6 +174,15 @@ The hero has significant mobile-specific overrides in the final `@media (max-wid
 ### Custom Cursor
 - Hidden on iframe `mouseenter` to prevent cursor getting stranded over Vimeo embeds
 - A `MutationObserver` on `document.body` catches dynamically inserted iframes (Vimeo embeds added on accordion open)
+
+### Modal Close Button
+- `.video-modal-close` — always yellow (`color: var(--gold)`), `font-size: 10px`, uppercase, top-right of modal overlay
+
+### Reframe Edit Mode (index.html)
+- Activated by visiting `greghobden.com/?edit=1`
+- All `.work-image` thumbnails get a yellow outline and become draggable to set `object-position`
+- "Copy values" button outputs `alt: X% Y%` pairs — paste back to Claude to bake into the HTML
+- Tool is JS-only, invisible in normal browsing
 
 ### Scroll Progress Bar
 - `#scrollProgress` — yellow 2px line at top of page showing scroll position
