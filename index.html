@@ -791,6 +791,12 @@
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
             background-size: 200px 200px;
         }
+        /* REFRAME EDIT MODE */
+        .reframe-toolbar { display:none; position:fixed; bottom:24px; left:50%; transform:translateX(-50%); z-index:9999; background:#111; border:1px solid #333; border-radius:6px; padding:10px 16px; display:flex; gap:12px; align-items:center; font-family:var(--font-sans); font-size:11px; letter-spacing:0.1em; color:#EDEDE8; }
+        .reframe-toolbar button { background:var(--gold); color:#080808; border:none; border-radius:3px; padding:6px 14px; font-size:11px; letter-spacing:0.1em; font-family:var(--font-sans); cursor:pointer; }
+        body.reframe-mode .work-image { cursor:move; outline:2px solid var(--gold); outline-offset:-2px; }
+        body.reframe-mode .work-image.dragging { cursor:grabbing; }
+        body.reframe-mode .work-image.dragging img { transition:none; }
     </style>
 </head>
 <body>
@@ -2512,6 +2518,60 @@
             });
         })();
 
+    </script>
+    <script>
+    // === REFRAME EDIT MODE (activate via ?edit=1) ===
+    if (new URLSearchParams(location.search).get('edit') === '1') {
+        document.body.classList.add('reframe-mode');
+        const toolbar = document.createElement('div');
+        toolbar.className = 'reframe-toolbar';
+        toolbar.innerHTML = '<span>Drag images to reframe</span><button id="reframeExport">Copy values</button>';
+        document.body.appendChild(toolbar);
+        toolbar.style.display = 'flex';
+
+        document.querySelectorAll('.work-image').forEach(container => {
+            const img = container.querySelector('img');
+            if (!img) return;
+            let dragging = false, startX, startY, posX, posY;
+
+            function getPos() {
+                const pos = img.style.objectPosition || '50% 50%';
+                const parts = pos.split(' ');
+                return [parseFloat(parts[0]) || 50, parseFloat(parts[1]) || 50];
+            }
+
+            container.addEventListener('mousedown', e => {
+                if (e.button !== 0) return;
+                dragging = true;
+                startX = e.clientX; startY = e.clientY;
+                [posX, posY] = getPos();
+                container.classList.add('dragging');
+                e.preventDefault();
+            });
+            window.addEventListener('mousemove', e => {
+                if (!dragging) return;
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                const newX = Math.max(0, Math.min(100, posX - dx * 0.15));
+                const newY = Math.max(0, Math.min(100, posY - dy * 0.15));
+                img.style.objectPosition = newX.toFixed(1) + '% ' + newY.toFixed(1) + '%';
+            });
+            window.addEventListener('mouseup', () => {
+                if (!dragging) return;
+                dragging = false;
+                container.classList.remove('dragging');
+            });
+        });
+
+        document.getElementById('reframeExport').addEventListener('click', () => {
+            const lines = [];
+            document.querySelectorAll('.work-image img').forEach(img => {
+                const pos = img.style.objectPosition;
+                if (pos) lines.push(img.alt + ': ' + pos);
+            });
+            prompt('Copy these values and send to Claude:', lines.join('\n') || 'No changes made yet.');
+        });
+    }
     </script>
     <script src="https://player.vimeo.com/api/player.js"></script>
   <script>
