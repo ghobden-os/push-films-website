@@ -31,268 +31,225 @@
   .switcher button.active { background: #F5D800; color: #111; border-color: #F5D800; }
 
   .slide {
-    width: 1280px;
-    height: 720px;
-    position: relative;
-    overflow: hidden;
+    width: 1280px; height: 720px;
+    position: relative; overflow: hidden;
     display: none;
     box-shadow: 0 20px 60px rgba(0,0,0,0.5);
   }
   .slide.active { display: block; }
 
-  /* ─── SHARED ELEMENTS ─── */
-  .logo-area { display: flex; align-items: center; gap: 14px; }
-  .g-disc {
-    border-radius: 50%; background: #F5D800;
+  /* ─── LIGHT VERSION ─── */
+  #slideLight {
+    background: #F5F3EE;
+  }
+  #slideLight .photo {
+    position: absolute; left: 0; top: 0;
+    width: 420px; height: 720px; overflow: hidden;
+  }
+  #slideLight .photo img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: 60% top;
+    filter: grayscale(100%);
+  }
+  #slideLight .divider {
+    position: absolute; left: 420px; top: 0;
+    width: 4px; height: 720px;
+    background: #F5D800;
+  }
+  #slideLight .content {
+    position: absolute; left: 444px; top: 0; right: 0; bottom: 0;
+    padding: 52px 60px 44px 48px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+
+  /* Logo */
+  #slideLight .logo-area { display: flex; align-items: center; gap: 14px; }
+  #slideLight .g-disc {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: #F5D800;
     display: flex; align-items: center; justify-content: center;
-    font-weight: 300; color: #111; flex-shrink: 0;
+    font-size: 21px; font-weight: 300; color: #111; flex-shrink: 0;
   }
-
-  /* ─── OPTION A: Light, photo left ─── */
-  #slideA { background: #F4F2ED; }
-
-  #slideA .photo {
-    position: absolute; left: 0; top: 0;
-    width: 440px; height: 720px; overflow: hidden;
+  #slideLight .logo-name {
+    font-size: 17px; font-weight: 600; letter-spacing: 0.22em;
+    text-transform: uppercase; color: #111; line-height: 1;
   }
-  #slideA .photo img {
-    width: 100%; height: 100%; object-fit: cover;
-    object-position: center top; filter: grayscale(100%);
-  }
-  #slideA .photo::after {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(to right, transparent 70%, #F4F2ED 100%);
-  }
-  #slideA .yellow-edge {
-    position: absolute; left: 0; top: 0;
-    width: 4px; height: 720px; background: #F5D800;
-  }
-  #slideA .content {
-    position: absolute; left: 460px; top: 0; right: 0; bottom: 0;
-    padding: 52px 56px 44px 32px;
-    display: flex; flex-direction: column; justify-content: space-between;
-  }
-  #slideA .g-disc { width: 40px; height: 40px; font-size: 20px; }
-  #slideA .logo-name {
-    font-size: 16px; font-weight: 600; letter-spacing: 0.2em;
-    text-transform: uppercase; color: #111;
-  }
-  #slideA .logo-sub {
-    font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: #999; margin-top: 2px;
-  }
-  #slideA .name-block h1 {
-    font-size: 26px; font-weight: 300; color: #111; line-height: 1.1;
-  }
-  #slideA .name-block h1 em { font-style: normal; font-weight: 500; }
-  #slideA .name-block p {
-    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: #999; margin-top: 5px;
-  }
-  #slideA .yellow-rule { width: 36px; height: 2px; background: #F5D800; margin: 4px 0; }
-  #slideA .bio {
-    font-size: 12.5px; font-weight: 300; color: #555; line-height: 1.78;
-  }
-  #slideA .capabilities-label {
+  #slideLight .logo-tagline {
     font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: #aaa; margin-bottom: 9px;
+    color: #aaa; margin-top: 4px;
   }
-  #slideA .capabilities {
-    display: flex; flex-direction: column; gap: 5px;
-  }
-  #slideA .cap-item {
-    display: flex; align-items: center; gap: 10px;
-    font-size: 12px; color: #333;
-  }
-  #slideA .cap-dot {
-    width: 4px; height: 4px; border-radius: 50%;
-    background: #F5D800; flex-shrink: 0;
-  }
-  #slideA .contact-bar {
-    border-top: 1px solid #ddd; padding-top: 14px;
-    display: flex; gap: 20px; align-items: center;
-  }
-  #slideA .contact-bar span, #slideA .contact-bar a {
-    font-size: 11px; color: #888; text-decoration: none;
-  }
-  #slideA .cdot { width: 3px; height: 3px; border-radius: 50%; background: #F5D800; }
 
-  /* ─── OPTION B: Light, photo right, wider text ─── */
-  #slideB { background: #F8F7F3; }
-
-  #slideB .photo {
-    position: absolute; right: 0; top: 0;
-    width: 500px; height: 720px; overflow: hidden;
+  /* Name + bio block */
+  #slideLight .mid { display: flex; flex-direction: column; gap: 20px; }
+  #slideLight .name-block h2 {
+    font-size: 22px; font-weight: 300; color: #111; line-height: 1.1;
   }
-  #slideB .photo img {
-    width: 100%; height: 100%; object-fit: cover;
-    object-position: center top; filter: grayscale(100%);
-  }
-  #slideB .photo::after {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(to left, transparent 30%, #F8F7F3 85%);
-  }
-  #slideB .top-accent {
-    position: absolute; top: 0; left: 0; right: 0;
-    height: 4px; background: #F5D800;
-  }
-  #slideB .content {
-    position: absolute; left: 0; top: 0;
-    width: 740px; height: 720px;
-    padding: 52px 60px 44px 60px;
-    display: flex; flex-direction: column; justify-content: space-between;
-  }
-  #slideB .g-disc { width: 44px; height: 44px; font-size: 22px; }
-  #slideB .logo-name {
-    font-size: 18px; font-weight: 600; letter-spacing: 0.2em;
-    text-transform: uppercase; color: #111;
-  }
-  #slideB .logo-sub {
-    font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: #999; margin-top: 2px;
-  }
-  #slideB .name-block h1 {
-    font-size: 28px; font-weight: 300; color: #111; line-height: 1.1;
-  }
-  #slideB .name-block h1 em { font-style: normal; font-weight: 500; }
-  #slideB .name-block p {
+  #slideLight .name-block h2 em { font-style: normal; font-weight: 500; }
+  #slideLight .name-block .role {
     font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: #999; margin-top: 5px;
+    color: #aaa; margin-top: 5px;
   }
-  #slideB .yellow-rule { width: 40px; height: 3px; background: #F5D800; margin: 2px 0; }
-  #slideB .bio {
+  #slideLight .yellow-rule {
+    width: 36px; height: 2px; background: #F5D800;
+  }
+  #slideLight .bio {
     font-size: 13px; font-weight: 300; color: #555; line-height: 1.8;
-    max-width: 560px;
   }
-  #slideB .capabilities-label {
+
+  /* Credits */
+  #slideLight .credits-label {
     font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: #aaa; margin-bottom: 10px;
+    color: #bbb; margin-bottom: 10px;
   }
-  #slideB .capabilities { display: flex; flex-direction: column; gap: 6px; }
-  #slideB .cap-item {
-    display: flex; align-items: center; gap: 10px;
-    font-size: 12.5px; color: #333;
+  #slideLight .credits { display: flex; flex-direction: column; gap: 7px; }
+  #slideLight .credit {
+    display: flex; align-items: baseline; gap: 10px;
+    font-size: 12.5px; color: #333; line-height: 1.3;
   }
-  #slideB .cap-dot {
+  #slideLight .credit-dot {
     width: 4px; height: 4px; border-radius: 50%;
-    background: #F5D800; flex-shrink: 0;
+    background: #F5D800; flex-shrink: 0; margin-top: 5px;
   }
-  #slideB .contact-bar {
+  #slideLight .credit-detail {
+    font-size: 11px; font-weight: 300; color: #aaa; margin-left: 2px;
+  }
+
+  /* Contact */
+  #slideLight .contact-bar {
     border-top: 1px solid #ddd; padding-top: 14px;
     display: flex; gap: 20px; align-items: center;
   }
-  #slideB .contact-bar span, #slideB .contact-bar a {
-    font-size: 11px; color: #888; text-decoration: none;
+  #slideLight .contact-bar span {
+    font-size: 11px; color: #999; letter-spacing: 0.04em;
   }
-  #slideB .cdot { width: 3px; height: 3px; border-radius: 50%; background: #F5D800; }
+  #slideLight .cdot {
+    width: 3px; height: 3px; border-radius: 50%; background: #F5D800;
+  }
 
-  /* ─── OPTION C: Dark ─── */
-  #slideC { background: #0C0C0C; }
-
-  #slideC .photo {
+  /* ─── DARK VERSION ─── */
+  #slideDark {
+    background: #0C0C0C;
+  }
+  #slideDark .photo {
     position: absolute; left: 0; top: 0;
-    width: 400px; height: 720px; overflow: hidden;
+    width: 420px; height: 720px; overflow: hidden;
   }
-  #slideC .photo img {
-    width: 100%; height: 100%; object-fit: cover;
-    object-position: center top; filter: grayscale(100%); opacity: 0.7;
+  #slideDark .photo img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: 60% top;
+    filter: grayscale(100%); opacity: 0.8;
   }
-  #slideC .photo::after {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(to right, transparent 55%, #0C0C0C 100%);
-  }
-  #slideC .yellow-edge {
-    position: absolute; left: 0; top: 0;
+  #slideDark .divider {
+    position: absolute; left: 420px; top: 0;
     width: 4px; height: 720px; background: #F5D800;
   }
-  #slideC .content {
-    position: absolute; left: 420px; top: 0; right: 0; bottom: 0;
-    padding: 52px 56px 44px 36px;
+  #slideDark .content {
+    position: absolute; left: 444px; top: 0; right: 0; bottom: 0;
+    padding: 52px 60px 44px 48px;
     display: flex; flex-direction: column; justify-content: space-between;
   }
-  #slideC .g-disc { width: 40px; height: 40px; font-size: 20px; }
-  #slideC .logo-name {
-    font-size: 16px; font-weight: 600; letter-spacing: 0.2em;
-    text-transform: uppercase; color: #EDEDE8;
+  #slideDark .logo-area { display: flex; align-items: center; gap: 14px; }
+  #slideDark .g-disc {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: #F5D800;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 21px; font-weight: 300; color: #111; flex-shrink: 0;
   }
-  #slideC .logo-sub {
-    font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: #444; margin-top: 2px;
+  #slideDark .logo-name {
+    font-size: 17px; font-weight: 600; letter-spacing: 0.22em;
+    text-transform: uppercase; color: #EDEDE8; line-height: 1;
   }
-  #slideC .name-block h1 {
-    font-size: 26px; font-weight: 300; color: #EDEDE8; line-height: 1.1;
+  #slideDark .logo-tagline {
+    font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: #444; margin-top: 4px;
   }
-  #slideC .name-block h1 em { font-style: normal; font-weight: 500; color: #F5D800; }
-  #slideC .name-block p {
+  #slideDark .mid { display: flex; flex-direction: column; gap: 20px; }
+  #slideDark .name-block h2 {
+    font-size: 22px; font-weight: 300; color: #EDEDE8; line-height: 1.1;
+  }
+  #slideDark .name-block h2 em { font-style: normal; font-weight: 500; color: #F5D800; }
+  #slideDark .name-block .role {
     font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
     color: #444; margin-top: 5px;
   }
-  #slideC .yellow-rule { width: 36px; height: 2px; background: #F5D800; margin: 4px 0; }
-  #slideC .bio {
-    font-size: 12.5px; font-weight: 300; color: #888; line-height: 1.78;
+  #slideDark .yellow-rule { width: 36px; height: 2px; background: #F5D800; }
+  #slideDark .bio {
+    font-size: 13px; font-weight: 300; color: #888; line-height: 1.8;
   }
-  #slideC .capabilities-label {
+  #slideDark .credits-label {
     font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: #444; margin-bottom: 9px;
+    color: #333; margin-bottom: 10px;
   }
-  #slideC .capabilities { display: flex; flex-direction: column; gap: 5px; }
-  #slideC .cap-item {
-    display: flex; align-items: center; gap: 10px;
-    font-size: 12px; color: #bbb;
+  #slideDark .credits { display: flex; flex-direction: column; gap: 7px; }
+  #slideDark .credit {
+    display: flex; align-items: baseline; gap: 10px;
+    font-size: 12.5px; color: #ccc; line-height: 1.3;
   }
-  #slideC .cap-dot {
+  #slideDark .credit-dot {
     width: 4px; height: 4px; border-radius: 50%;
-    background: #F5D800; flex-shrink: 0;
+    background: #F5D800; flex-shrink: 0; margin-top: 5px;
   }
-  #slideC .contact-bar {
+  #slideDark .credit-detail { font-size: 11px; font-weight: 300; color: #555; margin-left: 2px; }
+  #slideDark .contact-bar {
     border-top: 1px solid #1a1a1a; padding-top: 14px;
     display: flex; gap: 20px; align-items: center;
   }
-  #slideC .contact-bar span, #slideC .contact-bar a {
-    font-size: 11px; color: #555; text-decoration: none;
-  }
-  #slideC .cdot { width: 3px; height: 3px; border-radius: 50%; background: #F5D800; }
+  #slideDark .contact-bar span { font-size: 11px; color: #444; }
+  #slideDark .cdot { width: 3px; height: 3px; border-radius: 50%; background: #F5D800; }
 </style>
 </head>
 <body>
 
 <div class="switcher">
-  <button class="active" onclick="show('A')">Option A — Photo left</button>
-  <button onclick="show('B')">Option B — Photo right</button>
-  <button onclick="show('C')">Option C — Dark</button>
+  <button class="active" onclick="show('Light')">Light</button>
+  <button onclick="show('Dark')">Dark</button>
 </div>
 
-<!-- OPTION A -->
-<div class="slide active" id="slideA">
-  <div class="yellow-edge"></div>
+<!-- SHARED CONTENT TEMPLATE -->
+<script>
+  const bio = `Push Films produces film and media content across documentary, high-end commercial production, live events, and corporate film.`;
+  const bio2 = `Much of that has included on-site event and conference coverage — executive interviews, delegate coverage, vox pops, and fast-turnaround edits.`;
+  const credits = [
+    { text: 'UAE World Expo Pavilions — Lead Producer', detail: 'Shanghai · Yeosu · Milan' },
+    { text: 'Ford · McLaren · Rolls-Royce · Jaguar Land Rover', detail: 'Producer' },
+    { text: 'Corporate event &amp; conference coverage', detail: 'ongoing — clients confidential' },
+    { text: 'I Am Ali', detail: 'Producer · Universal Pictures' },
+    { text: 'Iron Maiden: Burning Ambition', detail: 'Co-Producer · Universal Pictures · 2026' },
+  ];
+</script>
+
+<!-- LIGHT -->
+<div class="slide active" id="slideLight">
   <div class="photo"><img src="FOR PUSH FILMS /GREG BIO PIC .png" alt="Greg Hobden"></div>
+  <div class="divider"></div>
   <div class="content">
     <div class="logo-area">
       <div class="g-disc">G</div>
       <div>
         <div class="logo-name">Push Films</div>
-        <div class="logo-sub">Film Production &amp; Live Events</div>
+        <div class="logo-tagline">Film Production &amp; Live Events</div>
       </div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:18px;">
+    <div class="mid">
       <div class="name-block">
-        <h1><em>Greg</em> Hobden</h1>
-        <p>Film Producer · London</p>
+        <h2><em>Greg</em> Hobden</h2>
+        <div class="role">Film Producer · London</div>
       </div>
       <div class="yellow-rule"></div>
-      <p class="bio">Push Films is the production vehicle of Greg Hobden — a London-based film producer with thirty-five years of experience across theatrical documentary, high-end commercial production, large-scale live events, and corporate film.<br><br>A significant part of that work has been on-site event and conference coverage — executive interviews, vox pops, delegate footage, and fast-turnaround edits. Much of this work is confidential by nature. The clients who commission it value discretion as much as craft.</p>
+      <p class="bio">Push Films produces film and media content across documentary, high-end commercial production, live events, and corporate film.<br><br>Much of that has included on-site event and conference coverage — executive interviews, delegate coverage, vox pops, and fast-turnaround edits.</p>
     </div>
     <div>
-      <div class="capabilities-label">Selected Work</div>
-      <div class="capabilities">
-        <div class="cap-item"><div class="cap-dot"></div>UAE World Expo Pavilions — Lead Producer &nbsp;<span style="opacity:0.45;font-size:11px">Shanghai · Yeosu · Milan</span></div>
-        <div class="cap-item"><div class="cap-dot"></div>Ford · McLaren · Rolls-Royce · Jaguar Land Rover — Producer</div>
-        <div class="cap-item"><div class="cap-dot"></div>Corporate event &amp; conference coverage — ongoing &nbsp;<span style="opacity:0.45;font-size:11px">clients confidential</span></div>
-        <div class="cap-item"><div class="cap-dot"></div>I Am Ali — Producer &nbsp;<span style="opacity:0.45;font-size:11px">Universal Pictures</span></div>
-        <div class="cap-item"><div class="cap-dot"></div>Iron Maiden: Burning Ambition — Co-Producer &nbsp;<span style="opacity:0.45;font-size:11px">Universal Pictures · 2026</span></div>
+      <div class="credits-label">Selected Work</div>
+      <div class="credits">
+        <div class="credit"><div class="credit-dot"></div><span>UAE World Expo Pavilions — Lead Producer <span class="credit-detail">Shanghai · Yeosu · Milan</span></span></div>
+        <div class="credit"><div class="credit-dot"></div><span>Ford · McLaren · Rolls-Royce · Jaguar Land Rover <span class="credit-detail">Producer</span></span></div>
+        <div class="credit"><div class="credit-dot"></div><span>Corporate event &amp; conference coverage <span class="credit-detail">ongoing — clients confidential</span></span></div>
+        <div class="credit"><div class="credit-dot"></div><span>I Am Ali <span class="credit-detail">Producer · Universal Pictures</span></span></div>
+        <div class="credit"><div class="credit-dot"></div><span>Iron Maiden: Burning Ambition <span class="credit-detail">Co-Producer · Universal Pictures · 2026</span></span></div>
       </div>
     </div>
     <div class="contact-bar">
+      <span>Greg Hobden</span><div class="cdot"></div>
       <span>ghobden@mac.com</span><div class="cdot"></div>
       <span>07802 179 515</span><div class="cdot"></div>
       <span>greghobden.com</span>
@@ -300,75 +257,38 @@
   </div>
 </div>
 
-<!-- OPTION B -->
-<div class="slide" id="slideB">
-  <div class="top-accent"></div>
+<!-- DARK -->
+<div class="slide" id="slideDark">
   <div class="photo"><img src="FOR PUSH FILMS /GREG BIO PIC .png" alt="Greg Hobden"></div>
+  <div class="divider"></div>
   <div class="content">
     <div class="logo-area">
       <div class="g-disc">G</div>
       <div>
         <div class="logo-name">Push Films</div>
-        <div class="logo-sub">Film Production &amp; Live Events</div>
+        <div class="logo-tagline">Film Production &amp; Live Events</div>
       </div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:20px;">
+    <div class="mid">
       <div class="name-block">
-        <h1><em>Greg</em> Hobden</h1>
-        <p>Film Producer · London</p>
+        <h2><em>Greg</em> Hobden</h2>
+        <div class="role">Film Producer · London</div>
       </div>
       <div class="yellow-rule"></div>
-      <p class="bio">Push Films is the production vehicle of Greg Hobden — a London-based film producer with thirty-five years of experience across theatrical documentary, high-end commercial production, large-scale live events, and corporate film.<br><br>A significant part of that work has been on-site event and conference coverage — executive interviews, vox pops, delegate footage, and fast-turnaround edits. Much of this work is confidential by nature. The clients who commission it value discretion as much as craft.</p>
+      <p class="bio">Push Films produces film and media content across documentary, high-end commercial production, live events, and corporate film.<br><br>Much of that has included on-site event and conference coverage — executive interviews, delegate coverage, vox pops, and fast-turnaround edits.</p>
     </div>
     <div>
-      <div class="capabilities-label">Selected Work</div>
-      <div class="capabilities">
-        <div class="cap-item"><div class="cap-dot"></div>UAE World Expo Pavilions — Lead Producer &nbsp;<span style="opacity:0.45;font-size:11px">Shanghai · Yeosu · Milan</span></div>
-        <div class="cap-item"><div class="cap-dot"></div>Ford · McLaren · Rolls-Royce · Jaguar Land Rover — Producer</div>
-        <div class="cap-item"><div class="cap-dot"></div>Corporate event &amp; conference coverage — ongoing &nbsp;<span style="opacity:0.45;font-size:11px">clients confidential</span></div>
-        <div class="cap-item"><div class="cap-dot"></div>I Am Ali — Producer &nbsp;<span style="opacity:0.45;font-size:11px">Universal Pictures</span></div>
-        <div class="cap-item"><div class="cap-dot"></div>Iron Maiden: Burning Ambition — Co-Producer &nbsp;<span style="opacity:0.45;font-size:11px">Universal Pictures · 2026</span></div>
+      <div class="credits-label">Selected Work</div>
+      <div class="credits">
+        <div class="credit"><div class="credit-dot"></div><span>UAE World Expo Pavilions — Lead Producer <span class="credit-detail">Shanghai · Yeosu · Milan</span></span></div>
+        <div class="credit"><div class="credit-dot"></div><span>Ford · McLaren · Rolls-Royce · Jaguar Land Rover <span class="credit-detail">Producer</span></span></div>
+        <div class="credit"><div class="credit-dot"></div><span>Corporate event &amp; conference coverage <span class="credit-detail">ongoing — clients confidential</span></span></div>
+        <div class="credit"><div class="credit-dot"></div><span>I Am Ali <span class="credit-detail">Producer · Universal Pictures</span></span></div>
+        <div class="credit"><div class="credit-dot"></div><span>Iron Maiden: Burning Ambition <span class="credit-detail">Co-Producer · Universal Pictures · 2026</span></span></div>
       </div>
     </div>
     <div class="contact-bar">
-      <span>ghobden@mac.com</span><div class="cdot"></div>
-      <span>07802 179 515</span><div class="cdot"></div>
-      <span>greghobden.com</span>
-    </div>
-  </div>
-</div>
-
-<!-- OPTION C -->
-<div class="slide" id="slideC">
-  <div class="yellow-edge"></div>
-  <div class="photo"><img src="FOR PUSH FILMS /GREG BIO PIC .png" alt="Greg Hobden"></div>
-  <div class="content">
-    <div class="logo-area">
-      <div class="g-disc">G</div>
-      <div>
-        <div class="logo-name">Push Films</div>
-        <div class="logo-sub">Film Production &amp; Live Events</div>
-      </div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:18px;">
-      <div class="name-block">
-        <h1><em>Greg</em> Hobden</h1>
-        <p>Film Producer · London</p>
-      </div>
-      <div class="yellow-rule"></div>
-      <p class="bio">Push Films is the production vehicle of Greg Hobden — a London-based film producer with thirty-five years of experience across theatrical documentary, high-end commercial production, large-scale live events, and corporate film.<br><br>A significant part of that work has been on-site event and conference coverage — executive interviews, vox pops, delegate footage, and fast-turnaround edits. Much of this work is confidential by nature. The clients who commission it value discretion as much as craft.</p>
-    </div>
-    <div>
-      <div class="capabilities-label">Selected Work</div>
-      <div class="capabilities">
-        <div class="cap-item"><div class="cap-dot"></div>UAE World Expo Pavilions — Lead Producer &nbsp;<span style="opacity:0.45;font-size:11px">Shanghai · Yeosu · Milan</span></div>
-        <div class="cap-item"><div class="cap-dot"></div>Ford · McLaren · Rolls-Royce · Jaguar Land Rover — Producer</div>
-        <div class="cap-item"><div class="cap-dot"></div>Corporate event &amp; conference coverage — ongoing &nbsp;<span style="opacity:0.45;font-size:11px">clients confidential</span></div>
-        <div class="cap-item"><div class="cap-dot"></div>I Am Ali — Producer &nbsp;<span style="opacity:0.45;font-size:11px">Universal Pictures</span></div>
-        <div class="cap-item"><div class="cap-dot"></div>Iron Maiden: Burning Ambition — Co-Producer &nbsp;<span style="opacity:0.45;font-size:11px">Universal Pictures · 2026</span></div>
-      </div>
-    </div>
-    <div class="contact-bar">
+      <span>Greg Hobden</span><div class="cdot"></div>
       <span>ghobden@mac.com</span><div class="cdot"></div>
       <span>07802 179 515</span><div class="cdot"></div>
       <span>greghobden.com</span>
@@ -381,7 +301,7 @@
     document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.switcher button').forEach(b => b.classList.remove('active'));
     document.getElementById('slide' + id).classList.add('active');
-    document.querySelectorAll('.switcher button')[['A','B','C'].indexOf(id)].classList.add('active');
+    document.querySelectorAll('.switcher button')[['Light','Dark'].indexOf(id)].classList.add('active');
   }
 </script>
 </body>
