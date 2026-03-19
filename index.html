@@ -204,16 +204,16 @@
         /* IRON MAIDEN HERO CARD */
         .hero-film-card {
             display: inline-flex; align-items: center; gap: 14px;
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            background: var(--gold); border: 1px solid var(--gold);
             padding: 10px 18px 10px 10px; margin-top: 20px; cursor: pointer;
-            transition: border-color 0.3s, background 0.3s; text-align: left;
+            transition: opacity 0.3s; text-align: left;
         }
-        .hero-film-card:hover { border-color: var(--gold); background: rgba(245,216,0,0.06); }
+        .hero-film-card:hover { opacity: 0.85; }
         .hero-film-card img { width: 100px; height: 63px; object-fit: cover; object-position: center; display: block; flex-shrink: 0; }
         .hero-film-card-text { display: flex; flex-direction: column; gap: 4px; }
-        .hero-film-card-title { font-size: 11px; letter-spacing: 0.08em; color: var(--fg); font-weight: 500; }
-        .hero-film-card-date { font-size: 10px; letter-spacing: 0.08em; color: var(--mid); }
-        .hero-film-card-cta { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+        .hero-film-card-title { font-size: 11px; letter-spacing: 0.08em; color: #080808; font-weight: 500; }
+        .hero-film-card-date { font-size: 10px; letter-spacing: 0.08em; color: #333; }
+        .hero-film-card-cta { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #080808; font-weight: 500; }
 
         /* SHOWREEL */
         #showreel { background: #000; padding: 0; }
