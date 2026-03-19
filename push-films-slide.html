@@ -303,6 +303,42 @@
     document.getElementById('slide' + id).classList.add('active');
     document.querySelectorAll('.switcher button')[['Light','Dark'].indexOf(id)].classList.add('active');
   }
+
+  // Photo drag tool
+  document.querySelectorAll('.slide .photo').forEach(panel => {
+    const img = panel.querySelector('img');
+    let dragging = false, startX, startY, posX, posY;
+
+    function getPos() {
+      const pos = img.style.objectPosition || getComputedStyle(img).objectPosition || '48% top';
+      const parts = pos.split(' ');
+      return [parseFloat(parts[0]) || 48, parts[1] === 'top' ? 0 : (parseFloat(parts[1]) || 0)];
+    }
+
+    panel.style.cursor = 'grab';
+    panel.addEventListener('mousedown', e => {
+      dragging = true;
+      startX = e.clientX; startY = e.clientY;
+      [posX, posY] = getPos();
+      panel.style.cursor = 'grabbing';
+      e.preventDefault();
+    });
+    window.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      const newX = Math.max(0, Math.min(100, posX - dx * 0.1));
+      const newY = Math.max(0, Math.min(100, posY - dy * 0.1));
+      img.style.objectPosition = newX.toFixed(1) + '% ' + newY.toFixed(1) + '%';
+    });
+    window.addEventListener('mouseup', () => {
+      if (!dragging) return;
+      dragging = false;
+      panel.style.cursor = 'grab';
+      const pos = img.style.objectPosition;
+      console.log('Photo position:', pos);
+    });
+  });
 </script>
 </body>
 </html>
