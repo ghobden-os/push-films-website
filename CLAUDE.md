@@ -63,6 +63,16 @@ Clicking a gallery image opens a full-screen lightbox (`#imgLightbox`).
 ### Work Section Category Order
 Automotive → Documentary → Experiential → Luxury → Expo → Sport → Comedy → Everest → The Early Years → Music Videos → Commercials
 
+### Early Years Button
+`.early-years-btn` — yellow filled (`background: var(--gold)`), dark text, `padding: 16px 32px`, matches showreel button style. Hover darkens to `#D4B800`.
+
+### Performance Warning
+Several work thumbnail images are very large (up to 12MB). They have `loading="lazy"` but are uncompressed. Key offenders:
+- `ford-explorer-launch.png` — 12MB
+- `range-rover-reveal.png` — 8.9MB
+- `ford-explorer-world-record.png` — 7.6MB
+These should ideally be compressed to under 200KB each.
+
 ### Mobile Layout
 - `STRIP_SIZE = window.innerWidth < 640 ? 1 : 3` — set once at page load
 - On mobile the gallery thumb height matches the film exactly: `calc((100vw - 2 * var(--pad)) * 0.5625)`
@@ -102,22 +112,22 @@ raptor: {
 - Ford Ranger Raptor: `1171157858` / gallery: `raptor`
 - Ford Explorer: `1171170029` / gallery: `lexieGreen`
 - Land Rover Defender: `1171151952` / gallery: `defender`
-- McLaren Spider: `1171150653` / gallery: `mclaren`
+- McLaren Spider: `1171150653` / gallery: `mclaren` — meta: "Producer — Spain"
 - RR Sport Test Track: `1171178087` / gallery: `rrSportTestTrack`
 - RR Sport Reveal: `1171150941`
 - RR James Corden: `1171151324` / gallery: `corden`
 - Discovery Sport: `1171150533` / gallery: `discovery`
 - Tata Nexon — 3 Spot Cutdown: `1171541476` / gallery: `tata2`
 - Tata Nexon — Performance: `1171541065` / gallery: `tata`
-- Iron Maiden: Burning Ambition: no Vimeo (not yet released) — credit is **Co-Producer**, meta: "Co-Producer — Feature Documentary — Universal Pictures". Has thumbnail `images/burning-ambition.png` and "Cinemas May 7" sub-label.
+- Iron Maiden: Burning Ambition: no Vimeo — has `data-youtube="BggdJLnSevQ"` (opens YouTube trailer in modal). Credit: **Co-Producer**, meta: "Co-Producer — Feature Documentary — Universal Pictures". Thumbnail `images/burning-ambition.png`. Release: "In cinemas May 7, 2026".
 - I Am Ali: `1171150609` — meta: "Producer — Feature Documentary — Universal Pictures"
-- Family Tree Milan World Expo: `1171151872` — meta: "Senior Producer — UAE"
-- The Turtle Yeosu Expo: `1171157242` — meta: "Senior Producer — UAE"
+- Family Tree Milan World Expo: `1171151872` — meta: "Lead Producer / Head of Media — UAE"
+- The Turtle Yeosu Expo: `1171157242` — meta: "Lead Producer / Head of Media — UAE"
 - Expo 2020 — Dubai: no Vimeo — static entry, image: `images/Dubai 2020 /Expo.png`, no work-meta, `object-position: 52.4% 100%`
 - Vashi: `1171158700` / gallery: `vashi`
 - Ford Wheels: `1172076463` / gallery: `fordWheels`
 - Lexie Limitless: `1171318976` / gallery: `explorer` (data-start="1140", data-last-hold="12000") — meta: "Producer — French Riviera"
-- Everest: `1171320476` / gallery: `everest` — meta: "On-Mountain Producer — Nepal / China", thumbnail `object-position: center top`
+- Everest: `1171320476` / gallery: `everest` — meta: "On-Mountain Producer — Nepal / China", thumbnail `object-position: center top`. Altitude referenced as 5,600 metres throughout.
 - Bridgestone: `1171158800`
 - Football League: `1171158741`
 - Golfing 4 Life: `1171158957`
@@ -153,9 +163,12 @@ vimeoFrame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
 - Film grid hides when a film plays; click the playing screen to return to film selection
 - Five video (`1171163096`): plays for 10 seconds from first frame before triggering reveal
 
-### Hero Image
+### Hero Section
 - Background image: `images/Ford%20Mustang%20223.jpg` (1MB JPEG, down from 7MB PNG)
 - Preloaded via `<link rel="preload" as="image" href="images/Ford%20Mustang%20223.jpg">` in `<head>`
+- `overflow: hidden` removed from `#hero` — was clipping the Iron Maiden card at the bottom
+- **Iron Maiden card** (`.hero-film-card`): dark semi-transparent background, yellow border, 72×45px thumbnail, title, date ("In cinemas 7 May 2026"), "Watch the trailer →" in gold. Clicks open YouTube trailer in modal. Animates in with the showreel button at 3.3s delay.
+- Showreel ID: `1174080790`
 
 ### Mobile Hero Layout
 The hero has significant mobile-specific overrides in the final `@media (max-width: 640px)` block:
@@ -196,10 +209,13 @@ The hero has significant mobile-specific overrides in the final `@media (max-wid
 - Linked from nav: `<li><a href="behind-the-scenes.html">Behind the Scenes</a></li>`
 - CSS Grid mosaic wall: 4 cols desktop, 3 at 900px, 2 at 600px, 1 at 380px, 3px gaps
 - `.wall-label` divs span full width, centred, gold, 13px uppercase — section titles
-- Sections (in order): Ford Ranger Raptor, Land Rover Defender, Land Rover Discovery Sport, McLaren Spider, Lexie Limitless, Range Rover Sport, Range Rover James Corden, Go Faster (Ford Wheels), Ford Mustang, Vashi Diamonds, Tata Nexon, Everest
-- Edit mode toolbar: drag-to-reframe + delete tiles, localStorage persistence (`bts-edits-v1`), export report
+- Sections (in order): Ford Ranger Raptor, Land Rover Defender, Land Rover Discovery Sport, McLaren Spider, Lexie Limitless, Range Rover Sport, Range Rover James Corden, Go Faster (Ford Wheels), Ford Mustang, Vashi Diamonds, Tata Nexon, Miscellaneous, Everest — West Ridge Expedition
+- Edit mode: activated by **Shift+E** (not `?edit=1`). Toolbar appears bottom-right. Drag-to-reframe, delete tiles, localStorage persistence (`bts-edits-v1`), export report.
+- Each tile shows section name + index number (e.g. "Everest #3") when in edit mode — use this to identify images to remove
+- Videos lazy-load via `data-src` / IntersectionObserver — `src` is only set when the video enters the viewport
 - Lightbox with ← → arrow navigation, counter, spacebar/Escape to close
 - Object-position reframes baked directly into `style` attributes on `<img>` tags after each edit session export
+- **Image numbering**: global image count (all `<img loading="lazy">` tags in order) used for bulk removals — e.g. "remove image 139"
 
 ### Typewriter Effect
 Hero section has a typewriter animation synced to Web Audio API click sounds via `scheduleClick(atTime)`.
