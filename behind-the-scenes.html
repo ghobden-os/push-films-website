@@ -1007,6 +1007,8 @@ footer a:hover { opacity: 0.6; }
     } else if (child.classList.contains('tile')) {
       sectionMap.set(child, _sectionLabel);
       if (_secTileIdx === 0 || _secTileIdx % 7 === 0) child.classList.add('wide');
+      const hint = child.querySelector('.tile-reframe-hint');
+      if (hint) hint.textContent = _sectionLabel + ' #' + (_secTileIdx + 1);
       _secTileIdx++;
     }
   });
