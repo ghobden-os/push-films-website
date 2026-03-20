@@ -478,6 +478,11 @@
         }
 
         /* CONTACT */
+        .mv-montage { width: 100%; overflow: hidden; }
+        .mv-montage-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+        .mv-montage-grid img { width: 100%; aspect-ratio: 16/9; object-fit: cover; object-position: top; display: block; opacity: 0.85; transition: opacity 0.3s; }
+        .mv-montage-grid img:hover { opacity: 0.85; }
+        @media (max-width: 640px) { .mv-montage-grid { grid-template-columns: repeat(4, 1fr); } }
         #contact { border-top: 1px solid var(--rule); }
         .contact-grid { display: grid; grid-template-columns: 180px 1fr; gap: clamp(40px, 6vw, 120px); align-items: start; }
         .contact-label { padding-top: 5px; position: sticky; top: calc(var(--nav-h) + 24px); }
@@ -1218,6 +1223,32 @@
         </div>
     </section>
 
+
+    <div class="mv-montage">
+        <div class="mv-montage-grid">
+            <img loading="lazy" src="images/amy-winehouse.png" alt="">
+            <img loading="lazy" src="images/diana-ross.png" alt="">
+            <img loading="lazy" src="images/will-young.png" alt="">
+            <img loading="lazy" src="images/busted.png" alt="">
+            <img loading="lazy" src="images/Five 2.png" alt="">
+            <img loading="lazy" src="images/girls-aloud.png" alt="">
+            <img loading="lazy" src="images/klonhertz.png" alt="">
+            <img loading="lazy" src="images/oasis-lyla.png" alt="">
+            <img loading="lazy" src="images/primal-scream-kowalski.png" alt="">
+            <img loading="lazy" src="images/sugababes.png" alt="">
+            <img loading="lazy" src="images/the-streets.png" alt="">
+            <img loading="lazy" src="images/the-streets-blinded.png" alt="">
+            <img loading="lazy" src="images/westlife.png" alt="">
+            <img loading="lazy" src="images/snow-patrol.png" alt="">
+            <img loading="lazy" src="images/the-killers.png" alt="">
+            <img loading="lazy" src="images/atomic-kitten.png" alt="">
+            <img loading="lazy" src="images/LOUISE.png" alt="">
+            <img loading="lazy" src="images/steps.png" alt="">
+            <img loading="lazy" src="images/BOYZONE .png" alt="">
+            <img loading="lazy" src="images/A1.png" alt="">
+            <img loading="lazy" src="images/Just Jack - Starz In Their Eyes .png" alt="">
+        </div>
+    </div>
 
     <section id="contact">
         <div class="container contact-grid">
