@@ -2336,7 +2336,7 @@
                             const posStyle = posToApply ? ' style="object-position:' + posToApply + '"' : '';
                             thumb.innerHTML = '<img src="' + item.src + '" alt=""' + posStyle + '>';
                             const img = thumb.querySelector('img');
-                            requestAnimationFrame(() => requestAnimationFrame(() => { img.style.opacity = '1'; }));
+                            if (img.complete) { img.style.opacity = '1'; } else { img.onload = () => { img.style.opacity = '1'; }; }
                             thumb.style.cursor = 'zoom-in';
                             thumb.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(items, rawIdx); });
                         } else {
