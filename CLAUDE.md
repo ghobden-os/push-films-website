@@ -16,6 +16,8 @@ Portfolio website for Greg Hobden, film producer. Single-page site with sections
 - **PWA**: `manifest.json`, `sw.js`, `apple-touch-icon.svg`, `icon-maskable.svg` — makes site installable as home screen app on iOS/Android
 - **Email signature**: `files/email-signature.html` — live preview + Apple Mail install instructions. `files/g-disc.svg` — hosted yellow G disc image used in the signature (44px circle, `#F5D800`, DM Sans G)
 - **Type spec**: `files/type-spec.html` — A4 print-ready spec sheet for video editors: DM Sans, colours, name layout, disciplines
+- **Corporate one-pager**: `push-films-slide.html` — 1280×720px slide for pitch/presentation use. Light + Dark versions with switcher. Photo drag tool (click and drag to reframe). Yellow 3px bar above contact details. Backed up as `push-films-slide-v1.html`.
+- **Corporate one-pager PDF**: `push-films-slide.pdf` — landscape PDF export of the light version (no switcher). Generated via Chrome headless with DM Sans fonts embedded. To regenerate: rebuild `/tmp/push-films-print.html` (single slide, fonts embedded) and run `Google\ Chrome --headless --print-to-pdf=push-films-slide.pdf --no-pdf-header-footer --no-margins --paper-width=13.333 --paper-height=7.5 "file:///tmp/push-films-print.html"`
 
 ## Deployment Pipeline
 - Git → GitHub (`ghobden-os/push-films-website`) → Netlify (auto-deploys on push to `main`)
@@ -51,6 +53,8 @@ Gallery items support a `position` property for per-image `object-position` crop
 ```
 All gallery images default to `object-position: top` via CSS.
 
+Gallery thumbnail fade-in uses `img.onload` — images stay `opacity:0` until fully loaded, then fade in sharp. If already cached, appears instantly. Do not revert to `requestAnimationFrame` — that showed blurry partially-decoded images.
+
 Clicking a gallery image opens a full-screen lightbox (`#imgLightbox`).
 
 ### Lightbox
@@ -65,6 +69,9 @@ Automotive → Documentary → Experiential → Luxury → Expo → Sport → Co
 
 ### Early Years Button
 `.early-years-btn` — yellow filled (`background: var(--gold)`), dark text, `padding: 16px 32px`, matches showreel button style. Hover darkens to `#D4B800`.
+
+### Music Video Montage
+`.mv-montage` — full-width grid of all 21 music video thumbnails, displayed just above the contact section. 7 columns desktop, 4 columns mobile, 3px gaps, `aspect-ratio: 16/9`, `object-fit: cover`, `opacity: 0.85`. No text, colour. Images hover to `opacity: 0.85` (already at that level — adjust if needed). Images listed in order: amy-winehouse, diana-ross, will-young, busted, Five 2, girls-aloud, klonhertz, oasis-lyla, primal-scream-kowalski, sugababes, the-streets, the-streets-blinded, westlife, snow-patrol, the-killers, atomic-kitten, LOUISE, steps, BOYZONE, A1, Just Jack.
 
 ### Performance Warning
 Several work thumbnail images are very large (up to 12MB). They have `loading="lazy"` but are uncompressed. Key offenders:
@@ -167,7 +174,7 @@ vimeoFrame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
 - Background image: `images/Ford%20Mustang%20223.jpg` (1MB JPEG, down from 7MB PNG)
 - Preloaded via `<link rel="preload" as="image" href="images/Ford%20Mustang%20223.jpg">` in `<head>`
 - `overflow: hidden` removed from `#hero` — was clipping the Iron Maiden card at the bottom
-- **Iron Maiden card** (`.hero-film-card`): dark semi-transparent background, yellow border, 72×45px thumbnail, title, date ("In cinemas 7 May 2026"), "Watch the trailer →" in gold. Clicks open YouTube trailer in modal. Animates in with the showreel button at 3.3s delay.
+- **Iron Maiden card** (`.hero-film-card`): dark semi-transparent background, yellow border, 128×80px thumbnail, title (14px), date and CTA (12px, date now `--fg` white). Clicks open YouTube trailer in modal. Animates in with the showreel button at 3.3s delay.
 - Showreel ID: `1174080790`
 
 ### Mobile Hero Layout
