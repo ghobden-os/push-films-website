@@ -2531,26 +2531,27 @@
                 if (frame) {
                     const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
                     const isMob = window.innerWidth < 640;
-                    function loadVimeo() {
-                        const autoplay = isIOS ? '' : '&autoplay=1';
-                        frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?playsinline=1&title=0&byline=0&portrait=0' + autoplay + vimeoStart;
-                        if (typeof Vimeo !== 'undefined') {
-                            vimeoPlayer = new Vimeo.Player(frame);
-                            vimeoPlayer.on('ended', () => collapse());
-                            vimeoPlayer.on('pause', () => collapse());
-                        }
+                    const autoplay = isIOS ? '' : '&autoplay=1';
+                    frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?playsinline=1&title=0&byline=0&portrait=0' + autoplay + vimeoStart;
+                    if (typeof Vimeo !== 'undefined') {
+                        vimeoPlayer = new Vimeo.Player(frame);
+                        vimeoPlayer.on('ended', () => collapse());
+                        // Use hasPlayed guard — iOS loads in paused state, avoid instant collapse
+                        let hasPlayed = false;
+                        vimeoPlayer.on('play', () => { hasPlayed = true; });
+                        vimeoPlayer.on('pause', () => { if (hasPlayed) collapse(); });
                     }
                     if (isMob && filmPoster) {
                         const workImg = article.querySelector('.work-image');
                         filmPoster.style.backgroundImage = 'url(' + (workImg ? workImg.src : '') + ')';
                         filmPoster.style.display = 'flex';
-                        filmPoster.addEventListener('click', function(e) {
-                            e.stopPropagation();
-                            filmPoster.style.display = 'none';
-                            loadVimeo();
-                        }, { once: true });
-                    } else {
-                        loadVimeo();
+                        // Delay listener to avoid ghost tap from opening the accordion
+                        setTimeout(() => {
+                            filmPoster.addEventListener('click', function(e) {
+                                e.stopPropagation();
+                                filmPoster.style.display = 'none';
+                            }, { once: true });
+                        }, 350);
                     }
                 }
                 if (items.length > 0) {
