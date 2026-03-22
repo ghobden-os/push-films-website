@@ -2294,12 +2294,14 @@
 
         // POSITION HELPER
         let posMode = false;
-        const posAdjustments = {}; // galleryKey-itemIndex → yPct
-        const posAdjustmentsX = {}; // galleryKey-itemIndex → xPct
-        const posDeleteMarked = new Set(); // galleryKey-itemIndex keys marked for deletion
+        const posAdjustments = {}; // galleryKey-itemIndex → yPct (desktop)
+        const posAdjustmentsX = {}; // galleryKey-itemIndex → xPct (desktop)
+        const posAdjustmentsMobile = {}; // galleryKey-itemIndex → yPct (mobile)
+        const posAdjustmentsXMobile = {}; // galleryKey-itemIndex → xPct (mobile)
+        const posDeleteMarked = new Set();
         const posBadge = document.createElement('div');
         posBadge.className = 'pos-mode-badge';
-        posBadge.textContent = 'Position Mode — P to exit | X to mark delete | V for values';
+        posBadge.textContent = 'Position Mode — P to exit | V for values';
         document.body.appendChild(posBadge);
 
         function addPosOverlay(thumb) {
@@ -2309,18 +2311,22 @@
             if (existing) existing.remove();
             const posKey = thumb.dataset.posKey || '';
             const imgNum = thumb.dataset.imgNum || '';
+            const isMob = window.innerWidth < 640;
+            const adjY = isMob ? posAdjustmentsMobile : posAdjustments;
+            const adjX = isMob ? posAdjustmentsXMobile : posAdjustmentsX;
             const style = img.style.objectPosition;
             let xPct = 50, yPct = 0;
             if (style && style !== 'top') {
                 const parts = style.split(' ');
                 if (parts.length >= 2) { xPct = parseFloat(parts[0]) || 50; yPct = parseFloat(parts[1]) || 0; }
             }
-            if (posKey && posAdjustmentsX[posKey] !== undefined) xPct = posAdjustmentsX[posKey];
-            // Apply delete styling if already marked
+            if (posKey && adjX[posKey] !== undefined) xPct = adjX[posKey];
+            if (posKey && adjY[posKey] !== undefined) yPct = adjY[posKey];
             if (posKey && posDeleteMarked.has(posKey)) thumb.classList.add('pos-delete-marked');
+            const mobTag = isMob ? '<span style="color:var(--gold);font-size:8px;margin-right:4px">MOB</span>' : '';
             const ov = document.createElement('div');
             ov.className = 'pos-overlay';
-            ov.innerHTML = '<span class="pos-num">' + imgNum + '</span><button class="pl">←</button><span class="pos-x-val">' + xPct + '%</span><button class="pr">→</button><button class="pu">↑</button><span class="pos-val">' + yPct + '%</span><button class="pd">↓</button><button class="pdel" title="Mark for deletion">✕</button>';
+            ov.innerHTML = mobTag + '<span class="pos-num">' + imgNum + '</span><button class="pl">←</button><span class="pos-x-val">' + xPct + '%</span><button class="pr">→</button><button class="pu">↑</button><span class="pos-val">' + yPct + '%</span><button class="pd">↓</button><button class="pdel" title="Mark for deletion">✕</button>';
             thumb.appendChild(ov);
             const lbl = ov.querySelector('.pos-val');
             const xlbl = ov.querySelector('.pos-x-val');
@@ -2329,28 +2335,28 @@
                 xPct = Math.max(0, xPct - 5);
                 img.style.objectPosition = xPct + '% ' + yPct + '%';
                 xlbl.textContent = xPct + '%';
-                if (posKey) posAdjustmentsX[posKey] = xPct;
+                if (posKey) adjX[posKey] = xPct;
             });
             ov.querySelector('.pr').addEventListener('click', e => {
                 e.stopPropagation();
                 xPct = Math.min(100, xPct + 5);
                 img.style.objectPosition = xPct + '% ' + yPct + '%';
                 xlbl.textContent = xPct + '%';
-                if (posKey) posAdjustmentsX[posKey] = xPct;
+                if (posKey) adjX[posKey] = xPct;
             });
             ov.querySelector('.pu').addEventListener('click', e => {
                 e.stopPropagation();
                 yPct = Math.max(0, yPct - 5);
                 img.style.objectPosition = xPct + '% ' + yPct + '%';
                 lbl.textContent = yPct + '%';
-                if (posKey) posAdjustments[posKey] = yPct;
+                if (posKey) adjY[posKey] = yPct;
             });
             ov.querySelector('.pd').addEventListener('click', e => {
                 e.stopPropagation();
                 yPct = Math.min(100, yPct + 5);
                 img.style.objectPosition = xPct + '% ' + yPct + '%';
                 lbl.textContent = yPct + '%';
-                if (posKey) posAdjustments[posKey] = yPct;
+                if (posKey) adjY[posKey] = yPct;
             });
             ov.querySelector('.pdel').addEventListener('click', e => {
                 e.stopPropagation();
@@ -2376,14 +2382,17 @@
             }
             if (e.key === 'v' || e.key === 'V') {
                 if (!posMode) return;
+                const lines = [];
                 const allKeys = new Set([...Object.keys(posAdjustments), ...Object.keys(posAdjustmentsX)]);
-                const posLines = [...allKeys].map(k => { const x = posAdjustmentsX[k] !== undefined ? posAdjustmentsX[k] : 50; const y = posAdjustments[k] !== undefined ? posAdjustments[k] : 0; return k + ' → ' + x + '% ' + y + '%'; });
+                allKeys.forEach(k => { const x = posAdjustmentsX[k] !== undefined ? posAdjustmentsX[k] : 50; const y = posAdjustments[k] !== undefined ? posAdjustments[k] : 0; lines.push(k + ' → ' + x + '% ' + y + '%'); });
+                const allMobKeys = new Set([...Object.keys(posAdjustmentsMobile), ...Object.keys(posAdjustmentsXMobile)]);
+                allMobKeys.forEach(k => { const x = posAdjustmentsXMobile[k] !== undefined ? posAdjustmentsXMobile[k] : 50; const y = posAdjustmentsMobile[k] !== undefined ? posAdjustmentsMobile[k] : 0; lines.push('mobile:' + k + ' → ' + x + '% ' + y + '%'); });
                 const delLines = [...posDeleteMarked].map(k => 'DELETE: ' + k);
-                const all = [...posLines, ...delLines];
-                if (all.length === 0) { alert('No adjustments or deletions marked yet.'); return; }
+                const all = [...lines, ...delLines];
+                if (all.length === 0) { alert('No adjustments yet.'); return; }
                 navigator.clipboard.writeText(all.join('\n')).then(() => {
                     const orig = posBadge.textContent;
-                    posBadge.textContent = '✓ Copied to clipboard!';
+                    posBadge.textContent = '✓ Copied!';
                     setTimeout(() => { posBadge.textContent = orig; }, 2000);
                 });
             }
@@ -2446,12 +2455,18 @@
                     if (rawIdx < items.length) {
                         const item = items[rawIdx];
                         if (item.type === 'image') {
+                            const isMob = window.innerWidth < 640;
                             const storedY = posKey && posAdjustments[posKey] !== undefined ? posAdjustments[posKey] : null;
                             const storedX = posKey && posAdjustmentsX[posKey] !== undefined ? posAdjustmentsX[posKey] : null;
-                            const basePos = (item.position || '50% 0%').split(' ');
-                            const finalX = storedX !== null ? storedX : (parseFloat(basePos[0]) || 50);
-                            const finalY = storedY !== null ? storedY : (parseFloat(basePos[1]) || 0);
-                            const posToApply = (storedX !== null || storedY !== null) ? (finalX + '% ' + finalY + '%') : (item.position || '');
+                            const storedYMob = posKey && posAdjustmentsMobile[posKey] !== undefined ? posAdjustmentsMobile[posKey] : null;
+                            const storedXMob = posKey && posAdjustmentsXMobile[posKey] !== undefined ? posAdjustmentsXMobile[posKey] : null;
+                            const effectiveStoredY = isMob && storedYMob !== null ? storedYMob : storedY;
+                            const effectiveStoredX = isMob && storedXMob !== null ? storedXMob : storedX;
+                            const baseItem = isMob && item.mobilePosition ? item.mobilePosition : (item.position || '50% 0%');
+                            const basePos = baseItem.split(' ');
+                            const finalX = effectiveStoredX !== null ? effectiveStoredX : (parseFloat(basePos[0]) || 50);
+                            const finalY = effectiveStoredY !== null ? effectiveStoredY : (parseFloat(basePos[1]) || 0);
+                            const posToApply = (effectiveStoredX !== null || effectiveStoredY !== null) ? (finalX + '% ' + finalY + '%') : (isMob && item.mobilePosition ? item.mobilePosition : (item.position || ''));
                             const posStyle = posToApply ? ' style="object-position:' + posToApply + '"' : '';
                             thumb.innerHTML = '<img src="' + item.src + '" alt=""' + posStyle + '>';
                             const img = thumb.querySelector('img');
