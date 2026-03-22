@@ -1842,6 +1842,11 @@
         historicClose.addEventListener('click', () => {
             historic.classList.remove('visible');
             stopEasterAudio();
+            // Reset film player state so grid is visible next time section opens
+            if (restrictedGrid) restrictedGrid.style.display = '';
+            if (restrictedFrame) restrictedFrame.src = '';
+            if (restrictedFrameWrap) restrictedFrameWrap.classList.remove('visible');
+            if (restrictedBack) restrictedBack.style.display = 'none';
             document.getElementById('earlyYearsBtn').scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
 
