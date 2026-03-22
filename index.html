@@ -2947,8 +2947,10 @@
             lastIdx = idx;
             const img = imgs[idx];
             img.classList.add('mv-lit');
-            setTimeout(() => img.classList.remove('mv-lit'), 3000);
-            setTimeout(pulse, 1500 + Math.random() * 1000);
+            setTimeout(() => {
+                img.classList.remove('mv-lit');
+                setTimeout(pulse, 1300); // wait for fade-out transition before next
+            }, 3000);
         }
 
         // Start after a short delay so the page settles first
