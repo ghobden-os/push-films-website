@@ -629,6 +629,9 @@
         .work-expand-inner { display: block; }
         .expand-film { position: relative; width: 87.5%; margin: 0 auto; padding-bottom: 49.21875%; height: 0; background: #000; }
         .expand-film iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .film-poster { display: none; position: absolute; inset: 0; background-size: cover; background-position: center; cursor: pointer; align-items: center; justify-content: center; z-index: 2; }
+        .film-poster-play { width: 60px; height: 60px; background: rgba(0,0,0,0.55); border: 2px solid rgba(255,255,255,0.75); border-radius: 50%; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+        .film-poster-play::after { content: ''; display: block; width: 0; height: 0; border-style: solid; border-width: 11px 0 11px 20px; border-color: transparent transparent transparent #fff; margin-left: 4px; }
         .expand-gallery-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px; }
         .expand-gallery-thumb { aspect-ratio: 3/2; overflow: hidden; background: #000; border-radius: 6px; position: relative; }
         .pos-overlay { position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); border-radius: 4px; display: flex; align-items: center; gap: 6px; padding: 4px 8px; z-index: 10; pointer-events: all; }
@@ -2429,11 +2432,12 @@
             const expandPanel = article.querySelector('.work-expand');
             const items = (galleryKey && galleries[galleryKey]) ? galleries[galleryKey].items : [];
             let html = '<div class="work-expand-inner">';
-            if (vimeoId) html += '<div class="expand-film"><iframe class="expand-frame" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen playsinline></iframe></div>';
+            if (vimeoId) html += '<div class="expand-film"><div class="film-poster"><div class="film-poster-play"></div></div><iframe class="expand-frame" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen playsinline></iframe></div>';
             if (items.length > 0) html += '<div class="expand-gallery-strip"></div><div class="expand-gallery-bar"><button class="expand-gal-prev">←</button><span class="expand-gal-counter"></span><button class="expand-gal-next">→</button></div>';
             html += '</div>';
             expandPanel.innerHTML = html;
             const frame = expandPanel.querySelector('.expand-frame');
+            const filmPoster = expandPanel.querySelector('.film-poster');
             const strip = expandPanel.querySelector('.expand-gallery-strip');
             const counter = expandPanel.querySelector('.expand-gal-counter');
             const bar = expandPanel.querySelector('.expand-gallery-bar');
@@ -2503,6 +2507,7 @@
                 vimeoPlayer = null;
                 article.classList.remove('expanded');
                 if (frame) frame.src = '';
+                if (filmPoster) filmPoster.style.display = 'none';
                 stopSlide();
                 if (strip) strip.innerHTML = '';
                 if (counter) counter.textContent = '';
@@ -2525,12 +2530,27 @@
                 });
                 if (frame) {
                     const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
-                    const autoplay = isIOS ? '' : '&autoplay=1';
-                    frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?playsinline=1&title=0&byline=0&portrait=0' + autoplay + vimeoStart;
-                    if (typeof Vimeo !== 'undefined') {
-                        vimeoPlayer = new Vimeo.Player(frame);
-                        vimeoPlayer.on('ended', () => collapse());
-                        vimeoPlayer.on('pause', () => collapse());
+                    const isMob = window.innerWidth < 640;
+                    function loadVimeo() {
+                        const autoplay = isIOS ? '' : '&autoplay=1';
+                        frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?playsinline=1&title=0&byline=0&portrait=0' + autoplay + vimeoStart;
+                        if (typeof Vimeo !== 'undefined') {
+                            vimeoPlayer = new Vimeo.Player(frame);
+                            vimeoPlayer.on('ended', () => collapse());
+                            vimeoPlayer.on('pause', () => collapse());
+                        }
+                    }
+                    if (isMob && filmPoster) {
+                        const workImg = article.querySelector('.work-image');
+                        filmPoster.style.backgroundImage = 'url(' + (workImg ? workImg.src : '') + ')';
+                        filmPoster.style.display = 'flex';
+                        filmPoster.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            filmPoster.style.display = 'none';
+                            loadVimeo();
+                        }, { once: true });
+                    } else {
+                        loadVimeo();
                     }
                 }
                 if (items.length > 0) {
