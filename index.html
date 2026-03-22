@@ -1901,7 +1901,7 @@
             raptor: {
                 stripDurations: [7667, 7667, 7666, 15000],
                 items: [
-                    {type:'image',src:'images/raptor-4.jpeg',position:'60% 0%',mobilePosition:'50% 50%'},
+                    {type:'image',src:'images/raptor-4.jpeg',position:'60% 0%',mobilePosition:'60% 50%'},
                     {type:'image',src:'images/raptor-11.jpeg',position:'50% 0%',mobilePosition:'50% 40%'},
                     {type:'image',src:'images/raptor-12.jpeg',position:'50% 50%',mobilePosition:'50% 65%'},
                     {type:'image',src:'images/raptor-14.jpeg',position:'50% 35%',mobilePosition:'50% 45%'},
@@ -1912,7 +1912,7 @@
                     {type:'video',src:'images/raptor-50.mov'},
                     {type:'video',src:'images/raptor-51.mov'},
                     {type:'image',src:'images/RAPTOR%20/2391CBE2-C9A5-402F-B727-B1C2CABD56AE.jpg',position:'50% 35%',mobilePosition:'50% 50%'},
-                    {type:'image',src:'images/RAPTOR%20/5A1AE96E-0003-4884-BC7B-25738AE3B39E.jpg',position:'40% 25%',mobilePosition:'50% 40%'},
+                    {type:'image',src:'images/RAPTOR%20/5A1AE96E-0003-4884-BC7B-25738AE3B39E.jpg',position:'40% 25%',mobilePosition:'40% 40%'},
                     {type:'image',src:'images/RAPTOR%20/7.png',mobilePosition:'50% 10%'},
                     {type:'image',src:'images/RAPTOR%20/79522D37-59D7-4640-AA7B-C968F7DD5964.jpg',position:'40% 0%'},
                     {type:'image',src:'images/RAPTOR%20/A1335C08-C6F1-4AFD-ADA0-CD230D69D21C.jpg',position:'50% 0%',mobilePosition:'50% 45%'},
@@ -2386,7 +2386,18 @@
                 const allKeys = new Set([...Object.keys(posAdjustments), ...Object.keys(posAdjustmentsX)]);
                 allKeys.forEach(k => { const x = posAdjustmentsX[k] !== undefined ? posAdjustmentsX[k] : 50; const y = posAdjustments[k] !== undefined ? posAdjustments[k] : 0; lines.push(k + ' → ' + x + '% ' + y + '%'); });
                 const allMobKeys = new Set([...Object.keys(posAdjustmentsMobile), ...Object.keys(posAdjustmentsXMobile)]);
-                allMobKeys.forEach(k => { const x = posAdjustmentsXMobile[k] !== undefined ? posAdjustmentsXMobile[k] : 50; const y = posAdjustmentsMobile[k] !== undefined ? posAdjustmentsMobile[k] : 0; lines.push('mobile:' + k + ' → ' + x + '% ' + y + '%'); });
+                allMobKeys.forEach(k => {
+                    let x = posAdjustmentsXMobile[k] !== undefined ? posAdjustmentsXMobile[k] : null;
+                    if (x === null) {
+                        // Read actual rendered X from the img element so non-adjusted X values are correct
+                        const thumb = document.querySelector('[data-pos-key="' + k + '"]');
+                        const img = thumb && thumb.querySelector('img');
+                        const pos = img && img.style.objectPosition;
+                        x = (pos && pos !== 'top') ? (parseFloat(pos.split(' ')[0]) || 50) : 50;
+                    }
+                    const y = posAdjustmentsMobile[k] !== undefined ? posAdjustmentsMobile[k] : 0;
+                    lines.push('mobile:' + k + ' → ' + x + '% ' + y + '%');
+                });
                 const delLines = [...posDeleteMarked].map(k => 'DELETE: ' + k);
                 const all = [...lines, ...delLines];
                 if (all.length === 0) { alert('No adjustments yet.'); return; }
