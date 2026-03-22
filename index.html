@@ -2859,14 +2859,14 @@
                 backImg.style.opacity = '0';
                 frontImg.style.zIndex = '2';
                 requestAnimationFrame(() => requestAnimationFrame(() => {
-                    backImg.style.transition = 'opacity 0.7s ease';
+                    backImg.style.transition = 'opacity 1.2s ease';
                     backImg.style.opacity = '1';
                     // Once fully faded in, silently hide the old front (now behind)
                     setTimeout(() => {
                         frontImg.style.transition = 'none';
                         frontImg.style.opacity = '0';
                         const tmp = frontImg; frontImg = backImg; backImg = tmp;
-                    }, 750);
+                    }, 1250);
                 }));
             }
 
@@ -2875,28 +2875,29 @@
                 // Reset layers cleanly
                 frontImg = imgA; backImg = imgB;
                 imgA.src = srcs[0];
-                imgA.style.zIndex = '3'; imgA.style.transition = 'opacity 0.5s ease'; imgA.style.opacity = '1';
+                imgA.style.zIndex = '3'; imgA.style.transition = 'opacity 0.6s ease'; imgA.style.opacity = '1';
                 imgB.style.zIndex = '2'; imgB.style.transition = 'none'; imgB.style.opacity = '0';
                 previewIdx = 0;
                 if (srcs.length > 1) {
-                    setTimeout(() => { previewIdx = 1; crossfadeTo(previewIdx); }, 700);
-                    previewInterval = setInterval(() => {
+                    // First crossfade after 2s, then chain interval every 3.5s
+                    previewInterval = setTimeout(function tick() {
                         previewIdx = (previewIdx + 1) % srcs.length;
                         crossfadeTo(previewIdx);
-                    }, 3000);
+                        previewInterval = setTimeout(tick, 3500);
+                    }, 2000);
                 }
             });
 
             item.addEventListener('mouseleave', () => {
-                clearInterval(previewInterval);
-                imgA.style.transition = 'opacity 0.4s ease'; imgA.style.opacity = '0';
-                imgB.style.transition = 'opacity 0.4s ease'; imgB.style.opacity = '0';
+                clearTimeout(previewInterval);
+                imgA.style.transition = 'opacity 0.5s ease'; imgA.style.opacity = '0';
+                imgB.style.transition = 'opacity 0.5s ease'; imgB.style.opacity = '0';
                 setTimeout(() => {
                     frontImg = imgA; backImg = imgB;
                     imgA.src = srcs[0]; imgA.style.zIndex = '3';
                     imgB.src = srcs[1 % srcs.length]; imgB.style.zIndex = '2';
                     previewIdx = 0;
-                }, 450);
+                }, 550);
             });
         }
     });
