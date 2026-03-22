@@ -256,7 +256,8 @@
         .about-label span { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); }
         .about-content p { font-size: clamp(15px, 1.3vw, 17px); line-height: 2.0; color: #CCCCCC; margin-bottom: 28px; max-width: 640px; }
         .about-section-break { border: none; border-top: 1px solid var(--rule); margin: 44px 0; max-width: 640px; }
-        .about-photo { width: 100%; max-width: 640px; aspect-ratio: 3426 / 1438; object-fit: cover; object-position: center; display: block; margin: 44px 0; }
+        .about-photo { width: 100%; max-width: 640px; aspect-ratio: 3426 / 1438; object-fit: cover; object-position: center; display: block; margin: 44px 0; cursor: zoom-in; transition: opacity 0.2s; }
+        .about-photo:hover { opacity: 0.85; }
         .about-lead {
             font-family: var(--font-serif) !important; font-size: clamp(20px, 2.4vw, 28px) !important; font-weight: 500 !important;
             color: var(--fg) !important; line-height: 1.4 !important; margin-bottom: 28px !important;
@@ -2278,6 +2279,8 @@
             }
         }
         imgLightbox.addEventListener('click', closeLightbox);
+        const aboutPhoto = document.querySelector('.about-photo');
+        if (aboutPhoto) aboutPhoto.addEventListener('click', () => openLightbox([{ src: aboutPhoto.src }], 0));
         document.addEventListener('keydown', (e) => {
             if (imgLightbox.style.display === 'none') return;
             if (e.key === 'ArrowLeft') navigateLightbox(-1);
