@@ -2832,44 +2832,72 @@
 
             overlay.querySelectorAll('button').forEach(b => b.addEventListener('click', e => e.stopPropagation()));
         } else {
-            // Normal mode: hover to cycle
-            const previewEl = document.createElement('img');
-            previewEl.className = 'work-preview-img';
-            previewEl.src = srcs[0];
-            workImg.appendChild(previewEl);
+            // Normal mode: two-layer crossfade (no flash on src swap)
+            // imgBack is always visible; imgFront fades in over it
+            const imgBack = document.createElement('img');
+            const imgFront = document.createElement('img');
+            imgBack.className = 'work-preview-img';
+            imgFront.className = 'work-preview-img';
+            imgBack.src = srcs[0];
+            imgFront.src = srcs[1 % srcs.length];
+            imgFront.style.zIndex = '3';
+            imgBack.style.zIndex = '2';
+            workImg.appendChild(imgBack);
+            workImg.appendChild(imgFront);
 
             let previewInterval = null;
             let previewIdx = 0;
+            let transitionTimer = null;
+
+            function crossfadeTo(idx) {
+                imgFront.src = srcs[idx];
+                imgFront.style.transition = 'none';
+                imgFront.style.opacity = '0';
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    imgFront.style.transition = 'opacity 0.7s ease';
+                    imgFront.style.opacity = '1';
+                    transitionTimer = setTimeout(() => {
+                        imgBack.src = srcs[idx];
+                        imgFront.style.transition = 'none';
+                        imgFront.style.opacity = '0';
+                    }, 750);
+                }));
+            }
 
             item.addEventListener('mouseenter', () => {
                 if (item.classList.contains('expanded')) return;
-                previewIdx = 1 % srcs.length; // start from second image
-                previewEl.style.transition = 'none';
-                previewEl.style.opacity = '0';
-                previewEl.src = srcs[previewIdx];
-                requestAnimationFrame(() => {
-                    previewEl.style.transition = 'opacity 0.5s ease';
-                    previewEl.style.opacity = '1';
-                });
+                clearTimeout(transitionTimer);
+                imgBack.style.transition = 'opacity 0.5s ease';
+                imgBack.style.opacity = '1';
+                imgBack.src = srcs[0];
+                imgFront.style.transition = 'none';
+                imgFront.style.opacity = '0';
+                previewIdx = 0;
+                // Dissolve to second image after a short pause
+                setTimeout(() => {
+                    previewIdx = 1 % srcs.length;
+                    crossfadeTo(previewIdx);
+                }, 600);
                 if (srcs.length > 1) {
                     previewInterval = setInterval(() => {
                         previewIdx = (previewIdx + 1) % srcs.length;
-                        previewEl.style.transition = 'opacity 0.3s ease';
-                        previewEl.style.opacity = '0';
-                        setTimeout(() => {
-                            previewEl.src = srcs[previewIdx];
-                            previewEl.style.transition = 'opacity 0.5s ease';
-                            previewEl.style.opacity = '1';
-                        }, 320);
-                    }, 2000);
+                        crossfadeTo(previewIdx);
+                    }, 3000);
                 }
             });
 
             item.addEventListener('mouseleave', () => {
                 clearInterval(previewInterval);
-                previewEl.style.transition = 'opacity 0.4s ease';
-                previewEl.style.opacity = '0';
-                setTimeout(() => { previewEl.src = srcs[0]; previewIdx = 0; }, 400);
+                clearTimeout(transitionTimer);
+                imgFront.style.transition = 'opacity 0.4s ease';
+                imgFront.style.opacity = '0';
+                imgBack.style.transition = 'opacity 0.4s ease';
+                imgBack.style.opacity = '0';
+                setTimeout(() => {
+                    imgBack.src = srcs[0];
+                    imgFront.src = srcs[1 % srcs.length];
+                    previewIdx = 0;
+                }, 450);
             });
         }
     });
