@@ -713,7 +713,7 @@
         @media (max-width: 640px) {
             .expand-film { width: 100% !important; padding-bottom: 56.25% !important; margin: 0 !important; }
             .expand-gallery-strip { grid-template-columns: 1fr !important; gap: 0 !important; margin-top: 10px !important; }
-            .expand-gallery-thumb { aspect-ratio: unset !important; height: calc((100vw - 2 * var(--pad)) * 0.5625) !important; max-height: none !important; }
+            .expand-gallery-thumb { aspect-ratio: unset !important; height: calc((100vw - 2 * var(--pad)) * 0.39375) !important; max-height: none !important; }
             #hero { background-position: 18% center !important; justify-content: space-between !important; padding-top: calc(var(--nav-h) + 20px) !important; padding-bottom: 52px !important; }
             #hero::before { background: linear-gradient(to bottom, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.08) 40%, rgba(0,0,0,0.08) 60%, rgba(0,0,0,0.72) 100%) !important; }
             .hero-main { margin-left: 0 !important; align-self: auto !important; padding-right: 0 !important; text-align: center !important; align-items: center !important; }
@@ -2491,7 +2491,12 @@
                 article.classList.add('expanded');
                 requestAnimationFrame(() => {
                     const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 64;
-                    const top = expandPanel.getBoundingClientRect().top + window.scrollY - navH - 12;
+                    const filterBar = document.querySelector('.work-filter-bar');
+                    const filterBarH = filterBar ? filterBar.offsetHeight : 0;
+                    const isMobile = window.innerWidth < 640;
+                    // On mobile scroll to the article (title visible), on desktop to the film
+                    const scrollTarget = isMobile ? article : expandPanel;
+                    const top = scrollTarget.getBoundingClientRect().top + window.scrollY - navH - filterBarH - 8;
                     window.scrollTo({ top, behavior: 'smooth' });
                 });
                 if (frame) {
