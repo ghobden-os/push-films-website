@@ -562,20 +562,17 @@
             width: 100%; height: 100%;
             object-fit: cover;
         }
-        #revealCountdown {
+        #revealProgressBar {
             position: absolute;
-            bottom: 48px;
-            right: 48px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: clamp(48px, 8vw, 96px);
-            font-weight: 300;
-            color: var(--gold);
+            bottom: 0; left: 0;
+            height: 3px;
+            width: 0%;
+            background: var(--gold);
             opacity: 0;
             transition: opacity 0.5s ease;
             pointer-events: none;
-            line-height: 1;
         }
-        #revealCountdown.visible { opacity: 1; }
+        #revealProgressBar.visible { opacity: 1; }
 
         .historic-header {
             margin-bottom: clamp(40px, 5vw, 64px);
@@ -1309,7 +1306,7 @@
 
     <div id="videoRevealOverlay">
         <video id="videoRevealClip" src="five-intro.mp4" playsinline muted></video>
-        <div id="revealCountdown"></div>
+        <div id="revealProgressBar"></div>
     </div>
 
     <audio id="easterEggAudio" src="easter-egg.mp3" preload="auto"></audio>
@@ -1667,7 +1664,7 @@
 
         const videoOverlay = document.getElementById('videoRevealOverlay');
         const videoClip = document.getElementById('videoRevealClip');
-        const revealCountdown = document.getElementById('revealCountdown');
+        const revealProgressBar = document.getElementById('revealProgressBar');
         let revealTimeout1 = null, revealTimeout2 = null, revealTimeout3 = null;
         let revealFadeInterval = null;
         let revealActive = false;
@@ -1679,7 +1676,8 @@
             clearInterval(revealFadeInterval);
 
             typewriterEl.textContent = '';
-            revealCountdown.classList.remove('visible');
+            revealProgressBar.classList.remove('visible');
+            revealProgressBar.style.width = '0%';
             historic.classList.add('visible');
             setTimeout(() => { window.scrollTo(0, historic.offsetTop); }, 50);
 
@@ -1736,19 +1734,13 @@
                 if (upStep >= 40) clearInterval(revealFadeInterval);
             }, 50);
 
-            // Countdown: appears at 2s, counts 15→0, disappears on dissolve
-            let countNum = 15;
-            revealCountdown.textContent = countNum;
+            // Progress bar: fades in at 2s, fills over 15s, disappears on dissolve
+            revealProgressBar.style.transition = 'none';
+            revealProgressBar.style.width = '0%';
             setTimeout(() => {
-                revealCountdown.classList.add('visible');
-                const countInterval = setInterval(() => {
-                    countNum--;
-                    revealCountdown.textContent = countNum;
-                    if (countNum <= 0) {
-                        clearInterval(countInterval);
-                        revealCountdown.classList.remove('visible');
-                    }
-                }, 1000);
+                revealProgressBar.classList.add('visible');
+                revealProgressBar.style.transition = 'width 15s linear';
+                revealProgressBar.style.width = '100%';
             }, 2000);
 
             // At 12s: begin slow audio fade over 8s
