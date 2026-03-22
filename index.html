@@ -2936,7 +2936,8 @@
             b.classList.toggle('active', b.dataset.filter === filter);
         });
         // Show/hide work categories
-        document.querySelectorAll('.work-category').forEach(cat => {
+        // Only filter categories inside #work — not those inside #historic (music videos)
+        document.querySelectorAll('#work .work-category').forEach(cat => {
             if (filter === 'all') {
                 cat.style.display = '';
             } else {
