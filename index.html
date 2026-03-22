@@ -2950,8 +2950,8 @@
                 cat.style.display = catName.includes(filter) ? '' : 'none';
             }
         });
-        // Hide montage when a specific section is active
-        const showMontage = filter === 'all';
+        // Show montage on 'all' or when Music Videos filter is active
+        const showMontage = filter === 'all' || filter === 'early years';
         if (mvMontage) mvMontage.style.display = showMontage ? '' : 'none';
         if (mvLabel)   mvLabel.style.display   = showMontage ? '' : 'none';
     }
