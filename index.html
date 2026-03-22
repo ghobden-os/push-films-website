@@ -2969,9 +2969,11 @@
     const topFilterBar = document.querySelector('.work-filter-bar');
     const stickyNav    = document.getElementById('stickyFilterNav');
     if (topFilterBar && stickyNav) {
-        new IntersectionObserver(([entry]) => {
-            stickyNav.classList.toggle('visible', !entry.isIntersecting);
-        }, { threshold: 0 }).observe(topFilterBar);
+        function updateStickyNav() {
+            stickyNav.classList.toggle('visible', topFilterBar.getBoundingClientRect().bottom < 0);
+        }
+        window.addEventListener('scroll', updateStickyNav, { passive: true });
+        updateStickyNav();
     }
 
     // ── MUSIC VIDEO MONTAGE HIGHLIGHTS ────────────────────────────────────────
