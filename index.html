@@ -840,6 +840,24 @@
         .work-filter-btn:hover { border-color:var(--gold); color:var(--gold); }
         .work-filter-btn.active { border-color:var(--gold); color:var(--gold); background:rgba(245,216,0,0.06); }
 
+        /* STICKY SECTION NAV */
+        #stickyFilterNav {
+            position:fixed; bottom:0; left:0; right:0; z-index:500;
+            background:rgba(8,8,8,0.97); border-top:1px solid var(--rule);
+            display:flex; justify-content:center; gap:8px; flex-wrap:wrap;
+            padding:10px clamp(16px,4vw,48px);
+            transform:translateY(100%); transition:transform 0.35s ease;
+        }
+        #stickyFilterNav.visible { transform:translateY(0); }
+
+        /* MONTAGE SECTION LABEL */
+        .mv-montage-label {
+            padding: clamp(32px,5vw,60px) var(--pad) 20px;
+            background: #0D0B08;
+            font-family:var(--font-sans); font-size:10px; letter-spacing:0.16em;
+            text-transform:uppercase; color:var(--mid);
+        }
+
         /* HOVER PREVIEW IMAGE */
         .work-preview-img {
             position:absolute; inset:0;
@@ -1288,7 +1306,8 @@
     </section>
 
 
-    <div class="mv-montage">
+    <div class="mv-montage-label" id="mvMontageLabel">Music Videos</div>
+    <div class="mv-montage" id="mvMontage">
         <div class="mv-montage-grid">
             <img loading="lazy" src="images/montage/amy-winehouse.png" alt="">
             <img loading="lazy" src="images/montage/diana-ross.png" alt="">
@@ -2919,21 +2938,41 @@
     }
 
     // ── WORK FILTER BAR ───────────────────────────────────────────────────────
-    document.querySelectorAll('.work-filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.work-filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const filter = btn.dataset.filter;
-            document.querySelectorAll('.work-category').forEach(cat => {
-                if (filter === 'all') {
-                    cat.style.display = '';
-                } else {
-                    const catName = (cat.querySelector('.work-category-header span')?.textContent || '').toLowerCase();
-                    cat.style.display = catName.includes(filter) ? '' : 'none';
-                }
-            });
+    const mvMontage = document.getElementById('mvMontage');
+    const mvLabel   = document.getElementById('mvMontageLabel');
+
+    function applyFilter(filter) {
+        // Sync active state on both bars
+        document.querySelectorAll('.work-filter-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.filter === filter);
         });
+        // Show/hide work categories
+        document.querySelectorAll('.work-category').forEach(cat => {
+            if (filter === 'all') {
+                cat.style.display = '';
+            } else {
+                const catName = (cat.querySelector('.work-category-header span')?.textContent || '').toLowerCase();
+                cat.style.display = catName.includes(filter) ? '' : 'none';
+            }
+        });
+        // Hide montage when a specific section is active
+        const showMontage = filter === 'all';
+        if (mvMontage) mvMontage.style.display = showMontage ? '' : 'none';
+        if (mvLabel)   mvLabel.style.display   = showMontage ? '' : 'none';
+    }
+
+    document.querySelectorAll('.work-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
     });
+
+    // Sticky nav: show when top filter bar scrolls out of view
+    const topFilterBar = document.querySelector('.work-filter-bar');
+    const stickyNav    = document.getElementById('stickyFilterNav');
+    if (topFilterBar && stickyNav) {
+        new IntersectionObserver(([entry]) => {
+            stickyNav.classList.toggle('visible', !entry.isIntersecting);
+        }, { threshold: 0 }).observe(topFilterBar);
+    }
 
     // ── MUSIC VIDEO MONTAGE HIGHLIGHTS ────────────────────────────────────────
     (function () {
@@ -2972,6 +3011,19 @@
     setInterval(updateMaidenCountdown, 60000);
 
     </script>
+    <div id="stickyFilterNav">
+        <button class="work-filter-btn active" data-filter="all">All</button>
+        <button class="work-filter-btn" data-filter="automotive">Automotive</button>
+        <button class="work-filter-btn" data-filter="documentary">Documentary</button>
+        <button class="work-filter-btn" data-filter="experiential">Experiential</button>
+        <button class="work-filter-btn" data-filter="luxury">Luxury</button>
+        <button class="work-filter-btn" data-filter="expo">Expo</button>
+        <button class="work-filter-btn" data-filter="sport">Sport</button>
+        <button class="work-filter-btn" data-filter="comedy">Comedy</button>
+        <button class="work-filter-btn" data-filter="everest">Everest</button>
+        <button class="work-filter-btn" data-filter="early years">Music Videos</button>
+    </div>
+
     <script src="https://player.vimeo.com/api/player.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
