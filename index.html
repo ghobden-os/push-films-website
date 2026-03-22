@@ -2832,53 +2832,54 @@
 
             overlay.querySelectorAll('button').forEach(b => b.addEventListener('click', e => e.stopPropagation()));
         } else {
-            // Normal mode: two-layer crossfade (no flash on src swap)
-            // imgBack is always visible; imgFront fades in over it
-            const imgBack = document.createElement('img');
-            const imgFront = document.createElement('img');
-            imgBack.className = 'work-preview-img';
-            imgFront.className = 'work-preview-img';
-            imgBack.src = srcs[0];
-            imgFront.src = srcs[1 % srcs.length];
-            imgFront.style.zIndex = '3';
-            imgBack.style.zIndex = '2';
-            workImg.appendChild(imgBack);
-            workImg.appendChild(imgFront);
+            // Normal mode: alternating two-layer crossfade
+            // frontImg is always the currently visible layer
+            // backImg is always loaded silently underneath
+            const imgA = document.createElement('img');
+            const imgB = document.createElement('img');
+            imgA.className = 'work-preview-img';
+            imgB.className = 'work-preview-img';
+            imgA.src = srcs[0];
+            imgB.src = srcs[1 % srcs.length];
+            imgA.style.zIndex = '3';
+            imgB.style.zIndex = '2';
+            workImg.appendChild(imgB);
+            workImg.appendChild(imgA);
 
+            let frontImg = imgA;
+            let backImg  = imgB;
             let previewInterval = null;
             let previewIdx = 0;
-            let transitionTimer = null;
 
             function crossfadeTo(idx) {
-                imgFront.src = srcs[idx];
-                imgFront.style.transition = 'none';
-                imgFront.style.opacity = '0';
+                // Load new image onto the back layer and bring it to the front
+                backImg.src = srcs[idx];
+                backImg.style.zIndex = '3';
+                backImg.style.transition = 'none';
+                backImg.style.opacity = '0';
+                frontImg.style.zIndex = '2';
                 requestAnimationFrame(() => requestAnimationFrame(() => {
-                    imgFront.style.transition = 'opacity 0.7s ease';
-                    imgFront.style.opacity = '1';
-                    transitionTimer = setTimeout(() => {
-                        imgBack.src = srcs[idx];
-                        imgFront.style.transition = 'none';
-                        imgFront.style.opacity = '0';
+                    backImg.style.transition = 'opacity 0.7s ease';
+                    backImg.style.opacity = '1';
+                    // Once fully faded in, silently hide the old front (now behind)
+                    setTimeout(() => {
+                        frontImg.style.transition = 'none';
+                        frontImg.style.opacity = '0';
+                        const tmp = frontImg; frontImg = backImg; backImg = tmp;
                     }, 750);
                 }));
             }
 
             item.addEventListener('mouseenter', () => {
                 if (item.classList.contains('expanded')) return;
-                clearTimeout(transitionTimer);
-                imgBack.style.transition = 'opacity 0.5s ease';
-                imgBack.style.opacity = '1';
-                imgBack.src = srcs[0];
-                imgFront.style.transition = 'none';
-                imgFront.style.opacity = '0';
+                // Reset layers cleanly
+                frontImg = imgA; backImg = imgB;
+                imgA.src = srcs[0];
+                imgA.style.zIndex = '3'; imgA.style.transition = 'opacity 0.5s ease'; imgA.style.opacity = '1';
+                imgB.style.zIndex = '2'; imgB.style.transition = 'none'; imgB.style.opacity = '0';
                 previewIdx = 0;
-                // Dissolve to second image after a short pause
-                setTimeout(() => {
-                    previewIdx = 1 % srcs.length;
-                    crossfadeTo(previewIdx);
-                }, 600);
                 if (srcs.length > 1) {
+                    setTimeout(() => { previewIdx = 1; crossfadeTo(previewIdx); }, 700);
                     previewInterval = setInterval(() => {
                         previewIdx = (previewIdx + 1) % srcs.length;
                         crossfadeTo(previewIdx);
@@ -2888,14 +2889,12 @@
 
             item.addEventListener('mouseleave', () => {
                 clearInterval(previewInterval);
-                clearTimeout(transitionTimer);
-                imgFront.style.transition = 'opacity 0.4s ease';
-                imgFront.style.opacity = '0';
-                imgBack.style.transition = 'opacity 0.4s ease';
-                imgBack.style.opacity = '0';
+                imgA.style.transition = 'opacity 0.4s ease'; imgA.style.opacity = '0';
+                imgB.style.transition = 'opacity 0.4s ease'; imgB.style.opacity = '0';
                 setTimeout(() => {
-                    imgBack.src = srcs[0];
-                    imgFront.src = srcs[1 % srcs.length];
+                    frontImg = imgA; backImg = imgB;
+                    imgA.src = srcs[0]; imgA.style.zIndex = '3';
+                    imgB.src = srcs[1 % srcs.length]; imgB.style.zIndex = '2';
                     previewIdx = 0;
                 }, 450);
             });
