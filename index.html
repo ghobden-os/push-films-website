@@ -2978,11 +2978,8 @@
             currentFilter = btn.dataset.filter;
             applyFilter(currentFilter);
             resetFilterTimer();
-            // Music Videos: scroll to the montage; all others: top of work section
-            const scrollTarget = currentFilter === 'early years'
-                ? (mvLabel || mvMontage)
-                : workSection;
-            const top = scrollTarget.getBoundingClientRect().top + window.scrollY - navH;
+            // Scroll to top of work section (sticky filter bar lands just above content)
+            const top = workSection.getBoundingClientRect().top + window.scrollY - navH;
             window.scrollTo({ top, behavior: 'smooth' });
         });
     });
