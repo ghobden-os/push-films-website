@@ -562,6 +562,20 @@
             width: 100%; height: 100%;
             object-fit: cover;
         }
+        #revealCountdown {
+            position: absolute;
+            bottom: 48px;
+            right: 48px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(48px, 8vw, 96px);
+            font-weight: 300;
+            color: var(--gold);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            line-height: 1;
+        }
+        #revealCountdown.visible { opacity: 1; }
 
         .historic-header {
             margin-bottom: clamp(40px, 5vw, 64px);
@@ -1295,6 +1309,7 @@
 
     <div id="videoRevealOverlay">
         <video id="videoRevealClip" src="five-intro.mp4" playsinline muted></video>
+        <div id="revealCountdown"></div>
     </div>
 
     <audio id="easterEggAudio" src="easter-egg.mp3" preload="auto"></audio>
@@ -1652,6 +1667,7 @@
 
         const videoOverlay = document.getElementById('videoRevealOverlay');
         const videoClip = document.getElementById('videoRevealClip');
+        const revealCountdown = document.getElementById('revealCountdown');
         let revealTimeout1 = null, revealTimeout2 = null, revealTimeout3 = null;
         let revealFadeInterval = null;
         let revealActive = false;
@@ -1663,6 +1679,7 @@
             clearInterval(revealFadeInterval);
 
             typewriterEl.textContent = '';
+            revealCountdown.classList.remove('visible');
             historic.classList.add('visible');
             setTimeout(() => { window.scrollTo(0, historic.offsetTop); }, 50);
 
@@ -1718,6 +1735,21 @@
                 videoClip.volume = Math.min(1, upStep / 40);
                 if (upStep >= 40) clearInterval(revealFadeInterval);
             }, 50);
+
+            // Countdown: appears at 2s, counts 15→0, disappears on dissolve
+            let countNum = 15;
+            revealCountdown.textContent = countNum;
+            setTimeout(() => {
+                revealCountdown.classList.add('visible');
+                const countInterval = setInterval(() => {
+                    countNum--;
+                    revealCountdown.textContent = countNum;
+                    if (countNum <= 0) {
+                        clearInterval(countInterval);
+                        revealCountdown.classList.remove('visible');
+                    }
+                }, 1000);
+            }, 2000);
 
             // At 12s: begin slow audio fade over 8s
             revealTimeout1 = setTimeout(() => {
