@@ -253,7 +253,7 @@
 
         /* ABOUT */
         #about { border-top: 1px solid var(--rule); }
-        .about-grid { display: grid; grid-template-columns: 180px 1fr; gap: clamp(40px, 6vw, 120px); align-items: start; }
+        .about-grid { display: grid; grid-template-columns: 120px 1fr; gap: clamp(32px, 4vw, 80px); align-items: start; }
         .about-label { padding-top: 5px; position: sticky; top: calc(var(--nav-h) + 24px); }
         .about-label span { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); }
         .about-content p { font-size: clamp(15px, 1.3vw, 17px); line-height: 2.0; color: #CCCCCC; margin-bottom: 28px; max-width: 640px; }
@@ -270,7 +270,7 @@
         #work { border-top: 1px solid var(--rule); }
         .section-header { margin-bottom: clamp(40px, 5vw, 64px); padding-bottom: 20px; border-bottom: 1px solid var(--rule); display: flex; align-items: baseline; justify-content: space-between; }
         .section-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
-        .work-category { margin-bottom: clamp(56px, 8vw, 96px); }
+        .work-category { margin-bottom: clamp(40px, 5vw, 64px); }
         .work-category:last-child { margin-bottom: 0; }
         .work-category-header { display: flex; align-items: baseline; gap: 20px; margin-bottom: clamp(24px, 3vw, 36px); }
         .work-category-header span { font-family: var(--font-serif); font-size: clamp(20px, 2.2vw, 26px); font-weight: 500; color: var(--fg); }
@@ -309,14 +309,14 @@
             content: '▶';
             position: absolute; inset: 0;
             display: flex; align-items: center; justify-content: center;
-            font-size: 32px; color: rgba(255,255,255,0);
-            background: rgba(0,0,0,0);
+            font-size: 32px; color: rgba(255,255,255,0.35);
+            background: rgba(0,0,0,0.15);
             transition: color 0.3s ease, background 0.3s ease;
             pointer-events: none;
         }
         .work-item.accordion:hover .work-image::after {
             color: rgba(255,255,255,0.9);
-            background: rgba(0,0,0,0.35);
+            background: rgba(0,0,0,0.4);
         }
         .work-image.placeholder { display: flex; align-items: center; justify-content: center; }
         .work-image.placeholder span { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rule); }
@@ -840,7 +840,7 @@
         <div class="hero-main">
             <h1 class="hero-name">Greg<br><em>Hobden</em></h1>
             <div class="hero-divider"><span>Thirty-five years in film</span></div>
-            <p class="hero-sub">Theatrical documentary, high-end automotive, live experiential.</p>
+            <p class="hero-sub">Theatrical documentary, high-end&nbsp;automotive, live experiential.</p>
             <button class="hero-reel-btn" id="heroReelBtn"><span class="hero-reel-play">&#9654;</span>Showreel</button>
             <div class="hero-film-card" id="heroMaidenBtn">
                 <img src="images/burning-ambition.png" alt="Iron Maiden: Burning Ambition">
