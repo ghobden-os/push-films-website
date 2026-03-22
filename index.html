@@ -480,8 +480,9 @@
         /* CONTACT */
         .mv-montage { width: 100%; overflow: hidden; }
         .mv-montage-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
-        .mv-montage-grid img { width: 100%; aspect-ratio: 16/9; object-fit: cover; object-position: top; display: block; opacity: 0.85; transition: opacity 0.3s; }
+        .mv-montage-grid img { width: 100%; aspect-ratio: 16/9; object-fit: cover; object-position: top; display: block; opacity: 0.55; transition: opacity 1.2s ease; }
         .mv-montage-grid img:hover { opacity: 0.85; }
+        .mv-montage-grid img.mv-lit { opacity: 1; }
         @media (max-width: 640px) { .mv-montage-grid { grid-template-columns: repeat(4, 1fr); } }
         #contact { border-top: 1px solid var(--rule); }
         .contact-grid { display: grid; grid-template-columns: 180px 1fr; gap: clamp(40px, 6vw, 120px); align-items: start; }
@@ -2933,6 +2934,26 @@
             });
         });
     });
+
+    // ── MUSIC VIDEO MONTAGE HIGHLIGHTS ────────────────────────────────────────
+    (function () {
+        const imgs = Array.from(document.querySelectorAll('.mv-montage-grid img'));
+        if (!imgs.length) return;
+        let lastIdx = -1;
+
+        function pulse() {
+            let idx;
+            do { idx = Math.floor(Math.random() * imgs.length); } while (idx === lastIdx);
+            lastIdx = idx;
+            const img = imgs[idx];
+            img.classList.add('mv-lit');
+            setTimeout(() => img.classList.remove('mv-lit'), 1800);
+            setTimeout(pulse, 900 + Math.random() * 800);
+        }
+
+        // Start after a short delay so the page settles first
+        setTimeout(pulse, 1200);
+    })();
 
     // ── IRON MAIDEN COUNTDOWN ─────────────────────────────────────────────────
     function updateMaidenCountdown() {
