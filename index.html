@@ -839,6 +839,16 @@
         .work-filter-btn:hover { border-color:var(--gold); color:var(--gold); }
         .work-filter-btn.active { border-color:var(--gold); color:var(--gold); background:rgba(245,216,0,0.06); }
 
+        /* HOVER PREVIEW IMAGE */
+        .work-preview-img {
+            position:absolute; inset:0;
+            width:100%; height:100%;
+            object-fit:cover; object-position:50% 50%;
+            opacity:0;
+            pointer-events:none;
+            z-index:1;
+        }
+
         /* CATEGORY TAG */
         .work-tag {
             position:absolute; bottom:10px; left:10px;
@@ -989,7 +999,7 @@
                         </div>
                         <div class="work-expand"></div>
                     </article>
-                    <article class="work-item accordion" data-vimeo="1171150941">
+                    <article class="work-item accordion" data-vimeo="1171150941" data-preview="rr-sport-reveal">
                         <div class="work-image"><img loading="lazy" src="images/range-rover-reveal.png" alt="Range Rover Sport Reveal"></div>
                         <div class="work-info">
                             <h3>Range Rover Sport Reveal</h3>
@@ -1045,7 +1055,7 @@
             <div class="work-category">
                 <div class="work-category-header"><span>Documentary</span></div>
                 <div class="work-grid">
-                    <article class="work-item accordion" data-vimeo="1171150609">
+                    <article class="work-item accordion" data-vimeo="1171150609" data-preview="i-am-ali">
                         <div class="work-image"><img loading="lazy" src="images/i-am-ali.png" alt="I Am Ali"></div>
                         <div class="work-info">
                             <h3>I Am Ali</h3>
@@ -1117,7 +1127,7 @@
             <div class="work-category">
                 <div class="work-category-header"><span>Expo</span></div>
                 <div class="work-grid">
-                    <article class="work-item accordion" data-vimeo="1171151872">
+                    <article class="work-item accordion" data-vimeo="1171151872" data-preview="family-tree">
                         <div class="work-image"><img loading="lazy" src="images/family-tree.png" alt="Family Tree — Milan World Expo"></div>
                         <div class="work-info">
                             <h3>Family Tree — Milan World Expo</h3>
@@ -1135,7 +1145,7 @@
                             <p class="work-desc">Having produced all media for the UAE's pavilions at three World Expos outside their borders, the Dubai government asked us to help them win the right to bring the world's fair home. With our help, Dubai was awarded the hosting rights for Expo 2020 — the first World Expo ever held in the Middle East. The event eventually took place in 2021, delayed by a year due to COVID.</p>
                         </div>
                     </article>
-                    <article class="work-item accordion" data-vimeo="1171157242">
+                    <article class="work-item accordion" data-vimeo="1171157242" data-preview="the-turtle">
                         <div class="work-image"><img loading="lazy" src="images/the-turtle.png" alt="The Turtle — Yeosu Expo"></div>
                         <div class="work-info">
                             <h3>The Turtle — Yeosu Expo</h3>
@@ -1151,7 +1161,7 @@
             <div class="work-category">
                 <div class="work-category-header"><span>Sport</span></div>
                 <div class="work-grid">
-                    <article class="work-item accordion" data-vimeo="1171158800">
+                    <article class="work-item accordion" data-vimeo="1171158800" data-preview="bridgestone">
                         <div class="work-image"><img loading="lazy" src="images/bridgestone.png" alt="Bridgestone"></div>
                         <div class="work-info">
                             <h3>Bridgestone</h3>
@@ -1161,7 +1171,7 @@
                         </div>
                         <div class="work-expand"></div>
                     </article>
-                    <article class="work-item accordion" data-vimeo="1171158741">
+                    <article class="work-item accordion" data-vimeo="1171158741" data-preview="football-league">
                         <div class="work-image"><img loading="lazy" src="images/football-league.png" alt="Football League"></div>
                         <div class="work-info">
                             <h3>Football League</h3>
@@ -1171,7 +1181,7 @@
                         </div>
                         <div class="work-expand"></div>
                     </article>
-                    <article class="work-item accordion" data-vimeo="1171158957">
+                    <article class="work-item accordion" data-vimeo="1171158957" data-preview="golfing-4-life">
                         <div class="work-image"><img loading="lazy" src="images/Golfing4 Life .png" alt="Golfing 4 Life"></div>
                         <div class="work-info">
                             <h3>Golfing 4 Life</h3>
@@ -1187,7 +1197,7 @@
             <div class="work-category">
                 <div class="work-category-header"><span>Comedy</span></div>
                 <div class="work-grid">
-                    <article class="work-item accordion" data-vimeo="1171300697">
+                    <article class="work-item accordion" data-vimeo="1171300697" data-preview="sext-tuesdays">
                         <div class="work-image"><img loading="lazy" src="images/Sexy Tuesdays .png" alt="Sexy Tuesdays"></div>
                         <div class="work-info">
                             <h3>Sexy Tuesdays</h3>
@@ -1197,7 +1207,7 @@
                         </div>
                         <div class="work-expand"></div>
                     </article>
-                    <article class="work-item accordion" data-vimeo="1171300442">
+                    <article class="work-item accordion" data-vimeo="1171300442" data-preview="waiting-for-conkers">
                         <div class="work-image"><img loading="lazy" src="images/Waiting for Conkers.png" alt="Waiting for Conkers"></div>
                         <div class="work-info">
                             <h3>Waiting for Conkers</h3>
@@ -2727,6 +2737,154 @@
             imgWrap.appendChild(tag);
         });
     });
+
+    // ── FILM GRAB HOVER PREVIEW ───────────────────────────────────────────────
+    // Maps data-gallery or data-preview key → array of image paths
+    const filmGrabMap = {
+        raptor:           ['raptor/RAPTOR_1.jpg','raptor/RAPTOR_2.jpg','raptor/RAPTOR_3.jpg','raptor/RAPTOR_4.jpg','raptor/RAPTOR_5.jpg'],
+        lexieGreen:       ['explorer/EXPLORER_1.jpg','explorer/EXPLORER_2.jpg','explorer/EXPLORER_3.jpg','explorer/EXPLORER_4.jpg','explorer/EXPLORER_5.jpg'],
+        defender:         ['defender/DEFENDER_1.jpg','defender/DEFENDER_2.jpg','defender/DEFENDER_3.jpg','defender/DEFENDER_4.jpg','defender/DEFENDER_5.jpg'],
+        mclaren:          ['spider/SPIDER_1.jpg','spider/SPIDER_2.jpg','spider/SPIDER_3.jpg','spider/SPIDER_4.jpg'],
+        rrSportTestTrack: ['rr-test-track/RR TEST TRACK_1.jpg','rr-test-track/RR TEST TRACK_2.jpg','rr-test-track/RR TEST TRACK_3.jpg','rr-test-track/RR TEST TRACK_4.jpg'],
+        corden:           ['rr-sport-jcorden/RR SPORT JCORDEN_1.jpg','rr-sport-jcorden/RR SPORT JCORDEN_2.jpg','rr-sport-jcorden/RR SPORT JCORDEN_3.jpg','rr-sport-jcorden/RR SPORT JCORDEN_4.jpg'],
+        discovery:        ['lr-disco-sport/LR DISCO SPORT_1.jpg','lr-disco-sport/LR DISCO SPORT_2.jpg','lr-disco-sport/LR DISCO SPORT_3.jpg','lr-disco-sport/LR DISCO SPORT_4.jpg','lr-disco-sport/LR DISCO SPORT_5.jpg'],
+        tata2:            ['tata/TATA_1.jpg','tata/TATA_2.jpg','tata/TATA_3.jpg','tata/TATA_4.jpg'],
+        tata:             ['tata/TATA_1.jpg','tata/TATA_2.jpg','tata/TATA_3.jpg','tata/TATA_4.jpg'],
+        fordWheels:       ['ford-wheels/FORD WHEELS_1.jpg','ford-wheels/FORD WHEELS_2.jpg','ford-wheels/FORD WHEELS_3.jpg','ford-wheels/FORD WHEELS_4.jpg'],
+        explorer:         ['lexie-limit/LEXIE LIMIT_1.jpg','lexie-limit/LEXIE LIMIT_2.jpg','lexie-limit/LEXIE LIMIT_3.jpg','lexie-limit/LEXIE LIMIT_4.jpg','lexie-limit/LEXIE LIMIT_5.jpg'],
+        vashi:            ['vashi/VASHI_1.jpg','vashi/VASHI_2.jpg','vashi/VASHI_3.jpg','vashi/VASHI_4.jpg','vashi/VASHI_5.jpg'],
+        everest:          ['everest/EVEREST_1.jpg','everest/EVEREST_2.jpg','everest/EVEREST_3.jpg','everest/EVEREST_4.jpg'],
+        'i-am-ali':       ['i-am-ali/I AM ALI_1.jpg','i-am-ali/I AM ALI_2.jpg','i-am-ali/I AM ALI_3.jpg','i-am-ali/I AM ALI_4.jpg'],
+        'rr-sport-reveal':['rr-sport-reveal/RR SPORT REVEAL_1.jpg','rr-sport-reveal/RR SPORT REVEAL_2.jpg','rr-sport-reveal/RR SPORT REVEAL_3.jpg','rr-sport-reveal/RR SPORT REVEAL_4.jpg'],
+        'family-tree':    ['family-tree/FAMILY TREE_1.jpg','family-tree/FAMILY TREE_2.jpg','family-tree/FAMILY TREE_3.jpg','family-tree/FAMILY TREE_4.jpg','family-tree/FAMILY TREE_5.jpg'],
+        'the-turtle':     ['the-turtle/THE TURTLE_1.jpg','the-turtle/THE TURTLE_2.jpg','the-turtle/THE TURTLE_3.jpg','the-turtle/THE TURTLE_4.jpg'],
+        'bridgestone':    ['bridgestone/BRIDGESTONE_1.jpg','bridgestone/BRIDGESTONE_2.jpg','bridgestone/BRIDGESTONE_3.jpg','bridgestone/BRIDGESTONE_4.jpg'],
+        'football-league':['football-league/FOOTBALL LEAGUE_1.jpg','football-league/FOOTBALL LEAGUE_2.jpg','football-league/FOOTBALL LEAGUE_3.jpg','football-league/FOOTBALL LEAGUE_4.jpg'],
+        'golfing-4-life': ['golfing-4-life/GOLFING 4 LIFE_1.jpg','golfing-4-life/GOLFING 4 LIFE_2.jpg','golfing-4-life/GOLFING 4 LIFE_3.jpg','golfing-4-life/GOLFING 4 LIFE_4.jpg'],
+        'sext-tuesdays':  ['sext-tuesdays/SEXT TUESDAYS_1.jpg','sext-tuesdays/SEXT TUESDAYS_2.jpg','sext-tuesdays/SEXT TUESDAYS_3.jpg','sext-tuesdays/SEXT TUESDAYS_4.jpg'],
+        'waiting-for-conkers': ['waiting-for-conkers/WAITING FOR CONKERS_1.jpg','waiting-for-conkers/WAITING FOR CONKERS_2.jpg','waiting-for-conkers/WAITING FOR CONKERS_3.jpg','waiting-for-conkers/WAITING FOR CONKERS_4.jpg'],
+    };
+
+    // Stored per-image positions: { 'key-index': 'X% Y%' }
+    const grabPositions = {};
+
+    const previewEditMode = new URLSearchParams(location.search).get('preview-edit') === '1';
+
+    document.querySelectorAll('.work-item').forEach(item => {
+        const key = item.dataset.gallery || item.dataset.preview;
+        if (!key || !filmGrabMap[key]) return;
+
+        const srcs = filmGrabMap[key].map(f => 'images/film-grabs/' + encodeURIComponent(f).replace(/%2F/g, '/'));
+        const workImg = item.querySelector('.work-image');
+        if (!workImg) return;
+
+        // Preload
+        srcs.forEach(src => { const i = new Image(); i.src = src; });
+
+        if (previewEditMode) {
+            // Edit mode: show first image static with position controls
+            const editEl = document.createElement('img');
+            editEl.className = 'work-preview-img';
+            editEl.style.opacity = '1';
+            editEl.style.objectPosition = grabPositions[key + '-0'] || '50% 50%';
+            editEl.src = srcs[0];
+            workImg.appendChild(editEl);
+
+            let imgIdx = 0;
+            const overlay = document.createElement('div');
+            overlay.className = 'pos-overlay';
+            overlay.innerHTML = `
+                <span class="pos-num">${key}</span>
+                <button title="Up">↑</button>
+                <button title="Down">↓</button>
+                <button title="Left">←</button>
+                <button title="Right">→</button>
+                <span class="pos-badge">50% 50%</span>
+                <button title="Prev img">‹</button>
+                <button title="Next img">›</button>
+            `;
+            workImg.appendChild(overlay);
+
+            const badge = overlay.querySelector('.pos-badge');
+            const [upBtn, downBtn, leftBtn, rightBtn] = overlay.querySelectorAll('button');
+            const [prevBtn, nextBtn] = [...overlay.querySelectorAll('button')].slice(4);
+
+            function getPos() {
+                const posKey = key + '-' + imgIdx;
+                return (grabPositions[posKey] || '50% 50%').split(' ').map(v => parseFloat(v));
+            }
+            function setPos(x, y) {
+                x = Math.max(0, Math.min(100, x));
+                y = Math.max(0, Math.min(100, y));
+                const posKey = key + '-' + imgIdx;
+                const val = x.toFixed(0) + '% ' + y.toFixed(0) + '%';
+                grabPositions[posKey] = val;
+                editEl.style.objectPosition = val;
+                badge.textContent = val;
+            }
+
+            upBtn.addEventListener('click',    () => { const [x,y] = getPos(); setPos(x, y-5); });
+            downBtn.addEventListener('click',  () => { const [x,y] = getPos(); setPos(x, y+5); });
+            leftBtn.addEventListener('click',  () => { const [x,y] = getPos(); setPos(x-5, y); });
+            rightBtn.addEventListener('click', () => { const [x,y] = getPos(); setPos(x+5, y); });
+            prevBtn.addEventListener('click',  () => { imgIdx = (imgIdx - 1 + srcs.length) % srcs.length; editEl.src = srcs[imgIdx]; const [x,y] = getPos(); editEl.style.objectPosition = grabPositions[key+'-'+imgIdx] || '50% 50%'; badge.textContent = grabPositions[key+'-'+imgIdx] || '50% 50%'; });
+            nextBtn.addEventListener('click',  () => { imgIdx = (imgIdx + 1) % srcs.length; editEl.src = srcs[imgIdx]; editEl.style.objectPosition = grabPositions[key+'-'+imgIdx] || '50% 50%'; badge.textContent = grabPositions[key+'-'+imgIdx] || '50% 50%'; });
+
+            overlay.querySelectorAll('button').forEach(b => b.addEventListener('click', e => e.stopPropagation()));
+        } else {
+            // Normal mode: hover to cycle
+            const previewEl = document.createElement('img');
+            previewEl.className = 'work-preview-img';
+            previewEl.src = srcs[0];
+            workImg.appendChild(previewEl);
+
+            let previewInterval = null;
+            let previewIdx = 0;
+
+            item.addEventListener('mouseenter', () => {
+                if (item.classList.contains('expanded')) return;
+                previewIdx = 0;
+                previewEl.style.transition = 'none';
+                previewEl.style.opacity = '0';
+                previewEl.src = srcs[previewIdx];
+                requestAnimationFrame(() => {
+                    previewEl.style.transition = 'opacity 0.5s ease';
+                    previewEl.style.opacity = '1';
+                });
+                previewInterval = setInterval(() => {
+                    previewIdx = (previewIdx + 1) % srcs.length;
+                    previewEl.style.transition = 'opacity 0.3s ease';
+                    previewEl.style.opacity = '0';
+                    setTimeout(() => {
+                        previewEl.src = srcs[previewIdx];
+                        previewEl.style.transition = 'opacity 0.5s ease';
+                        previewEl.style.opacity = '1';
+                    }, 320);
+                }, 2000);
+            });
+
+            item.addEventListener('mouseleave', () => {
+                clearInterval(previewInterval);
+                previewEl.style.transition = 'opacity 0.4s ease';
+                previewEl.style.opacity = '0';
+            });
+        }
+    });
+
+    if (previewEditMode) {
+        // Copy all positions with Shift+V
+        document.addEventListener('keydown', e => {
+            if (e.shiftKey && e.key === 'V') {
+                const lines = Object.entries(grabPositions).map(([k, v]) => k + ': ' + v);
+                prompt('Film grab positions — paste to Claude:', lines.join('\n') || 'No adjustments yet.');
+            }
+        });
+        // Add mode badge
+        const badge = document.createElement('div');
+        badge.style.cssText = 'position:fixed;top:80px;right:20px;background:var(--gold);color:#000;padding:6px 14px;font-family:var(--font-sans);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;z-index:9999;';
+        badge.textContent = 'Preview Edit Mode — Shift+V to copy';
+        document.body.appendChild(badge);
+    }
 
     // ── WORK FILTER BAR ───────────────────────────────────────────────────────
     document.querySelectorAll('.work-filter-btn').forEach(btn => {
