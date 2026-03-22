@@ -1750,6 +1750,10 @@
             document.getElementById('earlyYearsBtn').click();
         });
 
+        if (new URLSearchParams(window.location.search).get('videos') === '1') {
+            document.getElementById('earlyYearsBtn').click();
+        }
+
         historicClose.addEventListener('click', () => {
             historic.classList.remove('visible');
             stopEasterAudio();
