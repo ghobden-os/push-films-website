@@ -2875,16 +2875,16 @@
                 // Reset layers cleanly
                 frontImg = imgA; backImg = imgB;
                 imgA.src = srcs[0];
-                imgA.style.zIndex = '3'; imgA.style.transition = 'opacity 0.6s ease'; imgA.style.opacity = '1';
+                imgA.style.zIndex = '3'; imgA.style.transition = 'opacity 0.3s ease'; imgA.style.opacity = '1';
                 imgB.style.zIndex = '2'; imgB.style.transition = 'none'; imgB.style.opacity = '0';
                 previewIdx = 0;
                 if (srcs.length > 1) {
-                    // First crossfade after 2s, then chain interval every 3.5s
+                    // First crossfade after 3s, then chain interval every 3.5s
                     previewInterval = setTimeout(function tick() {
                         previewIdx = (previewIdx + 1) % srcs.length;
                         crossfadeTo(previewIdx);
                         previewInterval = setTimeout(tick, 3500);
-                    }, 2000);
+                    }, 3000);
                 }
             });
 
