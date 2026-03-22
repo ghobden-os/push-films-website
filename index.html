@@ -2956,8 +2956,30 @@
         if (mvLabel)   mvLabel.style.display   = showMontage ? '' : 'none';
     }
 
+    let currentFilter = 'all';
+    let filterResetTimer = null;
+    const FILTER_RESET_MS = 20000;
+
+    function resetFilterTimer() {
+        clearTimeout(filterResetTimer);
+        if (currentFilter !== 'all') {
+            filterResetTimer = setTimeout(() => {
+                applyFilter('all');
+                currentFilter = 'all';
+            }, FILTER_RESET_MS);
+        }
+    }
+
     document.querySelectorAll('.work-filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
+        btn.addEventListener('click', () => {
+            currentFilter = btn.dataset.filter;
+            applyFilter(currentFilter);
+            resetFilterTimer();
+        });
+    });
+
+    ['mousemove', 'scroll', 'keydown', 'touchstart'].forEach(evt => {
+        window.addEventListener(evt, resetFilterTimer, { passive: true });
     });
 
 
