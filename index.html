@@ -482,7 +482,7 @@
         .mv-montage-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
         .mv-montage-grid img { width: 100%; aspect-ratio: 16/9; object-fit: cover; object-position: top; display: block; opacity: 0.55; transition: opacity 1.2s ease; }
         .mv-montage-grid img:hover { opacity: 0.85; }
-        .mv-montage-grid img.mv-lit { opacity: 1; }
+        .mv-montage-grid img.mv-lit { opacity: 1; outline: 2px solid var(--gold); outline-offset: -2px; }
         @media (max-width: 640px) { .mv-montage-grid { grid-template-columns: repeat(4, 1fr); } }
         #contact { border-top: 1px solid var(--rule); }
         .contact-grid { display: grid; grid-template-columns: 180px 1fr; gap: clamp(40px, 6vw, 120px); align-items: start; }
@@ -2947,8 +2947,8 @@
             lastIdx = idx;
             const img = imgs[idx];
             img.classList.add('mv-lit');
-            setTimeout(() => img.classList.remove('mv-lit'), 1800);
-            setTimeout(pulse, 900 + Math.random() * 800);
+            setTimeout(() => img.classList.remove('mv-lit'), 3000);
+            setTimeout(pulse, 1500 + Math.random() * 1000);
         }
 
         // Start after a short delay so the page settles first
