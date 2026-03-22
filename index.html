@@ -2519,10 +2519,8 @@
                     const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 64;
                     const filterBar = document.querySelector('.work-filter-bar');
                     const filterBarH = filterBar ? filterBar.offsetHeight : 0;
-                    const isMobile = window.innerWidth < 640;
-                    // On mobile scroll to the article (title visible), on desktop to the film
-                    const scrollTarget = isMobile ? article : expandPanel;
-                    const top = scrollTarget.getBoundingClientRect().top + window.scrollY - navH - filterBarH - 8;
+                    // Scroll to the film on both mobile and desktop
+                    const top = expandPanel.getBoundingClientRect().top + window.scrollY - navH - filterBarH - 8;
                     window.scrollTo({ top, behavior: 'smooth' });
                 });
                 if (frame) {
