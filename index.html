@@ -827,6 +827,44 @@
         body.reframe-mode .work-image { cursor:move; outline:2px solid var(--gold); outline-offset:-2px; }
         body.reframe-mode .work-image.dragging { cursor:grabbing; }
         body.reframe-mode .work-image.dragging img { transition:none; }
+
+        /* WORK FILTER BAR */
+        .work-filter-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:clamp(32px, 4vw, 48px); }
+        .work-filter-btn {
+            font-family:var(--font-sans); font-size:9px; letter-spacing:0.14em;
+            text-transform:uppercase; color:var(--mid);
+            background:none; border:1px solid var(--rule);
+            padding:6px 14px; cursor:pointer; transition:all 0.2s;
+        }
+        .work-filter-btn:hover { border-color:var(--gold); color:var(--gold); }
+        .work-filter-btn.active { border-color:var(--gold); color:var(--gold); background:rgba(245,216,0,0.06); }
+
+        /* HOVER PREVIEW IMAGE */
+        .work-preview-img {
+            position:absolute; inset:0;
+            width:100%; height:100%;
+            object-fit:cover; object-position:top;
+            opacity:0;
+            pointer-events:none;
+            z-index:1;
+        }
+
+        /* CATEGORY TAG */
+        .work-tag {
+            position:absolute; bottom:10px; left:10px;
+            font-family:var(--font-sans); font-size:8px; letter-spacing:0.12em; text-transform:uppercase;
+            color:rgba(255,255,255,0.7);
+            background:rgba(0,0,0,0.65);
+            border:1px solid rgba(255,255,255,0.12);
+            padding:3px 8px;
+            pointer-events:none;
+            z-index:3;
+        }
+        @media (max-width:640px) { .work-tag { display:none; } }
+
+        /* EARLY YEARS ARCHIVE — distinct background */
+        #historic { background:#0D0B08; }
+        .mv-montage { background:#0D0B08; padding-top:2px; }
     </style>
 </head>
 <body>
@@ -858,7 +896,7 @@
                 <img src="images/burning-ambition.png" alt="Iron Maiden: Burning Ambition">
                 <div class="hero-film-card-text">
                     <span class="hero-film-card-title">Iron Maiden: Burning Ambition</span>
-                    <span class="hero-film-card-date">In cinemas 7 May 2026</span>
+                    <span class="hero-film-card-date" id="maidenCountdown">In cinemas 7 May 2026</span>
                     <span class="hero-film-card-cta">Watch the trailer →</span>
                 </div>
             </div>
@@ -893,6 +931,19 @@
     <section id="work">
         <div class="container">
             <div class="section-header"><span class="section-label">Selected Work</span></div>
+
+            <div class="work-filter-bar">
+                <button class="work-filter-btn active" data-filter="all">All</button>
+                <button class="work-filter-btn" data-filter="automotive">Automotive</button>
+                <button class="work-filter-btn" data-filter="documentary">Documentary</button>
+                <button class="work-filter-btn" data-filter="experiential">Experiential</button>
+                <button class="work-filter-btn" data-filter="luxury">Luxury</button>
+                <button class="work-filter-btn" data-filter="expo">Expo</button>
+                <button class="work-filter-btn" data-filter="sport">Sport</button>
+                <button class="work-filter-btn" data-filter="comedy">Comedy</button>
+                <button class="work-filter-btn" data-filter="everest">Everest</button>
+                <button class="work-filter-btn" data-filter="early years">Music Videos</button>
+            </div>
 
             <div class="work-category">
                 <div class="work-category-header"><span>Automotive</span></div>
@@ -2674,6 +2725,104 @@
             prompt('Copy these values and send to Claude:', lines.join('\n') || 'No changes made yet.');
         });
     }
+
+    // ── CATEGORY TAGS ────────────────────────────────────────────────────────
+    document.querySelectorAll('.work-category').forEach(cat => {
+        const catName = cat.querySelector('.work-category-header span')?.textContent;
+        if (!catName) return;
+        cat.querySelectorAll('.work-item .work-image').forEach(imgWrap => {
+            const tag = document.createElement('span');
+            tag.className = 'work-tag';
+            tag.textContent = catName;
+            imgWrap.appendChild(tag);
+        });
+    });
+
+    // ── HOVER GALLERY PREVIEW ─────────────────────────────────────────────────
+    document.querySelectorAll('.work-item.accordion[data-gallery]').forEach(item => {
+        const galleryKey = item.dataset.gallery;
+        const galleryData = galleries[galleryKey];
+        if (!galleryData) return;
+        const previewSrcs = galleryData.items
+            .filter(i => i.type === 'image')
+            .slice(0, 6)
+            .map(i => i.src);
+        if (previewSrcs.length < 2) return;
+
+        const workImg = item.querySelector('.work-image');
+        if (!workImg) return;
+
+        // Preload
+        previewSrcs.forEach(src => { const img = new Image(); img.src = src; });
+
+        const previewEl = document.createElement('img');
+        previewEl.className = 'work-preview-img';
+        previewEl.src = previewSrcs[0];
+        workImg.appendChild(previewEl);
+
+        let previewInterval = null;
+        let previewIdx = 0;
+
+        item.addEventListener('mouseenter', () => {
+            if (item.classList.contains('expanded')) return;
+            previewIdx = 0;
+            previewEl.style.transition = 'none';
+            previewEl.style.opacity = '0';
+            previewEl.src = previewSrcs[previewIdx];
+            requestAnimationFrame(() => {
+                previewEl.style.transition = 'opacity 0.5s ease';
+                previewEl.style.opacity = '1';
+            });
+            previewInterval = setInterval(() => {
+                previewIdx = (previewIdx + 1) % previewSrcs.length;
+                previewEl.style.transition = 'opacity 0.3s ease';
+                previewEl.style.opacity = '0';
+                setTimeout(() => {
+                    previewEl.src = previewSrcs[previewIdx];
+                    previewEl.style.transition = 'opacity 0.5s ease';
+                    previewEl.style.opacity = '1';
+                }, 320);
+            }, 2000);
+        });
+
+        item.addEventListener('mouseleave', () => {
+            clearInterval(previewInterval);
+            previewEl.style.transition = 'opacity 0.4s ease';
+            previewEl.style.opacity = '0';
+        });
+    });
+
+    // ── WORK FILTER BAR ───────────────────────────────────────────────────────
+    document.querySelectorAll('.work-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.work-filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const filter = btn.dataset.filter;
+            document.querySelectorAll('.work-category').forEach(cat => {
+                if (filter === 'all') {
+                    cat.style.display = '';
+                } else {
+                    const catName = (cat.querySelector('.work-category-header span')?.textContent || '').toLowerCase();
+                    cat.style.display = catName.includes(filter) ? '' : 'none';
+                }
+            });
+        });
+    });
+
+    // ── IRON MAIDEN COUNTDOWN ─────────────────────────────────────────────────
+    function updateMaidenCountdown() {
+        const el = document.getElementById('maidenCountdown');
+        if (!el) return;
+        const target = new Date('2026-05-07T00:00:00');
+        const now = new Date();
+        const diff = target - now;
+        if (diff <= 0) { el.textContent = 'Now in cinemas'; return; }
+        const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+        el.textContent = days === 1 ? '1 day to go' : `${days} days to go`;
+    }
+    updateMaidenCountdown();
+    setInterval(updateMaidenCountdown, 60000);
+
     </script>
     <script src="https://player.vimeo.com/api/player.js"></script>
   <script>
