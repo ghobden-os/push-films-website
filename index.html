@@ -2843,7 +2843,7 @@
 
             item.addEventListener('mouseenter', () => {
                 if (item.classList.contains('expanded')) return;
-                previewIdx = 0;
+                previewIdx = 1 % srcs.length; // start from second image
                 previewEl.style.transition = 'none';
                 previewEl.style.opacity = '0';
                 previewEl.src = srcs[previewIdx];
@@ -2851,22 +2851,25 @@
                     previewEl.style.transition = 'opacity 0.5s ease';
                     previewEl.style.opacity = '1';
                 });
-                previewInterval = setInterval(() => {
-                    previewIdx = (previewIdx + 1) % srcs.length;
-                    previewEl.style.transition = 'opacity 0.3s ease';
-                    previewEl.style.opacity = '0';
-                    setTimeout(() => {
-                        previewEl.src = srcs[previewIdx];
-                        previewEl.style.transition = 'opacity 0.5s ease';
-                        previewEl.style.opacity = '1';
-                    }, 320);
-                }, 2000);
+                if (srcs.length > 1) {
+                    previewInterval = setInterval(() => {
+                        previewIdx = (previewIdx + 1) % srcs.length;
+                        previewEl.style.transition = 'opacity 0.3s ease';
+                        previewEl.style.opacity = '0';
+                        setTimeout(() => {
+                            previewEl.src = srcs[previewIdx];
+                            previewEl.style.transition = 'opacity 0.5s ease';
+                            previewEl.style.opacity = '1';
+                        }, 320);
+                    }, 2000);
+                }
             });
 
             item.addEventListener('mouseleave', () => {
                 clearInterval(previewInterval);
                 previewEl.style.transition = 'opacity 0.4s ease';
                 previewEl.style.opacity = '0';
+                setTimeout(() => { previewEl.src = srcs[0]; previewIdx = 0; }, 400);
             });
         }
     });
