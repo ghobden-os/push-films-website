@@ -830,7 +830,14 @@
         body.reframe-mode .work-image.dragging img { transition:none; }
 
         /* WORK FILTER BAR */
-        .work-filter-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:clamp(32px, 4vw, 48px); }
+        .work-filter-bar {
+            display:flex; gap:8px; flex-wrap:wrap;
+            margin-bottom:clamp(32px, 4vw, 48px);
+            position:sticky; top:var(--nav-h);
+            background:var(--bg);
+            padding:12px 0;
+            z-index:100;
+        }
         .work-filter-btn {
             font-family:var(--font-sans); font-size:9px; letter-spacing:0.14em;
             text-transform:uppercase; color:var(--mid);
@@ -839,16 +846,6 @@
         }
         .work-filter-btn:hover { border-color:var(--gold); color:var(--gold); }
         .work-filter-btn.active { border-color:var(--gold); color:var(--gold); background:rgba(245,216,0,0.06); }
-
-        /* STICKY SECTION NAV */
-        #stickyFilterNav {
-            position:fixed; bottom:0; left:0; right:0; z-index:500;
-            background:rgba(8,8,8,0.97); border-top:1px solid var(--rule);
-            display:flex; justify-content:center; gap:8px; flex-wrap:wrap;
-            padding:10px clamp(16px,4vw,48px);
-            transform:translateY(100%); transition:transform 0.35s ease;
-        }
-        #stickyFilterNav.visible { transform:translateY(0); }
 
         /* MONTAGE SECTION LABEL */
         .mv-montage-label {
@@ -2965,16 +2962,6 @@
         btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
     });
 
-    // Sticky nav: show when top filter bar scrolls out of view
-    const topFilterBar = document.querySelector('.work-filter-bar');
-    const stickyNav    = document.getElementById('stickyFilterNav');
-    if (topFilterBar && stickyNav) {
-        function updateStickyNav() {
-            stickyNav.classList.toggle('visible', topFilterBar.getBoundingClientRect().bottom < 0);
-        }
-        window.addEventListener('scroll', updateStickyNav, { passive: true });
-        updateStickyNav();
-    }
 
     // ── MUSIC VIDEO MONTAGE HIGHLIGHTS ────────────────────────────────────────
     (function () {
@@ -3013,19 +3000,6 @@
     setInterval(updateMaidenCountdown, 60000);
 
     </script>
-    <div id="stickyFilterNav">
-        <button class="work-filter-btn active" data-filter="all">All</button>
-        <button class="work-filter-btn" data-filter="automotive">Automotive</button>
-        <button class="work-filter-btn" data-filter="documentary">Documentary</button>
-        <button class="work-filter-btn" data-filter="experiential">Experiential</button>
-        <button class="work-filter-btn" data-filter="luxury">Luxury</button>
-        <button class="work-filter-btn" data-filter="expo">Expo</button>
-        <button class="work-filter-btn" data-filter="sport">Sport</button>
-        <button class="work-filter-btn" data-filter="comedy">Comedy</button>
-        <button class="work-filter-btn" data-filter="everest">Everest</button>
-        <button class="work-filter-btn" data-filter="early years">Music Videos</button>
-    </div>
-
     <script src="https://player.vimeo.com/api/player.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
