@@ -2970,15 +2970,19 @@
                         if (entry.isIntersecting) {
                             frontImg = imgA; backImg = imgB;
                             imgA.src = srcs[0];
-                            imgA.style.zIndex = '3'; imgA.style.transition = 'opacity 0.3s ease'; imgA.style.opacity = '1';
+                            imgA.style.zIndex = '3'; imgA.style.transition = 'none'; imgA.style.opacity = '0';
                             imgB.style.zIndex = '2'; imgB.style.transition = 'none'; imgB.style.opacity = '0';
                             previewIdx = 0;
                             clearTimeout(previewInterval);
-                            previewInterval = setTimeout(function tick() {
-                                previewIdx = (previewIdx + 1) % srcs.length;
-                                crossfadeTo(previewIdx);
-                                previewInterval = setTimeout(tick, 2500);
-                            }, 2000);
+                            // Hold static thumbnail for 1.5s, then fade in first grab and hold for 2s before cycling
+                            previewInterval = setTimeout(function() {
+                                imgA.style.transition = 'opacity 0.4s ease'; imgA.style.opacity = '1';
+                                previewInterval = setTimeout(function tick() {
+                                    previewIdx = (previewIdx + 1) % srcs.length;
+                                    crossfadeTo(previewIdx);
+                                    previewInterval = setTimeout(tick, 2500);
+                                }, 2000);
+                            }, 1500);
                         } else {
                             clearTimeout(previewInterval);
                             imgA.style.transition = 'opacity 0.5s ease'; imgA.style.opacity = '0';
