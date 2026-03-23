@@ -632,9 +632,8 @@
         .work-expand-inner { display: block; }
         .expand-film { position: relative; width: 87.5%; margin: 0 auto; padding-bottom: 49.21875%; height: 0; background: #000; }
         .expand-film iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-        .film-poster { display: none; position: absolute; inset: 0; background-size: cover; background-position: center; cursor: pointer; align-items: center; justify-content: center; z-index: 2; }
-        .film-poster-play { width: 60px; height: 60px; background: rgba(0,0,0,0.55); border: 2px solid rgba(255,255,255,0.75); border-radius: 50%; display: flex; align-items: center; justify-content: center; pointer-events: none; }
-        .film-poster-play::after { content: ''; display: block; width: 0; height: 0; border-style: solid; border-width: 11px 0 11px 20px; border-color: transparent transparent transparent #fff; margin-left: 4px; }
+        .film-poster { display: none; position: absolute; inset: 0; background-size: cover; background-position: center; cursor: pointer; z-index: 2; }
+        .film-poster-play { display: none; }
         .expand-gallery-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px; }
         .expand-gallery-thumb { aspect-ratio: 3/2; overflow: hidden; background: #000; border-radius: 6px; position: relative; }
         .pos-overlay { position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); border-radius: 4px; display: flex; align-items: center; gap: 6px; padding: 4px 8px; z-index: 10; pointer-events: all; }
