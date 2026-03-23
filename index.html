@@ -40,6 +40,7 @@
             if (day === 3 || day === 6) document.documentElement.classList.add('hero-label-right');
             if (day === 3) document.documentElement.classList.add('hero-label-explorer');
             if (day === 6) document.documentElement.classList.add('hero-label-ali');
+            if (day === 1 || day === 2) document.documentElement.classList.add('hero-label-defender');
             var pre = document.createElement('link');
             pre.rel = 'preload'; pre.as = 'image'; pre.href = imgs[day];
             document.head.appendChild(pre);
@@ -149,6 +150,7 @@
         /* Ali: shift whole block right 10%, centre label within it */
         .hero-label-ali .hero-main { margin-left: calc(62% + 20px); margin-top: -12vh; }
         .hero-label-ali .hero-main .hero-rule-top { align-self: center; }
+        .hero-label-defender .hero-main { margin-left: calc(58% + 20px); }
         .hero-rule-top::before, .hero-rule-top::after {
             content: ''; display: block; width: clamp(40px, 8vw, 120px); height: 1px; background: rgba(255,255,255,0.4);
         }
