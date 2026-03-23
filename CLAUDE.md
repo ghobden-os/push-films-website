@@ -146,7 +146,7 @@ Some music videos have been muted by Vimeo's ContentID system (copyrighted audio
 ```js
 vimeoFrame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
 ```
-- Busted — Year 3000: YouTube `Tu7HoGZaspo` (switched from Vimeo `1171144521` due to muted audio)
+- Busted — Year 3000: Vimeo `1175913189` (self-hosted upload via yt-dlp download of YouTube `TZ1c3MsUytc`; original Vimeo `1171144521` muted by ContentID; YouTube embeds also blocked)
 - If other music videos lose audio, switch them to YouTube the same way.
 
 ### Music Video Vimeo IDs (Early Years section)
@@ -295,6 +295,9 @@ Generating logos in SVG/HTML is designing blind — Claude cannot see what it pr
 - **Outfit** — too generic, not cinematic enough
 - **Cormorant Garamond** — too editorial/literary, not quite right
 - **Cinzel** — Roman inscription, genuinely cinematic but user still not satisfied with overall direction
+
+## Playwright / Browser Testing
+- **Always use Safari** for Playwright browser testing — Chrome conflicts with the existing Chrome session on this machine and fails to launch. Use `mcp__playwright__browser_navigate` after ensuring Safari is the configured browser.
 
 ## Known Quirks
 - Vimeo IDs were historically swapped between Raptor and Explorer — double-check if something plays the wrong film
