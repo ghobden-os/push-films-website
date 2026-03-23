@@ -151,11 +151,11 @@
             position: static; transform: none; left: auto; top: auto; white-space: normal;
             margin-bottom: clamp(16px, 2.5vw, 24px);
         }
-        /* Explorer: pin block just below nav, label sits cleanly above name */
-        .hero-label-explorer .hero-main { align-self: flex-start; margin-top: calc(var(--nav-h) + 72px); }
+        /* Explorer: pin block to top — margin-bottom:auto pushes free space below */
+        .hero-label-explorer .hero-main { margin-top: calc(var(--nav-h) + 72px); margin-bottom: auto; }
         .hero-label-explorer .hero-main .hero-rule-top { margin-bottom: 24px; }
-        /* Ali: pin block, shift right, label centred above name */
-        .hero-label-ali .hero-main { align-self: flex-start; margin-top: calc(var(--nav-h) + 60px); margin-left: calc(62% + 20px); }
+        /* Ali: same pin, shift right, label centred above name */
+        .hero-label-ali .hero-main { margin-top: calc(var(--nav-h) + 60px); margin-bottom: auto; margin-left: calc(62% + 20px); }
         .hero-label-ali .hero-main .hero-rule-top { align-self: center; margin-bottom: 20px; }
         /* Defender: block shifted right 8% */
         .hero-label-defender .hero-main { margin-left: calc(58% + 20px); }
