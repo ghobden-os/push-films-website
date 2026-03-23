@@ -788,7 +788,7 @@
             .hero-name     { animation: heroFade 1.2s cubic-bezier(0.22,1,0.36,1) 0.3s  both; }
             .hero-divider  { animation: heroFade 1.2s cubic-bezier(0.22,1,0.36,1) 0.3s  both; }
             .hero-sub      { animation: heroFade 1.2s cubic-bezier(0.22,1,0.36,1) 0.3s  both; }
-            .hero-reel-btn { animation: heroFade 1.2s cubic-bezier(0.22,1,0.36,1) 0.3s  both; }
+            .hero-reel-btn, .btn-showreel { animation: heroFade 1.2s cubic-bezier(0.22,1,0.36,1) 0.3s  both; }
             .hero-film-card { animation: heroFade 1.2s cubic-bezier(0.22,1,0.36,1) 0.3s  both; }
         }
 
@@ -957,6 +957,7 @@
         <div class="hero-main">
             <h1 class="hero-name">Greg<br><em>Hobden</em></h1>
             <p class="hero-sub">Theatrical documentary, high&#8209;end&nbsp;automotive, live experiential.</p>
+            <button class="btn-showreel" id="heroShowreelBtn">Watch Showreel <span class="btn-arrow">↓</span></button>
             <div class="hero-film-card" id="heroMaidenBtn">
                 <img src="images/burning-ambition.png" alt="Iron Maiden: Burning Ambition">
                 <div class="hero-film-card-text">
@@ -1676,6 +1677,8 @@
             const heroMain = document.querySelector('.hero-main');
             if (ruleTop && heroMain) heroMain.insertBefore(ruleTop, heroMain.firstChild);
         }
+
+        document.getElementById('heroShowreelBtn').addEventListener('click', () => openVimeo('1174080790'));
 
         document.getElementById('heroMaidenBtn').addEventListener('click', () => {
             vimeoFrame.src = 'https://www.youtube.com/embed/BggdJLnSevQ?autoplay=1&rel=0';
