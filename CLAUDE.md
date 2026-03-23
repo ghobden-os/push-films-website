@@ -176,15 +176,56 @@ vimeoFrame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
 - `overflow: hidden` removed from `#hero` — was clipping the Iron Maiden card at the bottom
 - **Iron Maiden card** (`.hero-film-card`): dark semi-transparent background, yellow border, 128×80px thumbnail, title (14px), date and CTA (12px, date now `--fg` white). Clicks open YouTube trailer in modal. Animates in with the showreel button at 3.3s delay.
 - Showreel ID: `1174080790`
+- **Image rotation**: 9 images cycle hourly via `Math.floor(Date.now() / 3600000) % imgs.length`. Preview any with `?hero=N` (0–8).
+
+### Hero Desktop Text Placement — Locked Layout
+These positions are confirmed and signed off. Do not adjust without explicit instruction.
+
+**Default heroes (0, 4, 5, 7, 8)** — name block right-of-centre, vertically centred + pushed down:
+```css
+.hero-main { margin-left: calc(50% + 20px); margin-top: 72px; }
+```
+- `margin-left: calc(50% + 20px)` — name block starts just right of centre
+- `margin-top: 72px` — pushes name block down from vertical centre, creating gap below the absolutely-positioned "Film Producer & Production Consultant" label
+
+**Defender heroes (1, 2)** — same vertical position, shifted further right:
+```css
+.hero-label-defender .hero-main { margin-left: calc(58% + 20px); }
+```
+
+**Explorer (hero=3)** — pinned to top-right, label inside the name block:
+```css
+.hero-label-explorer .hero-main { margin-top: calc(var(--nav-h) + 72px); margin-bottom: auto; }
+.hero-label-explorer .hero-main .hero-rule-top { margin-bottom: 24px; }
+```
+
+**Ali (hero=6)** — pinned to top, shifted far right, disc hidden:
+```css
+.hero-label-ali .hero-main { margin-top: calc(var(--nav-h) + 60px); margin-bottom: auto; margin-left: calc(62% + 20px); }
+.hero-label-ali .hero-main .hero-rule-top { align-self: center; margin-bottom: 20px; }
+.hero-label-ali .nav-logo { display: none; }  /* disc sits on Ali's forehead — hidden */
+```
+
+**"Film Producer & Production Consultant" label** (`.hero-rule-top`):
+- Desktop: absolutely positioned at `top: calc(var(--nav-h) + 48px)`, horizontally centred
+- Has decorative `::before`/`::after` lines either side
+- Explorer & Ali: label moved inside `.hero-main` (static flow), overridden by `.hero-main .hero-rule-top { position: static; }`
+- **Mobile: hidden** (`display: none !important`) — too wide for small screens
 
 ### Mobile Hero Layout
 The hero has significant mobile-specific overrides in the final `@media (max-width: 640px)` block:
 - Background panned to `18% center` to show the car body (not just the wheel/bumper)
-- `justify-content: space-between` with `padding-top: calc(var(--nav-h) + 20px)` and `padding-bottom: 52px` — pins label to top, name/content to bottom
-- Dual gradient overlay: dark at top (for label legibility), clear in middle (car visible), dark at bottom (for name legibility)
+- `justify-content: space-between` with `padding-top: calc(var(--nav-h) + 20px)` and `padding-bottom: 52px` — pins content to top and bottom
+- Dual gradient overlay: dark at top, clear in middle (car visible), dark at bottom
 - Text shadows on all hero text elements for legibility over the image
 - Showreel button significantly smaller: `font-size: 8px`, `padding: 10px 18px`
 - `.hero-sub` has extra `margin-top` to push it away from the name
+- `.hero-rule-top` hidden (`display: none !important`) — "Film Producer & Production Consultant" label not shown on mobile
+
+### Service Worker / Caching
+- `sw.js` cache key: `gh-v2` — bump this (e.g. `gh-v3`) any time you need to force all browsers to fetch fresh HTML
+- The SW is cache-first for all same-origin requests. If users report seeing stale content, bump the cache version and push.
+- Hero image URLs (`/?hero=N`) are cached separately per URL — old SW versions can cause different heroes to show different HTML versions
 
 ### Nav Logo
 - Yellow disc mark: `<a href="#" class="nav-logo">G</a>` — 38px circle, `background: var(--gold)`, DM Sans weight 300, font-size 22px, color `#111111`
