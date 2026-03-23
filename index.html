@@ -2974,6 +2974,38 @@
                     previewIdx = 0;
                 }, 550);
             });
+
+            // Mobile: auto-cycle when item scrolls into view
+            if (srcs.length > 1 && window.innerWidth < 640) {
+                const mobileObs = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            frontImg = imgA; backImg = imgB;
+                            imgA.src = srcs[0];
+                            imgA.style.zIndex = '3'; imgA.style.transition = 'opacity 0.3s ease'; imgA.style.opacity = '1';
+                            imgB.style.zIndex = '2'; imgB.style.transition = 'none'; imgB.style.opacity = '0';
+                            previewIdx = 0;
+                            clearTimeout(previewInterval);
+                            previewInterval = setTimeout(function tick() {
+                                previewIdx = (previewIdx + 1) % srcs.length;
+                                crossfadeTo(previewIdx);
+                                previewInterval = setTimeout(tick, 2500);
+                            }, 2000);
+                        } else {
+                            clearTimeout(previewInterval);
+                            imgA.style.transition = 'opacity 0.5s ease'; imgA.style.opacity = '0';
+                            imgB.style.transition = 'opacity 0.5s ease'; imgB.style.opacity = '0';
+                            setTimeout(() => {
+                                frontImg = imgA; backImg = imgB;
+                                imgA.src = srcs[0]; imgA.style.zIndex = '3';
+                                imgB.src = srcs[1 % srcs.length]; imgB.style.zIndex = '2';
+                                previewIdx = 0;
+                            }, 550);
+                        }
+                    });
+                }, { threshold: 0.5 });
+                mobileObs.observe(item);
+            }
         }
     });
 
