@@ -34,7 +34,8 @@
                 'images/hero/hero-7.jpg',
                 'images/hero/hero-8.jpg'
             ];
-            var day = Math.floor(Date.now() / 86400000) % imgs.length;
+            var param = new URLSearchParams(location.search).get('hero');
+            var day = param !== null ? parseInt(param) % imgs.length : Math.floor(Date.now() / 86400000) % imgs.length;
             document.documentElement.style.setProperty('--hero-img', "url('" + imgs[day] + "')");
             // Explorer (3) and Muhammad Ali (6) — shift label right to avoid faces
             if (day === 3 || day === 6) document.documentElement.classList.add('hero-label-right');
