@@ -760,7 +760,7 @@
             .work-item.accordion .work-image::after { display: none !important; }
             .expand-film { width: 100% !important; padding-bottom: 56.25% !important; margin: 0 !important; }
             .expand-gallery-strip { grid-template-columns: 1fr !important; gap: 0 !important; margin-top: 10px !important; }
-            .expand-gallery-thumb { aspect-ratio: unset !important; height: calc((100vw - 2 * var(--pad)) * 0.39375) !important; max-height: none !important; }
+            .expand-gallery-thumb { aspect-ratio: unset !important; height: calc((100vw - 2 * var(--pad)) * 0.5625) !important; max-height: none !important; }
             #hero { background-position: 18% center !important; justify-content: space-between !important; padding-top: calc(var(--nav-h) + 20px) !important; padding-bottom: 52px !important; }
             #hero::before { background: linear-gradient(to bottom, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.08) 40%, rgba(0,0,0,0.08) 60%, rgba(0,0,0,0.72) 100%) !important; }
             .hero-main { margin-left: 0 !important; align-self: auto !important; padding-right: 0 !important; text-align: center !important; align-items: center !important; }
@@ -954,7 +954,7 @@
     </nav>
 
     <section id="hero">
-        <div class="hero-rule-top">Film Producer<span class="hero-rule-extra"> &amp; Production Consultant</span></div>
+        <div class="hero-rule-top"><span>Film Producer<span class="hero-rule-extra"> &amp; Production Consultant</span></span></div>
         <div class="hero-main">
             <h1 class="hero-name">Greg<br><em>Hobden</em></h1>
             <p class="hero-sub">Theatrical documentary, high&#8209;end&nbsp;automotive, live experiential.</p>
@@ -2880,6 +2880,9 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
 
     const previewEditMode = new URLSearchParams(location.search).get('preview-edit') === '1';
 
+    // Hover preview is desktop-only — skip entirely on touch devices
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
     document.querySelectorAll('.work-item').forEach(item => {
         const key = item.dataset.gallery || item.dataset.preview;
         if (!key || !filmGrabMap[key]) return;
@@ -2887,6 +2890,9 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
         const srcs = filmGrabMap[key].map(f => 'images/film-grabs/' + encodeURIComponent(f).replace(/%2F/g, '/'));
         const workImg = item.querySelector('.work-image');
         if (!workImg) return;
+
+        // Skip hover preview setup on touch devices — saves bandwidth and DOM
+        if (isTouch && !previewEditMode) return;
 
         // Preload
         srcs.forEach(src => { const i = new Image(); i.src = src; });
