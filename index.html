@@ -36,6 +36,8 @@
             ];
             var day = Math.floor(Date.now() / 86400000) % imgs.length;
             document.documentElement.style.setProperty('--hero-img', "url('" + imgs[day] + "')");
+            // Explorer (3) and Muhammad Ali (6) — shift label right to avoid faces
+            if (day === 3 || day === 6) document.documentElement.classList.add('hero-label-right');
             var pre = document.createElement('link');
             pre.rel = 'preload'; pre.as = 'image'; pre.href = imgs[day];
             document.head.appendChild(pre);
@@ -137,7 +139,9 @@
             margin-top: -15vh;
             color: #fff; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase;
             position: relative; z-index: 1;
+            transition: margin-left 0s;
         }
+        .hero-label-right .hero-rule-top { margin-left: 30%; }
         .hero-rule-top::before, .hero-rule-top::after {
             content: ''; display: block; width: clamp(40px, 8vw, 120px); height: 1px; background: rgba(255,255,255,0.4);
         }
