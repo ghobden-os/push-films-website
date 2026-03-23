@@ -39,6 +39,7 @@
             // Explorer (3) and Muhammad Ali (6) — shift label right to avoid faces
             if (day === 3 || day === 6) document.documentElement.classList.add('hero-label-right');
             if (day === 3) document.documentElement.classList.add('hero-label-explorer');
+            if (day === 6) document.documentElement.classList.add('hero-label-ali');
             var pre = document.createElement('link');
             pre.rel = 'preload'; pre.as = 'image'; pre.href = imgs[day];
             document.head.appendChild(pre);
@@ -145,6 +146,9 @@
         .hero-main .hero-rule-top { margin-top: 0; margin-left: 0; margin-bottom: clamp(20px, 3vw, 32px); }
         /* Explorer: push label up further */
         .hero-label-explorer .hero-main .hero-rule-top { margin-top: -30vh; }
+        /* Ali: shift whole block right 10%, centre label within it */
+        .hero-label-ali .hero-main { margin-left: calc(68% + 20px); }
+        .hero-label-ali .hero-main .hero-rule-top { align-self: center; }
         .hero-rule-top::before, .hero-rule-top::after {
             content: ''; display: block; width: clamp(40px, 8vw, 120px); height: 1px; background: rgba(255,255,255,0.4);
         }
