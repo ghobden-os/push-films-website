@@ -958,8 +958,7 @@
         <div class="hero-main">
             <h1 class="hero-name">Greg<br><em>Hobden</em></h1>
             <p class="hero-sub">Theatrical documentary, high&#8209;end&nbsp;automotive, live experiential.</p>
-            <button class="btn-showreel" id="heroShowreelBtn">Watch Showreel <span class="btn-arrow">↓</span></button>
-            <div class="hero-film-card" id="heroMaidenBtn">
+<div class="hero-film-card" id="heroMaidenBtn">
                 <img src="images/burning-ambition.png" alt="Iron Maiden: Burning Ambition">
                 <div class="hero-film-card-text">
                     <span class="hero-film-card-title">Iron Maiden: Burning Ambition</span>
@@ -1679,9 +1678,7 @@
             if (ruleTop && heroMain) heroMain.insertBefore(ruleTop, heroMain.firstChild);
         }
 
-        document.getElementById('heroShowreelBtn').addEventListener('click', () => openVimeo('1174080790'));
-
-        document.getElementById('heroMaidenBtn').addEventListener('click', () => {
+document.getElementById('heroMaidenBtn').addEventListener('click', () => {
             vimeoFrame.src = 'https://www.youtube.com/embed/BggdJLnSevQ?autoplay=1&rel=0';
             vimeoModal.classList.add('open');
         });
