@@ -2556,18 +2556,6 @@
                         vimeoPlayer.on('play', () => { hasPlayed = true; });
                         vimeoPlayer.on('pause', () => { if (hasPlayed) collapse(); });
                     }
-                    if (isMob && filmPoster) {
-                        const workImg = article.querySelector('.work-image');
-                        filmPoster.style.backgroundImage = 'url(' + (workImg ? workImg.src : '') + ')';
-                        filmPoster.style.display = 'flex';
-                        // Delay listener to avoid ghost tap from opening the accordion
-                        setTimeout(() => {
-                            filmPoster.addEventListener('click', function(e) {
-                                e.stopPropagation();
-                                filmPoster.style.display = 'none';
-                            }, { once: true });
-                        }, 350);
-                    }
                 }
                 if (items.length > 0) {
                     showSlide(0, false);
