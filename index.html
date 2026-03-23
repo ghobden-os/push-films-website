@@ -38,7 +38,6 @@
             document.documentElement.style.setProperty('--hero-img', "url('" + imgs[day] + "')");
             // Explorer (3) and Muhammad Ali (6) — shift label right to avoid faces
             if (day === 3 || day === 6) document.documentElement.classList.add('hero-label-right');
-            if (day === 3) document.documentElement.classList.add('hero-label-explorer');
             var pre = document.createElement('link');
             pre.rel = 'preload'; pre.as = 'image'; pre.href = imgs[day];
             document.head.appendChild(pre);
@@ -140,10 +139,9 @@
             margin-top: -15vh;
             color: #fff; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase;
             position: relative; z-index: 1;
-            transition: margin-left 0s;
         }
-        .hero-label-right .hero-rule-top { margin-left: 30%; }
-        .hero-label-explorer .hero-rule-top { margin-top: -24vh; }
+        /* When moved inside hero-main (Explorer & Ali days) */
+        .hero-main .hero-rule-top { margin-top: 0; margin-left: 0; margin-bottom: clamp(20px, 3vw, 32px); }
         .hero-rule-top::before, .hero-rule-top::after {
             content: ''; display: block; width: clamp(40px, 8vw, 120px); height: 1px; background: rgba(255,255,255,0.4);
         }
@@ -1656,7 +1654,13 @@
         const links = document.querySelector('.nav-links');
         toggle?.addEventListener('click', () => { toggle.classList.toggle('open'); links.classList.toggle('open'); });
 
-        document.getElementById('heroReelBtn').addEventListener('click', () => openVimeo('1174080790'));
+        // Move hero label inside name block on Explorer & Ali days
+        if (document.documentElement.classList.contains('hero-label-right')) {
+            const ruleTop = document.querySelector('.hero-rule-top');
+            const heroMain = document.querySelector('.hero-main');
+            if (ruleTop && heroMain) heroMain.insertBefore(ruleTop, heroMain.firstChild);
+        }
+
         document.getElementById('heroMaidenBtn').addEventListener('click', () => {
             vimeoFrame.src = 'https://www.youtube.com/embed/BggdJLnSevQ?autoplay=1&rel=0';
             vimeoModal.classList.add('open');
