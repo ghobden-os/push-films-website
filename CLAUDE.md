@@ -82,8 +82,9 @@ These should ideally be compressed to under 200KB each.
 
 ### Mobile Layout
 - `STRIP_SIZE = window.innerWidth < 640 ? 1 : 3` — set once at page load
-- On mobile the gallery thumb height matches the film exactly: `calc((100vw - 2 * var(--pad)) * 0.5625)`
+- On mobile the gallery thumb height matches the film exactly: `calc((100vw - 2 * var(--pad)) * 0.5625)` — the multiplier must be `0.5625` (16:9), not `0.39375` (wrong). The second `@media` `!important` block at end of stylesheet holds the canonical value.
 - Film is `width: 100%; padding-bottom: 56.25%; margin: 0` on mobile (overrides desktop 87.5%)
+- **Touch device optimisation**: hover preview crossfade images are only preloaded on non-touch devices. Guard: `const isTouch = window.matchMedia('(pointer: coarse)').matches` — if `isTouch && !previewEditMode` the hover handler returns early, preventing unnecessary image downloads on mobile.
 
 ### CSS Cascade Warning
 The accordion expand CSS (`.expand-film`, `.expand-gallery-strip`, `.expand-gallery-thumb`) lives at ~line 590, **after** the first `@media (max-width: 640px)` block at ~line 558. Equal-specificity rules later in the file win, so the mobile overrides in that first block were being silently ignored. Fix: there is a **second** `@media (max-width: 640px)` block at the very end of `<style>` (just before `</style>`) with `!important` that correctly overrides the accordion desktop rules. Always add mobile accordion overrides there, not in the first media block.
@@ -176,7 +177,7 @@ vimeoFrame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
 - `overflow: hidden` removed from `#hero` — was clipping the Iron Maiden card at the bottom
 - **Iron Maiden card** (`.hero-film-card`): dark semi-transparent background, yellow border, 128×80px thumbnail, title (14px), date and CTA (12px, date now `--fg` white). Clicks open YouTube trailer in modal. Animates in with the showreel button at 3.3s delay.
 - Showreel ID: `1174080790`
-- **Image rotation**: 9 images cycle hourly via `Math.floor(Date.now() / 3600000) % imgs.length`. Preview any with `?hero=N` (0–8).
+- **Image rotation**: 9 images cycle every **15 minutes** via `Math.floor(Date.now() / 900000) % imgs.length`. Preview any with `?hero=N` (0–8).
 
 ### Hero Desktop Text Placement — Locked Layout
 These positions are confirmed and signed off. Do not adjust without explicit instruction.
@@ -211,6 +212,7 @@ These positions are confirmed and signed off. Do not adjust without explicit ins
 - Has decorative `::before`/`::after` lines either side
 - Explorer & Ali: label moved inside `.hero-main` (static flow), overridden by `.hero-main .hero-rule-top { position: static; }`
 - **Mobile: hidden** (`display: none !important`) — too wide for small screens
+- **Flex gap fix**: `.hero-rule-top` is a flex container with `gap: 28px`. "Film Producer" text and `<span class="hero-rule-extra">` were separate flex items each receiving the gap. Fixed by wrapping both in a single `<span>` so they form one flex item: `<div class="hero-rule-top"><span>Film Producer<span class="hero-rule-extra"> &amp; Production Consultant</span></span></div>`
 
 ### Mobile Hero Layout
 The hero has significant mobile-specific overrides in the final `@media (max-width: 640px)` block:
@@ -223,9 +225,10 @@ The hero has significant mobile-specific overrides in the final `@media (max-wid
 - `.hero-rule-top` hidden (`display: none !important`) — "Film Producer & Production Consultant" label not shown on mobile
 
 ### Service Worker / Caching
-- `sw.js` cache key: `gh-v2` — bump this (e.g. `gh-v3`) any time you need to force all browsers to fetch fresh HTML
+- `sw.js` cache key: `gh-v6` — bump this (e.g. `gh-v7`) any time you need to force all browsers to fetch fresh HTML
 - The SW is cache-first for all same-origin requests. If users report seeing stale content, bump the cache version and push.
 - Hero image URLs (`/?hero=N`) are cached separately per URL — old SW versions can cause different heroes to show different HTML versions
+- After bumping and pushing, a new SW only activates after the first navigation — users see fresh content on the **second** page load. This is normal SW behaviour.
 
 ### Nav Logo
 - Yellow disc mark: `<a href="#" class="nav-logo">G</a>` — 38px circle, `background: var(--gold)`, DM Sans weight 300, font-size 22px, color `#111111`
@@ -271,7 +274,7 @@ Hero section has a typewriter animation synced to Web Audio API click sounds via
 ### Contact Section
 - Email button: `ghobden@mac.com` — styled as yellow filled button
 - LinkedIn button: `https://www.linkedin.com/in/greg-hobden-340a913/` — styled as yellow filled button
-- Both: `.contact-link { background: var(--gold); color: #080808; }`
+- Both use `.contact-link` — must include `-webkit-appearance: none; appearance: none;` to strip Safari's default button UA styles (white background, inconsistent sizing). Also needs explicit `font-weight: 500; line-height: 1; -webkit-text-size-adjust: 100%; text-size-adjust: 100%;` to prevent iOS auto-scaling `mailto:` links to a different size than other links.
 
 ### Email Signature
 - File: `files/email-signature.html` — preview page + install instructions
@@ -338,7 +341,10 @@ Generating logos in SVG/HTML is designing blind — Claude cannot see what it pr
 - **Cinzel** — Roman inscription, genuinely cinematic but user still not satisfied with overall direction
 
 ## Playwright / Browser Testing
-- **Always use Safari** for Playwright browser testing — Chrome conflicts with the existing Chrome session on this machine and fails to launch. Use `mcp__playwright__browser_navigate` after ensuring Safari is the configured browser.
+- **Always use WebKit (Safari engine)** — Chrome conflicts with the existing Chrome session on this machine and fails to launch.
+- `.mcp.json` sets `"--browser", "webkit"` — this is the correct Playwright identifier for Safari. Do not use `"safari"` as the value; Playwright does not recognise it.
+- If the browser fails to launch, run `mcp__playwright__browser_install` then retry `mcp__playwright__browser_navigate`.
+- After any change to `.mcp.json`, the MCP server must restart (reload the Claude Code session) to pick up the new config.
 
 ## Known Quirks
 - Vimeo IDs were historically swapped between Raptor and Explorer — double-check if something plays the wrong film
