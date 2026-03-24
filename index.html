@@ -373,6 +373,8 @@
         .work-quote cite { font-style: normal; font-size: 11px; letter-spacing: 0.06em; color: var(--mid); }
         .distrib-logo { display: block; width: 60px; height: auto; opacity: 0.5; align-self: flex-end; margin-top: 4px; pointer-events: none; }
         .work-arrow { font-size: 20px; color: var(--rule); margin-top: 16px; transition: all 0.3s; }
+        .work-yt-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; font-family: var(--font-sans); font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); background: none; border: 1px solid var(--gold); padding: 10px 18px; cursor: pointer; transition: all 0.2s; }
+        .work-yt-btn:hover { background: var(--gold); color: #080808; }
         .work-item:hover .work-arrow { color: var(--gold); transform: translateX(6px); }
         .work-image--placeholder { background: var(--dim); border: 1px solid var(--rule); }
         .work-image--coming-soon { background: var(--dim); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; }
@@ -1131,7 +1133,7 @@
                         </div>
                         <div class="work-expand"></div>
                     </article>
-                    <article class="work-item" data-youtube="BggdJLnSevQ">
+                    <article class="work-item accordion" data-gallery="ironMaiden">
                         <div class="work-image"><img loading="lazy" src="images/burning-ambition.png" alt="Iron Maiden: Burning Ambition"></div>
                         <div class="work-info">
                             <h3>Iron Maiden: Burning Ambition</h3>
@@ -1140,8 +1142,10 @@
                             <p class="work-desc">Featuring Javier Bardem, Lars Ulrich and Chuck D. Theatrical release worldwide via Universal Pictures. In cinemas May 7, 2026.</p>
                             <blockquote class="work-quote">"A brilliant film" <cite>— Kerrang!</cite> &nbsp;·&nbsp; "Electrifying" <cite>— Rolling Stone UK</cite> &nbsp;·&nbsp; "Must see" <cite>— Metal Hammer</cite></blockquote>
                             <img src="images/universal-logo.png" alt="Universal Pictures" class="distrib-logo">
+                            <button class="work-yt-btn" data-youtube="BggdJLnSevQ">▶ Watch trailer</button>
                             <span class="work-arrow">→</span>
                         </div>
+                        <div class="work-expand"></div>
                     </article>
                 </div>
             </div>
@@ -2004,6 +2008,17 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
 
         // UNIFIED GALLERY
         const galleries = {
+            ironMaiden: {
+                items: [
+                    {type:'image',src:'images/film-grabs/iron-maiden/IM1.jpg'},
+                    {type:'image',src:'images/film-grabs/iron-maiden/IM2.jpg'},
+                    {type:'image',src:'images/film-grabs/iron-maiden/IM3.jpg'},
+                    {type:'image',src:'images/film-grabs/iron-maiden/IM4.jpg'},
+                    {type:'image',src:'images/film-grabs/iron-maiden/IM5.jpg'},
+                    {type:'image',src:'images/film-grabs/iron-maiden/IM6.jpg'},
+                    {type:'image',src:'images/film-grabs/iron-maiden/IM7.jpg'}
+                ]
+            },
             raptor: {
                 stripDurations: [7667, 7667, 7666, 15000],
                 items: [
@@ -2518,6 +2533,15 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
             article.style.cursor = 'pointer';
             article.addEventListener('click', () => openVimeo(article.dataset.vimeo));
         });
+        document.querySelectorAll('.work-yt-btn[data-youtube]').forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.stopPropagation();
+                if (vimeoLocked) return;
+                vimeoFrame.src = 'https://www.youtube.com/embed/' + btn.dataset.youtube + '?autoplay=1&rel=0';
+                vimeoModal.classList.add('open');
+            });
+        });
+
         document.querySelectorAll('.work-item:not(.accordion)[data-youtube]').forEach(article => {
             article.style.cursor = 'pointer';
             article.addEventListener('click', () => {
