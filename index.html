@@ -30,17 +30,15 @@
                 'images/hero/hero-3.jpg',
                 'images/hero/hero-4.jpg',
                 'images/hero/hero-5.jpg',
-                'images/hero/hero-6.jpg',
                 'images/hero/hero-7.jpg',
                 'images/hero/hero-8.jpg'
             ];
             var param = new URLSearchParams(location.search).get('hero');
             var day = param !== null ? parseInt(param) % imgs.length : Math.floor(Date.now() / 900000) % imgs.length;
             document.documentElement.style.setProperty('--hero-img', "url('" + imgs[day] + "')");
-            // Explorer (3) and Muhammad Ali (6) — shift label right to avoid faces
-            if (day === 3 || day === 6) document.documentElement.classList.add('hero-label-right');
+            // Explorer (3) — shift label right to avoid faces
+            if (day === 3) document.documentElement.classList.add('hero-label-right');
             if (day === 3) document.documentElement.classList.add('hero-label-explorer');
-            if (day === 6) document.documentElement.classList.add('hero-label-ali');
             if (day === 1 || day === 2) document.documentElement.classList.add('hero-label-defender');
             var pre = document.createElement('link');
             pre.rel = 'preload'; pre.as = 'image'; pre.href = imgs[day];
