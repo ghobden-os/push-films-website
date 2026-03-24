@@ -129,9 +129,14 @@
             position: relative;
             background: var(--hero-img, url('images/Ford%20Mustang%20223.jpg')) center/cover no-repeat;
         }
+        .hero-bg {
+            position: absolute; inset: 0; z-index: 0;
+            background-size: cover; background-position: center;
+            transition: opacity 1.5s ease;
+        }
         #hero::before {
             content: '';
-            position: absolute; inset: 0;
+            position: absolute; inset: 0; z-index: 1;
             background: rgba(0,0,0,0.45);
             pointer-events: none;
         }
@@ -139,7 +144,7 @@
             display: flex; align-items: center; gap: 28px;
             color: #fff; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase;
             position: absolute; top: calc(var(--nav-h) + 48px); left: 50%; transform: translateX(-50%);
-            white-space: nowrap; z-index: 1;
+            white-space: nowrap; z-index: 2;
         }
         .hero-rule-top::before, .hero-rule-top::after {
             content: ''; display: block; width: clamp(40px, 8vw, 120px); height: 1px; background: rgba(255,255,255,0.4);
@@ -162,7 +167,7 @@
             display: flex; flex-direction: column; align-items: flex-start; text-align: left;
             margin-left: calc(50% + 20px);
             margin-top: 72px;
-            position: relative; z-index: 1;
+            position: relative; z-index: 2;
         }
         .hero-label {
             font-family: var(--font-sans);
@@ -760,6 +765,7 @@
             .expand-gallery-strip { grid-template-columns: 1fr !important; gap: 0 !important; margin-top: 10px !important; }
             .expand-gallery-thumb { aspect-ratio: unset !important; height: calc((100vw - 2 * var(--pad)) * 0.5625) !important; max-height: none !important; }
             #hero { background-position: 18% center !important; justify-content: space-between !important; padding-top: calc(var(--nav-h) + 20px) !important; padding-bottom: 52px !important; }
+            .hero-bg { background-position: 18% center !important; }
             #hero::before { background: linear-gradient(to bottom, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.08) 40%, rgba(0,0,0,0.08) 60%, rgba(0,0,0,0.72) 100%) !important; }
             .hero-main { margin-left: 0 !important; align-self: auto !important; padding-right: 0 !important; text-align: center !important; align-items: center !important; position: static !important; }
             .hero-sub { margin-top: clamp(24px, 5vw, 40px) !important; margin-bottom: 0 !important; }
@@ -953,6 +959,8 @@
     </nav>
 
     <section id="hero">
+        <div class="hero-bg" id="heroBgA"></div>
+        <div class="hero-bg" id="heroBgB" style="opacity:0"></div>
         <div class="hero-rule-top"><span>Film Producer<span class="hero-rule-extra"> &amp; Production Consultant</span></span></div>
         <div class="hero-main">
             <h1 class="hero-name">Greg<br><em>Hobden</em></h1>
@@ -1663,6 +1671,39 @@
     </section>
 
     <script>
+
+        // Hero background crossfade rotation
+        (function() {
+            var heroImgs = [
+                'images/Ford%20Mustang%20223.jpg',
+                'images/hero/hero-1.jpg',
+                'images/hero/hero-2.jpg',
+                'images/hero/hero-3.jpg',
+                'images/hero/hero-4.jpg',
+                'images/hero/hero-5.jpg',
+                'images/hero/hero-7.jpg',
+                'images/hero/hero-8.jpg'
+            ];
+            var param = new URLSearchParams(location.search).get('hero');
+            var idx = param !== null ? parseInt(param) % heroImgs.length : Math.floor(Date.now() / 900000) % heroImgs.length;
+            var bgA = document.getElementById('heroBgA');
+            var bgB = document.getElementById('heroBgB');
+            bgA.style.backgroundImage = "url('" + heroImgs[idx] + "')";
+            var activeA = true;
+            // Preload next image
+            function preload(i) { var img = new Image(); img.src = heroImgs[i]; }
+            preload((idx + 1) % heroImgs.length);
+            setInterval(function() {
+                idx = (idx + 1) % heroImgs.length;
+                var incoming = activeA ? bgB : bgA;
+                var outgoing = activeA ? bgA : bgB;
+                incoming.style.backgroundImage = "url('" + heroImgs[idx] + "')";
+                incoming.style.opacity = '1';
+                outgoing.style.opacity = '0';
+                activeA = !activeA;
+                preload((idx + 1) % heroImgs.length);
+            }, 45000);
+        })();
 
         const nav = document.getElementById('nav');
         window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
