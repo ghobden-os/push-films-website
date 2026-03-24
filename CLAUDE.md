@@ -178,12 +178,12 @@ vimeoFrame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
 - `overflow: hidden` removed from `#hero` — was clipping the Iron Maiden card at the bottom
 - **Iron Maiden card** (`.hero-film-card`): dark semi-transparent background, yellow border, 128×80px thumbnail, title (14px), date and CTA (12px, date now `--fg` white). Clicks open YouTube trailer in modal. Animates in with the showreel button at 3.3s delay.
 - Showreel ID: `1174080790`
-- **Image rotation**: 9 images cycle every **15 minutes** via `Math.floor(Date.now() / 900000) % imgs.length`. Preview any with `?hero=N` (0–8).
+- **Image rotation**: 8 images cycle every **15 minutes** via `Math.floor(Date.now() / 900000) % imgs.length`. Preview any with `?hero=N` (0–7).
 
 ### Hero Desktop Text Placement — Locked Layout
 These positions are confirmed and signed off. Do not adjust without explicit instruction.
 
-**Default heroes (0, 4, 5, 7, 8)** — name block right-of-centre, vertically centred + pushed down:
+**Default heroes (0, 4, 5, 6, 7)** — name block right-of-centre, vertically centred + pushed down:
 ```css
 .hero-main { margin-left: calc(50% + 20px); margin-top: 72px; }
 ```
@@ -201,17 +201,10 @@ These positions are confirmed and signed off. Do not adjust without explicit ins
 .hero-label-explorer .hero-main .hero-rule-top { margin-bottom: 24px; }
 ```
 
-**Ali (hero=6)** — pinned to top, shifted far right, disc hidden:
-```css
-.hero-label-ali .hero-main { margin-top: calc(var(--nav-h) + 60px); margin-bottom: auto; margin-left: calc(62% + 20px); }
-.hero-label-ali .hero-main .hero-rule-top { align-self: center; margin-bottom: 20px; }
-.hero-label-ali .nav-logo { display: none; }  /* disc sits on Ali's forehead — hidden */
-```
-
 **"Film Producer & Production Consultant" label** (`.hero-rule-top`):
 - Desktop: absolutely positioned at `top: calc(var(--nav-h) + 48px)`, horizontally centred
 - Has decorative `::before`/`::after` lines either side
-- Explorer & Ali: label moved inside `.hero-main` (static flow), overridden by `.hero-main .hero-rule-top { position: static; }`
+- Explorer: label moved inside `.hero-main` (static flow), overridden by `.hero-main .hero-rule-top { position: static; }`
 - **Mobile: hidden** (`display: none !important`) — too wide for small screens
 - **Flex gap fix**: `.hero-rule-top` is a flex container with `gap: 28px`. "Film Producer" text and `<span class="hero-rule-extra">` were separate flex items each receiving the gap. Fixed by wrapping both in a single `<span>` so they form one flex item: `<div class="hero-rule-top"><span>Film Producer<span class="hero-rule-extra"> &amp; Production Consultant</span></span></div>`
 
