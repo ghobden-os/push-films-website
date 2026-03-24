@@ -2658,7 +2658,6 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
                 });
                 if (frame) {
                     const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
-                    const isMob = window.innerWidth < 640;
                     const autoplay = isIOS ? '' : '&autoplay=1';
                     frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?playsinline=1&title=0&byline=0&portrait=0' + autoplay + vimeoStart;
                     if (typeof Vimeo !== 'undefined') {
