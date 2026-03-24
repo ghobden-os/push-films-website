@@ -763,8 +763,9 @@
             .expand-gallery-thumb { aspect-ratio: unset !important; height: calc((100vw - 2 * var(--pad)) * 0.5625) !important; max-height: none !important; }
             #hero { background-position: 18% center !important; justify-content: space-between !important; padding-top: calc(var(--nav-h) + 20px) !important; padding-bottom: 52px !important; }
             #hero::before { background: linear-gradient(to bottom, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.08) 40%, rgba(0,0,0,0.08) 60%, rgba(0,0,0,0.72) 100%) !important; }
-            .hero-main { margin-left: 0 !important; align-self: auto !important; padding-right: 0 !important; text-align: center !important; align-items: center !important; }
-            .hero-sub { margin-top: clamp(24px, 5vw, 40px) !important; }
+            .hero-main { margin-left: 0 !important; align-self: auto !important; padding-right: 0 !important; text-align: center !important; align-items: center !important; flex: 1 !important; }
+            .hero-sub { margin-top: clamp(24px, 5vw, 40px) !important; margin-bottom: 0 !important; }
+            .hero-film-card { margin-top: auto !important; }
             .hero-rule-top { display: flex !important; }
             .hero-rule-extra { display: none !important; }
             .hero-name { text-shadow: 0 2px 24px rgba(0,0,0,0.9), 0 1px 6px rgba(0,0,0,0.8) !important; }
