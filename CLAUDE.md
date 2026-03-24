@@ -65,7 +65,7 @@ Clicking a gallery image opens a full-screen lightbox (`#imgLightbox`).
 - `openLightbox(items, index)` — takes the full items array and the rawIdx of the clicked image
 
 ### Work Section Category Order
-Automotive → Documentary → Experiential → Luxury → Expo → Sport → Comedy → Everest → The Early Years → Music Videos → Commercials
+Automotive → Documentary → Experiential → Luxury → Expo → Sport → Comedy → Everest → Showreel → The Early Years → Music Videos → Commercials
 
 ### Early Years Button
 `.early-years-btn` — yellow filled (`background: var(--gold)`), dark text, `padding: 16px 32px`, matches showreel button style. Hover darkens to `#D4B800`.
@@ -121,14 +121,14 @@ raptor: {
 - Ford Ranger Raptor: `1171157858` / gallery: `raptor`
 - Ford Explorer: `1171170029` / gallery: `lexieGreen`
 - Land Rover Defender: `1171151952` / gallery: `defender`
-- McLaren Spider: `1171150653` / gallery: `mclaren` — meta: "Producer — Spain"
+- McLaren Spider: `1171150653` / gallery: `mclaren` — meta: "Producer — Spain". Thumbnail: `images/film-grabs/spider/SPIDER_2.jpg`
 - RR Sport Test Track: `1171178087` / gallery: `rrSportTestTrack`
 - RR Sport Reveal: `1171150941`
 - RR James Corden: `1171151324` / gallery: `corden`
 - Discovery Sport: `1171150533` / gallery: `discovery`
 - Tata Nexon — 3 Spot Cutdown: `1171541476` / gallery: `tata2`
 - Tata Nexon — Performance: `1171541065` / gallery: `tata`
-- Iron Maiden: Burning Ambition: no Vimeo — has `data-youtube="BggdJLnSevQ"` (opens YouTube trailer in modal). Credit: **Co-Producer**, meta: "Co-Producer — Feature Documentary — Universal Pictures". Thumbnail `images/burning-ambition.png`. Release: "In cinemas May 7, 2026".
+- Iron Maiden: Burning Ambition: no Vimeo — accordion with `data-gallery="ironMaiden"` and `data-preview="iron-maiden"`. Clicking expands gallery (8 film grabs: `images/film-grabs/iron-maiden/IM1–IM8.jpg`). Thumbnail rotates through 8 holding images (`IMHI1–IMHI8.jpg`, same folder). `▶ Watch trailer` button (`.work-yt-btn`) opens YouTube `BggdJLnSevQ` in modal via `stopPropagation`. Credit: **Co-Producer**, meta: "Co-Producer — Feature Documentary — Universal Pictures". Thumbnail `images/burning-ambition.png`. Release: "In cinemas May 7, 2026".
 - I Am Ali: `1171150609` — meta: "Producer — Feature Documentary — Universal Pictures"
 - Family Tree Milan World Expo: `1171151872` — meta: "Lead Producer / Head of Media — UAE"
 - The Turtle Yeosu Expo: `1171157242` — meta: "Lead Producer / Head of Media — UAE"
@@ -177,8 +177,9 @@ vimeoFrame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
 - Preloaded via `<link rel="preload" as="image" href="images/Ford%20Mustang%20223.jpg">` in `<head>`
 - `overflow: hidden` removed from `#hero` — was clipping the Iron Maiden card at the bottom
 - **Iron Maiden card** (`.hero-film-card`): dark semi-transparent background, yellow border, 128×80px thumbnail, title (14px), date and CTA (12px, date now `--fg` white). Clicks open YouTube trailer in modal. Animates in with the showreel button at 3.3s delay.
-- Showreel ID: `1174080790`
-- **Image rotation**: 8 images cycle every **15 minutes** via `Math.floor(Date.now() / 900000) % imgs.length`. Preview any with `?hero=N` (0–7).
+- Showreel ID: `1174080790`. Button lives in its own "Showreel" work category section between Everest and The Early Years (uses `.early-years-btn` style, calls `openVimeo('1174080790')`). Removed from Contact section.
+- **Image rotation**: 8 images. Starting image is determined on page load via `Math.floor(Date.now() / 900000) % imgs.length` (changes every 15 minutes). Once on the page, the hero **crossfades live** between all 8 images every **45 seconds** via two stacked `.hero-bg` divs (`#heroBgA`, `#heroBgB`) with `opacity` transitions. Preview any starting image with `?hero=N` (0–7).
+- **Hero bg layers**: `.hero-bg` — `position: absolute; inset: 0; z-index: 0; transition: opacity 1.5s ease`. `#hero::before` overlay at `z-index: 1`. Hero content at `z-index: 2`. Mobile override: `.hero-bg { background-position: 18% center }` in final `!important` media block.
 
 ### Hero Desktop Text Placement — Locked Layout
 These positions are confirmed and signed off. Do not adjust without explicit instruction.
