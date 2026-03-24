@@ -84,7 +84,8 @@ These should ideally be compressed to under 200KB each.
 - `STRIP_SIZE = window.innerWidth < 640 ? 1 : 3` — set once at page load
 - On mobile the gallery thumb height matches the film exactly: `calc((100vw - 2 * var(--pad)) * 0.5625)` — the multiplier must be `0.5625` (16:9), not `0.39375` (wrong). The second `@media` `!important` block at end of stylesheet holds the canonical value.
 - Film is `width: 100%; padding-bottom: 56.25%; margin: 0` on mobile (overrides desktop 87.5%)
-- **Touch device optimisation**: hover preview crossfade images are only preloaded on non-touch devices. Guard: `const isTouch = window.matchMedia('(pointer: coarse)').matches` — if `isTouch && !previewEditMode` the hover handler returns early, preventing unnecessary image downloads on mobile.
+- **Touch device optimisation**: hover preview crossfade images are only preloaded on non-touch devices (`!isTouch`). Touch devices still get the IntersectionObserver auto-cycle (images loaded lazily as needed). Guard: `const isTouch = window.matchMedia('(pointer: coarse)').matches`.
+- **Filter navigation re-trigger**: after a filter button click + smooth scroll, `mobilePreviewObservers` (array of `{ obs, el }`) are all unobserved/re-observed 750ms later. This forces the IntersectionObserver to fire immediately for items already in the viewport — otherwise items that were in view before the scroll don't trigger a threshold crossing and never start cycling.
 
 ### CSS Cascade Warning
 The accordion expand CSS (`.expand-film`, `.expand-gallery-strip`, `.expand-gallery-thumb`) lives at ~line 590, **after** the first `@media (max-width: 640px)` block at ~line 558. Equal-specificity rules later in the file win, so the mobile overrides in that first block were being silently ignored. Fix: there is a **second** `@media (max-width: 640px)` block at the very end of `<style>` (just before `</style>`) with `!important` that correctly overrides the accordion desktop rules. Always add mobile accordion overrides there, not in the first media block.
@@ -225,7 +226,7 @@ The hero has significant mobile-specific overrides in the final `@media (max-wid
 - `.hero-rule-top` hidden (`display: none !important`) — "Film Producer & Production Consultant" label not shown on mobile
 
 ### Service Worker / Caching
-- `sw.js` cache key: `gh-v6` — bump this (e.g. `gh-v7`) any time you need to force all browsers to fetch fresh HTML
+- `sw.js` cache key: `gh-v7` — bump this (e.g. `gh-v8`) any time you need to force all browsers to fetch fresh HTML
 - The SW is cache-first for all same-origin requests. If users report seeing stale content, bump the cache version and push.
 - Hero image URLs (`/?hero=N`) are cached separately per URL — old SW versions can cause different heroes to show different HTML versions
 - After bumping and pushing, a new SW only activates after the first navigation — users see fresh content on the **second** page load. This is normal SW behaviour.

@@ -2880,8 +2880,11 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
 
     const previewEditMode = new URLSearchParams(location.search).get('preview-edit') === '1';
 
-    // Hover preview is desktop-only — skip entirely on touch devices
+    // Hover preview is desktop-only; touch devices get auto-cycle via IntersectionObserver only
     const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
+    // Collect mobile observers so filter navigation can re-trigger them
+    const mobilePreviewObservers = [];
 
     document.querySelectorAll('.work-item').forEach(item => {
         const key = item.dataset.gallery || item.dataset.preview;
@@ -2891,13 +2894,9 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
         const workImg = item.querySelector('.work-image');
         if (!workImg) return;
 
-        // Skip hover preview setup on touch devices — saves bandwidth and DOM
-        if (isTouch && !previewEditMode) return;
-
-        // Preload
-        srcs.forEach(src => { const i = new Image(); i.src = src; });
-
         if (previewEditMode) {
+            // Preload for edit mode
+            srcs.forEach(src => { const i = new Image(); i.src = src; });
             // Edit mode: show first image static with position controls
             const editEl = document.createElement('img');
             editEl.className = 'work-preview-img';
@@ -2947,44 +2946,50 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
             nextBtn.addEventListener('click',  () => { imgIdx = (imgIdx + 1) % srcs.length; editEl.src = srcs[imgIdx]; editEl.style.objectPosition = grabPositions[key+'-'+imgIdx] || '50% 50%'; badge.textContent = grabPositions[key+'-'+imgIdx] || '50% 50%'; });
 
             overlay.querySelectorAll('button').forEach(b => b.addEventListener('click', e => e.stopPropagation()));
-        } else {
-            // Normal mode: alternating two-layer crossfade
-            // frontImg is always the currently visible layer
-            // backImg is always loaded silently underneath
-            const imgA = document.createElement('img');
-            const imgB = document.createElement('img');
-            imgA.className = 'work-preview-img';
-            imgB.className = 'work-preview-img';
-            imgA.src = srcs[0];
-            imgB.src = srcs[1 % srcs.length];
-            imgA.style.zIndex = '3';
-            imgB.style.zIndex = '2';
-            workImg.appendChild(imgB);
-            workImg.appendChild(imgA);
+            return; // edit mode done
+        }
 
-            let frontImg = imgA;
-            let backImg  = imgB;
-            let previewInterval = null;
-            let previewIdx = 0;
+        // Normal mode: alternating two-layer crossfade
+        // frontImg is always the currently visible layer
+        // backImg is always loaded silently underneath
+        const imgA = document.createElement('img');
+        const imgB = document.createElement('img');
+        imgA.className = 'work-preview-img';
+        imgB.className = 'work-preview-img';
+        imgA.src = srcs[0];
+        imgB.src = srcs[1 % srcs.length];
+        imgA.style.zIndex = '3';
+        imgB.style.zIndex = '2';
+        workImg.appendChild(imgB);
+        workImg.appendChild(imgA);
 
-            function crossfadeTo(idx) {
-                // Load new image onto the back layer and bring it to the front
-                backImg.src = srcs[idx];
-                backImg.style.zIndex = '3';
-                backImg.style.transition = 'none';
-                backImg.style.opacity = '0';
-                frontImg.style.zIndex = '2';
-                requestAnimationFrame(() => requestAnimationFrame(() => {
-                    backImg.style.transition = 'opacity 1.2s ease';
-                    backImg.style.opacity = '1';
-                    // Once fully faded in, silently hide the old front (now behind)
-                    setTimeout(() => {
-                        frontImg.style.transition = 'none';
-                        frontImg.style.opacity = '0';
-                        const tmp = frontImg; frontImg = backImg; backImg = tmp;
-                    }, 1250);
-                }));
-            }
+        let frontImg = imgA;
+        let backImg  = imgB;
+        let previewInterval = null;
+        let previewIdx = 0;
+
+        function crossfadeTo(idx) {
+            // Load new image onto the back layer and bring it to the front
+            backImg.src = srcs[idx];
+            backImg.style.zIndex = '3';
+            backImg.style.transition = 'none';
+            backImg.style.opacity = '0';
+            frontImg.style.zIndex = '2';
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                backImg.style.transition = 'opacity 1.2s ease';
+                backImg.style.opacity = '1';
+                // Once fully faded in, silently hide the old front (now behind)
+                setTimeout(() => {
+                    frontImg.style.transition = 'none';
+                    frontImg.style.opacity = '0';
+                    const tmp = frontImg; frontImg = backImg; backImg = tmp;
+                }, 1250);
+            }));
+        }
+
+        if (!isTouch) {
+            // Desktop only: eager preload all grab images and set up hover crossfade
+            srcs.forEach(src => { const i = new Image(); i.src = src; });
 
             item.addEventListener('mouseenter', () => {
                 if (item.classList.contains('expanded')) return;
@@ -3015,42 +3020,44 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
                     previewIdx = 0;
                 }, 550);
             });
+        }
 
-            // Mobile: auto-cycle when item scrolls into view
-            if (srcs.length > 1 && window.innerWidth < 640) {
-                const mobileObs = new IntersectionObserver(entries => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
+        // Auto-cycle when item scrolls into view.
+        // Touch devices: always (no hover available). Desktop: only on narrow viewports (<640px).
+        if (srcs.length > 1 && (isTouch || window.innerWidth < 640)) {
+            const mobileObs = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        frontImg = imgA; backImg = imgB;
+                        imgA.src = srcs[0];
+                        imgA.style.zIndex = '3'; imgA.style.transition = 'none'; imgA.style.opacity = '0';
+                        imgB.style.zIndex = '2'; imgB.style.transition = 'none'; imgB.style.opacity = '0';
+                        previewIdx = 0;
+                        clearTimeout(previewInterval);
+                        // Hold static thumbnail for 1.5s, then fade in first grab and cycle every 2.5s
+                        previewInterval = setTimeout(function() {
+                            imgA.style.transition = 'opacity 0.4s ease'; imgA.style.opacity = '1';
+                            previewInterval = setTimeout(function tick() {
+                                previewIdx = (previewIdx + 1) % srcs.length;
+                                crossfadeTo(previewIdx);
+                                previewInterval = setTimeout(tick, 2500);
+                            }, 2000);
+                        }, 1500);
+                    } else {
+                        clearTimeout(previewInterval);
+                        imgA.style.transition = 'opacity 0.5s ease'; imgA.style.opacity = '0';
+                        imgB.style.transition = 'opacity 0.5s ease'; imgB.style.opacity = '0';
+                        setTimeout(() => {
                             frontImg = imgA; backImg = imgB;
-                            imgA.src = srcs[0];
-                            imgA.style.zIndex = '3'; imgA.style.transition = 'none'; imgA.style.opacity = '0';
-                            imgB.style.zIndex = '2'; imgB.style.transition = 'none'; imgB.style.opacity = '0';
+                            imgA.src = srcs[0]; imgA.style.zIndex = '3';
+                            imgB.src = srcs[1 % srcs.length]; imgB.style.zIndex = '2';
                             previewIdx = 0;
-                            clearTimeout(previewInterval);
-                            // Hold static thumbnail for 1.5s, then fade in first grab and hold for 2s before cycling
-                            previewInterval = setTimeout(function() {
-                                imgA.style.transition = 'opacity 0.4s ease'; imgA.style.opacity = '1';
-                                previewInterval = setTimeout(function tick() {
-                                    previewIdx = (previewIdx + 1) % srcs.length;
-                                    crossfadeTo(previewIdx);
-                                    previewInterval = setTimeout(tick, 2500);
-                                }, 2000);
-                            }, 1500);
-                        } else {
-                            clearTimeout(previewInterval);
-                            imgA.style.transition = 'opacity 0.5s ease'; imgA.style.opacity = '0';
-                            imgB.style.transition = 'opacity 0.5s ease'; imgB.style.opacity = '0';
-                            setTimeout(() => {
-                                frontImg = imgA; backImg = imgB;
-                                imgA.src = srcs[0]; imgA.style.zIndex = '3';
-                                imgB.src = srcs[1 % srcs.length]; imgB.style.zIndex = '2';
-                                previewIdx = 0;
-                            }, 550);
-                        }
-                    });
-                }, { threshold: 0.5 });
-                mobileObs.observe(item);
-            }
+                        }, 550);
+                    }
+                });
+            }, { threshold: 0.5 });
+            mobileObs.observe(item);
+            mobilePreviewObservers.push({ obs: mobileObs, el: item });
         }
     });
 
@@ -3119,6 +3126,15 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
             // Scroll to top of work section (sticky filter bar lands just above content)
             const top = workSection.getBoundingClientRect().top + window.scrollY - navH;
             window.scrollTo({ top, behavior: 'smooth' });
+            // Re-trigger IntersectionObserver for items now in view — smooth scroll can
+            // bring items into the viewport without crossing the threshold from off-screen,
+            // so the observer never fires. Unobserve/re-observe forces an immediate check.
+            setTimeout(() => {
+                mobilePreviewObservers.forEach(({ obs, el }) => {
+                    obs.unobserve(el);
+                    obs.observe(el);
+                });
+            }, 750);
         });
     });
 
