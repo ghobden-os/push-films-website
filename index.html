@@ -788,6 +788,7 @@
 
         @media (max-height: 500px) and (orientation: landscape) {
             .work-filter-bar { display: none !important; }
+            .nav-links { display: none !important; }
         }
 
         /* === HERO ENTRANCE === */
@@ -1169,7 +1170,7 @@
                         <div class="work-expand"></div>
                     </article>
                     <article class="work-item accordion" data-vimeo="1171318976" data-gallery="explorer" data-preview="explorer" data-start="1140" data-last-hold="12000">
-                        <div class="work-image"><img loading="lazy" src="images/film-grabs/lexie-limit/LEXIE LIMIT_2.jpg" alt="Ford Explorer World Record"></div>
+                        <div class="work-image"><img loading="lazy" src="images/film-grabs/lexie-limit/LEXIE%20LIMIT_2.jpg" alt="Ford Explorer World Record"></div>
                         <div class="work-info">
                             <h3>Ford Explorer: Lexie Limitless World Record Finale</h3>
                             <p class="work-meta">Producer — Ford — French Riviera</p>
@@ -3125,8 +3126,8 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
                     }
                 });
             }, { threshold: 0.5 });
-            mobileObs.observe(item);
-            mobilePreviewObservers.push({ obs: mobileObs, el: item });
+            mobileObs.observe(workImg);
+            mobilePreviewObservers.push({ obs: mobileObs, el: workImg });
         }
     });
 
