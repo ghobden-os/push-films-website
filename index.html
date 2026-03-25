@@ -1018,6 +1018,7 @@
                 <button class="work-filter-btn" data-filter="comedy">Comedy</button>
                 <button class="work-filter-btn" data-filter="everest">Everest</button>
                 <button class="work-filter-btn" data-filter="early years">Music Videos</button>
+                <button class="work-filter-btn" id="showreelFilterBtn">Showreel</button>
             </div>
 
             <div class="work-category">
@@ -1163,8 +1164,8 @@
                         </div>
                         <div class="work-expand"></div>
                     </article>
-                    <article class="work-item accordion" data-vimeo="1171318976" data-gallery="explorer" data-start="1140" data-last-hold="12000">
-                        <div class="work-image"><img loading="lazy" src="images/ford-explorer-world-record.png" alt="Ford Explorer World Record"></div>
+                    <article class="work-item accordion" data-vimeo="1171318976" data-gallery="explorer" data-preview="explorer" data-start="1140" data-last-hold="12000">
+                        <div class="work-image"><img loading="lazy" src="images/film-grabs/lexie-limit/LEXIE LIMIT_2.jpg" alt="Ford Explorer World Record"></div>
                         <div class="work-info">
                             <h3>Ford Explorer: Lexie Limitless World Record Finale</h3>
                             <p class="work-meta">Producer — Ford — French Riviera</p>
@@ -1304,13 +1305,6 @@
                         </div>
                         <div class="work-expand"></div>
                     </article>
-                </div>
-            </div>
-
-            <div class="work-category">
-                <div class="work-category-header"><span>Showreel</span></div>
-                <div class="early-years-link-wrap">
-                    <button class="early-years-btn" onclick="openVimeo('1174080790')">Watch the showreel →</button>
                 </div>
             </div>
 
@@ -3207,6 +3201,10 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
                 });
             }, 750);
         });
+    });
+
+    document.getElementById('showreelFilterBtn').addEventListener('click', () => {
+        openVimeo('1174080790');
     });
 
     ['mousemove', 'scroll', 'keydown', 'touchstart'].forEach(evt => {
