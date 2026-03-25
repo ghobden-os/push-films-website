@@ -219,6 +219,15 @@ The hero has significant mobile-specific overrides in the final `@media (max-wid
 - `.hero-sub` has extra `margin-top` to push it away from the name
 - `.hero-rule-top` hidden (`display: none !important`) — "Film Producer & Production Consultant" label not shown on mobile
 
+### Per-Hero Mobile Adjustments
+JS adds `hero-idx-N` class to `<html>` alongside `hero-label-*`. A separate `@media (max-width: 640px)` block (just before the landscape query) has per-hero overrides:
+- **Hero 2 (canyon)**: Film Producer high (`top: nav-h + 14px`), name pushed into mid-frame (`margin-top: 180px`)
+- **Hero 3 (Lexie)**: Film Producer over her hair (`top: nav-h + 14px`), name on her shoulder (`margin-top: 220px`), subtitle below her face (`margin-bottom: 64px`)
+- **Hero 5 (golfer)**: Text block raised (`margin-top: 40px`), subtitle lowered (`margin-bottom: 60px`)
+- **Hero 6**: Background panned right to show beach people (`background-position: 62% center`)
+- **Hero 7**: Background panned to centre to show people (`background-position: 48% center`)
+- **Explorer label guard**: The JS block that moves `.hero-rule-top` inside `.hero-main` on Explorer days is guarded with `&& window.innerWidth > 640` — without this, the CSS `top` override has no effect on mobile (static element)
+
 ### Service Worker / Caching
 - `sw.js` cache key: `gh-v7` — bump this (e.g. `gh-v8`) any time you need to force all browsers to fetch fresh HTML
 - The SW is cache-first for all same-origin requests. If users report seeing stale content, bump the cache version and push.
