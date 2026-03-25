@@ -40,6 +40,7 @@
             if (day === 3) document.documentElement.classList.add('hero-label-right');
             if (day === 3) document.documentElement.classList.add('hero-label-explorer');
             if (day === 1 || day === 2) document.documentElement.classList.add('hero-label-defender');
+            document.documentElement.classList.add('hero-idx-' + day);
             var pre = document.createElement('link');
             pre.rel = 'preload'; pre.as = 'image'; pre.href = imgs[day];
             document.head.appendChild(pre);
@@ -784,6 +785,24 @@
             .hero-film-card img { width: 102px !important; height: 64px !important; }
             .hero-film-card-title { font-size: 11px !important; }
             .hero-film-card-date, .hero-film-card-cta { font-size: 10px !important; }
+        }
+
+        /* Per-hero mobile adjustments */
+        @media (max-width: 640px) {
+            /* Hero 2 (canyon): Film Producer high, name in middle of image */
+            html.hero-idx-2 .hero-rule-top { top: calc(var(--nav-h) + 14px) !important; }
+            html.hero-idx-2 .hero-main { margin-top: 180px !important; }
+            /* Hero 3 (Lexie): Film Producer high, name on shoulder, subtitle below face */
+            html.hero-idx-3 .hero-rule-top { top: calc(var(--nav-h) + 14px) !important; }
+            html.hero-idx-3 .hero-main { margin-top: 220px !important; }
+            html.hero-idx-3 .hero-name { margin-bottom: 64px !important; }
+            /* Hero 5 (golfer): raise text block, push subtitle down */
+            html.hero-idx-5 .hero-rule-top { top: calc(var(--nav-h) + 24px) !important; }
+            html.hero-idx-5 .hero-main { margin-top: 40px !important; }
+            html.hero-idx-5 .hero-name { margin-bottom: 60px !important; }
+            /* Heroes 6 & 7: pan right to show people */
+            html.hero-idx-6 .hero-bg { background-position: 62% center !important; }
+            html.hero-idx-7 .hero-bg { background-position: 48% center !important; }
         }
 
         @media (max-height: 500px) and (orientation: landscape) {
@@ -1720,8 +1739,8 @@
         const links = document.querySelector('.nav-links');
         toggle?.addEventListener('click', () => { toggle.classList.toggle('open'); links.classList.toggle('open'); });
 
-        // Move hero label inside name block on Explorer & Ali days
-        if (document.documentElement.classList.contains('hero-label-right')) {
+        // Move hero label inside name block on Explorer & Ali days (desktop only)
+        if (document.documentElement.classList.contains('hero-label-right') && window.innerWidth > 640) {
             const ruleTop = document.querySelector('.hero-rule-top');
             const heroMain = document.querySelector('.hero-main');
             if (ruleTop && heroMain) heroMain.insertBefore(ruleTop, heroMain.firstChild);
