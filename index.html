@@ -1721,11 +1721,18 @@
                 'images/hero/hero-7.jpg',
                 'images/hero/hero-8.jpg'
             ];
+            // Mobile background-position per hero (matches CSS per-hero overrides)
+            var mobilePans = ['18%', '59%', '18%', '18%', '25%', '26%', '58%', '55%'];
+            var isMobile = window.matchMedia('(max-width: 640px)').matches;
+            function applyPan(el, i) {
+                if (isMobile) el.style.backgroundPosition = mobilePans[i] + ' center';
+            }
             var param = new URLSearchParams(location.search).get('hero');
             var idx = param !== null ? parseInt(param) % heroImgs.length : Math.floor(Date.now() / 900000) % heroImgs.length;
             var bgA = document.getElementById('heroBgA');
             var bgB = document.getElementById('heroBgB');
             bgA.style.backgroundImage = "url('" + heroImgs[idx] + "')";
+            applyPan(bgA, idx);
             var activeA = true;
             // Preload next image
             function preload(i) { var img = new Image(); img.src = heroImgs[i]; }
@@ -1735,6 +1742,7 @@
                 var incoming = activeA ? bgB : bgA;
                 var outgoing = activeA ? bgA : bgB;
                 incoming.style.backgroundImage = "url('" + heroImgs[idx] + "')";
+                applyPan(incoming, idx);
                 incoming.style.opacity = '1';
                 outgoing.style.opacity = '0';
                 activeA = !activeA;
