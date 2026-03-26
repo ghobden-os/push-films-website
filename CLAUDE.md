@@ -84,8 +84,10 @@ These should ideally be compressed to under 200KB each.
 - `STRIP_SIZE = window.innerWidth < 640 ? 1 : 3` — set once at page load
 - On mobile the gallery thumb height matches the film exactly: `calc((100vw - 2 * var(--pad)) * 0.5625)` — the multiplier must be `0.5625` (16:9), not `0.39375` (wrong). The second `@media` `!important` block at end of stylesheet holds the canonical value.
 - Film is `width: 100%; padding-bottom: 56.25%; margin: 0` on mobile (overrides desktop 87.5%)
-- **Touch device optimisation**: hover preview crossfade images are only preloaded on non-touch devices (`!isTouch`). Touch devices still get the IntersectionObserver auto-cycle (images loaded lazily as needed). Guard: `const isTouch = window.matchMedia('(pointer: coarse)').matches`.
+- **Touch device optimisation**: hover preview crossfade images are only preloaded on non-touch devices (`!isTouch`). Guard: `const isTouch = window.matchMedia('(pointer: coarse)').matches`.
+- **IntersectionObserver auto-cycle**: enabled for **all devices** (desktop and mobile) — condition is `if (srcs.length > 1)`. Previously was `(isTouch || window.innerWidth < 640)` which meant desktop hover-only items never auto-cycled on scroll. Timing: 2s initial hold, first image fades in over 0.8s, then cycles every **5s**. Crossfade transition: **1.8s ease**.
 - **Filter navigation re-trigger**: after a filter button click + smooth scroll, `mobilePreviewObservers` (array of `{ obs, el }`) are all unobserved/re-observed 750ms later. This forces the IntersectionObserver to fire immediately for items already in the viewport — otherwise items that were in view before the scroll don't trigger a threshold crossing and never start cycling.
+- **Hover preview timing**: first crossfade at 4s, then every 5s. Crossfade transition: 1.8s ease.
 
 ### CSS Cascade Warning
 The accordion expand CSS (`.expand-film`, `.expand-gallery-strip`, `.expand-gallery-thumb`) lives at ~line 590, **after** the first `@media (max-width: 640px)` block at ~line 558. Equal-specificity rules later in the file win, so the mobile overrides in that first block were being silently ignored. Fix: there is a **second** `@media (max-width: 640px)` block at the very end of `<style>` (just before `</style>`) with `!important` that correctly overrides the accordion desktop rules. Always add mobile accordion overrides there, not in the first media block.
@@ -128,7 +130,7 @@ raptor: {
 - Discovery Sport: `1171150533` / gallery: `discovery`
 - Tata Nexon — 3 Spot Cutdown: `1171541476` / gallery: `tata2`
 - Tata Nexon — Performance: `1171541065` / gallery: `tata`
-- Iron Maiden: Burning Ambition: no Vimeo — accordion with `data-gallery="ironMaiden"` and `data-preview="iron-maiden"`. Clicking expands gallery (8 film grabs: `images/film-grabs/iron-maiden/IM1–IM8.jpg`). Thumbnail rotates through 8 holding images (`IMHI1–IMHI8.jpg`, same folder). `▶ Watch trailer` button (`.work-yt-btn`) opens YouTube `BggdJLnSevQ` in modal via `stopPropagation`. Credit: **Co-Producer**, meta: "Co-Producer — Feature Documentary — Universal Pictures". Thumbnail `images/burning-ambition.png`. Release: "In cinemas May 7, 2026".
+- Iron Maiden: Burning Ambition: no Vimeo — accordion with `data-gallery="ironMaiden"` and `data-preview="iron-maiden"`. Clicking expands gallery (8 film grabs: `images/film-grabs/iron-maiden/IM1–IM8.jpg`). Thumbnail rotates through 8 holding images (`IMHI1–IMHI8.jpg`, same folder). `▶ Watch trailer` button (`.work-yt-btn`) opens YouTube `BggdJLnSevQ` in modal via `stopPropagation`. Credit: **Co-Producer**, meta: "Co-Producer — Feature Documentary — Universal Pictures". Thumbnail `images/burning-ambition.png`. Release: "In cinemas May 7, 2026". After gallery finishes its loop, "In cinemas May 7" text (`.im-release-text`, gold, 13px uppercase) appears below carousel, then accordion auto-closes after 10 seconds (`setTimeout(collapse, 10000)` in `showSlide` finish logic).
 - I Am Ali: `1171150609` — meta: "Producer — Feature Documentary — Universal Pictures"
 - Family Tree Milan World Expo: `1171151872` — meta: "Lead Producer / Head of Media — UAE"
 - The Turtle Yeosu Expo: `1171157242` — meta: "Lead Producer / Head of Media — UAE"
@@ -178,7 +180,9 @@ vimeoFrame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
 - `overflow: hidden` removed from `#hero` — was clipping the Iron Maiden card at the bottom
 - **Iron Maiden card** (`.hero-film-card`): dark semi-transparent background, yellow border, 128×80px thumbnail, title (14px), date and CTA (12px, date now `--fg` white). Clicks open YouTube trailer in modal. Animates in with the showreel button at 3.3s delay.
 - Showreel ID: `1174080790`. Button lives in its own "Showreel" work category section between Everest and The Early Years (uses `.early-years-btn` style, calls `openVimeo('1174080790')`). Removed from Contact section.
-- **Image rotation**: 8 images. Starting image is determined on page load via `Math.floor(Date.now() / 900000) % imgs.length` (changes every 15 minutes). Once on the page, the hero **crossfades live** between all 8 images every **45 seconds** via two stacked `.hero-bg` divs (`#heroBgA`, `#heroBgB`) with `opacity` transitions. Preview any starting image with `?hero=N` (0–7).
+- **Desktop image rotation**: 8 images. **Mobile image rotation**: 3 images only — canyon (`hero-2.jpg`), beach couple (`hero-7.jpg`), dune couple (`hero-8.jpg`). Split is done in the `<head>` script via `isMobileDevice = window.matchMedia('(max-width: 640px)').matches`. Desktop restores `hero-label-defender` / `hero-label-explorer` label classes; mobile skips them.
+- Starting image is determined on page load via `Math.floor(Date.now() / 900000) % imgs.length` (changes every 15 minutes). The hero **crossfades live** between images every **45 seconds** via two stacked `.hero-bg` divs (`#heroBgA`, `#heroBgB`) with `opacity` transitions. Preview any starting image with `?hero=N`.
+- **Mobile pan on crossfade**: CSS `hero-idx-N` classes only apply at page load. On rotation, pan is applied via JS — `mobilePans` array holds full `background-position` values per mobile index (e.g. `['18% center', '58% center', '55% center']`), and `applyPan(el, i)` is called on every crossfade. Without this, images revert to the CSS default pan on rotation.
 - **Hero bg layers**: `.hero-bg` — `position: absolute; inset: 0; z-index: 0; transition: opacity 1.5s ease`. `#hero::before` overlay at `z-index: 1`. Hero content at `z-index: 2`. Mobile override: `.hero-bg { background-position: 18% center }` in final `!important` media block.
 
 ### Hero Desktop Text Placement — Locked Layout
@@ -220,16 +224,16 @@ The hero has significant mobile-specific overrides in the final `@media (max-wid
 - `.hero-rule-top` hidden (`display: none !important`) — "Film Producer & Production Consultant" label not shown on mobile
 
 ### Per-Hero Mobile Adjustments
-JS adds `hero-idx-N` class to `<html>` alongside `hero-label-*`. A separate `@media (max-width: 640px)` block (just before the landscape query) has per-hero overrides:
-- **Hero 2 (canyon)**: Film Producer high (`top: nav-h + 14px`), name pushed into mid-frame (`margin-top: 180px`)
-- **Hero 3 (Lexie)**: Film Producer over her hair (`top: nav-h + 14px`), name on her shoulder (`margin-top: 220px`), subtitle below her face (`margin-bottom: 64px`)
-- **Hero 5 (golfer)**: Text block raised (`margin-top: 40px`), subtitle lowered (`margin-bottom: 60px`)
-- **Hero 6**: Background panned right to show beach people (`background-position: 62% center`)
-- **Hero 7**: Background panned to centre to show people (`background-position: 48% center`)
+Mobile uses only 3 images (indices 0–2 in the `mobileImgs` array). JS adds `hero-idx-N` class to `<html>` (where N = index within the active array). A separate `@media (max-width: 640px)` block (just before the landscape query) has per-hero overrides:
+- **Hero 0 (canyon, `hero-2.jpg`)**: Film Producer high (`top: nav-h + 14px`), name mid-frame (`margin-top: 180px`)
+- **Hero 1 (beach couple, `hero-7.jpg`)**: Background panned to `58% center` to show the subjects
+- **Hero 2 (dune couple, `hero-8.jpg`)**: Background panned to `55% center`, Film Producer high (`top: nav-h + 5px`), name raised (`margin-top: 10px`)
 - **Explorer label guard**: The JS block that moves `.hero-rule-top` inside `.hero-main` on Explorer days is guarded with `&& window.innerWidth > 640` — without this, the CSS `top` override has no effect on mobile (static element)
 
+Note: heroes 3–7 from the desktop array (Lexie, silhouette, golfer, Ali, Iron Maiden) are **not used on mobile** — they were removed because viewport height differences between Playwright (390×664px) and real iPhones (~750–900px tall) made it impossible to tune `background-position` X% values that work reliably across devices. Stick to 3 mobile heroes only.
+
 ### Service Worker / Caching
-- `sw.js` cache key: `gh-v7` — bump this (e.g. `gh-v8`) any time you need to force all browsers to fetch fresh HTML
+- `sw.js` cache key: `gh-v28` — bump this (e.g. `gh-v29`) any time you need to force all browsers to fetch fresh HTML
 - The SW is cache-first for all same-origin requests. If users report seeing stale content, bump the cache version and push.
 - Hero image URLs (`/?hero=N`) are cached separately per URL — old SW versions can cause different heroes to show different HTML versions
 - After bumping and pushing, a new SW only activates after the first navigation — users see fresh content on the **second** page load. This is normal SW behaviour.
