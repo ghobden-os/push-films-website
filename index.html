@@ -3236,8 +3236,11 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
             allArts.sort((a, b) => (parseInt(a.dataset.curatedOrder) || 999) - (parseInt(b.dataset.curatedOrder) || 999));
             allArts.forEach(art => curatedWork.appendChild(art));
             curatedWork.style.display = '';
-            // Hide category sections (headers + grids)
-            document.querySelectorAll('#work .work-category').forEach(cat => cat.style.display = 'none');
+            // Hide category sections (headers + grids) — preserve Early Years lead-in
+            document.querySelectorAll('#work .work-category').forEach(cat => {
+                const catName = (cat.querySelector('.work-category-header span')?.textContent || '').toLowerCase();
+                cat.style.display = catName === 'the early years' ? '' : 'none';
+            });
         } else {
             // Restore articles to their category grids
             restoreArticles();
