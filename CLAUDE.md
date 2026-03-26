@@ -65,7 +65,19 @@ Clicking a gallery image opens a full-screen lightbox (`#imgLightbox`).
 - `openLightbox(items, index)` — takes the full items array and the rawIdx of the clicked image
 
 ### Work Section Category Order
-Automotive → Documentary → Experiential → Luxury → Expo → Sport → Comedy → Everest → Showreel → The Early Years → Music Videos → Commercials
+Automotive → Documentary → Experiential → Luxury → Expo → Sport → Comedy → Everest → The Early Years → Music Videos → Commercials
+
+### Curated "All" View
+When "All" is selected (default on page load), work items display in a flat mixed grid — no category headers — in a defined curated order set via `data-curated-order="N"` attributes on each `<article>`. Category headers only appear when a specific filter is active.
+
+The curated order (1–23):
+1. Iron Maiden  2. I Am Ali  3. Raptor  4. Lexie Limitless  5. Defender  6. Bridgestone  7. James Corden  8. Vashi  9. Ford Wheels  10. Family Tree  11. Expo Dubai  12. The Turtle  13. Football League  14. Golfing 4 Life  15. RR Sport Test Track  16. Sexy Tuesdays  17. Waiting for Conkers  18. Everest  19. Ford Explorer (lexieGreen)  20. McLaren  21. RR Sport Reveal  22. Discovery Sport  23. Tata Nexon
+
+**Implementation**: `applyFilter('all')` moves all articles into `#curatedWork.work-grid` sorted by `data-curated-order`, hides all `.work-category` divs except "The Early Years" (which always shows as a lead-in to music videos). Switching to a category filter calls `restoreArticles()` which puts articles back into their original `.work-grid` parents in original order, then shows/hides by category name. Original positions recorded in `articleOriginals` array on first call.
+
+**To reorder**: change `data-curated-order` values on the relevant `<article>` tags. Numbers don't need to be contiguous — they're sorted numerically.
+
+**Intro text** above filter bar: `<p class="work-categories-intro">Everything's here. Use the filters to browse.</p>` — styled via `.work-categories-intro` (18px, `var(--fg)`, weight 400).
 
 ### Early Years Button
 `.early-years-btn` — yellow filled (`background: var(--gold)`), dark text, `padding: 16px 32px`, matches showreel button style. Hover darkens to `#D4B800`.
@@ -86,6 +98,7 @@ These should ideally be compressed to under 200KB each.
 - Film is `width: 100%; padding-bottom: 56.25%; margin: 0` on mobile (overrides desktop 87.5%)
 - **Touch device optimisation**: hover preview crossfade images are only preloaded on non-touch devices (`!isTouch`). Guard: `const isTouch = window.matchMedia('(pointer: coarse)').matches`.
 - **IntersectionObserver auto-cycle**: enabled for **all devices** (desktop and mobile) — condition is `if (srcs.length > 1)`. Previously was `(isTouch || window.innerWidth < 640)` which meant desktop hover-only items never auto-cycled on scroll. Timing: 2s initial hold, first image fades in over 0.8s, then cycles every **5s**. Crossfade transition: **1.8s ease**.
+- **Mobile nav**: no hamburger — links shown inline in the nav bar. About, Work, Behind the Scenes, Contact visible; The Early Years hidden (`nav-mobile-hide` class). Font-size 8px, gap 14px. `.nav-toggle` is `display: none` on mobile.
 - **Filter navigation re-trigger**: after a filter button click + smooth scroll, `mobilePreviewObservers` (array of `{ obs, el }`) are all unobserved/re-observed 750ms later. This forces the IntersectionObserver to fire immediately for items already in the viewport — otherwise items that were in view before the scroll don't trigger a threshold crossing and never start cycling.
 - **Hover preview timing**: first crossfade at 4s, then every 5s. Crossfade transition: 1.8s ease.
 
@@ -233,7 +246,7 @@ Mobile uses only 3 images (indices 0–2 in the `mobileImgs` array). JS adds `he
 Note: heroes 3–7 from the desktop array (Lexie, silhouette, golfer, Ali, Iron Maiden) are **not used on mobile** — they were removed because viewport height differences between Playwright (390×664px) and real iPhones (~750–900px tall) made it impossible to tune `background-position` X% values that work reliably across devices. Stick to 3 mobile heroes only.
 
 ### Service Worker / Caching
-- `sw.js` cache key: `gh-v28` — bump this (e.g. `gh-v29`) any time you need to force all browsers to fetch fresh HTML
+- `sw.js` cache key: `gh-v43` — bump this (e.g. `gh-v44`) any time you need to force all browsers to fetch fresh HTML
 - The SW is cache-first for all same-origin requests. If users report seeing stale content, bump the cache version and push.
 - Hero image URLs (`/?hero=N`) are cached separately per URL — old SW versions can cause different heroes to show different HTML versions
 - After bumping and pushing, a new SW only activates after the first navigation — users see fresh content on the **second** page load. This is normal SW behaviour.
