@@ -807,7 +807,7 @@
             html.hero-idx-4 .hero-rule-top { top: calc(var(--nav-h) + 5px) !important; }
             html.hero-idx-4 .hero-main { margin-top: 10px !important; }
             /* Per-hero mobile pan overrides */
-            html.hero-idx-1 .hero-bg { background-position: 59% center !important; }
+            html.hero-idx-1 .hero-bg { background-position: 54% center !important; }
             html.hero-idx-4 .hero-bg { background-position: 25% center !important; }
             html.hero-idx-5 .hero-bg { background-position: 26% center !important; }
             html.hero-idx-6 .hero-bg { background-position: 58% center !important; }
@@ -1722,7 +1722,7 @@
                 'images/hero/hero-8.jpg'
             ];
             // Mobile background-position per hero (matches CSS per-hero overrides)
-            var mobilePans = ['18%', '59%', '18%', '18%', '25%', '26%', '58%', '55%'];
+            var mobilePans = ['18%', '54%', '18%', '18%', '25%', '26%', '58%', '55%'];
             var isMobile = window.matchMedia('(max-width: 640px)').matches;
             function applyPan(el, i) {
                 if (isMobile) el.style.backgroundPosition = mobilePans[i] + ' center';
