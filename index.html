@@ -3129,9 +3129,8 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
             });
         }
 
-        // Auto-cycle when item scrolls into view.
-        // Touch devices: always (no hover available). Desktop: only on narrow viewports (<640px).
-        if (srcs.length > 1 && (isTouch || window.innerWidth < 640)) {
+        // Auto-cycle when item scrolls into view — all devices.
+        if (srcs.length > 1) {
             const mobileObs = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
