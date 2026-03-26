@@ -706,6 +706,7 @@
         .expand-gallery-bar button { background: none; border: none; color: var(--mid); cursor: pointer; font-size: 18px; padding: 2px 6px; transition: color 0.2s; }
         .expand-gallery-bar button:hover { color: var(--gold); }
         .expand-gallery-bar span { font-family: var(--font-sans); font-size: 12px; letter-spacing: 0.08em; color: #CCCCCC; }
+        .im-release-text { font-family: var(--font-sans); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); text-align: center; margin-top: 16px; }
 
         /* MEDIA BUTTON */
         .media-btn {
@@ -2604,6 +2605,7 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
             let html = '<div class="work-expand-inner">';
             if (vimeoId) html += '<div class="expand-film"><div class="film-poster"><div class="film-poster-play"></div></div><iframe class="expand-frame" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen playsinline></iframe></div>';
             if (items.length > 0) html += '<div class="expand-gallery-strip"></div><div class="expand-gallery-bar"><button class="expand-gal-prev">←</button><span class="expand-gal-counter"></span><button class="expand-gal-next">→</button></div>';
+            if (galleryKey === 'ironMaiden') html += '<p class="im-release-text">In cinemas May 7</p>';
             html += '</div>';
             expandPanel.innerHTML = html;
             const frame = expandPanel.querySelector('.expand-frame');
@@ -2624,7 +2626,9 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
                 if (auto && slideDone) return;
                 if (auto && i >= items.length) {
                     if (vimeoId) { hideGallery(); return; }
-                    slideDone = true; return;
+                    slideDone = true;
+                    if (galleryKey === 'ironMaiden') setTimeout(collapse, 10000);
+                    return;
                 }
                 idx = ((i % items.length) + items.length) % items.length;
                 if (counter) counter.textContent = (idx + 1) + ' / ' + items.length;
