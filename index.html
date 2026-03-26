@@ -3087,7 +3087,7 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
             backImg.style.opacity = '0';
             frontImg.style.zIndex = '2';
             requestAnimationFrame(() => requestAnimationFrame(() => {
-                backImg.style.transition = 'opacity 1.2s ease';
+                backImg.style.transition = 'opacity 1.8s ease';
                 backImg.style.opacity = '1';
                 // Once fully faded in, silently hide the old front (now behind)
                 setTimeout(() => {
@@ -3111,12 +3111,12 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
                 imgB.style.zIndex = '2'; imgB.style.transition = 'none'; imgB.style.opacity = '0';
                 previewIdx = 0;
                 if (srcs.length > 1) {
-                    // First crossfade after 3s, then chain interval every 3.5s
+                    // First crossfade after 4s, then chain interval every 5s
                     previewInterval = setTimeout(function tick() {
                         previewIdx = (previewIdx + 1) % srcs.length;
                         crossfadeTo(previewIdx);
-                        previewInterval = setTimeout(tick, 3500);
-                    }, 3000);
+                        previewInterval = setTimeout(tick, 5000);
+                    }, 4000);
                 }
             });
 
@@ -3144,15 +3144,15 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
                         imgB.style.zIndex = '2'; imgB.style.transition = 'none'; imgB.style.opacity = '0';
                         previewIdx = 0;
                         clearTimeout(previewInterval);
-                        // Hold static thumbnail for 1.5s, then fade in first grab and cycle every 2.5s
+                        // Hold static thumbnail for 2s, then fade in first grab and cycle every 5s
                         previewInterval = setTimeout(function() {
-                            imgA.style.transition = 'opacity 0.4s ease'; imgA.style.opacity = '1';
+                            imgA.style.transition = 'opacity 0.8s ease'; imgA.style.opacity = '1';
                             previewInterval = setTimeout(function tick() {
                                 previewIdx = (previewIdx + 1) % srcs.length;
                                 crossfadeTo(previewIdx);
-                                previewInterval = setTimeout(tick, 2500);
-                            }, 2000);
-                        }, 1500);
+                                previewInterval = setTimeout(tick, 5000);
+                            }, 2500);
+                        }, 2000);
                     } else {
                         clearTimeout(previewInterval);
                         imgA.style.transition = 'opacity 0.5s ease'; imgA.style.opacity = '0';
