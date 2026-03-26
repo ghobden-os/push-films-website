@@ -24,22 +24,13 @@
     <script>
         (function() {
             var imgs = [
-                'images/Ford%20Mustang%20223.jpg',
-                'images/hero/hero-1.jpg',
                 'images/hero/hero-2.jpg',
-                'images/hero/hero-3.jpg',
-                'images/hero/hero-4.jpg',
-                'images/hero/hero-5.jpg',
                 'images/hero/hero-7.jpg',
                 'images/hero/hero-8.jpg'
             ];
             var param = new URLSearchParams(location.search).get('hero');
             var day = param !== null ? parseInt(param) % imgs.length : Math.floor(Date.now() / 900000) % imgs.length;
             document.documentElement.style.setProperty('--hero-img', "url('" + imgs[day] + "')");
-            // Explorer (3) — shift label right to avoid faces
-            if (day === 3) document.documentElement.classList.add('hero-label-right');
-            if (day === 3) document.documentElement.classList.add('hero-label-explorer');
-            if (day === 1 || day === 2) document.documentElement.classList.add('hero-label-defender');
             document.documentElement.classList.add('hero-idx-' + day);
             var pre = document.createElement('link');
             pre.rel = 'preload'; pre.as = 'image'; pre.href = imgs[day];
@@ -789,30 +780,15 @@
 
         /* Per-hero mobile adjustments */
         @media (max-width: 640px) {
-            /* Hero 2 (canyon): Film Producer high, name in middle of image */
-            html.hero-idx-2 .hero-rule-top { top: calc(var(--nav-h) + 14px) !important; }
-            html.hero-idx-2 .hero-main { margin-top: 180px !important; }
-            /* Hero 3 (Lexie): Film Producer high, name below chin, subtitle below face */
-            html.hero-idx-3 .hero-rule-top { top: calc(var(--nav-h) + 14px) !important; }
-            html.hero-idx-3 .hero-main { margin-top: 240px !important; }
-            html.hero-idx-3 .hero-name { margin-bottom: 20px !important; }
-            /* Hero 5 (golfer): push text block below his head */
-            html.hero-idx-5 .hero-rule-top { top: calc(var(--nav-h) + 24px) !important; }
-            html.hero-idx-5 .hero-main { margin-top: 180px !important; }
-            html.hero-idx-5 .hero-name { margin-bottom: 20px !important; }
-            /* Hero 7 (dune couple): raise text so subtitle clears above the humans */
-            html.hero-idx-7 .hero-rule-top { top: calc(var(--nav-h) + 5px) !important; }
-            html.hero-idx-7 .hero-main { margin-top: 10px !important; }
-            /* Hero 4 (silhouette): raise text above the figure */
-            html.hero-idx-4 .hero-rule-top { top: calc(var(--nav-h) + 5px) !important; }
-            html.hero-idx-4 .hero-main { margin-top: 10px !important; }
+            /* Hero 0 (canyon): Film Producer high, name in middle of image */
+            html.hero-idx-0 .hero-rule-top { top: calc(var(--nav-h) + 14px) !important; }
+            html.hero-idx-0 .hero-main { margin-top: 180px !important; }
+            /* Hero 2 (dune couple): raise text so subtitle clears above the humans */
+            html.hero-idx-2 .hero-rule-top { top: calc(var(--nav-h) + 5px) !important; }
+            html.hero-idx-2 .hero-main { margin-top: 10px !important; }
             /* Per-hero mobile pan overrides */
-            html.hero-idx-1 .hero-bg { background-position: 54% center !important; }
-            html.hero-idx-3 .hero-bg { background-position: 18% top !important; }
-            html.hero-idx-4 .hero-bg { background-position: 25% bottom !important; }
-            html.hero-idx-5 .hero-bg { background-position: 26% bottom !important; }
-            html.hero-idx-6 .hero-bg { background-position: 58% center !important; }
-            html.hero-idx-7 .hero-bg { background-position: 55% center !important; }
+            html.hero-idx-1 .hero-bg { background-position: 58% center !important; }
+            html.hero-idx-2 .hero-bg { background-position: 55% center !important; }
         }
 
         @media (max-height: 500px) and (orientation: landscape) {
@@ -1713,17 +1689,12 @@
         // Hero background crossfade rotation
         (function() {
             var heroImgs = [
-                'images/Ford%20Mustang%20223.jpg',
-                'images/hero/hero-1.jpg',
                 'images/hero/hero-2.jpg',
-                'images/hero/hero-3.jpg',
-                'images/hero/hero-4.jpg',
-                'images/hero/hero-5.jpg',
                 'images/hero/hero-7.jpg',
                 'images/hero/hero-8.jpg'
             ];
             // Mobile background-position per hero (matches CSS per-hero overrides)
-            var mobilePans = ['18% center', '54% center', '18% center', '18% top', '25% bottom', '26% bottom', '58% center', '55% center'];
+            var mobilePans = ['18% center', '58% center', '55% center'];
             var isMobile = window.matchMedia('(max-width: 640px)').matches;
             function applyPan(el, i) {
                 if (isMobile) el.style.backgroundPosition = mobilePans[i];
