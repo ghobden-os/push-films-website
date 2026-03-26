@@ -23,14 +23,31 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
     <script>
         (function() {
-            var imgs = [
+            var allImgs = [
+                'images/Ford%20Mustang%20223.jpg',
+                'images/hero/hero-1.jpg',
+                'images/hero/hero-2.jpg',
+                'images/hero/hero-3.jpg',
+                'images/hero/hero-4.jpg',
+                'images/hero/hero-5.jpg',
+                'images/hero/hero-7.jpg',
+                'images/hero/hero-8.jpg'
+            ];
+            var mobileImgs = [
                 'images/hero/hero-2.jpg',
                 'images/hero/hero-7.jpg',
                 'images/hero/hero-8.jpg'
             ];
+            var isMobileDevice = window.matchMedia('(max-width: 640px)').matches;
+            var imgs = isMobileDevice ? mobileImgs : allImgs;
             var param = new URLSearchParams(location.search).get('hero');
             var day = param !== null ? parseInt(param) % imgs.length : Math.floor(Date.now() / 900000) % imgs.length;
             document.documentElement.style.setProperty('--hero-img', "url('" + imgs[day] + "')");
+            if (!isMobileDevice) {
+                if (day === 3) document.documentElement.classList.add('hero-label-right');
+                if (day === 3) document.documentElement.classList.add('hero-label-explorer');
+                if (day === 1 || day === 2) document.documentElement.classList.add('hero-label-defender');
+            }
             document.documentElement.classList.add('hero-idx-' + day);
             var pre = document.createElement('link');
             pre.rel = 'preload'; pre.as = 'image'; pre.href = imgs[day];
@@ -1688,11 +1705,23 @@
 
         // Hero background crossfade rotation
         (function() {
-            var heroImgs = [
+            var allHeroImgs = [
+                'images/Ford%20Mustang%20223.jpg',
+                'images/hero/hero-1.jpg',
+                'images/hero/hero-2.jpg',
+                'images/hero/hero-3.jpg',
+                'images/hero/hero-4.jpg',
+                'images/hero/hero-5.jpg',
+                'images/hero/hero-7.jpg',
+                'images/hero/hero-8.jpg'
+            ];
+            var mobileHeroImgs = [
                 'images/hero/hero-2.jpg',
                 'images/hero/hero-7.jpg',
                 'images/hero/hero-8.jpg'
             ];
+            var isMobile = window.matchMedia('(max-width: 640px)').matches;
+            var heroImgs = isMobile ? mobileHeroImgs : allHeroImgs;
             // Mobile background-position per hero (matches CSS per-hero overrides)
             var mobilePans = ['18% center', '58% center', '55% center'];
             var isMobile = window.matchMedia('(max-width: 640px)').matches;
