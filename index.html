@@ -2632,13 +2632,15 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
             const strip = expandPanel.querySelector('.expand-gallery-strip');
             const counter = expandPanel.querySelector('.expand-gal-counter');
             const bar = expandPanel.querySelector('.expand-gallery-bar');
-            let expanded = false, idx = 0, slideTimer = null, vimeoPlayer = null, slideDone = false;
+            let expanded = false, idx = 0, slideTimer = null, vimeoPlayer = null, slideDone = false, suppressPauseCollapse = false;
             function stopSlide() { clearTimeout(slideTimer); slideTimer = null; }
             function hideGallery() {
                 stopSlide();
                 slideDone = true;
+                suppressPauseCollapse = true;
                 if (strip) strip.style.display = 'none';
                 if (bar) bar.style.display = 'none';
+                setTimeout(() => { suppressPauseCollapse = false; }, 1000);
             }
             function showSlide(i, auto) {
                 stopSlide();
@@ -2731,7 +2733,7 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
                         // Use hasPlayed guard — iOS loads in paused state, avoid instant collapse
                         let hasPlayed = false;
                         vimeoPlayer.on('play', () => { hasPlayed = true; });
-                        vimeoPlayer.on('pause', () => { if (hasPlayed) collapse(); });
+                        vimeoPlayer.on('pause', () => { if (hasPlayed && !suppressPauseCollapse) collapse(); });
                     }
                 }
                 if (items.length > 0) {
