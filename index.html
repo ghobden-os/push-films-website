@@ -2642,10 +2642,8 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
             function hideGallery() {
                 stopSlide();
                 slideDone = true;
-                // Remove the pause listener — layout shift from hiding the strip fires a spurious
-                // Vimeo pause event, and no flag-check is reliable enough to catch it every time
-                if (vimeoPlayer) vimeoPlayer.off('pause');
-                if (strip) strip.style.display = 'none';
+                // Do NOT hide strip — hiding causes a layout shift which triggers spurious
+                // Vimeo events and accidental touch-collapse on mobile. Just freeze it.
                 if (bar) bar.style.display = 'none';
             }
             function showSlide(i, auto) {
