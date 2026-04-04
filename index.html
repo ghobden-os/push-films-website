@@ -1985,9 +1985,12 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
         });
 
         if (new URLSearchParams(window.location.search).get('videos') === '1') {
-            setTimeout(() => {
-                document.getElementById('earlyYearsBtn').scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 400);
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    const btn = document.getElementById('earlyYearsBtn');
+                    if (btn) btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            });
         }
 
         historicClose.addEventListener('click', () => {
@@ -2736,7 +2739,11 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
                         // Use hasPlayed guard — iOS loads in paused state, avoid instant collapse
                         let hasPlayed = false;
                         vimeoPlayer.on('play', () => { hasPlayed = true; });
-                        vimeoPlayer.on('pause', () => { if (hasPlayed && !slideDone) collapse(); });
+                        // Only collapse on pause for films without a gallery — gallery films
+                        // fire spurious pause events from layout shifts when the strip hides
+                        if (items.length === 0) {
+                            vimeoPlayer.on('pause', () => { if (hasPlayed) collapse(); });
+                        }
                     }
                 }
                 if (items.length > 0) {
