@@ -2735,7 +2735,18 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
                     frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?playsinline=1&title=0&byline=0&portrait=0' + autoplay + vimeoStart;
                     if (typeof Vimeo !== 'undefined') {
                         vimeoPlayer = new Vimeo.Player(frame);
-                        vimeoPlayer.on('ended', () => { hideGallery(); setTimeout(collapse, 1500); });
+                        vimeoPlayer.on('ended', () => {
+                            // Guard against spurious ended events fired by layout shifts —
+                            // only collapse if we're actually within 5 seconds of the real end
+                            vimeoPlayer.getDuration().then(duration => {
+                                vimeoPlayer.getCurrentTime().then(time => {
+                                    if (duration > 0 && (duration - time) < 5) {
+                                        hideGallery();
+                                        setTimeout(collapse, 1500);
+                                    }
+                                });
+                            });
+                        });
                         // Use hasPlayed guard — iOS loads in paused state, avoid instant collapse
                         let hasPlayed = false;
                         vimeoPlayer.on('play', () => { hasPlayed = true; });
