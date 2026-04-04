@@ -2637,15 +2637,21 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
             const strip = expandPanel.querySelector('.expand-gallery-strip');
             const counter = expandPanel.querySelector('.expand-gal-counter');
             const bar = expandPanel.querySelector('.expand-gallery-bar');
-            let expanded = false, idx = 0, slideTimer = null, vimeoPlayer = null, slideDone = false;
+            let expanded = false, idx = 0, slideTimer = null, vimeoPlayer = null, slideDone = false, hideGalleryTimer = null;
             function stopSlide() { clearTimeout(slideTimer); slideTimer = null; }
             function hideGallery() {
                 stopSlide();
                 slideDone = true;
-                // Use visibility:hidden not display:none — preserves layout so no shift occurs,
-                // preventing spurious Vimeo events and accidental touch-collapse
+                // Fade out visually first, then remove from layout after a short delay.
+                // The brief visibility:hidden period prevents spurious layout-shift events
+                // before display:none collapses the space and the film plays solo.
                 if (strip) strip.style.visibility = 'hidden';
                 if (bar) bar.style.visibility = 'hidden';
+                clearTimeout(hideGalleryTimer);
+                hideGalleryTimer = setTimeout(() => {
+                    if (strip) strip.style.display = 'none';
+                    if (bar) bar.style.display = 'none';
+                }, 800);
             }
             function showSlide(i, auto) {
                 stopSlide();
@@ -2702,6 +2708,7 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
                 slideTimer = setTimeout(() => showSlide(idx + STRIP_SIZE, true), holdMs);
             }
             function collapse() {
+                clearTimeout(hideGalleryTimer);
                 expanded = false;
                 currentlyExpanded = null;
                 vimeoPlayer = null;
@@ -2709,8 +2716,8 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
                 if (frame) frame.src = '';
                 if (filmPoster) filmPoster.style.display = 'none';
                 stopSlide();
-                if (strip) { strip.innerHTML = ''; strip.style.visibility = ''; }
-                if (bar) bar.style.visibility = '';
+                if (strip) { strip.innerHTML = ''; strip.style.visibility = ''; strip.style.display = ''; }
+                if (bar) { bar.style.visibility = ''; bar.style.display = ''; }
                 if (counter) counter.textContent = '';
             }
             function expand() {
