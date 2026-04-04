@@ -1985,7 +1985,9 @@ document.getElementById('heroMaidenBtn').addEventListener('click', () => {
         });
 
         if (new URLSearchParams(window.location.search).get('videos') === '1') {
-            document.getElementById('earlyYearsBtn').click();
+            setTimeout(() => {
+                document.getElementById('earlyYearsBtn').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 400);
         }
 
         historicClose.addEventListener('click', () => {
