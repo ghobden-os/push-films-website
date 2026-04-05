@@ -71,6 +71,14 @@
                 console.log('[SCROLL-TO]', arguments[0], arguments[1], new Error().stack);
                 _scrollTo.apply(window, arguments);
             };
+            window.addEventListener('hashchange', function() {
+                console.log('[HASHCHANGE]', location.hash, new Error().stack);
+            });
+            var _scrollIntoView = Element.prototype.scrollIntoView;
+            Element.prototype.scrollIntoView = function() {
+                console.log('[SCROLL-INTO-VIEW]', this, new Error().stack);
+                _scrollIntoView.apply(this, arguments);
+            };
         })();
     </script>
     <style>
