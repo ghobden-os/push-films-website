@@ -1,4 +1,4 @@
-const CACHE = 'gh-v58';
+const CACHE = 'gh-v59';
 const PRECACHE = ['/', '/index.html', '/favicon.svg', '/manifest.json'];
 
 self.addEventListener('install', e => {
