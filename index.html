@@ -4771,19 +4771,17 @@
                     frame.src = 'https://player.vimeo.com/video/' + vimeoId + '?playsinline=1&title=0&byline=0&portrait=0' + autoplay + vimeoStart;
                     if (typeof Vimeo !== 'undefined') {
                         vimeoPlayer = new Vimeo.Player(frame);
+                        // Track current time ourselves every second — don't trust Vimeo's
+                        // async time calls inside the ended event, which can race and misfire
+                        let currentTimeSec = 0;
+                        let durationSec = 0;
+                        vimeoPlayer.getDuration().then(d => { durationSec = d; });
+                        vimeoPlayer.on('timeupdate', data => { currentTimeSec = data.seconds; });
                         vimeoPlayer.on('ended', () => {
-                            // Ignore ended events within 3s of gallery hiding — opacity fade
-                            // can cause Vimeo to fire spurious ended events mid-film.
-                            if (galleryHideTime > 0 && (Date.now() - galleryHideTime) < 3000) return;
-                            // Also guard: only collapse if we're actually within 5 seconds of the real end
-                            vimeoPlayer.getDuration().then(duration => {
-                                vimeoPlayer.getCurrentTime().then(time => {
-                                    if (duration > 0 && (duration - time) < 5) {
-                                        hideGallery();
-                                        setTimeout(collapse, 1500);
-                                    }
-                                });
-                            });
+                            // Only collapse if we know we're within 10 seconds of the real end
+                            if (durationSec > 0 && (durationSec - currentTimeSec) > 10) return;
+                            hideGallery();
+                            setTimeout(collapse, 1500);
                         });
                         // Use hasPlayed guard — iOS loads in paused state, avoid instant collapse
                         let hasPlayed = false;
