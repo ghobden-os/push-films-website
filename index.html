@@ -4721,6 +4721,7 @@
                 slideTimer = setTimeout(() => showSlide(idx + STRIP_SIZE, true), holdMs);
             }
             function collapse() {
+                console.log('[COLLAPSE]', galleryKey || vimeoId, new Error().stack);
                 clearTimeout(hideGalleryTimer);
                 expanded = false;
                 currentlyExpanded = null;
