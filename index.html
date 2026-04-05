@@ -65,6 +65,13 @@
         rel="stylesheet">
     <script>
         history.scrollRestoration = 'manual';
+        (function() {
+            var _scrollTo = window.scrollTo.bind(window);
+            window.scrollTo = function() {
+                console.log('[SCROLL-TO]', arguments[0], arguments[1], new Error().stack);
+                _scrollTo.apply(window, arguments);
+            };
+        })();
     </script>
     <style>
         *,
