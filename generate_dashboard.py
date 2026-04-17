@@ -101,7 +101,7 @@ for sheet_name in wb.sheetnames:
     for col, h in all_headers.items():
         if col == income_col:
             continue
-        if 'project cost' in h.lower():
+        if 'project cost' in h.lower() or 'crh cost' in h.lower():
             PRODUCTION_COLS[col] = 'Project Costs'
             break
 
