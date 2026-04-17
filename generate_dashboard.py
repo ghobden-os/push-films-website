@@ -57,6 +57,7 @@ TAB_RE = re.compile(r'^PUSH \+ \d+ (.+)$')
 income_by_month        = {}
 costs_breakdown_by_month = {}  # list of {p, a} per month
 
+_headers_printed = False
 for sheet_name in wb.sheetnames:
     m = TAB_RE.match(sheet_name)
     if not m:
@@ -64,13 +65,50 @@ for sheet_name in wb.sheetnames:
     month_label = m.group(1).strip()
     ws = wb[sheet_name]
 
-    income_col = find_col(ws, 3, 'income', 'funds in', 'push income', 'turnover')
-    costs_col  = find_col(ws, 3, 'project cost', 'costs', 'expense', 'outgoing', 'payment')
-    # Description is usually col A or B
-    desc_col   = find_col(ws, 3, 'description', 'payee', 'detail', 'name', 'reference', 'supplier') or 2
+    # Print column headers from row 3 for the first monthly tab (diagnostic)
+    if not _headers_printed:
+        _headers_printed = True
+        print(f"\nRow 3 headers in '{sheet_name}':")
+        for col in range(1, min(ws.max_column + 1, 20)):
+            v = ws.cell(row=3, column=col).value
+            if v is not None:
+                print(f"  col {col} ({chr(64+col)}): {repr(v)}")
+        # Also print first data row
+        print("  First data row (row 4):")
+        for col in range(1, min(ws.max_column + 1, 20)):
+            v = ws.cell(row=4, column=col).value
+            if v is not None:
+                print(f"    col {col} ({chr(64+col)}): {repr(v)}")
+
+    # Read ALL column headers from row 3 — the headers ARE the payee/category names
+    all_headers = {}  # col -> cleaned header string
+    for col in range(1, min(ws.max_column + 1, 40)):
+        v = ws.cell(row=3, column=col).value
+        if v is not None:
+            h = str(v).strip().replace('\n', ' ').strip()
+            if h:
+                all_headers[col] = h
+
+    # Identify income column
+    income_col = None
+    for col, h in all_headers.items():
+        if any(k in h.lower() for k in ('income', 'funds in', 'push income', 'turnover')):
+            income_col = col
+            break
+
+    # ATL cost columns: any named column whose header suggests a business/production cost.
+    # Personal spending cols (Coffee, Restaurant, etc.) are already in the SUMMARY cats section.
+    ATL_KEYWORDS = ('cost', 'rent', 'reedland', 'montage', 'salary', 'project',
+                    'transfer', 'tax', 'vat', 'acct', 'production', 'fee', 'payment')
+    atl_cost_cols = {}  # col -> header
+    for col, h in all_headers.items():
+        if col == income_col:
+            continue
+        if any(k in h.lower() for k in ATL_KEYWORDS):
+            atl_cost_cols[col] = h
 
     income_total = 0.0
-    cost_items   = []
+    col_totals   = {}  # header -> running total
 
     for row in range(4, ws.max_row + 1):
         # Col C (col 3) non-empty = real data row (not formula/subtotal)
@@ -84,15 +122,16 @@ for sheet_name in wb.sheetnames:
             if val and isinstance(val, (int, float)) and val > 0:
                 income_total += val
 
-        # Project costs
-        if costs_col:
-            val = ws.cell(row=row, column=costs_col).value
+        # ATL costs — accumulate by column header (= payee/category name)
+        for col, header in atl_cost_cols.items():
+            val = ws.cell(row=row, column=col).value
             if val and isinstance(val, (int, float)) and val > 0:
-                desc = ws.cell(row=row, column=desc_col).value or ''
-                cost_items.append({'p': str(desc).strip(), 'a': round(float(val), 2)})
+                col_totals[header] = col_totals.get(header, 0) + val
 
     income_by_month[month_label] = round(income_total, 2)
-    if cost_items:
+    if col_totals:
+        cost_items = [{'p': k, 'a': round(v, 2)}
+                      for k, v in sorted(col_totals.items(), key=lambda x: -x[1])]
         costs_breakdown_by_month[month_label] = cost_items
 
 # ── Read SUMMARY sheet ────────────────────────────────────────────────────────
