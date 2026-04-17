@@ -546,8 +546,8 @@ const catConfig = [
   { key:'Personal',               short:'Personal',   color:'#A9DFBF' },
   { key:'Transport',              short:'Transport',  color:'#7FB3D3' },
   { key:'Comms',                  short:'Comms',      color:'#888888' },
-  { key:'Mortgage / Rent',        short:'Mortgage',   color:'#5FA8A8' },
-  { key:'Ocado / Household',      short:'Household',  color:'#C9A44E' },
+  { key:'Mortgage / Rent',        short:'Mortgage',   color:'#5FA8A8', isStandalone:true },
+  { key:'Ocado / Household',      short:'Household',  color:'#C9A44E', isStandalone:true },
   { key:'Uncategorised',          short:'Uncat',      color:'#555555', isUncat:true }
 ];
 
@@ -571,11 +571,14 @@ function render(pk) {
   const nAvg = P.size || n; // fixed denominator for fixed-length periods (12 for CY/TY)
 
   // Build augmented category data including Uncategorised amount per month
-  const realCatConfig = catConfig.filter(c => !c.isUncat);
+  const realCatConfig = catConfig.filter(c => !c.isUncat && !c.isStandalone);
   const mCU = mM.map(d => {
     const cr = mC.find(x => x.m === d.m) || {};
     const catSum = realCatConfig.reduce((s, c) => s + (cr[c.key] || 0), 0);
-    return { ...cr, m: d.m, 'Uncategorised': Math.max(0, d.spend - catSum) };
+    return { ...cr, m: d.m,
+      'Mortgage / Rent':   d.accom || 0,
+      'Ocado / Household': d.food  || 0,
+      'Uncategorised': Math.max(0, d.spend - catSum) };
   });
 
   document.getElementById('periodLabel').textContent = P.sub;
@@ -678,7 +681,7 @@ function render(pk) {
     `${P.sub} · avg ${f(spAvg)} / month`;
 
   // Build doughnut data — totals per category for the period
-  const doughnutData = catConfig.map(c => ({
+  const doughnutData = catConfig.filter(c => !c.isStandalone).map(c => ({
     key: c.key, color: c.color,
     total: mCU.reduce((s,d) => s + (d[c.key]||0), 0)
   })).filter(d => d.total > 0);
@@ -801,10 +804,10 @@ function render(pk) {
     const exVat = gross / 1.2;
     if (gross === 0) return `<div class="month-row">
       <div class="month-row-hdr" style="${iCols}; cursor:default">
-        <div class="month-name" style="color:#555">${a.m}</div>
-        <div><span style="color:#444;font-size:12px">No income</span></div>
-        <div><div class="month-col" style="color:#444">—</div></div>
-        <div><div class="month-col" style="color:#444">—</div></div>
+        <div class="month-name" style="color:#aaa">${a.m}</div>
+        <div><span style="color:#666;font-size:12px">No income</span></div>
+        <div><div class="month-col" style="color:#666">—</div></div>
+        <div><div class="month-col" style="color:#666">—</div></div>
       </div>
     </div>`;
     const bd    = a.breakdown || [];
@@ -823,7 +826,7 @@ function render(pk) {
       </div>`).join('');
     return `<div class="month-row">
       <div class="month-row-hdr" style="${iCols}; cursor:default">
-        <div class="month-name">${a.m}</div>
+        <div class="month-name" style="color:#aaa">${a.m}</div>
         <div style="display:flex;align-items:center">${fromCell}</div>
         <div><div class="month-col" style="color:var(--green)">${f(gross)}</div></div>
         <div><div class="month-col">${f(exVat)}</div></div>
