@@ -50,12 +50,85 @@ def find_col(ws, row, *keywords):
                 return col
     return None
 
+# ── Payee name lookup — maps raw bank memo fragments to clean display names ───
+PAYEE_MAP = [
+    # Pattern (upper)           Clean name
+    ('IMAGINATION',             'Imagination Europe'),
+    ('WORKSOME',                'Imagination Europe'),
+    ('CHARTWELL',               'Chartwell Travel'),
+    ('BRIGHTLIGHT',             'Brightlight Films'),
+    ('TALLER STORIES',          'Taller Stories'),
+    ('EYE RISE',                'Eye Rise Films'),
+    ('8 FEET',                  '8 Feet Fixer'),
+    ('BURNS',                   'Burns + Wilcox'),
+    ('COASTHOUSE',              'Coasthouse Productions'),
+    ('LETTICE',                 'Lettice Yardley'),
+    ('PAUL BARTON',             'Paul Barton Cinema'),
+    ('DAVID BRILL',             'David Brill'),
+    ('BRAZN',                   'BRAZN'),
+    ('DRUCE',                   'Charlie Druce'),
+    ('CKM',                     'Charlie Druce'),
+    ('ALASTAIR FOX',            'Alastair Fox'),
+    ('WISE',                    'Alastair Fox'),
+    ('SALLY HOBDEN',            'Sally Hobden'),
+    ('CHESTERFIELD',            'Chesterfield Group'),
+    ('PROTAPE',                 'Protape'),
+    ('DYNAMIC DOX',             'Dynamic Dox'),
+    ('NO ORDINARY',             'No Ordinary Films'),
+    ('NOF',                     'No Ordinary Films'),
+    ('NATURE OF THE',           'Nature of the Beast'),
+    ('8 FEET PART',             '8 Feet Fixer'),
+    ('VITESSE',                 'Vitesse'),
+    ('THEOPENLAB',              'TheOpenLab'),
+    ('OPENLAB',                 'TheOpenLab'),
+    # CRH / international wire patterns — all Imagination Europe project costs
+    ('CRH IMAG',                'Imagination Europe'),
+    ('LAME PRODU',              'Imagination Europe'),
+    ('LAME CR',                 'Imagination Europe'),
+    ('CRH USA',                 'Imagination Europe'),
+    ('PHOENIXC',                'Imagination Europe'),
+    ('DUBLINCRH',               'Imagination Europe'),
+    ('TALLER STO',              'Taller Stories'),
+    ('HARTSHORN',               'DL Hartshorn'),
+]
+
+PAYMENT_TYPES = {'direct debit', 'standing order', 'funds transfer',
+                 'card purchase', 'faster payment', 'bacs', 'bgc', 'crh',
+                 'debit', 'credit', 'transfer', 'counter credit',
+                 'unpaid direct debit', 'faster payments',
+                 'contactless card purchase', 'charges commission for period'}
+
+def extract_memo(ws, row):
+    """Extract the best memo string from a data row (cols 4–7)."""
+    candidates = []
+    for c in range(4, 8):
+        v = ws.cell(row=row, column=c).value
+        if not v or not isinstance(v, str):
+            continue
+        cleaned = re.sub(r'\s+', ' ', v).strip()
+        if not cleaned:
+            continue
+        if norm(cleaned) in PAYMENT_TYPES:
+            continue
+        candidates.append(cleaned)
+    return candidates[0] if candidates else ''
+
+def clean_payee(memo):
+    """Map a raw bank memo to a readable payee name."""
+    upper = memo.upper()
+    for pattern, name in PAYEE_MAP:
+        if pattern in upper:
+            return name
+    # Fall back to first 30 chars of raw memo, title-cased
+    return memo[:40].strip().title() if memo else 'Unknown'
+
 # ── Read income AND costs from each monthly tab ───────────────────────────────
 # Tab names: "PUSH + 108 SEP 2024" etc.  Month label = "SEP 2024"
 TAB_RE = re.compile(r'^PUSH \+ \d+ (.+)$')
 
 income_by_month        = {}
 costs_breakdown_by_month = {}  # list of {p, a} per month
+payees_by_month        = {}   # dict of {payee_name: total} per month
 
 _headers_printed = False
 for sheet_name in wb.sheetnames:
@@ -148,6 +221,12 @@ for sheet_name in wb.sheetnames:
             val = ws.cell(row=row, column=col).value
             if val and isinstance(val, (int, float)) and val > 0:
                 cost_items.append({'p': date_label, 'a': round(float(val), 2)})
+                memo        = extract_memo(ws, row)
+                payee_name  = clean_payee(memo)
+                payee_totals = payees_by_month.setdefault(month_label, {})
+                payee_totals[payee_name] = round(
+                    payee_totals.get(payee_name, 0.0) + float(val), 2
+                )
 
     income_by_month[month_label] = round(income_total, 2)
     if cost_items:
@@ -222,11 +301,18 @@ atl = []
 for entry in monthly:
     m    = entry['m']
     prev = existing_atl.get(m, {})
+    # Build sorted payees list for this month
+    raw_payees = payees_by_month.get(m, {})
+    payees_list = sorted(
+        [{'name': k, 'amount': v} for k, v in raw_payees.items()],
+        key=lambda x: -x['amount']
+    )
     atl.append({
         'm':               m,
         'income':          income_by_month.get(m, 0.0),
         'costs':           atl_costs.get(m, 0.0),
         'costs_breakdown': costs_breakdown_by_month.get(m, []),
+        'payees':          payees_list,
         'tax':             prev.get('tax', 0),
         'from':            prev.get('from', ''),
         'breakdown':       prev.get('breakdown', []),

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-17T20:19:32.495984",
+  "generated": "2026-04-17T21:45:12.335549",
   "source": "ACCOUNTS_2026_COMPLETE_16-04-2026_17-35.xlsx",
   "monthly": [
     {
@@ -377,6 +377,12 @@
           "a": 75.0
         }
       ],
+      "payees": [
+        {
+          "name": "Booking.Com On 02 Sep Bdc",
+          "amount": 75.0
+        }
+      ],
       "tax": 10250.0,
       "from": "Imagination Europe",
       "breakdown": [
@@ -448,6 +454,56 @@
           "a": 214.23
         }
       ],
+      "payees": [
+        {
+          "name": "Alastair Fox",
+          "amount": 5364.95
+        },
+        {
+          "name": "Sally Hobden",
+          "amount": 2000.0
+        },
+        {
+          "name": "BRAZN",
+          "amount": 1850.0
+        },
+        {
+          "name": "Paul Barton Cinema",
+          "amount": 1850.0
+        },
+        {
+          "name": "Chartwell Travel",
+          "amount": 1825.0
+        },
+        {
+          "name": "Chesterfield Group",
+          "amount": 1650.99
+        },
+        {
+          "name": "Dynamic Dox",
+          "amount": 740.4
+        },
+        {
+          "name": "Protape",
+          "amount": 612.0
+        },
+        {
+          "name": "Paypal Payment 4Du222288S2E8 Ddr",
+          "amount": 214.23
+        },
+        {
+          "name": "Paypal *Pypl Payin On 26 Oct Bdc",
+          "amount": 67.33
+        },
+        {
+          "name": "Lavapies Shapla Sl Spain Amount In Eur 5",
+          "amount": 49.8
+        },
+        {
+          "name": "Brutal Land Spain Amount In Eur 3.",
+          "amount": 2.57
+        }
+      ],
       "tax": 1680.0,
       "from": "Imagination Europe",
       "breakdown": [
@@ -477,6 +533,20 @@
         {
           "p": "18 Nov",
           "a": 5752.95
+        }
+      ],
+      "payees": [
+        {
+          "name": "Imagination Europe",
+          "amount": 7012.95
+        },
+        {
+          "name": "Audio Dept Ltd 25288 Brill Crh Ft",
+          "amount": 243.36
+        },
+        {
+          "name": "British A 12521974 On 27 Nov Bdc",
+          "amount": 186.47
         }
       ],
       "tax": 0,
@@ -603,6 +673,92 @@
         {
           "p": "2 Dec",
           "a": 2731.5
+        }
+      ],
+      "payees": [
+        {
+          "name": "Imagination Europe",
+          "amount": 41255.51
+        },
+        {
+          "name": "Brightlight Films",
+          "amount": 5000.0
+        },
+        {
+          "name": "Chartwell Travel",
+          "amount": 2792.0
+        },
+        {
+          "name": "Paul Barton Cinema",
+          "amount": 2731.5
+        },
+        {
+          "name": "David Brill",
+          "amount": 2029.15
+        },
+        {
+          "name": "British A 12521985 On 14 Dec Bdc",
+          "amount": 771.88
+        },
+        {
+          "name": "Chesterfield Group",
+          "amount": 655.2
+        },
+        {
+          "name": "Haddington House Ireland Amount In Eur",
+          "amount": 260.42
+        },
+        {
+          "name": "Booking.Com Amount In Eur 267.30 O",
+          "amount": 228.75
+        },
+        {
+          "name": "Dun Laoire 1 Ireland Amount In Eur",
+          "amount": 85.27
+        },
+        {
+          "name": "Uber *Trip On 19 Dec Bdc",
+          "amount": 74.37
+        },
+        {
+          "name": "Uber* Trip On 17 Dec Bdc",
+          "amount": 61.9
+        },
+        {
+          "name": "Sushida Dun Laogha Ireland Amount In Eur",
+          "amount": 60.04
+        },
+        {
+          "name": "Sumup *Taxi-Abdura Ireland Amount In Eur",
+          "amount": 53.23
+        },
+        {
+          "name": "Fish Shack Ireland Amount In Eur",
+          "amount": 47.07
+        },
+        {
+          "name": "British A 12542410 On 14 Dec Bdc",
+          "amount": 38.0
+        },
+        {
+          "name": "Wagamama Heathrow On 17 Dec Clp",
+          "amount": 32.2
+        },
+        {
+          "name": "The Butlers Pantry Ireland Amount In Eur",
+          "amount": 29.2
+        },
+        {
+          "name": "Frame Cafe Ireland Amount In Eur",
+          "amount": 18.59
+        },
+        {
+          "name": "Uber *Trip On 17 Dec Bdc",
+          "amount": 11.98
+        },
+        {
+          "name": "Bryans Coffee 01 Ireland Amount In Eur",
+          "amount": 6.39
         }
       ],
       "tax": 0,
@@ -732,6 +888,80 @@
           "a": 1645.0
         }
       ],
+      "payees": [
+        {
+          "name": "Imagination Europe",
+          "amount": 23170.11
+        },
+        {
+          "name": "8 Feet Fixer",
+          "amount": 15185.69
+        },
+        {
+          "name": "Brightlight Films",
+          "amount": 5000.0
+        },
+        {
+          "name": "Chesterfield Group",
+          "amount": 1808.0
+        },
+        {
+          "name": "Paul Barton Cinema",
+          "amount": 1645.0
+        },
+        {
+          "name": "Protape",
+          "amount": 1096.8
+        },
+        {
+          "name": "Chartwell Travel",
+          "amount": 791.04
+        },
+        {
+          "name": "Ac Hotel Roma Clod Italy Amount In Eur 7",
+          "amount": 648.9
+        },
+        {
+          "name": "British A 12522019 On 27 Jan Bdc",
+          "amount": 172.82
+        },
+        {
+          "name": "Uber *Trip On 26 Jan Bdc",
+          "amount": 80.56
+        },
+        {
+          "name": "Wagamama Heathrow On 26 Jan Clp",
+          "amount": 52.6
+        },
+        {
+          "name": "Radiotaxi Fg 52 Italy Amount In Eur 55",
+          "amount": 47.83
+        },
+        {
+          "name": "Uber *Trip Netherlands Amount In",
+          "amount": 20.13
+        },
+        {
+          "name": "Radiotaxi Fi 27 Italy Amount In Eur 15",
+          "amount": 12.98
+        },
+        {
+          "name": "6645 - Ginevra 07 Italy Amount In Eur 11",
+          "amount": 9.52
+        },
+        {
+          "name": "Radiotaxi Cr 52 Italy Amount In Eur 10",
+          "amount": 8.87
+        },
+        {
+          "name": "Unknown",
+          "amount": 8.5
+        },
+        {
+          "name": "Sq *Lane Eight Cof On 08 Jan Clp",
+          "amount": 3.5
+        }
+      ],
       "tax": 16000.0,
       "from": "Imagination Europe",
       "breakdown": [
@@ -827,6 +1057,72 @@
           "a": 8.5
         }
       ],
+      "payees": [
+        {
+          "name": "Imagination Europe",
+          "amount": 24507.68
+        },
+        {
+          "name": "8 Feet Fixer",
+          "amount": 18128.13
+        },
+        {
+          "name": "Brightlight Films",
+          "amount": 7250.0
+        },
+        {
+          "name": "Coasthouse Productions",
+          "amount": 4070.77
+        },
+        {
+          "name": "Paul Barton Cinema",
+          "amount": 3625.0
+        },
+        {
+          "name": "Lettice Yardley",
+          "amount": 3521.98
+        },
+        {
+          "name": "DL Hartshorn",
+          "amount": 1020.0
+        },
+        {
+          "name": "Chesterfield Group",
+          "amount": 117.61
+        },
+        {
+          "name": "Ac Hotel Roma Clod Italy Amount In Eur 1",
+          "amount": 97.83
+        },
+        {
+          "name": "Uber *Trip Netherlands Amount In",
+          "amount": 84.58
+        },
+        {
+          "name": "Ac Hotel Roma Clod Italy Amount In Eur 8",
+          "amount": 72.6
+        },
+        {
+          "name": "Uber *Trip On 31 Jan Bdc",
+          "amount": 68.16
+        },
+        {
+          "name": "Addisonlee.Com On 31 Jan Cpm",
+          "amount": 55.62
+        },
+        {
+          "name": "Chef Market Fiumic Italy Amount In Eur 3",
+          "amount": 27.51
+        },
+        {
+          "name": "Charges*165338* Lame Final Inv10 * Tf",
+          "amount": 15.25
+        },
+        {
+          "name": "Unknown",
+          "amount": 8.5
+        }
+      ],
       "tax": 45118.8,
       "from": "Imagination Europe",
       "breakdown": [
@@ -854,6 +1150,12 @@
           "a": 5250.0
         }
       ],
+      "payees": [
+        {
+          "name": "Lettice Yardley",
+          "amount": 5250.0
+        }
+      ],
       "tax": 7078.56,
       "from": "Imagination Europe",
       "breakdown": [
@@ -868,6 +1170,7 @@
       "income": 0.0,
       "costs": 0.0,
       "costs_breakdown": [],
+      "payees": [],
       "tax": 0,
       "from": "",
       "breakdown": []
@@ -877,6 +1180,7 @@
       "income": 1200.0,
       "costs": 0.0,
       "costs_breakdown": [],
+      "payees": [],
       "tax": 3900.0,
       "from": "Worksome (Imagination)",
       "breakdown": [
@@ -891,6 +1195,7 @@
       "income": 0.0,
       "costs": 0.0,
       "costs_breakdown": [],
+      "payees": [],
       "tax": 17812.6,
       "from": "",
       "breakdown": []
@@ -900,6 +1205,7 @@
       "income": 0.0,
       "costs": 0.0,
       "costs_breakdown": [],
+      "payees": [],
       "tax": 6374.88,
       "from": "",
       "breakdown": []
@@ -942,6 +1248,20 @@
           "a": 358.0
         }
       ],
+      "payees": [
+        {
+          "name": "Imagination Europe",
+          "amount": 9285.77
+        },
+        {
+          "name": "Chartwell Travel",
+          "amount": 2540.62
+        },
+        {
+          "name": "Charlie Druce",
+          "amount": 750.0
+        }
+      ],
       "tax": 2940.0,
       "from": "Imagination / Nature of the Beast",
       "breakdown": [
@@ -967,6 +1287,16 @@
         {
           "p": "8 Sep",
           "a": 6742.55
+        }
+      ],
+      "payees": [
+        {
+          "name": "Imagination Europe",
+          "amount": 9902.03
+        },
+        {
+          "name": "Coasthouse Productions",
+          "amount": 6742.55
         }
       ],
       "tax": 11252.8,
@@ -1008,6 +1338,16 @@
           "a": 562.89
         }
       ],
+      "payees": [
+        {
+          "name": "Imagination Europe",
+          "amount": 562.89
+        },
+        {
+          "name": "Vc Consultancy Push Films Ft",
+          "amount": 336.0
+        }
+      ],
       "tax": 19922.02,
       "from": "Nature of the Beast / Imagination",
       "breakdown": [
@@ -1043,6 +1383,16 @@
           "a": 789.96
         }
       ],
+      "payees": [
+        {
+          "name": "Gdp*Cursejourney.C Usa Amount In Usd 100",
+          "amount": 789.96
+        },
+        {
+          "name": "Gdp*Midjourneymade Usa Amount In Usd 400",
+          "amount": 315.13
+        }
+      ],
       "tax": 6946.28,
       "from": "Nature of the Beast",
       "breakdown": [
@@ -1060,6 +1410,12 @@
         {
           "p": "24 Dec",
           "a": 1282.36
+        }
+      ],
+      "payees": [
+        {
+          "name": "Ms* Faerncransmont Switzerland Amount In",
+          "amount": 1282.36
         }
       ],
       "tax": 0,
@@ -1165,6 +1521,76 @@
           "a": 61.7
         }
       ],
+      "payees": [
+        {
+          "name": "Hotel Alpes Et Lac Switzerland Amount In",
+          "amount": 963.26
+        },
+        {
+          "name": "Chauffage Compris Switzerland Amount In",
+          "amount": 383.7
+        },
+        {
+          "name": "Migros Mr Marin-Ce Switzerland Amount In",
+          "amount": 356.25
+        },
+        {
+          "name": "La Brasserie Du Ce Switzerland Amount In",
+          "amount": 321.03
+        },
+        {
+          "name": "Europcar Switzerla Switzerland Amount In",
+          "amount": 220.96
+        },
+        {
+          "name": "Denner Marin-Epagn Switzerland Amount In",
+          "amount": 170.55
+        },
+        {
+          "name": "Lti* Crans-Mt Tix Switzerland Amount In",
+          "amount": 89.21
+        },
+        {
+          "name": "Ski Service Le Sig Switzerland Amount In",
+          "amount": 78.08
+        },
+        {
+          "name": "Eat Drink Smile Sa Switzerland Amount In",
+          "amount": 70.99
+        },
+        {
+          "name": "Restaurant Gerber Switzerland Amount In",
+          "amount": 69.13
+        },
+        {
+          "name": "Shell A1 Alpes Switzerland Amount In",
+          "amount": 61.7
+        },
+        {
+          "name": "Eni Uvrier Switzerland Amount In",
+          "amount": 50.12
+        },
+        {
+          "name": "Soho Coffee Switzerland Amount In",
+          "amount": 17.55
+        },
+        {
+          "name": "Pharmacie De La Ga Switzerland Amount In",
+          "amount": 13.38
+        },
+        {
+          "name": "Restaurant Cry D'E Switzerland Amount In",
+          "amount": 11.04
+        },
+        {
+          "name": "Event Catering Switzerland Amount In",
+          "amount": 4.8
+        },
+        {
+          "name": "Adf Principale Switzerland Amount In",
+          "amount": 4.03
+        }
+      ],
       "tax": 1776.3,
       "from": "Imagination Europe",
       "breakdown": [
@@ -1192,6 +1618,20 @@
           "a": 50.0
         }
       ],
+      "payees": [
+        {
+          "name": "Swiss Filming * 241390*Theus Sarl* Tf",
+          "amount": 28280.97
+        },
+        {
+          "name": "Pulll France On 31 Jan Bdc",
+          "amount": 50.0
+        },
+        {
+          "name": "Swiss Filming * 178250*Theus Sarl* Tf",
+          "amount": 1.0
+        }
+      ],
       "tax": 32373.5,
       "from": "Nature of the Beast / Worksome",
       "breakdown": [
@@ -1213,6 +1653,12 @@
         {
           "p": "2 Mar",
           "a": 672.0
+        }
+      ],
+      "payees": [
+        {
+          "name": "Burns + Wilcox",
+          "amount": 672.0
         }
       ],
       "tax": 11664.0,
