@@ -604,7 +604,7 @@ const gc = 'rgba(255,255,255,0.04)';
 
 let SC=null, TC=null, FAC=null;
 let spendChartType = 'doughnut';
-let lastDoughnutData = [], lastTotSpend = 0;
+let lastDoughnutData = [], lastTotSpend = 0, lastSorted = [];
 
 function render(pk) {
   const P = periods[pk];
@@ -1013,18 +1013,17 @@ function buildSpendChart(doughnutData, totSpend) {
 
   } else if (spendChartType === 'hbar') {
     wrap.style.height = Math.max(280, doughnutData.length * 38) + 'px';
-    const sorted = [...doughnutData].sort((a,b) => b.total - a.total);
+    lastSorted = [...doughnutData].sort((a,b) => b.total - a.total);
     SC = new Chart(document.getElementById('spendChart').getContext('2d'), {
       type:'bar',
       data:{
-        labels: sorted.map(d => { const cfg=catConfig.find(c=>c.key===d.key); return cfg?cfg.short:d.key; }),
-        datasets:[{ data: sorted.map(d=>d.total),
-          backgroundColor: sorted.map(d=>d.color+'cc'),
-          borderColor: sorted.map(d=>d.color),
+        labels: lastSorted.map(d => { const cfg=catConfig.find(c=>c.key===d.key); return cfg?cfg.short:d.key; }),
+        datasets:[{ data: lastSorted.map(d=>d.total),
+          backgroundColor: lastSorted.map(d=>d.color+'cc'),
+          borderColor: lastSorted.map(d=>d.color),
           borderWidth:1, borderRadius:3 }]
       },
       options:{ responsive:true, maintainAspectRatio:false, indexAxis:'y',
-        onClick:(evt,els) => { if (els.length) showBarDesc(sorted[els[0].index].key); else hideBarDesc(); },
         plugins:{ legend:{display:false}, tooltip },
         scales:{
           x:{ grid:{color:gc}, border:{color:'rgba(255,255,255,0.06)'},
@@ -1036,18 +1035,17 @@ function buildSpendChart(doughnutData, totSpend) {
 
   } else { // vbar
     wrap.style.height = '320px';
-    const sorted = [...doughnutData].sort((a,b) => b.total - a.total);
+    lastSorted = [...doughnutData].sort((a,b) => b.total - a.total);
     SC = new Chart(document.getElementById('spendChart').getContext('2d'), {
       type:'bar',
       data:{
-        labels: sorted.map(d => { const cfg=catConfig.find(c=>c.key===d.key); return cfg?cfg.short:d.key; }),
-        datasets:[{ data: sorted.map(d=>d.total),
-          backgroundColor: sorted.map(d=>d.color+'cc'),
-          borderColor: sorted.map(d=>d.color),
+        labels: lastSorted.map(d => { const cfg=catConfig.find(c=>c.key===d.key); return cfg?cfg.short:d.key; }),
+        datasets:[{ data: lastSorted.map(d=>d.total),
+          backgroundColor: lastSorted.map(d=>d.color+'cc'),
+          borderColor: lastSorted.map(d=>d.color),
           borderWidth:1, borderRadius:3 }]
       },
       options:{ responsive:true, maintainAspectRatio:false,
-        onClick:(evt,els) => { if (els.length) showBarDesc(sorted[els[0].index].key); else hideBarDesc(); },
         plugins:{ legend:{display:false}, tooltip },
         scales:{
           x:{ grid:{display:false}, ticks:{color:'#EDEDE8', font:{size:12}, maxRotation:30} },
@@ -1059,6 +1057,13 @@ function buildSpendChart(doughnutData, totSpend) {
   }
   // Hide desc panel whenever chart type changes
   hideBarDesc();
+  // Attach canvas click listener — more reliable than Chart.js onClick
+  document.getElementById('spendChart').addEventListener('click', function(evt) {
+    if (!SC || spendChartType === 'doughnut') return;
+    const els = SC.getElementsAtEventForMode(evt, 'nearest', {intersect: true}, false);
+    if (els.length) showBarDesc(lastSorted[els[0].index].key);
+    else hideBarDesc();
+  });
 }
 
 function showBarDesc(key) {
