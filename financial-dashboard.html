@@ -1438,14 +1438,16 @@ function buildIncomeDetail(mA, periodSub) {
 function buildCostsDetail(mA) {
   // Project costs are outgoing production expenses — separate from income payers
   const rows = [...mA].reverse().filter(a => a.costs > 0).map(a => {
-    const bd = a.costs_breakdown || [];
-    // If we have per-payee breakdown, show it; otherwise show a plain row
-    const bdHtml = bd.length > 0
+    // Prefer new payees array {name, amount}; fall back to costs_breakdown {p, a}
+    const payees = (a.payees && a.payees.length > 0)
+      ? a.payees.map(e => ({ label: e.name || 'Production expense', amt: e.amount }))
+      : (a.costs_breakdown || []).map(e => ({ label: e.p || 'Production expense', amt: e.a }));
+    const bdHtml = payees.length > 0
       ? `<div style="margin-top:6px;padding-left:12px;border-left:2px solid #2a2a2a">` +
-        bd.map(e =>
+        payees.map(e =>
           `<div style="display:flex;justify-content:space-between;padding:3px 0">
-            <span style="font-size:11px;color:#aaa">${e.p || 'Production expense'}</span>
-            <span style="font-size:11px;font-weight:300;color:var(--red)">− ${f(e.a)}</span>
+            <span style="font-size:11px;color:#aaa">${e.label}</span>
+            <span style="font-size:11px;font-weight:300;color:var(--red)">− ${f(e.amt)}</span>
           </div>`
         ).join('') + `</div>`
       : `<div style="font-size:11px;color:#666;margin-top:4px">Production / project expenses</div>`;
