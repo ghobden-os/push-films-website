@@ -357,24 +357,12 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
 <div id="mainView" style="display:none">
 
   <div class="summary-hero">
-    <div class="kpi-row spend-row">
-      <div class="kpi">
-        <div class="kpi-lbl">Avg Monthly Spend</div>
-        <div class="kpi-val" id="kpiAvgSpend"></div>
-        <div class="kpi-sub" id="kpiAvgSpendSub"></div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-lbl">Total Spend</div>
-        <div class="kpi-val" id="kpiTotalSpend"></div>
-        <div class="kpi-sub" id="kpiTotalSpendSub"></div>
-      </div>
+    <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
       <div class="kpi">
         <div class="kpi-lbl">Period</div>
         <div class="kpi-val" id="kpiMonths"></div>
         <div class="kpi-sub" id="kpiMonthsSub"></div>
       </div>
-    </div>
-    <div class="kpi-row tax-row">
       <div class="kpi kpi-clickable" id="kpiIncomeBox" onclick="toggleKpiPanel('income')">
         <div class="kpi-lbl">Income (ex VAT)</div>
         <div class="kpi-val green" id="kpiIncome"></div>
@@ -392,10 +380,22 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
         <div class="kpi-val" id="kpiProfit"></div>
         <div class="kpi-sub" id="kpiProfitSub"></div>
       </div>
+    </div>
+    <div class="kpi-row" style="grid-template-columns:repeat(3,1fr)">
       <div class="kpi">
         <div class="kpi-lbl">Estimated Tax — 23%</div>
         <div class="kpi-val gold" id="kpiTax"></div>
         <div class="kpi-sub" id="kpiTaxSub"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">After Tax</div>
+        <div class="kpi-val green" id="kpiAfterTax"></div>
+        <div class="kpi-sub" id="kpiAfterTaxSub"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Avg Monthly Spend</div>
+        <div class="kpi-val" id="kpiAvgSpend"></div>
+        <div class="kpi-sub" id="kpiAvgSpendSub"></div>
       </div>
     </div>
   </div>
@@ -599,7 +599,7 @@ function render(pk) {
   const ms = P.months;
   const mM = by(monthly,ms), mC = by(cats,ms), mA = by(atl,ms);
   const n = mM.length;
-  const nAvg = P.size || n; // fixed denominator for fixed-length periods (12 for CY/TY)
+  const nAvg = (P.size && n >= P.size) ? P.size : n; // use fixed denominator only when period is complete
 
   // Build augmented category data including Uncategorised amount per month
   const realCatConfig = catConfig.filter(c => !c.isUncat && !c.isStandalone);
@@ -627,23 +627,24 @@ function render(pk) {
   const TAX_RATE    = 0.23;
   const estTax      = exVatNetInc * TAX_RATE;
 
-  // Spending row
-  document.getElementById('kpiAvgSpend').textContent    = f(spAvg);
-  document.getElementById('kpiAvgSpendSub').textContent = `per month`;
-  document.getElementById('kpiTotalSpend').textContent  = f(totSpend);
-  document.getElementById('kpiTotalSpendSub').textContent = `across ${n} month${n!==1?'s':''}`;
+  // Row 1: Period | Income | Project Costs | Taxable Profit
   document.getElementById('kpiMonths').textContent      = nAvg;
   document.getElementById('kpiMonthsSub').textContent   = P.sub;
+  document.getElementById('kpiIncome').textContent      = f(exVatInc);
+  document.getElementById('kpiIncomeSub').textContent   = `inc. VAT: ${f(totInc)}`;
+  document.getElementById('kpiCosts').textContent       = f(totCost);
+  document.getElementById('kpiCostsSub').textContent    = totCost > 0 ? `across ${mA.filter(a=>a.costs>0).length} month${mA.filter(a=>a.costs>0).length!==1?'s':''}` : 'none this period';
+  document.getElementById('kpiProfit').textContent      = f(exVatNetInc);
+  document.getElementById('kpiProfitSub').textContent   = `income less project costs`;
 
-  // Tax row
-  document.getElementById('kpiIncome').textContent     = f(exVatInc);
-  document.getElementById('kpiIncomeSub').textContent  = `inc. VAT: ${f(totInc)}`;
-  document.getElementById('kpiCosts').textContent      = f(totCost);
-  document.getElementById('kpiCostsSub').textContent   = totCost > 0 ? `across ${mA.filter(a=>a.costs>0).length} month${mA.filter(a=>a.costs>0).length!==1?'s':''}` : 'none this period';
-  document.getElementById('kpiProfit').textContent     = f(exVatNetInc);
-  document.getElementById('kpiProfitSub').textContent  = `income less project costs`;
-  document.getElementById('kpiTax').textContent        = f(estTax);
-  document.getElementById('kpiTaxSub').textContent     = `estimated liability`;
+  // Row 2: Estimated Tax | After Tax | Avg Monthly Spend
+  const afterTax = exVatNetInc - estTax;
+  document.getElementById('kpiTax').textContent         = f(estTax);
+  document.getElementById('kpiTaxSub').textContent      = `estimated liability`;
+  document.getElementById('kpiAfterTax').textContent    = f(afterTax);
+  document.getElementById('kpiAfterTaxSub').textContent = `profit after 23% tax`;
+  document.getElementById('kpiAvgSpend').textContent    = f(spAvg);
+  document.getElementById('kpiAvgSpendSub').textContent = `per month · total ${f(totSpend)}`;
 
   // Household Food & Accommodation totals (used by chart below)
   const totFood  = mM.reduce((s,d) => s + (d.food  || 0), 0);
@@ -1543,7 +1544,7 @@ function rebuildPeriods() {
 
   periods.ty2425 = { label:'Tax Year 2024/25', sub:'Sep 2024 – Aug 2025',    months: taxYearMonths(2024, 2025), size: 12 };
   periods.ty2526 = { label:'Tax Year 2025/26', sub:'Sep 2025 – Aug 2026',    months: taxYearMonths(2025, 2026), size: 12 };
-  periods.cy2024 = { label:'Calendar Year 2024', sub:'Jan – Dec 2024',        months: calYear(2024) };
+  periods.cy2024 = { label:'Calendar Year 2024', sub:'Jan – Dec 2024',        months: calYear(2024), size: 12 };
   periods.cy2025 = { label:'Calendar Year 2025', sub:'Jan – Dec 2025',        months: calYear(2025),              size: 12 };
   periods.cy2026 = { label:'Calendar Year 2026', sub:'Jan – present',         months: cy2026months };
   periods.last3  = { label:'Last 3 Months', sub:ms.slice(-3).join(' – '),     months: ms.slice(-3) };
