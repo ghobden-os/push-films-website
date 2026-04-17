@@ -29,19 +29,19 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
   display:flex; align-items:center; justify-content:center;
   font-size:17px; font-weight:300; color:#111; flex-shrink:0; }
 .hdr-title { font-size:13px; font-weight:500; letter-spacing:0.06em; }
-.hdr-sub { font-size:11px; color:var(--mid); margin-top:1px; }
-.hdr-date { font-size:11px; color:var(--mid); white-space:nowrap; }
+.hdr-sub { font-size:12px; color:#aaa; margin-top:1px; }
+.hdr-date { font-size:12px; color:#aaa; white-space:nowrap; }
 
 /* TABS */
 .tabs { position:sticky; top:70px; z-index:190; background:rgba(8,8,8,0.97); backdrop-filter:blur(14px);
   display:flex; align-items:flex-end; gap:0; padding:0 var(--pad); border-bottom:1px solid var(--rule); flex-wrap:wrap; }
 .tab-group { display:flex; flex-direction:column; }
-.tab-group-label { font-size:9px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase;
-  color:#383838; padding:12px 10px 4px; }
+.tab-group-label { font-size:10px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase;
+  color:#999; padding:12px 10px 4px; }
 .tab-group-tabs { display:flex; gap:0; }
 .tab-divider { width:1px; background:var(--rule); margin:0 6px 0; align-self:stretch; margin-bottom:0; flex-shrink:0; }
-.tab { font-size:11px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase;
-  padding:8px 14px 10px; cursor:pointer; color:var(--mid); border-bottom:2px solid transparent;
+.tab { font-size:12px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase;
+  padding:8px 14px 10px; cursor:pointer; color:#bbb; border-bottom:2px solid transparent;
   transition:color .2s, border-color .2s; user-select:none; white-space:nowrap; }
 .tab:hover { color:var(--fg); }
 .tab.active { color:var(--gold); border-bottom-color:var(--gold); }
@@ -50,10 +50,10 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
 .month-select-wrap { position:relative; display:flex; align-items:center; padding:8px 14px 10px;
   border-bottom:2px solid transparent; transition:border-color .2s; }
 .month-select-wrap.active-select { border-bottom-color:var(--gold); }
-.month-select-wrap::after { content:'▾'; font-size:10px; color:var(--mid); pointer-events:none;
+.month-select-wrap::after { content:'▾'; font-size:10px; color:#bbb; pointer-events:none;
   position:absolute; right:6px; top:50%; transform:translateY(-50%); }
-.month-select { background:transparent; border:none; color:var(--mid); font-family:var(--font);
-  font-size:11px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase;
+.month-select { background:transparent; border:none; color:#bbb; font-family:var(--font);
+  font-size:12px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase;
   cursor:pointer; outline:none; appearance:none; -webkit-appearance:none;
   padding-right:16px; transition:color .2s; }
 .month-select:hover { color:var(--fg); }
@@ -66,10 +66,10 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
 .slabel { font-size:11px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase;
   color:var(--gold); margin-bottom:16px; display:flex; align-items:center; gap:12px; }
 .slabel::after { content:''; flex:1; height:1px; background:var(--rule); }
-.slabel-btn { font-size:9px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase;
-  color:var(--mid); cursor:pointer; padding:4px 10px; border:1px solid var(--rule);
+.slabel-btn { font-size:10px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase;
+  color:#999; cursor:pointer; padding:4px 10px; border:1px solid #333;
   border-radius:3px; transition:color .2s, border-color .2s; flex-shrink:0; }
-.slabel-btn:hover { color:var(--fg); border-color:#383838; }
+.slabel-btn:hover { color:var(--fg); border-color:#555; }
 
 /* SUMMARY HERO */
 .summary-hero { display:flex; flex-direction:column; gap:10px; margin-bottom:28px; }
@@ -179,7 +179,7 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
 .month-name .badge { font-size:9px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase;
   background:var(--gold); color:#111; padding:2px 6px; border-radius:2px; margin-left:8px; }
 .month-col { text-align:right; font-size:13px; font-weight:300; font-variant-numeric:tabular-nums; }
-.month-col-lbl { font-size:9px; letter-spacing:0.08em; text-transform:uppercase; color:var(--mid); margin-bottom:2px; }
+.month-col-lbl { font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#aaa; margin-bottom:2px; }
 .over { color:var(--red); }
 .under { color:var(--green); }
 .month-detail { display:none; padding:20px 22px 24px; border-top:1px solid var(--rule); background:rgba(0,0,0,0.2); }
@@ -194,7 +194,7 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
 /* TABLE HEADER */
 .month-tbl-hdr { display:grid; grid-template-columns:140px 1fr 1fr 1fr 1fr; gap:16px;
   padding:10px 22px; border-bottom:1px solid var(--rule); }
-.month-tbl-hdr span { font-size:9px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--mid); text-align:right; }
+.month-tbl-hdr span { font-size:10px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:#aaa; text-align:right; }
 .month-tbl-hdr span:first-child { text-align:left; }
 
 @media (max-width:1000px) {
@@ -226,7 +226,7 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
   padding:11px 0; border-bottom:1px solid var(--rule); align-items:center; }
 .cmp-row:last-child { border-bottom:none; }
 .cmp-row.cmp-hdr { padding-bottom:8px; }
-.cmp-hdr-lbl { font-size:9px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--mid); text-align:right; }
+.cmp-hdr-lbl { font-size:10px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:#aaa; text-align:right; }
 .cmp-hdr-lbl:first-child { text-align:left; }
 
 /* INCOME BREAKDOWN */
@@ -400,31 +400,13 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
     </div>
   </div>
 
-  <div class="section-row">
-    <div class="chart-card">
-      <div class="chart-card-hdr" style="display:flex;justify-content:space-between;align-items:flex-start">
-        <div>
-          <div class="chart-card-title">Category Trends</div>
-          <div class="chart-card-meta">How each category changes month to month</div>
-        </div>
-        <div style="display:flex;gap:8px;flex-shrink:0">
-          <button class="slabel-btn" onclick="toggleAllTrendLines(true)">Show All</button>
-          <button class="slabel-btn" onclick="toggleAllTrendLines(false)">Hide All</button>
-        </div>
-      </div>
-      <div class="chart-wrap" style="height:300px"><canvas id="trendChart"></canvas></div>
-    </div>
-  </div>
-
   <div class="slabel">Income</div>
   <div class="month-list" style="margin-bottom:28px">
-    <div class="month-tbl-hdr" style="grid-template-columns:140px 1fr 1.4fr 1fr 1fr 1fr">
-      <span>Month</span>
-      <span>From</span>
-      <span>Gross Income</span>
+    <div class="month-tbl-hdr" style="grid-template-columns:140px 1fr 1.4fr 1fr">
+      <span style="text-align:left">Month</span>
+      <span style="text-align:left">From / Payer</span>
+      <span>Gross (inc. VAT)</span>
       <span>Ex VAT</span>
-      <span>Project Costs</span>
-      <span>Net (ex VAT)</span>
     </div>
     <div id="incomeList"></div>
   </div>
@@ -442,6 +424,22 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
       <span>Running Total</span>
     </div>
     <div id="monthList"></div>
+  </div>
+
+  <div class="section-row" style="margin-top:40px">
+    <div class="chart-card">
+      <div class="chart-card-hdr" style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div>
+          <div class="chart-card-title">Category Trends</div>
+          <div class="chart-card-meta">How each category changes month to month</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-shrink:0">
+          <button class="slabel-btn" onclick="toggleAllTrendLines(true)">Show All</button>
+          <button class="slabel-btn" onclick="toggleAllTrendLines(false)">Hide All</button>
+        </div>
+      </div>
+      <div class="chart-wrap" style="height:300px"><canvas id="trendChart"></canvas></div>
+    </div>
   </div>
 
 </div><!-- /#mainView -->
@@ -625,8 +623,8 @@ function render(pk) {
         legend:{
           display:true, position:'right',
           labels:{
-            boxWidth:10, boxHeight:10, padding:14, color:'#888',
-            font:{ family:"'DM Sans', sans-serif", size:11 },
+            boxWidth:10, boxHeight:10, padding:16, color:'#ccc',
+            font:{ family:"'DM Sans', sans-serif", size:12 },
             generateLabels: chart => {
               const ds = chart.data.datasets[0];
               return chart.data.labels.map((label, i) => ({
@@ -692,8 +690,8 @@ function render(pk) {
       plugins:{
         legend:{
           display:true, position:'bottom',
-          labels:{ boxWidth:8, boxHeight:8, padding:16, color:'#666',
-            font:{ family:"'DM Sans', sans-serif", size:11 },
+          labels:{ boxWidth:8, boxHeight:8, padding:16, color:'#ccc',
+            font:{ family:"'DM Sans', sans-serif", size:12 },
             usePointStyle:true, pointStyle:'circle' }
         },
         tooltip:{
@@ -711,51 +709,51 @@ function render(pk) {
     }
   });
 
-  // Income list
-  const cols = 'grid-template-columns:140px 1fr 1.4fr 1fr 1fr 1fr';
+  // Income list — 4 columns: Month | From/Payer | Gross (inc VAT) | Ex VAT
+  const iCols = 'grid-template-columns:140px 1fr 1.4fr 1fr';
   const incRows = [...mA].reverse().map(a => {
     const gross = a.income;
     const exVat = gross / 1.2;
-    const costs = a.costs;
-    const net   = exVat - costs;
-    const noInc = gross === 0 && costs === 0;
+    if (gross === 0) return `<div class="month-row">
+      <div class="month-row-hdr" style="${iCols}; cursor:default">
+        <div class="month-name" style="color:#555">${a.m}</div>
+        <div><span style="color:#444;font-size:12px">No income</span></div>
+        <div><div class="month-col" style="color:#444">—</div></div>
+        <div><div class="month-col" style="color:#444">—</div></div>
+      </div>
+    </div>`;
     const bd    = a.breakdown || [];
     const hasBreakdown = bd.length > 0;
     const bdId  = 'bd-' + a.m.replace(/\s/g,'-');
     const fromCell = hasBreakdown
       ? `<button class="inc-from-btn" onclick="toggleBreakdown('${bdId}',this)">
            <span class="chevron">▶</span>${a.from}
-           ${a.partial ? '<span style="font-size:9px;color:#555;margin-left:4px">partial</span>' : ''}
+           ${a.partial ? '<span style="font-size:9px;color:#777;margin-left:4px">partial</span>' : ''}
          </button>`
-      : `<span style="color:var(--mid);font-size:12px">${a.from || '—'}</span>`;
+      : `<span style="color:#aaa;font-size:12px">${a.from || '—'}</span>`;
     const bdRows = bd.map(e =>
       `<div class="inc-breakdown-row">
         <span class="inc-breakdown-payer">${e.p}</span>
         <span class="inc-breakdown-amt">${f(e.a)}</span>
       </div>`).join('');
     return `<div class="month-row">
-      <div class="month-row-hdr" style="${cols}; cursor:default">
+      <div class="month-row-hdr" style="${iCols}; cursor:default">
         <div class="month-name">${a.m}</div>
         <div style="display:flex;align-items:center">${fromCell}</div>
-        <div><div class="month-col" style="color:var(--green)">${gross > 0 ? f(gross) : '—'}</div></div>
-        <div><div class="month-col">${gross > 0 ? f(exVat) : '—'}</div></div>
-        <div><div class="month-col" style="color:${costs > 0 ? 'var(--red)' : 'var(--mid)'}">${costs > 0 ? '− '+f(costs) : '—'}</div></div>
-        <div><div class="month-col" style="color:${noInc ? 'var(--mid)' : net >= 0 ? 'var(--fg)' : 'var(--red)'}">${noInc ? '—' : f(net)}</div></div>
+        <div><div class="month-col" style="color:var(--green)">${f(gross)}</div></div>
+        <div><div class="month-col">${f(exVat)}</div></div>
       </div>
       ${hasBreakdown ? `<div class="inc-breakdown" id="${bdId}">${bdRows}</div>` : ''}
     </div>`;
   }).join('');
 
   const totExVat = totInc / 1.2;
-  const totNet   = totExVat - totCost;
   const totalsRow = `<div class="month-row" style="background:rgba(255,255,255,0.02)">
-    <div class="month-row-hdr" style="${cols}; cursor:default; border-top:2px solid var(--rule)">
-      <div class="month-name" style="font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid)">Total</div>
+    <div class="month-row-hdr" style="${iCols}; cursor:default; border-top:2px solid var(--rule)">
+      <div class="month-name" style="font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#aaa">Total</div>
       <div></div>
       <div><div class="month-col" style="color:var(--green); font-weight:500">${f(totInc)}</div></div>
       <div><div class="month-col" style="font-weight:500">${f(totExVat)}</div></div>
-      <div><div class="month-col" style="color:var(--red); font-weight:500">− ${f(totCost)}</div></div>
-      <div><div class="month-col" style="font-weight:500">${f(totNet)}</div></div>
     </div>
   </div>`;
 
@@ -776,17 +774,34 @@ function render(pk) {
     </div>`;
   }).join('');
 
-  // Build period-relative running totals
-  let runningAcc = 0;
-  const mMWithRunning = mM.map(d => { runningAcc += d.spend; return { ...d, periodRunning: runningAcc }; });
+  // Build full period month list — pad with £0 for months not yet in data
+  // (ensures calendar years show all 12 months, not just the ones with data)
+  const latestM = mM.length > 0 ? mM[mM.length-1].m : '';
+  let periodRunning = 0;
+  const fullPeriodList = ms.map(m => {
+    const d = monthly.find(x=>x.m===m) || {m, spend:0, running:0, vs:0};
+    periodRunning += d.spend;
+    return {...d, periodRunning};
+  });
 
-  const latestM = mM[mM.length-1].m;
-  document.getElementById('monthList').innerHTML = [...mMWithRunning].reverse().map(d=>{
+  document.getElementById('monthList').innerHTML = [...fullPeriodList].reverse().map(d=>{
+    const hasData = d.spend > 0;
     const isL = d.m===latestM;
+    const a   = mA.find(x=>x.m===d.m)||{income:0};
+    const cu  = mCU.find(x=>x.m===d.m)||{};
+    if (!hasData) {
+      return `<div class="month-row">
+        <div class="month-row-hdr" style="cursor:default;opacity:0.35">
+          <div class="month-name">${d.m}</div>
+          <div><div class="month-col-lbl" style="text-align:right">Spend</div><div class="month-col" style="color:#444">—</div></div>
+          <div><div class="month-col-lbl" style="text-align:right">vs Avg</div><div class="month-col" style="color:#444">—</div></div>
+          <div><div class="month-col-lbl" style="text-align:right">Income</div><div class="month-col" style="color:#444">—</div></div>
+          <div><div class="month-col-lbl" style="text-align:right">Running</div><div class="month-col" style="color:#444">—</div></div>
+        </div>
+      </div>`;
+    }
     const oc  = d.vs>=0?'over':'under';
     const s   = d.vs>=0?'+':'';
-    const a   = mA.find(x=>x.m===d.m)||{};
-    const cu  = mCU.find(x=>x.m===d.m)||{};
     const catItems = catConfig.map(c=>{
       const val = cu[c.key]||0;
       const isUncatItem = c.isUncat && val > 0;
@@ -1129,17 +1144,18 @@ function buildIncomeDetail(mA, periodSub) {
 }
 
 function buildCostsDetail(mA) {
+  // Project costs are outgoing production expenses — separate from income sources
   const rows = [...mA].reverse().filter(a => a.costs > 0).map(a =>
-    `<div class="kpi-detail-row" style="grid-template-columns:120px 1fr 110px;gap:16px">
+    `<div class="kpi-detail-row" style="grid-template-columns:140px 1fr 120px;gap:16px">
       <div class="kpi-detail-month">${a.m}</div>
-      <div class="kpi-detail-from">${a.from || ''}</div>
+      <div class="kpi-detail-from">Production / project expenses</div>
       <div class="kpi-detail-amt" style="color:var(--red)">− ${f(a.costs)}</div>
     </div>`
   ).join('');
 
   const totCosts = mA.reduce((s,a) => s + a.costs, 0);
   const totalsRow = totCosts > 0
-    ? `<div class="kpi-detail-total" style="grid-template-columns:120px 1fr 110px;gap:16px">
+    ? `<div class="kpi-detail-total" style="grid-template-columns:140px 1fr 120px;gap:16px">
         <div class="kpi-detail-month">Total</div>
         <div></div>
         <div class="kpi-detail-amt" style="color:var(--red)">− ${f(totCosts)}</div>
@@ -1214,6 +1230,7 @@ function showImportToast(msg) {
 
 function rebuildPeriods() {
   const ms = monthly.map(d => d.m);
+  const MN = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
 
   // Tax year: SEP of year Y through AUG of year Y+1
   const taxYearMonths = (sepYear, augYear) => {
@@ -1225,13 +1242,23 @@ function rebuildPeriods() {
     return ai < 0 ? ms.slice(si) : ms.slice(si, ai + 1);
   };
 
-  periods.ty2425 = { label:'Tax Year 2024/25', sub:'Sep 2024 – Aug 2025',               months: taxYearMonths(2024, 2025) };
-  periods.ty2526 = { label:'Tax Year 2025/26', sub:'Sep 2025 – present',                months: taxYearMonths(2025, 2026) };
-  periods.cy2024 = { label:'Calendar Year 2024', sub:'Sep – Dec 2024 (partial)',         months: ms.filter(m => m.endsWith('2024')) };
-  periods.cy2025 = { label:'Calendar Year 2025', sub:'Jan – Dec 2025',                  months: ms.filter(m => m.endsWith('2025')) };
-  periods.cy2026 = { label:'Calendar Year 2026', sub:'in progress',                     months: ms.filter(m => m.endsWith('2026')) };
-  periods.last3  = { label:'Last 3 Months',       sub:ms.slice(-3).join(' – '),         months: ms.slice(-3) };
-  periods.all    = { label:'All Time',             sub:ms[0] + ' – ' + ms[ms.length-1], months: ms };
+  // Calendar year: always all 12 months Jan–Dec, regardless of whether data exists
+  // render() pads missing months with £0 in the month list
+  const calYear = yr => MN.map(m => m + ' ' + yr);
+
+  // Current year: only months up to today
+  const now = new Date();
+  const curYr = now.getFullYear();
+  const curMo = now.getMonth(); // 0-based, so 0=Jan
+  const cy2026months = MN.slice(0, curMo + 1).map(m => m + ' 2026');
+
+  periods.ty2425 = { label:'Tax Year 2024/25', sub:'Sep 2024 – Aug 2025',    months: taxYearMonths(2024, 2025) };
+  periods.ty2526 = { label:'Tax Year 2025/26', sub:'Sep 2025 – present',     months: taxYearMonths(2025, 2026) };
+  periods.cy2024 = { label:'Calendar Year 2024', sub:'Jan – Dec 2024',        months: calYear(2024) };
+  periods.cy2025 = { label:'Calendar Year 2025', sub:'Jan – Dec 2025',        months: calYear(2025) };
+  periods.cy2026 = { label:'Calendar Year 2026', sub:'Jan – present',         months: cy2026months };
+  periods.last3  = { label:'Last 3 Months', sub:ms.slice(-3).join(' – '),     months: ms.slice(-3) };
+  periods.all    = { label:'All Time', sub:ms[0]+' – '+ms[ms.length-1],       months: ms };
 }
 
 document.getElementById('fileImportInput').addEventListener('change', function(e) {
