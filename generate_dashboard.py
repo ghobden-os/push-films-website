@@ -119,12 +119,30 @@ for sheet_name in wb.sheetnames:
             if val and isinstance(val, (int, float)) and val > 0:
                 income_total += val
 
-        # Project costs — gate on col B having a real date (not col C, which can be
-        # empty in some months even for genuine transaction rows)
+        # Project costs — gate on col B having any non-empty value (date or string)
+        # Some months store dates as strings rather than Excel date objects
         date_val = ws.cell(row=row, column=DATE_COL).value
-        if not hasattr(date_val, 'strftime'):
-            continue  # no date = not a transaction row
-        date_label = date_val.strftime('%-d %b')  # e.g. "14 Oct"
+        if date_val is None or date_val == '':
+            continue  # no date at all = skip (formula/total row)
+
+        if hasattr(date_val, 'strftime'):
+            date_label = date_val.strftime('%-d %b')  # Excel date object → "14 Oct"
+        else:
+            # String date — try to parse, fall back to raw string
+            date_str = str(date_val).strip()
+            if not date_str:
+                continue
+            parsed = False
+            for fmt in ('%Y-%m-%d %H:%M:%S', '%d/%m/%Y', '%Y-%m-%d', '%m/%d/%Y'):
+                try:
+                    from datetime import datetime as _dt
+                    date_label = _dt.strptime(date_str.split()[0], fmt.split()[0]).strftime('%-d %b')
+                    parsed = True
+                    break
+                except ValueError:
+                    continue
+            if not parsed:
+                date_label = date_str[:10]
 
         for col, payee in PRODUCTION_COLS.items():
             val = ws.cell(row=row, column=col).value
