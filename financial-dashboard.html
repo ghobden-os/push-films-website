@@ -614,7 +614,7 @@ function render(pk) {
     return { ...cr, m: d.m,
       'Mortgage / Rent':   d.accom || 0,
       'Ocado / Household': d.food  || 0,
-      'Uncategorised': Math.max(0, d.spend - catSum) };
+      'Uncategorised': Math.max(0, d.spend - catSum - (d.accom || 0)) };
   });
 
   document.getElementById('periodLabel').textContent = P.sub;
@@ -723,6 +723,13 @@ function render(pk) {
     key: c.key, color: c.color,
     total: mCU.reduce((s,d) => s + (d[c.key]||0), 0)
   })).filter(d => d.total > 0);
+
+  // Inject Mortgage / Rent as a segment (data lives on monthly entries, not in cats[])
+  const mortgageTotal = mM.reduce((s,d) => s + (d.accom||0), 0);
+  if (mortgageTotal > 0) {
+    const mc = catConfig.find(c => c.key === 'Mortgage / Rent');
+    doughnutData.push({ key: mc.key, color: mc.color, total: mortgageTotal });
+  }
 
   lastDoughnutData = doughnutData;
   lastTotSpend = totSpend;
