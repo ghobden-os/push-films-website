@@ -1,0 +1,628 @@
+{
+  "generated": "2026-04-17T15:41:27.548567",
+  "source": "ACCOUNTS_2026_COMPLETE_16-04-2026_17-35.xlsx",
+  "monthly": [
+    {
+      "m": "SEP 2024",
+      "spend": 12774.66,
+      "running": 12774.66,
+      "vs": 1232.32
+    },
+    {
+      "m": "OCT 2024",
+      "spend": 13604.41,
+      "running": 26379.07,
+      "vs": 2062.07
+    },
+    {
+      "m": "NOV 2024",
+      "spend": 11052.48,
+      "running": 37431.55,
+      "vs": -489.86
+    },
+    {
+      "m": "DEC 2024",
+      "spend": 11726.4,
+      "running": 49157.95,
+      "vs": 184.06
+    },
+    {
+      "m": "JAN 2025",
+      "spend": 11844.96,
+      "running": 61002.91,
+      "vs": 302.62
+    },
+    {
+      "m": "FEB 2025",
+      "spend": 10434.67,
+      "running": 71437.58,
+      "vs": -1107.67
+    },
+    {
+      "m": "MAR 2025",
+      "spend": 12640.7,
+      "running": 84078.28,
+      "vs": 1098.36
+    },
+    {
+      "m": "APR 2025",
+      "spend": 11287.71,
+      "running": 95365.99,
+      "vs": -254.63
+    },
+    {
+      "m": "MAY 2025",
+      "spend": 9817.34,
+      "running": 105183.33,
+      "vs": -1725.0
+    },
+    {
+      "m": "JUN 2025",
+      "spend": 8786.07,
+      "running": 113969.4,
+      "vs": -2756.27
+    },
+    {
+      "m": "JUL 2025",
+      "spend": 9616.33,
+      "running": 123585.73,
+      "vs": -1926.01
+    },
+    {
+      "m": "AUG 2025",
+      "spend": 9868.33,
+      "running": 133454.06,
+      "vs": -1674.01
+    },
+    {
+      "m": "SEP 2025",
+      "spend": 11220.8,
+      "running": 144674.86,
+      "vs": -321.54
+    },
+    {
+      "m": "OCT 2025",
+      "spend": 14142.66,
+      "running": 158817.52,
+      "vs": 2600.32
+    },
+    {
+      "m": "NOV 2025",
+      "spend": 12570.27,
+      "running": 171387.79,
+      "vs": 1027.93
+    },
+    {
+      "m": "DEC 2025",
+      "spend": 11988.72,
+      "running": 183376.51,
+      "vs": 446.38
+    },
+    {
+      "m": "JAN 2026",
+      "spend": 11896.86,
+      "running": 195273.37,
+      "vs": 354.52
+    },
+    {
+      "m": "FEB 2026",
+      "spend": 11386.77,
+      "running": 206660.14,
+      "vs": -155.57
+    },
+    {
+      "m": "MAR 2026",
+      "spend": 12644.29,
+      "running": 219304.43,
+      "vs": 1101.95
+    }
+  ],
+  "cats": [
+    {
+      "m": "SEP 2024",
+      "Food & Drink": 2183.36,
+      "Transport": 968.74,
+      "Comms": 416.53,
+      "Home": 5259.68,
+      "Finance/Work": 1100.6,
+      "Lifestyle": 3099.9,
+      "Personal": 609.02,
+      "Family": 1829.18
+    },
+    {
+      "m": "OCT 2024",
+      "Food & Drink": 1632.88,
+      "Transport": 819.2,
+      "Comms": 351.71,
+      "Home": 4611.45,
+      "Finance/Work": 1438.7,
+      "Lifestyle": 2691.38,
+      "Personal": 981.36,
+      "Family": 3227.73
+    },
+    {
+      "m": "NOV 2024",
+      "Food & Drink": 1248.15,
+      "Transport": 278.05,
+      "Comms": 233.08,
+      "Home": 1031.79,
+      "Finance/Work": 1355.44,
+      "Lifestyle": 760.46,
+      "Personal": 1067.73,
+      "Family": 2294.5
+    },
+    {
+      "m": "DEC 2024",
+      "Food & Drink": 996.66,
+      "Transport": 383.36,
+      "Comms": 370.56,
+      "Home": 1997.94,
+      "Finance/Work": 1304.15,
+      "Lifestyle": 2606.44,
+      "Personal": 1146.98,
+      "Family": 2806.49
+    },
+    {
+      "m": "JAN 2025",
+      "Food & Drink": 2272.47,
+      "Transport": 249.72,
+      "Comms": 333.63,
+      "Home": 5008.81,
+      "Finance/Work": 1045.35,
+      "Lifestyle": 1095.85,
+      "Personal": 1131.59,
+      "Family": 2210.26
+    },
+    {
+      "m": "FEB 2025",
+      "Food & Drink": 1796.34,
+      "Transport": 1243.84,
+      "Comms": 247.86,
+      "Home": 1493.23,
+      "Finance/Work": 1862.44,
+      "Lifestyle": 948.77,
+      "Personal": 765.47,
+      "Family": 1335.0
+    },
+    {
+      "m": "MAR 2025",
+      "Food & Drink": 2720.64,
+      "Transport": 562.29,
+      "Comms": 358.84,
+      "Home": 1053.55,
+      "Finance/Work": 724.16,
+      "Lifestyle": 720.87,
+      "Personal": 625.56,
+      "Family": 2704.6
+    },
+    {
+      "m": "APR 2025",
+      "Food & Drink": 2536.14,
+      "Transport": 393.03,
+      "Comms": 320.53,
+      "Home": 1469.36,
+      "Finance/Work": 1767.73,
+      "Lifestyle": 505.27,
+      "Personal": 294.11,
+      "Family": 2208.83
+    },
+    {
+      "m": "MAY 2025",
+      "Food & Drink": 1836.65,
+      "Transport": 393.98,
+      "Comms": 355.7,
+      "Home": 3094.7,
+      "Finance/Work": 1439.59,
+      "Lifestyle": 330.47,
+      "Personal": 703.75,
+      "Family": 1562.5
+    },
+    {
+      "m": "JUN 2025",
+      "Food & Drink": 1487.94,
+      "Transport": 145.62,
+      "Comms": 497.05,
+      "Home": 3280.62,
+      "Finance/Work": 821.59,
+      "Lifestyle": 643.31,
+      "Personal": 949.16,
+      "Family": 960.78
+    },
+    {
+      "m": "JUL 2025",
+      "Food & Drink": 1379.64,
+      "Transport": 2085.33,
+      "Comms": 505.34,
+      "Home": 3190.1,
+      "Finance/Work": 812.77,
+      "Lifestyle": 514.32,
+      "Personal": 761.83,
+      "Family": 360.0
+    },
+    {
+      "m": "AUG 2025",
+      "Food & Drink": 2146.46,
+      "Transport": 416.47,
+      "Comms": 309.27,
+      "Home": 3190.1,
+      "Finance/Work": 1816.22,
+      "Lifestyle": 745.48,
+      "Personal": 478.5,
+      "Family": 748.33
+    },
+    {
+      "m": "SEP 2025",
+      "Food & Drink": 2092.35,
+      "Transport": 271.9,
+      "Comms": 282.3,
+      "Home": 2911.09,
+      "Finance/Work": 922.11,
+      "Lifestyle": 1209.03,
+      "Personal": 1117.16,
+      "Family": 2179.16
+    },
+    {
+      "m": "OCT 2025",
+      "Food & Drink": 2821.7,
+      "Transport": 499.09,
+      "Comms": 533.26,
+      "Home": 3820.02,
+      "Finance/Work": 777.52,
+      "Lifestyle": 1733.15,
+      "Personal": 1716.1,
+      "Family": 1976.33
+    },
+    {
+      "m": "NOV 2025",
+      "Food & Drink": 1961.66,
+      "Transport": 1011.16,
+      "Comms": 159.41,
+      "Home": 3664.78,
+      "Finance/Work": 913.86,
+      "Lifestyle": 689.91,
+      "Personal": 1312.71,
+      "Family": 2436.78
+    },
+    {
+      "m": "DEC 2025",
+      "Food & Drink": 2969.36,
+      "Transport": 363.34,
+      "Comms": 413.84,
+      "Home": 651.2,
+      "Finance/Work": 773.99,
+      "Lifestyle": 2035.53,
+      "Personal": 1837.95,
+      "Family": 2615.31
+    },
+    {
+      "m": "JAN 2026",
+      "Food & Drink": 1819.67,
+      "Transport": 649.32,
+      "Comms": 587.18,
+      "Home": 4010.18,
+      "Finance/Work": 615.16,
+      "Lifestyle": 682.45,
+      "Personal": 853.94,
+      "Family": 1857.23
+    },
+    {
+      "m": "FEB 2026",
+      "Food & Drink": 1591.26,
+      "Transport": 1723.76,
+      "Comms": 648.1,
+      "Home": 3828.53,
+      "Finance/Work": 665.72,
+      "Lifestyle": 433.51,
+      "Personal": 821.86,
+      "Family": 1674.03
+    },
+    {
+      "m": "MAR 2026",
+      "Food & Drink": 2356.84,
+      "Transport": 1064.87,
+      "Comms": 900.45,
+      "Home": 3604.44,
+      "Finance/Work": 1003.99,
+      "Lifestyle": 291.99,
+      "Personal": 531.64,
+      "Family": 2052.33
+    }
+  ],
+  "atl": [
+    {
+      "m": "SEP 2024",
+      "income": 15104.4,
+      "costs": 75.0,
+      "tax": 10250.0,
+      "from": "Imagination Europe",
+      "breakdown": [
+        {
+          "p": "Imagination Europe",
+          "a": 9344.4
+        },
+        {
+          "p": "Imagination Europe",
+          "a": 5760.0
+        }
+      ]
+    },
+    {
+      "m": "OCT 2024",
+      "income": 24000.0,
+      "costs": 16227.27,
+      "tax": 1680.0,
+      "from": "Imagination Europe",
+      "breakdown": [
+        {
+          "p": "Imagination Europe",
+          "a": 24000.0
+        }
+      ]
+    },
+    {
+      "m": "NOV 2024",
+      "income": 8634.0,
+      "costs": 18927.45,
+      "tax": 0,
+      "from": "Eye Rise / No Ordinary Films",
+      "breakdown": []
+    },
+    {
+      "m": "DEC 2024",
+      "income": 173019.6,
+      "costs": 56242.65,
+      "tax": 0,
+      "from": "Imagination / No Ordinary Films",
+      "breakdown": [
+        {
+          "p": "No Ordinary Films",
+          "a": 10800.0
+        },
+        {
+          "p": "Imagination Europe",
+          "a": 88435.8
+        },
+        {
+          "p": "Imagination Europe",
+          "a": 39952.2
+        },
+        {
+          "p": "Imagination Europe",
+          "a": 8802.0
+        },
+        {
+          "p": "Imagination Europe",
+          "a": 6600.0
+        }
+      ]
+    },
+    {
+      "m": "JAN 2025",
+      "income": 53998.8,
+      "costs": 49762.85,
+      "tax": 16000.0,
+      "from": "Imagination Europe",
+      "breakdown": [
+        {
+          "p": "Imagination Europe",
+          "a": 21825.6
+        },
+        {
+          "p": "Imagination Europe",
+          "a": 32173.2
+        }
+      ]
+    },
+    {
+      "m": "FEB 2025",
+      "income": 96710.4,
+      "costs": 62671.22,
+      "tax": 45118.8,
+      "from": "Imagination Europe",
+      "breakdown": [
+        {
+          "p": "Imagination Europe",
+          "a": 63496.2
+        },
+        {
+          "p": "Imagination Europe",
+          "a": 13392.6
+        },
+        {
+          "p": "Imagination Europe",
+          "a": 11721.6
+        }
+      ]
+    },
+    {
+      "m": "MAR 2025",
+      "income": 22636.4,
+      "costs": 5250.0,
+      "tax": 7078.56,
+      "from": "Imagination Europe",
+      "breakdown": [
+        {
+          "p": "Imagination Europe",
+          "a": 22636.4
+        }
+      ]
+    },
+    {
+      "m": "APR 2025",
+      "income": 0.0,
+      "costs": 0.0,
+      "tax": 0,
+      "from": "",
+      "breakdown": []
+    },
+    {
+      "m": "MAY 2025",
+      "income": 1200.0,
+      "costs": 0.0,
+      "tax": 3900.0,
+      "from": "Worksome (Imagination)",
+      "breakdown": [
+        {
+          "p": "Worksome (Imagination)",
+          "a": 1200.0
+        }
+      ]
+    },
+    {
+      "m": "JUN 2025",
+      "income": 0.0,
+      "costs": 0.0,
+      "tax": 17812.6,
+      "from": "",
+      "breakdown": []
+    },
+    {
+      "m": "JUL 2025",
+      "income": 0.0,
+      "costs": 0.0,
+      "tax": 6374.88,
+      "from": "",
+      "breakdown": []
+    },
+    {
+      "m": "AUG 2025",
+      "income": 34667.4,
+      "costs": 12576.39,
+      "tax": 2940.0,
+      "from": "Imagination / Nature of the Beast",
+      "breakdown": [
+        {
+          "p": "Imagination Europe",
+          "a": 24407.4
+        },
+        {
+          "p": "Nature of the Beast",
+          "a": 10260.0
+        }
+      ]
+    },
+    {
+      "m": "SEP 2025",
+      "income": 27068.64,
+      "costs": 16644.58,
+      "tax": 11252.8,
+      "from": "Imagination / Nature of the Beast",
+      "breakdown": [
+        {
+          "p": "Imagination Europe",
+          "a": 24407.4
+        },
+        {
+          "p": "Nature of the Beast",
+          "a": 2100.0
+        },
+        {
+          "p": "No Ordinary Films",
+          "a": 32.46
+        },
+        {
+          "p": "Robert Williams",
+          "a": 82.0
+        },
+        {
+          "p": "DWP",
+          "a": 446.78
+        }
+      ]
+    },
+    {
+      "m": "OCT 2025",
+      "income": 23316.41,
+      "costs": 898.89,
+      "tax": 19922.02,
+      "from": "Nature of the Beast / Imagination",
+      "breakdown": [
+        {
+          "p": "Nature of the Beast",
+          "a": 14310.0
+        },
+        {
+          "p": "Nature of the Beast (expenses)",
+          "a": 8126.41
+        },
+        {
+          "p": "Imagination Europe",
+          "a": 798.0
+        },
+        {
+          "p": "P Hanlon",
+          "a": 82.0
+        }
+      ]
+    },
+    {
+      "m": "NOV 2025",
+      "income": 17365.41,
+      "costs": 1105.09,
+      "tax": 6946.28,
+      "from": "Nature of the Beast",
+      "breakdown": [
+        {
+          "p": "Nature of the Beast",
+          "a": 17365.41
+        }
+      ]
+    },
+    {
+      "m": "DEC 2025",
+      "income": 24540.6,
+      "costs": 1282.36,
+      "tax": 0,
+      "from": "Imagination Europe",
+      "breakdown": [
+        {
+          "p": "Imagination Europe",
+          "a": 24540.6
+        }
+      ]
+    },
+    {
+      "m": "JAN 2026",
+      "income": 31927.2,
+      "costs": 2885.78,
+      "tax": 1776.3,
+      "from": "Imagination Europe",
+      "breakdown": [
+        {
+          "p": "Imagination Europe",
+          "a": 31927.2
+        }
+      ]
+    },
+    {
+      "m": "FEB 2026",
+      "income": 30480.0,
+      "costs": 28331.97,
+      "tax": 32373.5,
+      "from": "Nature of the Beast / Worksome",
+      "breakdown": [
+        {
+          "p": "Nature of the Beast",
+          "a": 22680.0
+        },
+        {
+          "p": "Worksome (Imagination)",
+          "a": 7800.0
+        }
+      ]
+    },
+    {
+      "m": "MAR 2026",
+      "income": 0.0,
+      "costs": 0.0,
+      "tax": 11664.0,
+      "from": "Nature of the Beast",
+      "breakdown": [
+        {
+          "p": "Nature of the Beast (inv. 484)",
+          "a": 6480.0
+        }
+      ]
+    }
+  ]
+}

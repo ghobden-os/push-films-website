@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 :root {
@@ -71,30 +72,42 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
 .slabel-btn:hover { color:var(--fg); border-color:#383838; }
 
 /* SUMMARY HERO */
-.summary-hero { display:grid; grid-template-columns:1fr 1.5fr; gap:14px; margin-bottom:28px; }
-.summary-card { background:var(--dim); border:1px solid var(--rule); border-radius:6px; padding:28px 32px; }
-.summary-lbl { font-size:10px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--mid); margin-bottom:12px; }
-.summary-val { font-size:44px; font-weight:300; letter-spacing:-0.03em; line-height:1; }
-.summary-val.spent { color:var(--fg); }
-.summary-sub { font-size:12px; color:var(--mid); margin-top:10px; }
+.summary-hero { display:flex; flex-direction:column; gap:10px; margin-bottom:28px; }
+.kpi-row { display:grid; gap:10px; }
+.kpi-row.spend-row { grid-template-columns:repeat(3,1fr); }
+.kpi-row.tax-row   { grid-template-columns:repeat(4,1fr); }
+.kpi { background:var(--dim); border:1px solid var(--rule); border-radius:6px;
+  padding:20px 24px; display:flex; flex-direction:column; }
+.kpi-lbl { font-size:10px; font-weight:500; letter-spacing:0.13em; text-transform:uppercase;
+  color:var(--mid); margin-bottom:10px; }
+.kpi-val { font-size:32px; font-weight:300; letter-spacing:-0.03em; line-height:1;
+  font-variant-numeric:tabular-nums; }
+.kpi-val.green { color:var(--green); }
+.kpi-val.gold  { color:var(--gold); }
+.kpi-val.red   { color:var(--red); }
+.kpi-sub { font-size:11px; color:var(--mid); margin-top:8px; line-height:1.4; }
+.kpi-sub.accent { color:var(--fg); opacity:0.5; }
+.vat-box { display:inline-block; margin-top:8px; font-size:12px; color:#888;
+  background:rgba(255,255,255,0.05); border:1px solid #2a2a2a; border-radius:3px;
+  padding:4px 10px; letter-spacing:0.02em; }
+.vat-box span { color:#555; margin-right:4px; }
 
-/* TAX POSITION CARD */
-.tax-rows { display:flex; flex-direction:column; gap:0; margin-top:4px; }
-.tax-row { display:flex; justify-content:space-between; align-items:baseline;
-  padding:11px 0; border-bottom:1px solid var(--rule); }
-.tax-row:first-child { padding-top:4px; }
-.tax-row-lbl { font-size:12px; color:var(--mid); }
-.tax-row-val { font-size:18px; font-weight:300; font-variant-numeric:tabular-nums; letter-spacing:-0.01em; }
-.tax-row.taxable { border-bottom:none; padding-bottom:4px; }
-.tax-row.taxable .tax-row-lbl { font-size:13px; font-weight:500; color:var(--fg); }
-.tax-row.taxable .tax-row-val { font-size:32px; font-weight:300; letter-spacing:-0.02em; color:var(--fg); }
-.tax-row.estimate { border-top:none; padding-top:6px; border-bottom:none; }
-.tax-row.estimate .tax-row-lbl { font-size:11px; color:var(--mid); }
-.tax-row.estimate .tax-row-val { font-size:20px; color:var(--gold); }
-.vat-box { display:inline-block; margin-top:5px; font-size:10px; color:var(--mid);
-  background:rgba(255,255,255,0.03); border:1px solid var(--rule); border-radius:3px;
-  padding:3px 8px; letter-spacing:0.02em; }
-.vat-box span { color:#555; }
+/* IMPORT TOAST */
+#importToast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px);
+  background:#1e1e1e; border:1px solid #333; border-radius:6px; padding:12px 20px;
+  font-size:12px; color:var(--fg); letter-spacing:0.02em; pointer-events:none;
+  opacity:0; transition:opacity .3s, transform .3s; z-index:9999; white-space:nowrap; }
+#importToast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+#importToast .toast-icon { color:var(--gold); margin-right:8px; }
+
+@media (max-width:1000px) {
+  .kpi-row.spend-row { grid-template-columns:repeat(3,1fr); }
+  .kpi-row.tax-row   { grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:640px) {
+  .kpi-row.spend-row,
+  .kpi-row.tax-row { grid-template-columns:repeat(2,1fr); }
+}
 
 
 /* SECTION ROW */
@@ -159,6 +172,62 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
   .month-row-hdr > :nth-child(5) { display:none; }
   .month-detail-grid { grid-template-columns:repeat(2,1fr); }
 }
+
+/* SAVINGS VIEW */
+.vol-row { display:grid; grid-template-columns:140px 1fr 90px 180px 80px; gap:16px;
+  align-items:center; padding:12px 0; border-bottom:1px solid var(--rule); }
+.vol-row:last-child { border-bottom:none; }
+.vol-name { font-size:12px; font-weight:500; }
+.vol-bar-wrap { position:relative; height:6px; background:var(--rule); border-radius:3px; }
+.vol-bar-range { position:absolute; height:6px; border-radius:3px; }
+.vol-bar-avg  { position:absolute; width:2px; height:12px; top:-3px; border-radius:1px; background:rgba(255,255,255,0.5); }
+.vol-avg  { font-size:13px; font-weight:300; font-variant-numeric:tabular-nums; text-align:right; }
+.vol-range{ font-size:11px; color:var(--mid); text-align:right; }
+.vol-badge{ font-size:9px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase;
+  padding:3px 7px; border-radius:3px; text-align:center; }
+.vol-badge.high { background:rgba(224,85,85,0.15); color:#E05555; }
+.vol-badge.med  { background:rgba(245,216,0,0.1);  color:#B8A200; }
+.vol-badge.low  { background:rgba(76,175,125,0.12); color:#4CAF7D; }
+
+.cmp-table { width:100%; }
+.cmp-row { display:grid; grid-template-columns:140px 1fr 1fr 1fr; gap:16px;
+  padding:11px 0; border-bottom:1px solid var(--rule); align-items:center; }
+.cmp-row:last-child { border-bottom:none; }
+.cmp-row.cmp-hdr { padding-bottom:8px; }
+.cmp-hdr-lbl { font-size:9px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--mid); text-align:right; }
+.cmp-hdr-lbl:first-child { text-align:left; }
+
+/* INCOME BREAKDOWN */
+.inc-from-btn { background:none; border:none; color:var(--mid); font-family:var(--font);
+  font-size:12px; cursor:pointer; padding:0; display:flex; align-items:center; gap:5px;
+  transition:color .15s; }
+.inc-from-btn:hover { color:var(--fg); }
+.inc-from-btn .chevron { font-size:9px; transition:transform .2s; display:inline-block; }
+.inc-from-btn.open .chevron { transform:rotate(90deg); }
+.inc-breakdown { display:none; padding:10px 22px 14px 162px; background:rgba(0,0,0,0.15);
+  border-top:1px solid var(--rule); }
+.inc-breakdown.open { display:block; }
+.inc-breakdown-row { display:flex; justify-content:space-between; align-items:center;
+  padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.03); }
+.inc-breakdown-row:last-child { border-bottom:none; }
+.inc-breakdown-payer { font-size:11px; color:var(--mid); }
+.inc-breakdown-amt { font-size:12px; font-weight:300; font-variant-numeric:tabular-nums; color:var(--green); }
+.cmp-cat { font-size:12px; font-weight:500; }
+.cmp-val { font-size:13px; font-weight:300; font-variant-numeric:tabular-nums; text-align:right; }
+.cmp-diff { font-size:13px; font-weight:300; font-variant-numeric:tabular-nums; text-align:right; }
+.cmp-diff.better { color:var(--green); }
+.cmp-diff.worse  { color:var(--red); }
+
+.trend-row { display:grid; grid-template-columns:140px 1fr 1fr 80px 80px; gap:16px;
+  padding:11px 0; border-bottom:1px solid var(--rule); align-items:center; }
+.trend-row:last-child { border-bottom:none; }
+.trend-row.trend-hdr { padding-bottom:8px; }
+.trend-cat { font-size:12px; font-weight:500; }
+.trend-val { font-size:13px; font-weight:300; font-variant-numeric:tabular-nums; text-align:right; }
+.trend-arrow { font-size:18px; text-align:center; }
+.trend-pct { font-size:12px; font-variant-numeric:tabular-nums; text-align:right; }
+.trend-pct.better { color:var(--green); }
+.trend-pct.worse  { color:var(--red); }
 </style>
 </head>
 <body>
@@ -168,10 +237,25 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
     <div class="disc">G</div>
     <div>
       <div class="hdr-title">PUSH FILMS — FINANCIAL DASHBOARD</div>
-      <div class="hdr-sub">Greg Hobden · Updated 6 Apr 2026</div>
+      <div class="hdr-sub">Greg Hobden · Updated 16 Apr 2026</div>
     </div>
   </div>
-  <div class="hdr-date" id="periodLabel"></div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <div class="hdr-date" id="periodLabel"></div>
+    <button id="savingsBtn" onclick="showSavingsView()" style="
+      background:var(--gold); color:#111; border:none; border-radius:4px;
+      font-family:var(--font); font-size:11px; font-weight:500; letter-spacing:0.08em;
+      text-transform:uppercase; padding:8px 16px; cursor:pointer; white-space:nowrap;
+      transition:opacity .2s;">↓ Savings View</button>
+    <button onclick="document.getElementById('fileImportInput').click()" title="Load updated spreadsheet" style="
+      background:transparent; color:var(--mid); border:1px solid var(--rule); border-radius:4px;
+      font-family:var(--font); font-size:11px; font-weight:500; letter-spacing:0.08em;
+      text-transform:uppercase; padding:8px 14px; cursor:pointer; white-space:nowrap;
+      transition:color .2s, border-color .2s;"
+      onmouseover="this.style.color='var(--fg)';this.style.borderColor='#444'"
+      onmouseout="this.style.color='var(--mid)';this.style.borderColor='var(--rule)'">↑ Update Data</button>
+    <input type="file" id="fileImportInput" accept=".xlsx,.xls" style="display:none">
+  </div>
 </header>
 
 <div class="tabs">
@@ -214,15 +298,51 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
 
 <main class="main">
 
+<div id="loadingState" style="padding:80px 0;text-align:center;color:var(--mid);font-size:12px;letter-spacing:0.08em;text-transform:uppercase">
+  Loading dashboard data…
+</div>
+
+<div id="mainView" style="display:none">
+
   <div class="summary-hero">
-    <div class="summary-card">
-      <div class="summary-lbl">Personal Spending — Monthly Average</div>
-      <div class="summary-val spent" id="sumSpent"></div>
-      <div class="summary-sub" id="sumSpentSub"></div>
+    <div class="kpi-row spend-row">
+      <div class="kpi">
+        <div class="kpi-lbl">Avg Monthly Spend</div>
+        <div class="kpi-val" id="kpiAvgSpend"></div>
+        <div class="kpi-sub" id="kpiAvgSpendSub"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Total Spend</div>
+        <div class="kpi-val" id="kpiTotalSpend"></div>
+        <div class="kpi-sub" id="kpiTotalSpendSub"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Period</div>
+        <div class="kpi-val" id="kpiMonths"></div>
+        <div class="kpi-sub" id="kpiMonthsSub"></div>
+      </div>
     </div>
-    <div class="summary-card">
-      <div class="summary-lbl">Tax Position</div>
-      <div class="tax-rows" id="taxRows"></div>
+    <div class="kpi-row tax-row">
+      <div class="kpi">
+        <div class="kpi-lbl">Income</div>
+        <div class="kpi-val green" id="kpiIncome"></div>
+        <div class="kpi-sub" id="kpiIncomeSub"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Project Costs</div>
+        <div class="kpi-val red" id="kpiCosts"></div>
+        <div class="kpi-sub" id="kpiCostsSub"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Taxable Profit</div>
+        <div class="kpi-val" id="kpiProfit"></div>
+        <div class="kpi-sub" id="kpiProfitSub"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Estimated Tax — 23%</div>
+        <div class="kpi-val gold" id="kpiTax"></div>
+        <div class="kpi-sub" id="kpiTaxSub"></div>
+      </div>
     </div>
   </div>
 
@@ -238,12 +358,31 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
 
   <div class="section-row">
     <div class="chart-card">
-      <div class="chart-card-hdr">
-        <div class="chart-card-title">Category Trends</div>
-        <div class="chart-card-meta">How each category changes month to month</div>
+      <div class="chart-card-hdr" style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div>
+          <div class="chart-card-title">Category Trends</div>
+          <div class="chart-card-meta">How each category changes month to month</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-shrink:0">
+          <button class="slabel-btn" onclick="toggleAllTrendLines(true)">Show All</button>
+          <button class="slabel-btn" onclick="toggleAllTrendLines(false)">Hide All</button>
+        </div>
       </div>
       <div class="chart-wrap" style="height:300px"><canvas id="trendChart"></canvas></div>
     </div>
+  </div>
+
+  <div class="slabel">Income</div>
+  <div class="month-list" style="margin-bottom:28px">
+    <div class="month-tbl-hdr" style="grid-template-columns:140px 1fr 1.4fr 1fr 1fr 1fr">
+      <span>Month</span>
+      <span>From</span>
+      <span>Gross Income</span>
+      <span>Ex VAT</span>
+      <span>Project Costs</span>
+      <span>Net (ex VAT)</span>
+    </div>
+    <div id="incomeList"></div>
   </div>
 
   <div class="slabel">Spend by Category</div>
@@ -261,84 +400,78 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
     <div id="monthList"></div>
   </div>
 
+</div><!-- /#mainView -->
+
+<!-- SAVINGS VIEW -->
+<div id="savingsView" style="display:none">
+
+  <!-- Insight boxes -->
+  <div class="kpi-row" style="grid-template-columns:repeat(3,1fr); margin-bottom:28px" id="savingsKpis"></div>
+
+  <!-- Where to cut -->
+  <div class="slabel">Where to cut — Spending Volatility</div>
+  <div class="chart-card" style="margin-bottom:28px">
+    <div class="chart-card-hdr">
+      <div class="chart-card-meta">Categories ranked by how much they vary month to month. High variance = discretionary = most opportunity to save.</div>
+    </div>
+    <div id="volatilityList"></div>
+  </div>
+
+  <!-- Month comparison -->
+  <div class="slabel">Compare Any Two Months</div>
+  <div class="chart-card" style="margin-bottom:28px">
+    <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px; flex-wrap:wrap">
+      <select id="cmpA" class="month-select" style="background:var(--dim);border:1px solid var(--rule);border-radius:4px;padding:8px 12px;color:var(--fg);font-size:12px;cursor:pointer"></select>
+      <span style="color:var(--mid); font-size:12px">vs</span>
+      <select id="cmpB" class="month-select" style="background:var(--dim);border:1px solid var(--rule);border-radius:4px;padding:8px 12px;color:var(--fg);font-size:12px;cursor:pointer"></select>
+    </div>
+    <div id="comparisonTable"></div>
+  </div>
+
+  <!-- Trend direction -->
+  <div class="slabel">Trend — Last 3 Months vs Previous 3 Months</div>
+  <div class="chart-card" style="margin-bottom:28px">
+    <div class="chart-card-meta" style="margin-bottom:20px">Is each category getting better or worse?</div>
+    <div id="trendTable"></div>
+  </div>
+
+</div><!-- /#savingsView -->
+
 </main>
 
 <script>
-const monthly = [
-  {m:'SEP 2024',spend:12774.66,running:12774.66,vs:1232.32},
-  {m:'OCT 2024',spend:13604.41,running:26379.07,vs:2062.07},
-  {m:'NOV 2024',spend:11052.48,running:37431.55,vs:-489.86},
-  {m:'DEC 2024',spend:11726.40,running:49157.95,vs:184.06},
-  {m:'JAN 2025',spend:11844.96,running:61002.91,vs:302.62},
-  {m:'FEB 2025',spend:10434.67,running:71437.58,vs:-1107.67},
-  {m:'MAR 2025',spend:12640.70,running:84078.28,vs:1098.36},
-  {m:'APR 2025',spend:11287.71,running:95365.99,vs:-254.63},
-  {m:'MAY 2025',spend:9817.34, running:105183.33,vs:-1725.00},
-  {m:'JUN 2025',spend:8786.07, running:113969.40,vs:-2756.27},
-  {m:'JUL 2025',spend:9616.33, running:123585.73,vs:-1926.01},
-  {m:'AUG 2025',spend:9868.33, running:133454.06,vs:-1674.01},
-  {m:'SEP 2025',spend:11220.80,running:144674.86,vs:-321.54},
-  {m:'OCT 2025',spend:14142.66,running:158817.52,vs:2600.32},
-  {m:'NOV 2025',spend:12570.27,running:171387.79,vs:1027.93},
-  {m:'DEC 2025',spend:11988.72,running:183376.51,vs:446.38},
-  {m:'JAN 2026',spend:11896.86,running:195273.37,vs:354.52},
-  {m:'FEB 2026',spend:11386.77,running:206660.14,vs:-155.57},
-  {m:'MAR 2026',spend:12644.29,running:219304.43,vs:1101.95}
-];
+/*
+ * DATA SOURCE: dashboard_data.json
+ * Generated by Claude Code from the accounts spreadsheet.
+ * Run `python3 generate_dashboard.py` after any spreadsheet update, then push.
+ *
+ * Expected JSON schema:
+ * {
+ *   "generated": "2026-04-16T17:35:00",   // ISO timestamp
+ *   "source": "ACCOUNTS_2026…xlsx",        // filename for display
+ *   "monthly": [                            // one entry per month
+ *     { "m":"SEP 2024", "spend":12774.66, "running":12774.66, "vs":1232.32 }
+ *   ],
+ *   "cats": [                               // spending by category per month
+ *     { "m":"SEP 2024", "Food & Drink":2183.36, "Transport":968.74,
+ *       "Comms":416.53, "Home":5259.68, "Finance/Work":1100.60,
+ *       "Lifestyle":3099.90, "Personal":609.02, "Family":1829.18 }
+ *   ],
+ *   "atl": [                                // income / project costs per month
+ *     { "m":"SEP 2024", "income":15104.40, "costs":75.00, "tax":10250.00,
+ *       "from":"Imagination Europe",
+ *       "breakdown":[{"p":"Imagination Europe","a":9344.40}] }
+ *   ]
+ * }
+ */
 
-const cats = [
-  {m:'SEP 2024','Food & Drink':2183.36,'Transport':968.74,'Comms':416.53,'Home':5259.68,'Finance/Work':1100.60,'Lifestyle':3099.90,'Personal':609.02,'Family':1829.18},
-  {m:'OCT 2024','Food & Drink':1632.88,'Transport':819.20,'Comms':351.71,'Home':4611.45,'Finance/Work':1438.70,'Lifestyle':2691.38,'Personal':981.36,'Family':3227.73},
-  {m:'NOV 2024','Food & Drink':1248.15,'Transport':278.05,'Comms':233.08,'Home':1031.79,'Finance/Work':1355.44,'Lifestyle':760.46,'Personal':1067.73,'Family':2294.50},
-  {m:'DEC 2024','Food & Drink':996.66,'Transport':383.36,'Comms':370.56,'Home':1997.94,'Finance/Work':1304.15,'Lifestyle':2606.44,'Personal':1146.98,'Family':2806.49},
-  {m:'JAN 2025','Food & Drink':2272.47,'Transport':249.72,'Comms':333.63,'Home':5008.81,'Finance/Work':1045.35,'Lifestyle':1095.85,'Personal':1131.59,'Family':2210.26},
-  {m:'FEB 2025','Food & Drink':1796.34,'Transport':1243.84,'Comms':247.86,'Home':1493.23,'Finance/Work':1862.44,'Lifestyle':948.77,'Personal':765.47,'Family':1335.00},
-  {m:'MAR 2025','Food & Drink':2720.64,'Transport':562.29,'Comms':358.84,'Home':1053.55,'Finance/Work':724.16,'Lifestyle':720.87,'Personal':625.56,'Family':2704.60},
-  {m:'APR 2025','Food & Drink':2536.14,'Transport':393.03,'Comms':320.53,'Home':1469.36,'Finance/Work':1767.73,'Lifestyle':505.27,'Personal':294.11,'Family':2208.83},
-  {m:'MAY 2025','Food & Drink':1836.65,'Transport':393.98,'Comms':355.70,'Home':3094.70,'Finance/Work':1439.59,'Lifestyle':330.47,'Personal':703.75,'Family':1562.50},
-  {m:'JUN 2025','Food & Drink':1487.94,'Transport':145.62,'Comms':497.05,'Home':3280.62,'Finance/Work':821.59,'Lifestyle':643.31,'Personal':949.16,'Family':960.78},
-  {m:'JUL 2025','Food & Drink':1379.64,'Transport':2085.33,'Comms':505.34,'Home':3190.10,'Finance/Work':812.77,'Lifestyle':514.32,'Personal':761.83,'Family':360.00},
-  {m:'AUG 2025','Food & Drink':2146.46,'Transport':416.47,'Comms':309.27,'Home':3190.10,'Finance/Work':1816.22,'Lifestyle':745.48,'Personal':478.50,'Family':748.33},
-  {m:'SEP 2025','Food & Drink':2092.35,'Transport':271.90,'Comms':282.30,'Home':2911.09,'Finance/Work':922.11,'Lifestyle':1209.03,'Personal':1117.16,'Family':2179.16},
-  {m:'OCT 2025','Food & Drink':2821.70,'Transport':499.09,'Comms':533.26,'Home':3820.02,'Finance/Work':777.52,'Lifestyle':1733.15,'Personal':1716.10,'Family':1976.33},
-  {m:'NOV 2025','Food & Drink':1961.66,'Transport':1011.16,'Comms':159.41,'Home':3664.78,'Finance/Work':913.86,'Lifestyle':689.91,'Personal':1312.71,'Family':2436.78},
-  {m:'DEC 2025','Food & Drink':2969.36,'Transport':363.34,'Comms':413.84,'Home':651.20,'Finance/Work':773.99,'Lifestyle':2035.53,'Personal':1837.95,'Family':2615.31},
-  {m:'JAN 2026','Food & Drink':1819.67,'Transport':649.32,'Comms':587.18,'Home':4010.18,'Finance/Work':615.16,'Lifestyle':682.45,'Personal':853.94,'Family':1857.23},
-  {m:'FEB 2026','Food & Drink':1591.26,'Transport':1723.76,'Comms':648.10,'Home':3828.53,'Finance/Work':665.72,'Lifestyle':433.51,'Personal':821.86,'Family':1674.03},
-  {m:'MAR 2026','Food & Drink':2356.84,'Transport':1064.87,'Comms':900.45,'Home':3604.44,'Finance/Work':1003.99,'Lifestyle':291.99,'Personal':531.64,'Family':2052.33}
-];
+// Populated by loadDashboardData() below — do not edit directly
+const monthly = [];
+const cats    = [];
+const atl     = [];
 
-const atl = [
-  {m:'SEP 2024',income:15104.40,costs:75.00,tax:10250.00},
-  {m:'OCT 2024',income:24000.00,costs:16227.27,tax:1680.00},
-  {m:'NOV 2024',income:8634.00, costs:18927.45,tax:0},
-  {m:'DEC 2024',income:173019.60,costs:56242.65,tax:0},
-  {m:'JAN 2025',income:53998.80,costs:49762.85,tax:16000.00},
-  {m:'FEB 2025',income:96710.40,costs:62671.22,tax:45118.80},
-  {m:'MAR 2025',income:17696.40,costs:5250.00,tax:7078.56},
-  {m:'APR 2025',income:0,costs:0,tax:0},
-  {m:'MAY 2025',income:1200.00,costs:0,tax:3900.00},
-  {m:'JUN 2025',income:0,costs:0,tax:17812.60},
-  {m:'JUL 2025',income:0,costs:0,tax:6374.88},
-  {m:'AUG 2025',income:34667.40,costs:12576.39,tax:2940.00},
-  {m:'SEP 2025',income:27068.64,costs:16644.58,tax:11252.80},
-  {m:'OCT 2025',income:23316.41,costs:898.89,tax:19922.02},
-  {m:'NOV 2025',income:17365.41,costs:1105.09,tax:6946.28},
-  {m:'DEC 2025',income:24540.60,costs:1282.36,tax:0},
-  {m:'JAN 2026',income:31927.20,costs:2885.78,tax:1776.30},
-  {m:'FEB 2026',income:30480.00,costs:28331.97,tax:32373.50},
-  {m:'MAR 2026',income:1288.07,costs:0,tax:11664.00}
-];
-
-const periods = {
-  ty2425:{ label:'Tax Year 2024/25', sub:'Sep 2024 – Aug 2025', months:monthly.slice(0,12).map(d=>d.m) },
-  ty2526:{ label:'Tax Year 2025/26', sub:'Sep 2025 – Mar 2026 (in progress)', months:monthly.slice(12).map(d=>d.m) },
-  cy2024:{ label:'Calendar Year 2024', sub:'Sep – Dec 2024 (partial)', months:monthly.slice(0,4).map(d=>d.m) },
-  cy2025:{ label:'Calendar Year 2025', sub:'Jan – Dec 2025', months:monthly.slice(4,16).map(d=>d.m) },
-  cy2026:{ label:'Calendar Year 2026', sub:'Jan – Mar 2026 (in progress)', months:monthly.slice(16).map(d=>d.m) },
-  last3: { label:'Last 3 Months',    sub:'Jan – Mar 2026', months:monthly.slice(-3).map(d=>d.m) },
-  all:   { label:'All Time',         sub:'Sep 2024 – Mar 2026', months:monthly.map(d=>d.m) }
-};
+// periods is populated by rebuildPeriods() once data has loaded
+const periods = {};
 
 const catConfig = [
   { key:'Home',           color:'#F5D800' },
@@ -393,26 +526,23 @@ function render(pk) {
   const TAX_RATE    = 0.23;
   const estTax      = exVatNetInc * TAX_RATE;
 
-  document.getElementById('sumSpent').textContent    = f(spAvg);
-  document.getElementById('sumSpentSub').textContent = `per month · ${f(totSpend)} total over ${n} month${n!==1?'s':''}`;
+  // Spending row
+  document.getElementById('kpiAvgSpend').textContent    = f(spAvg);
+  document.getElementById('kpiAvgSpendSub').textContent = `per month`;
+  document.getElementById('kpiTotalSpend').textContent  = f(totSpend);
+  document.getElementById('kpiTotalSpendSub').textContent = `across ${n} month${n!==1?'s':''}`;
+  document.getElementById('kpiMonths').textContent      = n;
+  document.getElementById('kpiMonthsSub').textContent   = P.sub;
 
-  document.getElementById('taxRows').innerHTML = `
-    <div class="tax-row">
-      <span class="tax-row-lbl">Income</span>
-      <span class="tax-row-val" style="color:var(--green)">${f(exVatInc)}<br><span class="vat-box"><span>inc. VAT</span> ${f(totInc)}</span></span>
-    </div>
-    <div class="tax-row">
-      <span class="tax-row-lbl">Less project costs</span>
-      <span class="tax-row-val" style="color:var(--red)">− ${f(totCost)}</span>
-    </div>
-    <div class="tax-row taxable">
-      <span class="tax-row-lbl">Taxable profit</span>
-      <span class="tax-row-val">${f(exVatNetInc)}</span>
-    </div>
-    <div class="tax-row estimate">
-      <span class="tax-row-lbl">Estimated tax at 23%</span>
-      <span class="tax-row-val">${f(estTax)}</span>
-    </div>`;
+  // Tax row
+  document.getElementById('kpiIncome').textContent     = f(exVatInc);
+  document.getElementById('kpiIncomeSub').innerHTML    = `<span class="vat-box"><span>inc. VAT</span> ${f(totInc)}</span>`;
+  document.getElementById('kpiCosts').textContent      = f(totCost);
+  document.getElementById('kpiCostsSub').textContent   = `deducted from income`;
+  document.getElementById('kpiProfit').textContent     = f(exVatNetInc);
+  document.getElementById('kpiProfitSub').textContent  = `income less project costs`;
+  document.getElementById('kpiTax').textContent        = f(estTax);
+  document.getElementById('kpiTaxSub').textContent     = `estimated liability`;
 
 
   document.getElementById('spendChartMeta').textContent =
@@ -528,6 +658,56 @@ function render(pk) {
     }
   });
 
+  // Income list
+  const cols = 'grid-template-columns:140px 1fr 1.4fr 1fr 1fr 1fr';
+  const incRows = [...mA].reverse().map(a => {
+    const gross = a.income;
+    const exVat = gross / 1.2;
+    const costs = a.costs;
+    const net   = exVat - costs;
+    const noInc = gross === 0 && costs === 0;
+    const bd    = a.breakdown || [];
+    const hasBreakdown = bd.length > 0;
+    const bdId  = 'bd-' + a.m.replace(/\s/g,'-');
+    const fromCell = hasBreakdown
+      ? `<button class="inc-from-btn" onclick="toggleBreakdown('${bdId}',this)">
+           <span class="chevron">▶</span>${a.from}
+           ${a.partial ? '<span style="font-size:9px;color:#555;margin-left:4px">partial</span>' : ''}
+         </button>`
+      : `<span style="color:var(--mid);font-size:12px">${a.from || '—'}</span>`;
+    const bdRows = bd.map(e =>
+      `<div class="inc-breakdown-row">
+        <span class="inc-breakdown-payer">${e.p}</span>
+        <span class="inc-breakdown-amt">${f(e.a)}</span>
+      </div>`).join('');
+    return `<div class="month-row">
+      <div class="month-row-hdr" style="${cols}; cursor:default">
+        <div class="month-name">${a.m}</div>
+        <div style="display:flex;align-items:center">${fromCell}</div>
+        <div><div class="month-col" style="color:var(--green)">${gross > 0 ? f(gross) : '—'}</div></div>
+        <div><div class="month-col">${gross > 0 ? f(exVat) : '—'}</div></div>
+        <div><div class="month-col" style="color:${costs > 0 ? 'var(--red)' : 'var(--mid)'}">${costs > 0 ? '− '+f(costs) : '—'}</div></div>
+        <div><div class="month-col" style="color:${noInc ? 'var(--mid)' : net >= 0 ? 'var(--fg)' : 'var(--red)'}">${noInc ? '—' : f(net)}</div></div>
+      </div>
+      ${hasBreakdown ? `<div class="inc-breakdown" id="${bdId}">${bdRows}</div>` : ''}
+    </div>`;
+  }).join('');
+
+  const totExVat = totInc / 1.2;
+  const totNet   = totExVat - totCost;
+  const totalsRow = `<div class="month-row" style="background:rgba(255,255,255,0.02)">
+    <div class="month-row-hdr" style="${cols}; cursor:default; border-top:2px solid var(--rule)">
+      <div class="month-name" style="font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid)">Total</div>
+      <div></div>
+      <div><div class="month-col" style="color:var(--green); font-weight:500">${f(totInc)}</div></div>
+      <div><div class="month-col" style="font-weight:500">${f(totExVat)}</div></div>
+      <div><div class="month-col" style="color:var(--red); font-weight:500">− ${f(totCost)}</div></div>
+      <div><div class="month-col" style="font-weight:500">${f(totNet)}</div></div>
+    </div>
+  </div>`;
+
+  document.getElementById('incomeList').innerHTML = incRows + totalsRow;
+
   const maxAvg = Math.max(...catConfig.map(c=>sum(mCU,c.key)/n));
   document.getElementById('catGrid').innerHTML = catConfig.map(c=>{
     const t   = sum(mCU,c.key);
@@ -577,6 +757,19 @@ function render(pk) {
   }).join('');
 }
 
+function toggleAllTrendLines(visible) {
+  if (!TC) return;
+  TC.data.datasets.forEach(ds => { ds.hidden = !visible; });
+  TC.update();
+}
+
+function toggleBreakdown(id, btn) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
 function toggleMonth(hdr) {
   hdr.classList.toggle('open');
   hdr.nextElementSibling.classList.toggle('open');
@@ -592,13 +785,26 @@ function toggleAllMonths() {
   document.getElementById('expandAllBtn').textContent = allExpanded ? 'Collapse All' : 'Expand All';
 }
 
-// Populate month dropdown
-const monthSel = document.getElementById('monthSelect');
-monthly.forEach(d => {
-  const o = document.createElement('option');
-  o.value = d.m; o.textContent = d.m;
-  monthSel.appendChild(o);
-});
+// Month dropdown is populated by initDashboard() after data loads
+function populateMonthDropdown() {
+  const sel = document.getElementById('monthSelect');
+  sel.innerHTML = '';
+  monthly.forEach(d => {
+    const o = document.createElement('option');
+    o.value = d.m; o.textContent = d.m;
+    sel.appendChild(o);
+  });
+  ['cmpA','cmpB'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = '';
+    monthly.forEach(d => {
+      const o = document.createElement('option');
+      o.value = d.m; o.textContent = d.m;
+      el.appendChild(o);
+    });
+  });
+}
 
 function selectMonth(m) {
   if (!m) return;
@@ -610,7 +816,7 @@ function selectMonth(m) {
   render('_month');
 }
 
-document.querySelectorAll('.tab').forEach(t=>{
+document.querySelectorAll('.tab:not(#savingsTab)').forEach(t=>{
   t.addEventListener('click',()=>{
     document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
     t.classList.add('active');
@@ -618,11 +824,447 @@ document.querySelectorAll('.tab').forEach(t=>{
     document.getElementById('monthSelect').value = '';
     allExpanded = false;
     document.getElementById('expandAllBtn').textContent = 'Expand All';
+    document.getElementById('mainView').style.display = '';
+    document.getElementById('savingsView').style.display = 'none';
+    document.getElementById('savingsBtn').textContent = '↓ Savings View';
+    document.getElementById('savingsBtn').onclick = showSavingsView;
     render(t.dataset.period);
   });
 });
 
-render('ty2425');
+// ── SAVINGS VIEW ────────────────────────────────────────────────────────────
+
+function stdDev(arr) {
+  const m = arr.reduce((a,b)=>a+b,0) / arr.length;
+  return Math.sqrt(arr.map(x=>(x-m)**2).reduce((a,b)=>a+b,0) / arr.length);
+}
+
+function catVals(key) {
+  return monthly.map(d => {
+    const cu = { ...( cats.find(x=>x.m===d.m)||{} ) };
+    const realSum = catConfig.filter(c=>!c.isUncat).reduce((s,c)=>s+(cu[c.key]||0),0);
+    cu['Uncategorised'] = Math.max(0, d.spend - realSum);
+    return cu[key] || 0;
+  });
+}
+
+function showSavingsView() {
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.getElementById('monthSelectWrap').classList.remove('active-select');
+  document.getElementById('monthSelect').value = '';
+  document.getElementById('mainView').style.display = 'none';
+  document.getElementById('savingsView').style.display = '';
+  document.getElementById('savingsBtn').textContent = '↑ Back to Dashboard';
+  document.getElementById('savingsBtn').onclick = showMainView;
+  renderSavings();
+}
+
+function showMainView() {
+  document.getElementById('mainView').style.display = '';
+  document.getElementById('savingsView').style.display = 'none';
+  document.getElementById('savingsBtn').textContent = '↓ Savings View';
+  document.getElementById('savingsBtn').onclick = showSavingsView;
+  // re-activate first tab
+  const firstTab = document.querySelector('.tab[data-period]');
+  if (firstTab) { firstTab.classList.add('active'); render(firstTab.dataset.period); }
+}
+
+function renderSavings() {
+
+  // ── Stats per category ──────────────────────────────────────────────────
+  const catStats = catConfig.map(c => {
+    const vals = catVals(c.key);
+    const mean = vals.reduce((a,b)=>a+b,0) / vals.length;
+    const sd   = stdDev(vals);
+    const cv   = mean > 0 ? sd / mean : 0;
+    const min  = Math.min(...vals);
+    const max  = Math.max(...vals);
+    const minM = monthly[vals.indexOf(min)].m;
+    const maxM = monthly[vals.indexOf(max)].m;
+    return { ...c, mean, sd, cv, min, max, minM, maxM };
+  });
+
+  // ── Insight KPI boxes ───────────────────────────────────────────────────
+  const allSpend = monthly.map(d=>d.spend);
+  const overallAvg = allSpend.reduce((a,b)=>a+b,0) / allSpend.length;
+  const bestSpend  = Math.min(...allSpend);
+  const bestMonth  = monthly[allSpend.indexOf(bestSpend)].m;
+  const potential  = overallAvg - bestSpend;
+
+  const last3avg   = monthly.slice(-3).reduce((a,d)=>a+d.spend,0) / 3;
+  const prev3avg   = monthly.slice(-6,-3).reduce((a,d)=>a+d.spend,0) / 3;
+  const trendPct   = ((last3avg - prev3avg) / prev3avg * 100).toFixed(1);
+  const trendUp    = last3avg > prev3avg;
+
+  const topOpp = [...catStats].filter(c=>!c.isUncat).sort((a,b)=>b.cv-a.cv)[0];
+
+  document.getElementById('savingsKpis').innerHTML = `
+    <div class="kpi">
+      <div class="kpi-lbl">Monthly saving potential</div>
+      <div class="kpi-val green">${f(potential)}</div>
+      <div class="kpi-sub">difference between your average month and your best month (${bestMonth})</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Biggest opportunity</div>
+      <div class="kpi-val" style="font-size:22px; padding-top:4px">${topOpp.key}</div>
+      <div class="kpi-sub">most variable category · avg ${f(topOpp.mean)}/mo · range ${f(topOpp.min)}–${f(topOpp.max)}</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">3-month trend</div>
+      <div class="kpi-val ${trendUp ? 'red' : 'green'}">${trendUp ? '↑' : '↓'} ${Math.abs(trendPct)}%</div>
+      <div class="kpi-sub">last 3 months avg ${f(last3avg)} vs prior 3 months ${f(prev3avg)}</div>
+    </div>`;
+
+  // ── Volatility list ─────────────────────────────────────────────────────
+  const sorted = [...catStats].filter(c=>!c.isUncat).sort((a,b)=>b.cv-a.cv);
+  const globalMax = Math.max(...sorted.map(c=>c.max));
+
+  document.getElementById('volatilityList').innerHTML = sorted.map(c => {
+    const badge    = c.cv > 0.45 ? 'high' : c.cv > 0.25 ? 'med' : 'low';
+    const label    = c.cv > 0.45 ? 'High — cut here' : c.cv > 0.25 ? 'Medium' : 'Low — mostly fixed';
+    const barLeft  = (c.min / globalMax * 100).toFixed(1);
+    const barWidth = ((c.max - c.min) / globalMax * 100).toFixed(1);
+    const avgPos   = (c.mean / globalMax * 100).toFixed(1);
+    return `<div class="vol-row">
+      <div class="vol-name"><span class="cat-dot" style="background:${c.color}"></span>${c.key}</div>
+      <div class="vol-bar-wrap">
+        <div class="vol-bar-range" style="left:${barLeft}%;width:${barWidth}%;background:${c.color}55"></div>
+        <div class="vol-bar-avg"   style="left:${avgPos}%;background:${c.color}"></div>
+      </div>
+      <div class="vol-avg">${f(c.mean)}/mo</div>
+      <div class="vol-range">${f(c.min)} – ${f(c.max)}</div>
+      <div class="vol-badge ${badge}">${label}</div>
+    </div>`;
+  }).join('');
+
+  // ── Month comparison ────────────────────────────────────────────────────
+  const cmpA = document.getElementById('cmpA');
+  const cmpB = document.getElementById('cmpB');
+  if (!cmpA.options.length) {
+    monthly.forEach((d,i) => {
+      [cmpA, cmpB].forEach(sel => {
+        const o = document.createElement('option'); o.value=d.m; o.textContent=d.m; sel.appendChild(o);
+      });
+    });
+    // Default: last two months
+    cmpA.value = monthly[monthly.length-2].m;
+    cmpB.value = monthly[monthly.length-1].m;
+    cmpA.onchange = cmpB.onchange = renderComparison;
+  }
+  renderComparison();
+
+  // ── Trend ───────────────────────────────────────────────────────────────
+  renderTrendTable(catStats);
+}
+
+function getCatMonthVal(key, month) {
+  const cr = cats.find(x=>x.m===month)||{};
+  const realSum = catConfig.filter(c=>!c.isUncat).reduce((s,c)=>s+(cr[c.key]||0),0);
+  const uncat = Math.max(0, (monthly.find(x=>x.m===month)||{spend:0}).spend - realSum);
+  return key === 'Uncategorised' ? uncat : (cr[key]||0);
+}
+
+function renderComparison() {
+  const mA = document.getElementById('cmpA').value;
+  const mB = document.getElementById('cmpB').value;
+  if (!mA || !mB) return;
+  const spA = (monthly.find(x=>x.m===mA)||{}).spend||0;
+  const spB = (monthly.find(x=>x.m===mB)||{}).spend||0;
+  const diff = spB - spA;
+  const rows = catConfig.map(c => {
+    const a = getCatMonthVal(c.key, mA);
+    const b = getCatMonthVal(c.key, mB);
+    const d = b - a;
+    const cls = d < -10 ? 'better' : d > 10 ? 'worse' : '';
+    const sign = d > 0 ? '+' : '';
+    return `<div class="cmp-row">
+      <div class="cmp-cat"><span class="cat-dot" style="background:${c.color}"></span>${c.key}</div>
+      <div class="cmp-val">${a > 0 ? f(a) : '—'}</div>
+      <div class="cmp-val">${b > 0 ? f(b) : '—'}</div>
+      <div class="cmp-diff ${cls}">${Math.abs(d) > 10 ? sign+f(Math.abs(d)) : '='}</div>
+    </div>`;
+  }).join('');
+  const totalCls = diff < 0 ? 'better' : diff > 0 ? 'worse' : '';
+  document.getElementById('comparisonTable').innerHTML = `
+    <div class="cmp-row cmp-hdr">
+      <div class="cmp-hdr-lbl">Category</div>
+      <div class="cmp-hdr-lbl">${mA}</div>
+      <div class="cmp-hdr-lbl">${mB}</div>
+      <div class="cmp-hdr-lbl">Diff</div>
+    </div>
+    ${rows}
+    <div class="cmp-row" style="border-top:2px solid var(--rule); margin-top:4px; padding-top:12px">
+      <div class="cmp-cat" style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--mid)">Total</div>
+      <div class="cmp-val" style="font-weight:500">${f(spA)}</div>
+      <div class="cmp-val" style="font-weight:500">${f(spB)}</div>
+      <div class="cmp-diff ${totalCls}" style="font-weight:500">${diff < 0 ? '' : '+'}${f(Math.abs(diff))}</div>
+    </div>`;
+}
+
+function renderTrendTable(catStats) {
+  const last3months = monthly.slice(-3).map(d=>d.m);
+  const prev3months = monthly.slice(-6,-3).map(d=>d.m);
+
+  const rows = catStats.filter(c=>!c.isUncat).map(c => {
+    const last3 = last3months.reduce((s,m)=>s+getCatMonthVal(c.key,m),0) / 3;
+    const prev3 = prev3months.reduce((s,m)=>s+getCatMonthVal(c.key,m),0) / 3;
+    const pct   = prev3 > 0 ? ((last3 - prev3) / prev3 * 100) : 0;
+    const up    = last3 > prev3 + 10;
+    const down  = last3 < prev3 - 10;
+    const arrow = up ? '↑' : down ? '↓' : '→';
+    const cls   = up ? 'worse' : down ? 'better' : '';
+    const arrowColor = up ? 'var(--red)' : down ? 'var(--green)' : 'var(--mid)';
+    return `<div class="trend-row">
+      <div class="trend-cat"><span class="cat-dot" style="background:${c.color}"></span>${c.key}</div>
+      <div class="trend-val">${f(last3)}/mo</div>
+      <div class="trend-val" style="color:var(--mid)">${f(prev3)}/mo</div>
+      <div class="trend-arrow" style="color:${arrowColor}">${arrow}</div>
+      <div class="trend-pct ${cls}">${pct > 0 ? '+' : ''}${pct.toFixed(0)}%</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('trendTable').innerHTML = `
+    <div class="trend-row trend-hdr">
+      <div class="cmp-hdr-lbl">Category</div>
+      <div class="cmp-hdr-lbl" style="text-align:right">Last 3 months</div>
+      <div class="cmp-hdr-lbl" style="text-align:right">Prior 3 months</div>
+      <div class="cmp-hdr-lbl" style="text-align:center">Dir</div>
+      <div class="cmp-hdr-lbl" style="text-align:right">Change</div>
+    </div>
+    ${rows}`;
+}
+
+// ── DATA LOADER ──────────────────────────────────────────────────────────────
+
+async function loadDashboardData() {
+  const loading = document.getElementById('loadingState');
+  try {
+    const resp = await fetch('dashboard_data.json');
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+
+    // Populate arrays
+    monthly.length = 0; (data.monthly || []).forEach(x => monthly.push(x));
+    cats.length    = 0; (data.cats    || []).forEach(x => cats.push(x));
+    atl.length     = 0; (data.atl     || []).forEach(x => atl.push(x));
+
+    // Update subtitle
+    const src = data.source || '';
+    const gen = data.generated ? new Date(data.generated).toLocaleDateString('en-GB',
+      {day:'numeric', month:'short', year:'numeric'}) : '';
+    document.querySelector('.hdr-sub').textContent =
+      'Greg Hobden' + (src ? ' · ' + src : '') + (gen ? ' · ' + gen : '');
+
+    // Rebuild periods and dropdowns
+    rebuildPeriods();
+    populateMonthDropdown();
+
+    // Show dashboard
+    if (loading) loading.style.display = 'none';
+    document.getElementById('mainView').style.display = '';
+    render('ty2425');
+
+  } catch (err) {
+    console.error('Failed to load dashboard_data.json:', err);
+    if (loading) loading.innerHTML =
+      '<p style="color:var(--red);padding:48px 0;text-align:center;font-size:13px">' +
+      '⚠ Could not load dashboard_data.json<br>' +
+      '<span style="color:var(--mid);font-size:11px;margin-top:8px;display:block">' +
+      err.message + '<br>Run <code>python3 generate_dashboard.py</code> then push, or open via a local server.' +
+      '</span></p>';
+  }
+}
+
+loadDashboardData();
+
+// ── SPREADSHEET IMPORTER ────────────────────────────────────────────────────
+
+function showImportToast(msg) {
+  const t = document.getElementById('importToast');
+  t.innerHTML = '<span class="toast-icon">✓</span>' + msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+function rebuildPeriods() {
+  const ms = monthly.map(d => d.m);
+
+  // Tax year: SEP of year Y through AUG of year Y+1
+  const taxYearMonths = (sepYear, augYear) => {
+    const sepKey = 'SEP ' + sepYear;
+    const augKey = 'AUG ' + augYear;
+    const si = ms.indexOf(sepKey);
+    if (si < 0) return [];
+    const ai = ms.indexOf(augKey);
+    return ai < 0 ? ms.slice(si) : ms.slice(si, ai + 1);
+  };
+
+  periods.ty2425 = { label:'Tax Year 2024/25', sub:'Sep 2024 – Aug 2025',               months: taxYearMonths(2024, 2025) };
+  periods.ty2526 = { label:'Tax Year 2025/26', sub:'Sep 2025 – present',                months: taxYearMonths(2025, 2026) };
+  periods.cy2024 = { label:'Calendar Year 2024', sub:'Sep – Dec 2024 (partial)',         months: ms.filter(m => m.endsWith('2024')) };
+  periods.cy2025 = { label:'Calendar Year 2025', sub:'Jan – Dec 2025',                  months: ms.filter(m => m.endsWith('2025')) };
+  periods.cy2026 = { label:'Calendar Year 2026', sub:'in progress',                     months: ms.filter(m => m.endsWith('2026')) };
+  periods.last3  = { label:'Last 3 Months',       sub:ms.slice(-3).join(' – '),         months: ms.slice(-3) };
+  periods.all    = { label:'All Time',             sub:ms[0] + ' – ' + ms[ms.length-1], months: ms };
+}
+
+document.getElementById('fileImportInput').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  this.value = '';
+
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      const MONTH_NAMES = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+
+      // Convert any cell value to "MMM YYYY" or null
+      function toMonthLabel(val) {
+        if (val === null || val === undefined || val === '' || val === 0) return null;
+        if (typeof val === 'string') {
+          const s = val.trim().toUpperCase();
+          // "SEP 2024" or "SEPTEMBER 2024"
+          const m1 = s.match(/^([A-Z]{3})[A-Z]*[\s\-]+(\d{4})$/);
+          if (m1) return m1[1] + ' ' + m1[2];
+          // "Sep-24"
+          const m2 = s.match(/^([A-Z]{3})[A-Z]*[\s\-]+(\d{2})$/);
+          if (m2) return m2[1] + ' 20' + m2[2];
+          return null;
+        }
+        // Excel date serial number
+        if (typeof val === 'number' && val > 40000 && val < 60000) {
+          const d = new Date(Math.round((val - 25569) * 86400000));
+          return MONTH_NAMES[d.getUTCMonth()] + ' ' + d.getUTCFullYear();
+        }
+        if (val instanceof Date) {
+          return MONTH_NAMES[val.getMonth()] + ' ' + val.getFullYear();
+        }
+        return null;
+      }
+
+      // Find a header row where col0 matches pattern AND any cell in the row contains keyword
+      function findSection(rows, col0Pattern, anyColKeyword) {
+        for (let i = 0; i < rows.length; i++) {
+          const r = rows[i];
+          const c0 = String(r[0] || '').toLowerCase();
+          if (!col0Pattern.test(c0)) continue;
+          const rowText = r.map(c => String(c || '').toLowerCase()).join(' ');
+          if (rowText.includes(anyColKeyword)) return i + 1;
+        }
+        return -1;
+      }
+
+      // Read data rows from startIdx; skip rows with no valid month label
+      function readSection(rows, startIdx, maxRows, mapper) {
+        const result = [];
+        if (startIdx < 0) return result;
+        for (let i = startIdx; i < Math.min(startIdx + maxRows, rows.length); i++) {
+          const m = toMonthLabel(rows[i][0]);
+          if (m) result.push(mapper(m, rows[i]));
+        }
+        return result;
+      }
+
+      const wb = XLSX.read(new Uint8Array(ev.target.result), { type: 'array' });
+      const ws = wb.Sheets['SUMMARY'];
+      if (!ws) { alert('Could not find the SUMMARY sheet in this workbook.'); return; }
+
+      const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: 0, raw: true });
+
+      // ── Monthly totals ───────────────────────────────────────────────────
+      // Header: Month | Monthly Spend | Running Total | vs Average
+      const monthlyStart = findSection(rows, /^month/, 'spend');
+      const newMonthly = readSection(rows, monthlyStart, 30, (m, r) => ({
+        m, spend: +r[1] || 0, running: +r[2] || 0, vs: +r[3] || 0
+      }));
+
+      // ── Categories ───────────────────────────────────────────────────────
+      // Header: Month | Total Spend | Food & Drink | Transport | Comms |
+      //         Home | Finance/Work | Lifestyle | Personal | Family | Other
+      const catsStart = findSection(rows, /^month/, 'food');
+      const newCats = readSection(rows, catsStart, 30, (m, r) => ({
+        m,
+        'Food & Drink': +r[2] || 0,
+        'Transport':    +r[3] || 0,
+        'Comms':        +r[4] || 0,
+        'Home':         +r[5] || 0,
+        'Finance/Work': +r[6] || 0,
+        'Lifestyle':    +r[7] || 0,
+        'Personal':     +r[8] || 0,
+        'Family':       +r[9] || 0
+      }));
+
+      // ── ATL income ───────────────────────────────────────────────────────
+      // Header: Month | Business Income (Gross) | Project Costs | ...
+      // Always preserve from/breakdown/tax — only overwrite income + costs
+      const atlStart = findSection(rows, /^month/, 'income');
+      const newAtl = readSection(rows, atlStart, 30, (m, r) => {
+        const existing = atl.find(x => x.m === m);
+        return {
+          m,
+          income:    +r[1] || 0,
+          costs:     +r[2] || 0,
+          tax:       existing ? existing.tax       : 0,
+          from:      existing ? existing.from      : '',
+          breakdown: existing ? existing.breakdown : [],
+          ...(existing && existing.partial ? { partial: true } : {})
+        };
+      });
+
+      if (newMonthly.length === 0) {
+        alert('No monthly data found — is this the right spreadsheet? (Needs a SUMMARY sheet with Month/Spend columns)');
+        return;
+      }
+
+      // ── Update arrays in-place ───────────────────────────────────────────
+      monthly.length = 0; newMonthly.forEach(x => monthly.push(x));
+      cats.length    = 0; newCats.forEach(x    => cats.push(x));
+      if (newAtl.length > 0) { atl.length = 0; newAtl.forEach(x => atl.push(x)); }
+
+      // ── Refresh month dropdown ───────────────────────────────────────────
+      const sel = document.getElementById('monthSelect');
+      sel.innerHTML = '';
+      monthly.forEach(d => {
+        const o = document.createElement('option');
+        o.value = d.m; o.textContent = d.m;
+        sel.appendChild(o);
+      });
+
+      // ── Rebuild periods and re-render ────────────────────────────────────
+      rebuildPeriods();
+
+      ['cmpA','cmpB'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.innerHTML = '';
+        monthly.forEach(d => {
+          const o = document.createElement('option');
+          o.value = d.m; o.textContent = d.m;
+          el.appendChild(o);
+        });
+      });
+
+      const activeTab = document.querySelector('.tab.active[data-period]');
+      render(activeTab ? activeTab.dataset.period : 'ty2425');
+
+      const fileDate = new Date(file.lastModified);
+      const fileLabel = fileDate.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' })
+        + ', ' + fileDate.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+      document.querySelector('.hdr-sub').textContent = 'Greg Hobden · ' + file.name.replace(/\.[^.]+$/, '') + ' · ' + fileLabel;
+
+      const atlNote = newAtl.length > 0 ? '' : ' ⚠ ATL income not found';
+      showImportToast('Loaded ' + newMonthly.length + ' months' + atlNote);
+
+    } catch (err) {
+      console.error(err);
+      alert('Error reading spreadsheet: ' + err.message);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+});
 </script>
+
+<div id="importToast"></div>
+
 </body>
 </html>
