@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-17T18:19:20.179805",
+  "generated": "2026-04-17T18:28:46.411385",
   "source": "ACCOUNTS_2026_COMPLETE_16-04-2026_17-35.xlsx",
   "monthly": [
     {
@@ -369,11 +369,15 @@
   "atl": [
     {
       "m": "SEP 2024",
-      "income": 15104.4,
+      "income": 30208.8,
       "costs": 75.0,
       "costs_breakdown": [
         {
-          "p": "3 Sep  \u00b7  Project Costs",
+          "p": "3 Sep",
+          "a": 75.0
+        },
+        {
+          "p": "Project Costs",
           "a": 75.0
         }
       ],
@@ -392,59 +396,63 @@
     },
     {
       "m": "OCT 2024",
-      "income": 24000.0,
+      "income": 48000.0,
       "costs": 16227.27,
       "costs_breakdown": [
         {
-          "p": "28 Oct  \u00b7  Project Costs",
+          "p": "28 Oct",
           "a": 67.33
         },
         {
-          "p": "25 Oct  \u00b7  Project Costs",
+          "p": "25 Oct",
           "a": 2.57
         },
         {
-          "p": "24 Oct  \u00b7  Project Costs",
+          "p": "24 Oct",
           "a": 1825.0
         },
         {
-          "p": "23 Oct  \u00b7  Project Costs",
+          "p": "23 Oct",
           "a": 49.8
         },
         {
-          "p": "23 Oct  \u00b7  Project Costs",
+          "p": "23 Oct",
           "a": 1850.0
         },
         {
-          "p": "21 Oct  \u00b7  Project Costs",
+          "p": "21 Oct",
           "a": 5364.95
         },
         {
-          "p": "15 Oct  \u00b7  Project Costs",
+          "p": "15 Oct",
           "a": 740.4
         },
         {
-          "p": "14 Oct  \u00b7  Project Costs",
+          "p": "14 Oct",
           "a": 612.0
         },
         {
-          "p": "10 Oct  \u00b7  Project Costs",
+          "p": "10 Oct",
           "a": 2000.0
         },
         {
-          "p": "10 Oct  \u00b7  Project Costs",
+          "p": "10 Oct",
           "a": 1190.5
         },
         {
-          "p": "10 Oct  \u00b7  Project Costs",
+          "p": "10 Oct",
           "a": 460.49
         },
         {
-          "p": "7 Oct  \u00b7  Project Costs",
+          "p": "7 Oct",
           "a": 1850.0
         },
         {
-          "p": "8 Oct  \u00b7  Project Costs",
+          "p": "Project Costs",
+          "a": 16013.04
+        },
+        {
+          "p": "8 Oct",
           "a": 214.23
         }
       ],
@@ -463,20 +471,24 @@
       "costs": 18927.45,
       "costs_breakdown": [
         {
-          "p": "28 Nov  \u00b7  Project Costs",
+          "p": "28 Nov",
           "a": 186.47
         },
         {
-          "p": "20 Nov  \u00b7  Project Costs",
+          "p": "20 Nov",
           "a": 243.36
         },
         {
-          "p": "19 Nov  \u00b7  Project Costs",
+          "p": "19 Nov",
           "a": 1260.0
         },
         {
-          "p": "18 Nov  \u00b7  Project Costs",
+          "p": "18 Nov",
           "a": 5752.95
+        },
+        {
+          "p": "Project Costs",
+          "a": 18927.45
         }
       ],
       "tax": 0,
@@ -487,28 +499,7 @@
       "m": "DEC 2024",
       "income": 173019.6,
       "costs": 56242.65,
-      "costs_breakdown": [
-        {
-          "p": "CRH COSTS",
-          "a": 56242.65
-        },
-        {
-          "p": "TO MONTAGE",
-          "a": 1500
-        },
-        {
-          "p": "COUNCIL  TAX",
-          "a": 311
-        },
-        {
-          "p": "Coffee",
-          "a": 148.11
-        },
-        {
-          "p": "Taxi",
-          "a": 137.66
-        }
-      ],
+      "costs_breakdown": [],
       "tax": 0,
       "from": "Imagination / No Ordinary Films",
       "breakdown": [
@@ -538,32 +529,7 @@
       "m": "JAN 2025",
       "income": 53998.8,
       "costs": 49762.85,
-      "costs_breakdown": [
-        {
-          "p": "CRH COSTS",
-          "a": 49762.85
-        },
-        {
-          "p": "Transfere to Tax / VAT ACCT",
-          "a": 16000
-        },
-        {
-          "p": "HMRC  VAT LOAN",
-          "a": 500
-        },
-        {
-          "p": "COUNCIL  TAX",
-          "a": 311
-        },
-        {
-          "p": "Taxi",
-          "a": 92.49
-        },
-        {
-          "p": "Coffee",
-          "a": 59.9
-        }
-      ],
+      "costs_breakdown": [],
       "tax": 16000.0,
       "from": "Imagination Europe",
       "breakdown": [
@@ -579,84 +545,88 @@
     },
     {
       "m": "FEB 2025",
-      "income": 96710.4,
+      "income": 271648.97,
       "costs": 62671.22,
       "costs_breakdown": [
         {
-          "p": "24 Feb  \u00b7  Project Costs",
+          "p": "24 Feb",
           "a": 1020.0
         },
         {
-          "p": "14 Feb  \u00b7  Project Costs",
+          "p": "14 Feb",
           "a": 15.25
         },
         {
-          "p": "14 Feb  \u00b7  Project Costs",
+          "p": "14 Feb",
           "a": 24507.68
         },
         {
-          "p": "11 Feb  \u00b7  Project Costs",
+          "p": "11 Feb",
           "a": 4070.77
         },
         {
-          "p": "11 Feb  \u00b7  Project Costs",
+          "p": "11 Feb",
           "a": 3625.0
         },
         {
-          "p": "11 Feb  \u00b7  Project Costs",
+          "p": "11 Feb",
           "a": 3521.98
         },
         {
-          "p": "11 Feb  \u00b7  Project Costs",
+          "p": "11 Feb",
           "a": 5510.36
         },
         {
-          "p": "11 Feb  \u00b7  Project Costs",
+          "p": "11 Feb",
           "a": 117.61
         },
         {
-          "p": "10 Feb  \u00b7  Project Costs",
+          "p": "10 Feb",
           "a": 12617.77
         },
         {
-          "p": "5 Feb  \u00b7  Project Costs",
+          "p": "5 Feb",
           "a": 7250.0
         },
         {
-          "p": "3 Feb  \u00b7  Project Costs",
+          "p": "3 Feb",
           "a": 27.51
         },
         {
-          "p": "3 Feb  \u00b7  Project Costs",
+          "p": "3 Feb",
           "a": 14.56
         },
         {
-          "p": "3 Feb  \u00b7  Project Costs",
+          "p": "3 Feb",
           "a": 12.81
         },
         {
-          "p": "3 Feb  \u00b7  Project Costs",
+          "p": "3 Feb",
           "a": 57.21
         },
         {
-          "p": "3 Feb  \u00b7  Project Costs",
+          "p": "3 Feb",
           "a": 97.83
         },
         {
-          "p": "3 Feb  \u00b7  Project Costs",
+          "p": "3 Feb",
           "a": 72.6
         },
         {
-          "p": "3 Feb  \u00b7  Project Costs",
+          "p": "3 Feb",
           "a": 68.16
         },
         {
-          "p": "3 Feb  \u00b7  Project Costs",
+          "p": "3 Feb",
           "a": 55.62
         },
         {
-          "p": "3 Feb  \u00b7  Project Costs",
+          "p": "3 Feb",
           "a": 8.5
+        },
+        {
+          "p": "Project Costs",
+          "a": 62671.22
         }
       ],
       "tax": 45118.8,
@@ -678,11 +648,15 @@
     },
     {
       "m": "MAR 2025",
-      "income": 22636.4,
+      "income": 40332.8,
       "costs": 5250.0,
       "costs_breakdown": [
         {
-          "p": "13 Mar  \u00b7  Project Costs",
+          "p": "13 Mar",
+          "a": 5250.0
+        },
+        {
+          "p": "Project Costs",
           "a": 5250.0
         }
       ],
@@ -699,66 +673,16 @@
       "m": "APR 2025",
       "income": 0.0,
       "costs": 0.0,
-      "costs_breakdown": [
-        {
-          "p": "STERNHOLD / REEDLANDS  COSTS",
-          "a": 30275
-        },
-        {
-          "p": "Transfer from 108",
-          "a": 900
-        },
-        {
-          "p": "COUNCIL  TAX",
-          "a": 322.58
-        },
-        {
-          "p": "COFFEE",
-          "a": 86.65
-        },
-        {
-          "p": "Transfer to  MONTAGE",
-          "a": 50
-        },
-        {
-          "p": "CAR INSURANCE TAX",
-          "a": 20
-        }
-      ],
+      "costs_breakdown": [],
       "tax": 0,
       "from": "",
       "breakdown": []
     },
     {
       "m": "MAY 2025",
-      "income": 1200.0,
+      "income": 2400.0,
       "costs": 0.0,
-      "costs_breakdown": [
-        {
-          "p": "STERNHOLD / REEDLANDS  COSTS",
-          "a": 17940.09
-        },
-        {
-          "p": "Transfer Tax/VAT Payments",
-          "a": 3900
-        },
-        {
-          "p": "COUNCIL  TAX",
-          "a": 326
-        },
-        {
-          "p": "COFFEE",
-          "a": 117.6
-        },
-        {
-          "p": "TAXI",
-          "a": 55.4
-        },
-        {
-          "p": "CAR INSURANCE TAX",
-          "a": 51.36
-        }
-      ],
+      "costs_breakdown": [],
       "tax": 3900.0,
       "from": "Worksome (Imagination)",
       "breakdown": [
@@ -772,36 +696,7 @@
       "m": "JUN 2025",
       "income": 0.0,
       "costs": 0.0,
-      "costs_breakdown": [
-        {
-          "p": "Transfer Tax/VAT Payments",
-          "a": 17812.6
-        },
-        {
-          "p": "STERNHOLD / REEDLANDS  COSTS",
-          "a": 1528.33
-        },
-        {
-          "p": "Transfer to  MONTAGE",
-          "a": 1250
-        },
-        {
-          "p": "COUNCIL  TAX",
-          "a": 326
-        },
-        {
-          "p": "COFFEE",
-          "a": 118.84
-        },
-        {
-          "p": "CAR INSURANCE TAX",
-          "a": 51.36
-        },
-        {
-          "p": "TAXI",
-          "a": 11.08
-        }
-      ],
+      "costs_breakdown": [],
       "tax": 17812.6,
       "from": "",
       "breakdown": []
@@ -810,72 +705,51 @@
       "m": "JUL 2025",
       "income": 0.0,
       "costs": 0.0,
-      "costs_breakdown": [
-        {
-          "p": "Transfer Tax/VAT Payments",
-          "a": 6374.88
-        },
-        {
-          "p": "Transfer to  MONTAGE",
-          "a": 990
-        },
-        {
-          "p": "COUNCIL  TAX",
-          "a": 326
-        },
-        {
-          "p": "COFFEE",
-          "a": 80.62
-        },
-        {
-          "p": "TAXI",
-          "a": 80.07
-        },
-        {
-          "p": "CAR INSURANCE TAX",
-          "a": 51.36
-        }
-      ],
+      "costs_breakdown": [],
       "tax": 6374.88,
       "from": "",
       "breakdown": []
     },
     {
       "m": "AUG 2025",
-      "income": 34667.4,
+      "income": 69334.8,
       "costs": 12576.39,
       "costs_breakdown": [
         {
-          "p": "26 Aug  \u00b7  Project Costs",
+          "p": "26 Aug",
           "a": 250.0
         },
         {
-          "p": "21 Aug  \u00b7  Project Costs",
+          "p": "21 Aug",
           "a": 9285.77
         },
         {
-          "p": "18 Aug  \u00b7  Project Costs",
+          "p": "18 Aug",
           "a": 500.0
         },
         {
-          "p": "18 Aug  \u00b7  Project Costs",
+          "p": "18 Aug",
           "a": 150.0
         },
         {
-          "p": "18 Aug  \u00b7  Project Costs",
+          "p": "18 Aug",
           "a": 150.0
         },
         {
-          "p": "18 Aug  \u00b7  Project Costs",
+          "p": "18 Aug",
           "a": 135.8
         },
         {
-          "p": "15 Aug  \u00b7  Project Costs",
+          "p": "15 Aug",
           "a": 1746.82
         },
         {
-          "p": "15 Aug  \u00b7  Project Costs",
+          "p": "15 Aug",
           "a": 358.0
+        },
+        {
+          "p": "Project Costs",
+          "a": 12576.39
         }
       ],
       "tax": 2940.0,
@@ -893,16 +767,20 @@
     },
     {
       "m": "SEP 2025",
-      "income": 27068.64,
+      "income": 53690.5,
       "costs": 16644.58,
       "costs_breakdown": [
         {
-          "p": "8 Sep  \u00b7  Project Costs",
+          "p": "8 Sep",
           "a": 9902.03
         },
         {
-          "p": "8 Sep  \u00b7  Project Costs",
+          "p": "8 Sep",
           "a": 6742.55
+        },
+        {
+          "p": "Project Costs",
+          "a": 16644.58
         }
       ],
       "tax": 11252.8,
@@ -932,16 +810,20 @@
     },
     {
       "m": "OCT 2025",
-      "income": 23316.41,
+      "income": 46632.82,
       "costs": 898.89,
       "costs_breakdown": [
         {
-          "p": "28 Oct  \u00b7  Project Costs",
+          "p": "28 Oct",
           "a": 336.0
         },
         {
-          "p": "2 Oct  \u00b7  Project Costs",
+          "p": "2 Oct",
           "a": 562.89
+        },
+        {
+          "p": "Project Costs",
+          "a": 898.89
         }
       ],
       "tax": 19922.02,
@@ -967,16 +849,20 @@
     },
     {
       "m": "NOV 2025",
-      "income": 17365.41,
+      "income": 34730.82,
       "costs": 1105.09,
       "costs_breakdown": [
         {
-          "p": "10 Nov  \u00b7  Project Costs",
+          "p": "10 Nov",
           "a": 315.13
         },
         {
-          "p": "7 Nov  \u00b7  Project Costs",
+          "p": "7 Nov",
           "a": 789.96
+        },
+        {
+          "p": "Project Costs",
+          "a": 1105.09
         }
       ],
       "tax": 6946.28,
@@ -990,11 +876,15 @@
     },
     {
       "m": "DEC 2025",
-      "income": 24540.6,
+      "income": 49081.2,
       "costs": 1282.36,
       "costs_breakdown": [
         {
-          "p": "24 Dec  \u00b7  Project Costs",
+          "p": "24 Dec",
+          "a": 1282.36
+        },
+        {
+          "p": "Project Costs",
           "a": 1282.36
         }
       ],
@@ -1009,96 +899,100 @@
     },
     {
       "m": "JAN 2026",
-      "income": 31927.2,
+      "income": 63854.4,
       "costs": 2885.78,
       "costs_breakdown": [
         {
-          "p": "13 Jan  \u00b7  Project Costs",
+          "p": "13 Jan",
           "a": 220.96
         },
         {
-          "p": "12 Jan  \u00b7  Project Costs",
+          "p": "12 Jan",
           "a": 50.12
         },
         {
-          "p": "12 Jan  \u00b7  Project Costs",
+          "p": "12 Jan",
           "a": 17.55
         },
         {
-          "p": "12 Jan  \u00b7  Project Costs",
+          "p": "12 Jan",
           "a": 4.03
         },
         {
-          "p": "12 Jan  \u00b7  Project Costs",
+          "p": "12 Jan",
           "a": 89.21
         },
         {
-          "p": "12 Jan  \u00b7  Project Costs",
+          "p": "12 Jan",
           "a": 70.99
         },
         {
-          "p": "12 Jan  \u00b7  Project Costs",
+          "p": "12 Jan",
           "a": 78.08
         },
         {
-          "p": "12 Jan  \u00b7  Project Costs",
+          "p": "12 Jan",
           "a": 11.04
         },
         {
-          "p": "12 Jan  \u00b7  Project Costs",
+          "p": "12 Jan",
           "a": 4.8
         },
         {
-          "p": "12 Jan  \u00b7  Project Costs",
+          "p": "12 Jan",
           "a": 19.87
         },
         {
-          "p": "12 Jan  \u00b7  Project Costs",
+          "p": "12 Jan",
           "a": 69.13
         },
         {
-          "p": "12 Jan  \u00b7  Project Costs",
+          "p": "12 Jan",
           "a": 116.28
         },
         {
-          "p": "12 Jan  \u00b7  Project Costs",
+          "p": "12 Jan",
           "a": 33.41
         },
         {
-          "p": "12 Jan  \u00b7  Project Costs",
+          "p": "12 Jan",
           "a": 963.26
         },
         {
-          "p": "9 Jan  \u00b7  Project Costs",
+          "p": "9 Jan",
           "a": 93.59
         },
         {
-          "p": "9 Jan  \u00b7  Project Costs",
+          "p": "9 Jan",
           "a": 112.97
         },
         {
-          "p": "9 Jan  \u00b7  Project Costs",
+          "p": "9 Jan",
           "a": 383.7
         },
         {
-          "p": "9 Jan  \u00b7  Project Costs",
+          "p": "9 Jan",
           "a": 13.38
         },
         {
-          "p": "8 Jan  \u00b7  Project Costs",
+          "p": "8 Jan",
           "a": 321.03
         },
         {
-          "p": "8 Jan  \u00b7  Project Costs",
+          "p": "8 Jan",
           "a": 149.72
         },
         {
-          "p": "8 Jan  \u00b7  Project Costs",
+          "p": "8 Jan",
           "a": 0.96
         },
         {
-          "p": "7 Jan  \u00b7  Project Costs",
+          "p": "7 Jan",
           "a": 61.7
+        },
+        {
+          "p": "Project Costs",
+          "a": 2885.78
         }
       ],
       "tax": 1776.3,
@@ -1112,20 +1006,24 @@
     },
     {
       "m": "FEB 2026",
-      "income": 30480.0,
+      "income": 60960.0,
       "costs": 28331.97,
       "costs_breakdown": [
         {
-          "p": "2 Feb  \u00b7  Project Costs",
+          "p": "2 Feb",
           "a": 28280.97
         },
         {
-          "p": "2 Feb  \u00b7  Project Costs",
+          "p": "2 Feb",
           "a": 1.0
         },
         {
-          "p": "2 Feb  \u00b7  Project Costs",
+          "p": "2 Feb",
           "a": 50.0
+        },
+        {
+          "p": "Project Costs",
+          "a": 28331.97
         }
       ],
       "tax": 32373.5,
@@ -1143,11 +1041,15 @@
     },
     {
       "m": "MAR 2026",
-      "income": 0.0,
+      "income": 1288.07,
       "costs": 0.0,
       "costs_breakdown": [
         {
-          "p": "2 Mar  \u00b7  Project Costs",
+          "p": "2 Mar",
+          "a": 672.0
+        },
+        {
+          "p": "Project Costs",
           "a": 672.0
         }
       ],

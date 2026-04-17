@@ -109,33 +109,25 @@ for sheet_name in wb.sheetnames:
     DATE_COL = 2
 
     income_total = 0.0
-    cost_items   = []  # list of {p: "DD MMM / PayeeName", a: amount}
+    cost_items   = []  # list of {p: "DD MMM", a: amount}
 
     for row in range(4, ws.max_row + 1):
-        # Col C (col 3) non-empty = real data row (not formula/subtotal)
-        bank_cell = ws.cell(row=row, column=3).value
-        if bank_cell is None or bank_cell == '' or bank_cell == 0:
-            continue
-
-        # Date label for this row
-        date_val = ws.cell(row=row, column=DATE_COL).value
-        if hasattr(date_val, 'strftime'):
-            date_label = date_val.strftime('%-d %b')  # e.g. "14 Oct"
-        else:
-            date_label = str(date_val or '').strip()[:10]
-
-        # Income
+        # Read income directly — no gate needed, just check the cell itself
         if income_col:
             val = ws.cell(row=row, column=income_col).value
             if val and isinstance(val, (int, float)) and val > 0:
                 income_total += val
 
-        # Production costs — one item per cell with a value
+        # Production costs — check col K directly; date from col B
         for col, payee in PRODUCTION_COLS.items():
             val = ws.cell(row=row, column=col).value
             if val and isinstance(val, (int, float)) and val > 0:
-                label = f"{date_label}  ·  {payee}" if date_label else payee
-                cost_items.append({'p': label, 'a': round(float(val), 2)})
+                date_val = ws.cell(row=row, column=DATE_COL).value
+                if hasattr(date_val, 'strftime'):
+                    date_label = date_val.strftime('%-d %b')  # e.g. "14 Oct"
+                else:
+                    date_label = str(date_val or '').strip()[:10]
+                cost_items.append({'p': date_label or 'Project Costs', 'a': round(float(val), 2)})
 
     income_by_month[month_label] = round(income_total, 2)
     if cost_items:
@@ -214,7 +206,7 @@ for entry in monthly:
         'm':               m,
         'income':          income_by_month.get(m, 0.0),
         'costs':           atl_costs.get(m, 0.0),
-        'costs_breakdown': costs_breakdown_by_month.get(m, prev.get('costs_breakdown', [])),
+        'costs_breakdown': costs_breakdown_by_month.get(m, []),
         'tax':             prev.get('tax', 0),
         'from':            prev.get('from', ''),
         'breakdown':       prev.get('breakdown', []),
