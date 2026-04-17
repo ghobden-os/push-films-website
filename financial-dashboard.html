@@ -147,9 +147,16 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
 
 /* CHART CARD */
 .chart-card { background:var(--dim); border:1px solid var(--rule); border-radius:6px; padding:24px; }
-.chart-card-hdr { margin-bottom:20px; }
+.chart-card-hdr { margin-bottom:20px; display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+.chart-card-hdr-text { flex:1; }
 .chart-card-title { font-size:13px; font-weight:500; }
 .chart-card-meta { font-size:12px; color:#888; margin-top:3px; }
+.chart-toggle { display:flex; gap:4px; flex-shrink:0; }
+.ct-btn { font-size:10px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase;
+  padding:4px 10px; border:1px solid #333; border-radius:3px; background:transparent;
+  color:#888; cursor:pointer; font-family:var(--font); transition:color .15s, border-color .15s, background .15s; }
+.ct-btn:hover { color:var(--fg); border-color:#555; }
+.ct-btn.active { color:var(--gold); border-color:var(--gold); background:rgba(245,216,0,0.05); }
 .chart-wrap { position:relative; height:280px; }
 
 /* CATEGORY CARDS */
@@ -405,10 +412,17 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
   <div class="section-row">
     <div class="chart-card">
       <div class="chart-card-hdr">
-        <div class="chart-card-title">Expenditure by Category</div>
-        <div class="chart-card-meta" id="spendChartMeta"></div>
+        <div class="chart-card-hdr-text">
+          <div class="chart-card-title">Expenditure by Category</div>
+          <div class="chart-card-meta" id="spendChartMeta"></div>
+        </div>
+        <div class="chart-toggle">
+          <button class="ct-btn active" data-sct="doughnut" onclick="setSpendChartType('doughnut')">Pie</button>
+          <button class="ct-btn" data-sct="hbar" onclick="setSpendChartType('hbar')">H-Bar</button>
+          <button class="ct-btn" data-sct="vbar" onclick="setSpendChartType('vbar')">V-Bar</button>
+        </div>
       </div>
-      <div class="chart-wrap" style="height:320px"><canvas id="spendChart"></canvas></div>
+      <div class="chart-wrap" id="spendChartWrap" style="height:320px"><canvas id="spendChart"></canvas></div>
     </div>
   </div>
 
@@ -562,6 +576,8 @@ Chart.defaults.font.size = 11;
 const gc = 'rgba(255,255,255,0.04)';
 
 let SC=null, TC=null, FAC=null;
+let spendChartType = 'doughnut';
+let lastDoughnutData = [], lastTotSpend = 0;
 
 function render(pk) {
   const P = periods[pk];
@@ -686,75 +702,9 @@ function render(pk) {
     total: mCU.reduce((s,d) => s + (d[c.key]||0), 0)
   })).filter(d => d.total > 0);
 
-  if (SC) SC.destroy();
-  SC = new Chart(document.getElementById('spendChart').getContext('2d'), {
-    type:'doughnut',
-    data:{
-      labels: doughnutData.map(d => d.key),
-      datasets:[{
-        data: doughnutData.map(d => d.total),
-        backgroundColor: doughnutData.map(d => d.color + 'cc'),
-        borderColor: doughnutData.map(d => d.color),
-        borderWidth: 1,
-        hoverOffset: 6,
-      }]
-    },
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      cutout:'62%',
-      plugins:{
-        legend:{
-          display:true, position:'bottom',
-          labels:{
-            boxWidth:14, boxHeight:14, padding:20, color:'#EDEDE8',
-            font:{ family:"'DM Sans', sans-serif", size:14 },
-            generateLabels: chart => {
-              const ds = chart.data.datasets[0];
-              return chart.data.labels.map((label, i) => {
-                const cfg = catConfig.find(c => c.key === label);
-                const short = cfg ? cfg.short : label;
-                return {
-                  text: `${short}  ${f(ds.data[i])}`,
-                  fillStyle: ds.backgroundColor[i],
-                  strokeStyle: ds.borderColor[i],
-                  fontColor: '#EDEDE8',
-                  lineWidth: 1,
-                  hidden: false,
-                  index: i
-                };
-              });
-            }
-          }
-        },
-        tooltip:{
-          callbacks:{
-            label: ctx => {
-              const pct = ((ctx.raw / totSpend) * 100).toFixed(1);
-              return ` ${ctx.label}: ${f(ctx.raw)} (${pct}%)`;
-            }
-          }
-        }
-      }
-    },
-    plugins:[{
-      id:'donutCenter',
-      beforeDraw(chart) {
-        const {ctx, chartArea:{left,top,right,bottom}} = chart;
-        const cx = (left+right)/2, cy = (top+bottom)/2;
-        ctx.save();
-        ctx.textAlign='center';
-        ctx.textBaseline='middle';
-        ctx.fillStyle='#EDEDE8';
-        ctx.font="300 22px 'DM Sans', sans-serif";
-        ctx.fillText(f(totSpend), cx, cy-10);
-        ctx.fillStyle='#666';
-        ctx.font="400 10px 'DM Sans', sans-serif";
-        ctx.letterSpacing='0.08em';
-        ctx.fillText('TOTAL SPEND', cx, cy+14);
-        ctx.restore();
-      }
-    }]
-  });
+  lastDoughnutData = doughnutData;
+  lastTotSpend = totSpend;
+  buildSpendChart(doughnutData, totSpend);
 
   if (TC) TC.destroy();
   TC = new Chart(document.getElementById('trendChart').getContext('2d'), {
@@ -922,6 +872,110 @@ function render(pk) {
       </div>
     </div>`;
   }).join('');
+}
+
+function buildSpendChart(doughnutData, totSpend) {
+  if (SC) SC.destroy();
+  const wrap = document.getElementById('spendChartWrap');
+  const tooltip = { callbacks:{ label: ctx => {
+    const pct = ((ctx.raw / totSpend) * 100).toFixed(1);
+    return ` ${ctx.label}: ${f(ctx.raw)} (${pct}%)`;
+  }}};
+
+  if (spendChartType === 'doughnut') {
+    wrap.style.height = '320px';
+    SC = new Chart(document.getElementById('spendChart').getContext('2d'), {
+      type:'doughnut',
+      data:{
+        labels: doughnutData.map(d => d.key),
+        datasets:[{ data: doughnutData.map(d => d.total),
+          backgroundColor: doughnutData.map(d => d.color + 'cc'),
+          borderColor: doughnutData.map(d => d.color),
+          borderWidth:1, hoverOffset:6 }]
+      },
+      options:{ responsive:true, maintainAspectRatio:false, cutout:'62%',
+        plugins:{
+          legend:{ display:true, position:'bottom',
+            labels:{ boxWidth:14, boxHeight:14, padding:20, color:'#EDEDE8',
+              font:{family:"'DM Sans', sans-serif", size:14},
+              generateLabels: chart => {
+                const ds = chart.data.datasets[0];
+                return chart.data.labels.map((label,i) => {
+                  const cfg = catConfig.find(c=>c.key===label);
+                  return { text:`${cfg?cfg.short:label}  ${f(ds.data[i])}`,
+                    fillStyle:ds.backgroundColor[i], strokeStyle:ds.borderColor[i],
+                    fontColor:'#EDEDE8', lineWidth:1, hidden:false, index:i };
+                });
+              }
+            }
+          },
+          tooltip
+        }
+      },
+      plugins:[{ id:'donutCenter', beforeDraw(chart) {
+        const {ctx,chartArea:{left,top,right,bottom}} = chart;
+        const cx=(left+right)/2, cy=(top+bottom)/2;
+        ctx.save(); ctx.textAlign='center'; ctx.textBaseline='middle';
+        ctx.fillStyle='#EDEDE8'; ctx.font="300 22px 'DM Sans', sans-serif";
+        ctx.fillText(f(totSpend), cx, cy-10);
+        ctx.fillStyle='#666'; ctx.font="400 10px 'DM Sans', sans-serif";
+        ctx.letterSpacing='0.08em'; ctx.fillText('TOTAL SPEND', cx, cy+14);
+        ctx.restore();
+      }}]
+    });
+
+  } else if (spendChartType === 'hbar') {
+    wrap.style.height = Math.max(280, doughnutData.length * 38) + 'px';
+    const sorted = [...doughnutData].sort((a,b) => b.total - a.total);
+    SC = new Chart(document.getElementById('spendChart').getContext('2d'), {
+      type:'bar',
+      data:{
+        labels: sorted.map(d => { const cfg=catConfig.find(c=>c.key===d.key); return cfg?cfg.short:d.key; }),
+        datasets:[{ data: sorted.map(d=>d.total),
+          backgroundColor: sorted.map(d=>d.color+'cc'),
+          borderColor: sorted.map(d=>d.color),
+          borderWidth:1, borderRadius:3 }]
+      },
+      options:{ responsive:true, maintainAspectRatio:false, indexAxis:'y',
+        plugins:{ legend:{display:false}, tooltip },
+        scales:{
+          x:{ grid:{color:gc}, border:{color:'rgba(255,255,255,0.06)'},
+            ticks:{callback:v=>'£'+(v/1000).toFixed(1)+'k', color:'#aaa', font:{size:11}} },
+          y:{ grid:{display:false}, ticks:{color:'#EDEDE8', font:{size:13}} }
+        }
+      }
+    });
+
+  } else { // vbar
+    wrap.style.height = '320px';
+    const sorted = [...doughnutData].sort((a,b) => b.total - a.total);
+    SC = new Chart(document.getElementById('spendChart').getContext('2d'), {
+      type:'bar',
+      data:{
+        labels: sorted.map(d => { const cfg=catConfig.find(c=>c.key===d.key); return cfg?cfg.short:d.key; }),
+        datasets:[{ data: sorted.map(d=>d.total),
+          backgroundColor: sorted.map(d=>d.color+'cc'),
+          borderColor: sorted.map(d=>d.color),
+          borderWidth:1, borderRadius:3 }]
+      },
+      options:{ responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{display:false}, tooltip },
+        scales:{
+          x:{ grid:{display:false}, ticks:{color:'#EDEDE8', font:{size:12}, maxRotation:30} },
+          y:{ grid:{color:gc}, border:{color:'rgba(255,255,255,0.06)'},
+            ticks:{callback:v=>'£'+(v/1000).toFixed(1)+'k', color:'#aaa', font:{size:11}} }
+        }
+      }
+    });
+  }
+}
+
+function setSpendChartType(type) {
+  spendChartType = type;
+  document.querySelectorAll('.ct-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.sct === type);
+  });
+  buildSpendChart(lastDoughnutData, lastTotSpend);
 }
 
 function toggleAllTrendLines(visible) {
