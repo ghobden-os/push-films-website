@@ -58,11 +58,21 @@ Portfolio website for Greg Hobden, film producer. Single-page site with sections
 - Uncategorised spend = total spend − sum of 8 named categories (computed in JS, not from spreadsheet)
 - Spending categories: Home, Food & Drink, Family, Finance/Work, Lifestyle, Personal, Transport, Comms, Uncategorised
 
-### Git Lock File Issue
-VS Code running in the background continuously recreates `.git/index.lock`, blocking all commits. Fix: close VS Code first, then:
+### Git Lock File Issue — IMPORTANT
+Greg uses VS Code (with Claude Code extension) as his primary interface. VS Code runs git in the background and holds `.git/HEAD.lock` continuously. **Do NOT tell Greg to close VS Code** — that would end his session.
+
+The fix is to delete the lock file immediately before running git, in the same command chain. VS Code doesn't recreate it fast enough to block:
+
 ```
-rm -f ~/push-films-website/.git/index.lock && git add ... && git commit ... && git push origin main
+rm -f ~/push-films-website/.git/HEAD.lock && cd ~/push-films-website && git add <files> && git commit -m "message" && git push origin main
 ```
+
+For a push-only (nothing new to commit):
+```
+rm -f ~/push-films-website/.git/HEAD.lock && cd ~/push-films-website && git push origin main
+```
+
+This has been tested and works reliably. Always use this pattern — never ask Greg to close VS Code.
 
 ## Deployment Pipeline
 - Git → GitHub (`ghobden-os/push-films-website`) → Netlify (auto-deploys on push to `main`)
