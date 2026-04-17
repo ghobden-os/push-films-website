@@ -378,6 +378,18 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
         <div class="kpi-sub" id="kpiTaxSub"></div>
       </div>
     </div>
+    <div class="kpi-row" style="grid-template-columns:1fr 1fr">
+      <div class="kpi" style="border-color:#1e2e2e">
+        <div class="kpi-lbl">Household Food</div>
+        <div class="kpi-val" id="kpiFood"></div>
+        <div class="kpi-sub" id="kpiFoodSub"></div>
+      </div>
+      <div class="kpi" style="border-color:#1e2e2e">
+        <div class="kpi-lbl">Accommodation</div>
+        <div class="kpi-val" id="kpiAccom"></div>
+        <div class="kpi-sub" id="kpiAccomSub"></div>
+      </div>
+    </div>
   </div>
 
   <!-- KPI detail panels (shown on click) -->
@@ -397,6 +409,16 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
         <div class="chart-card-meta" id="spendChartMeta"></div>
       </div>
       <div class="chart-wrap" style="height:320px"><canvas id="spendChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section-row">
+    <div class="chart-card">
+      <div class="chart-card-hdr">
+        <div class="chart-card-title">Household Food &amp; Accommodation — by Month</div>
+        <div class="chart-card-meta" id="foodAccomChartMeta"></div>
+      </div>
+      <div class="chart-wrap" style="height:220px"><canvas id="foodAccomChart"></canvas></div>
     </div>
   </div>
 
@@ -539,7 +561,7 @@ Chart.defaults.font.family = "'DM Sans', sans-serif";
 Chart.defaults.font.size = 11;
 const gc = 'rgba(255,255,255,0.04)';
 
-let SC=null, TC=null;
+let SC=null, TC=null, FAC=null;
 
 function render(pk) {
   const P = periods[pk];
@@ -587,6 +609,63 @@ function render(pk) {
   document.getElementById('kpiProfitSub').textContent  = `income less project costs`;
   document.getElementById('kpiTax').textContent        = f(estTax);
   document.getElementById('kpiTaxSub').textContent     = `estimated liability`;
+
+  // Household Food & Accommodation KPIs
+  const totFood  = mM.reduce((s,d) => s + (d.food  || 0), 0);
+  const totAccom = mM.reduce((s,d) => s + (d.accom || 0), 0);
+  const avgFood  = n > 0 ? totFood  / n : 0;
+  const avgAccom = n > 0 ? totAccom / n : 0;
+  document.getElementById('kpiFood').textContent     = totFood  > 0 ? f(totFood)  : '—';
+  document.getElementById('kpiFoodSub').textContent  = totFood  > 0 ? `${f(avgFood)}/month avg · ${n} month${n!==1?'s':''}` : 'No data this period';
+  document.getElementById('kpiAccom').textContent    = totAccom > 0 ? f(totAccom) : '—';
+  document.getElementById('kpiAccomSub').textContent = totAccom > 0 ? `${f(avgAccom)}/month avg · ${n} month${n!==1?'s':''}` : 'No data this period';
+
+  document.getElementById('foodAccomChartMeta').textContent =
+    `${P.sub} · food avg ${f(avgFood)}/mo · accommodation avg ${f(avgAccom)}/mo`;
+
+  if (FAC) FAC.destroy();
+  FAC = new Chart(document.getElementById('foodAccomChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ms,
+      datasets: [
+        {
+          label: 'Household Food',
+          data: ms.map(m => { const d = monthly.find(x=>x.m===m); return d ? (d.food||0) : 0; }),
+          backgroundColor: '#E8A87Ccc',
+          borderColor: '#E8A87C',
+          borderWidth: 0,
+          borderRadius: 2,
+        },
+        {
+          label: 'Accommodation',
+          data: ms.map(m => { const d = monthly.find(x=>x.m===m); return d ? (d.accom||0) : 0; }),
+          backgroundColor: '#6EB5E0cc',
+          borderColor: '#6EB5E0',
+          borderWidth: 0,
+          borderRadius: 2,
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true, position: 'bottom',
+          labels: { boxWidth:10, boxHeight:10, padding:16, color:'#ccc',
+            font:{ family:"'DM Sans', sans-serif", size:12 } }
+        },
+        tooltip: {
+          callbacks: { label: ctx => ` ${ctx.dataset.label}: ${f(ctx.raw)}` }
+        }
+      },
+      scales: {
+        x: { grid:{color:gc}, ticks:{maxRotation:45, color:'#aaa', font:{size:11}} },
+        y: { grid:{color:gc}, border:{color:'rgba(255,255,255,0.06)'},
+             ticks:{callback:v=>'£'+(v/1000).toFixed(1)+'k', color:'#aaa', font:{size:11}} }
+      }
+    }
+  });
 
   // Build income detail panel content
   buildIncomeDetail(mA, P.sub);
@@ -810,6 +889,17 @@ function render(pk) {
         <div class="mdc-val">${val > 0 ? f(val) : '—'}</div>
       </div>`;
     }).join('');
+    const foodVal  = d.food  || 0;
+    const accomVal = d.accom || 0;
+    const highlightItems = (foodVal > 0 || accomVal > 0) ? `
+      <div class="mdc" style="border-color:#1e2e2e">
+        <div class="mdc-lbl" style="color:#E8A87C">Household Food</div>
+        <div class="mdc-val">${foodVal > 0 ? f(foodVal) : '—'}</div>
+      </div>
+      <div class="mdc" style="border-color:#1e2e2e">
+        <div class="mdc-lbl" style="color:#6EB5E0">Accommodation</div>
+        <div class="mdc-val">${accomVal > 0 ? f(accomVal) : '—'}</div>
+      </div>` : '';
     return `<div class="month-row">
       <div class="month-row-hdr" onclick="toggleMonth(this)">
         <div class="month-name">${d.m}${isL?'<span class="badge">Latest</span>':''}</div>
@@ -819,7 +909,7 @@ function render(pk) {
         <div><div class="month-col-lbl" style="text-align:right">Running</div><div class="month-col">${f(d.periodRunning)}</div></div>
       </div>
       <div class="month-detail">
-        <div class="month-detail-grid">${catItems}</div>
+        <div class="month-detail-grid">${catItems}${highlightItems}</div>
       </div>
     </div>`;
   }).join('');
