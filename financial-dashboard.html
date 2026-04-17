@@ -568,6 +568,7 @@ function render(pk) {
   const ms = P.months;
   const mM = by(monthly,ms), mC = by(cats,ms), mA = by(atl,ms);
   const n = mM.length;
+  const nAvg = P.size || n; // fixed denominator for fixed-length periods (12 for CY/TY)
 
   // Build augmented category data including Uncategorised amount per month
   const realCatConfig = catConfig.filter(c => !c.isUncat);
@@ -585,7 +586,7 @@ function render(pk) {
   const netInc   = totInc - totCost;
   const netPos   = netInc - totSpend;
   const taxSet   = sum(mA,'tax');
-  const spAvg    = avg(mM,'spend');
+  const spAvg    = nAvg > 0 ? totSpend / nAvg : 0;
 
   const exVatInc    = totInc / 1.2;
   const exVatNetInc = exVatInc - totCost;
@@ -597,7 +598,7 @@ function render(pk) {
   document.getElementById('kpiAvgSpendSub').textContent = `per month`;
   document.getElementById('kpiTotalSpend').textContent  = f(totSpend);
   document.getElementById('kpiTotalSpendSub').textContent = `across ${n} month${n!==1?'s':''}`;
-  document.getElementById('kpiMonths').textContent      = n;
+  document.getElementById('kpiMonths').textContent      = nAvg;
   document.getElementById('kpiMonthsSub').textContent   = P.sub;
 
   // Tax row
@@ -613,8 +614,8 @@ function render(pk) {
   // Household Food & Accommodation KPIs
   const totFood  = mM.reduce((s,d) => s + (d.food  || 0), 0);
   const totAccom = mM.reduce((s,d) => s + (d.accom || 0), 0);
-  const avgFood  = n > 0 ? totFood  / n : 0;
-  const avgAccom = n > 0 ? totAccom / n : 0;
+  const avgFood  = nAvg > 0 ? totFood  / nAvg : 0;
+  const avgAccom = nAvg > 0 ? totAccom / nAvg : 0;
   document.getElementById('kpiFood').textContent     = totFood  > 0 ? f(totFood)  : '—';
   document.getElementById('kpiFoodSub').textContent  = totFood  > 0 ? `${f(avgFood)}/month avg · ${n} month${n!==1?'s':''}` : 'No data this period';
   document.getElementById('kpiAccom').textContent    = totAccom > 0 ? f(totAccom) : '—';
@@ -838,10 +839,10 @@ function render(pk) {
 
   document.getElementById('incomeList').innerHTML = incRows + totalsRow;
 
-  const maxAvg = Math.max(...catConfig.map(c=>sum(mCU,c.key)/n));
+  const maxAvg = Math.max(...catConfig.map(c=>sum(mCU,c.key)/nAvg));
   document.getElementById('catGrid').innerHTML = catConfig.map(c=>{
     const t   = sum(mCU,c.key);
-    const a   = t / n;
+    const a   = t / nAvg;
     const pct = Math.max(0, a/maxAvg*100);
     const isUncatCard = c.isUncat && t > 0;
     const uncatNote   = c.isUncat ? (t > 0 ? ' · not assigned to a category' : ' · fully categorised ✓') : '';
@@ -1353,10 +1354,10 @@ function rebuildPeriods() {
   const curMo = now.getMonth(); // 0-based, so 0=Jan
   const cy2026months = MN.slice(0, curMo + 1).map(m => m + ' 2026');
 
-  periods.ty2425 = { label:'Tax Year 2024/25', sub:'Sep 2024 – Aug 2025',    months: taxYearMonths(2024, 2025) };
-  periods.ty2526 = { label:'Tax Year 2025/26', sub:'Sep 2025 – present',     months: taxYearMonths(2025, 2026) };
-  periods.cy2024 = { label:'Calendar Year 2024', sub:'Jan – Dec 2024',        months: calYear(2024) };
-  periods.cy2025 = { label:'Calendar Year 2025', sub:'Jan – Dec 2025',        months: calYear(2025) };
+  periods.ty2425 = { label:'Tax Year 2024/25', sub:'Sep 2024 – Aug 2025',    months: taxYearMonths(2024, 2025), size: 12 };
+  periods.ty2526 = { label:'Tax Year 2025/26', sub:'Sep 2025 – Aug 2026',    months: taxYearMonths(2025, 2026), size: 12 };
+  periods.cy2024 = { label:'Calendar Year 2024', sub:'Jan – Dec 2024',        months: calYear(2024),              size: 12 };
+  periods.cy2025 = { label:'Calendar Year 2025', sub:'Jan – Dec 2025',        months: calYear(2025),              size: 12 };
   periods.cy2026 = { label:'Calendar Year 2026', sub:'Jan – present',         months: cy2026months };
   periods.last3  = { label:'Last 3 Months', sub:ms.slice(-3).join(' – '),     months: ms.slice(-3) };
   periods.all    = { label:'All Time', sub:ms[0]+' – '+ms[ms.length-1],       months: ms };
