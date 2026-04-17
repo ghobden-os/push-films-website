@@ -1,9 +1,10 @@
-#!/usr/bin/env /opt/homebrew/bin/python3
+#!/usr/bin/env python3
 """
 generate_dashboard.py
 Reads the Push Films accounts spreadsheet and writes dashboard_data.json.
 
 Run after any spreadsheet update, then:
+    rm -f ~/push-films-website/.git/HEAD.lock && cd ~/push-films-website && \
     git add dashboard_data.json && git commit -m "Update dashboard data" && git push
 """
 
@@ -37,23 +38,25 @@ if os.path.exists(JSON_OUT):
 # ── Load workbook (data_only reads cached formula values) ─────────────────────
 wb = openpyxl.load_workbook(spreadsheet_path, data_only=True)
 
-# ── Helper: find income column in a monthly tab ───────────────────────────────
+# ── Helpers ───────────────────────────────────────────────────────────────────
 def norm(t):
     return re.sub(r'\s+', ' ', str(t or '').lower()).strip()
 
-def find_income_col(ws):
-    """Scan row 3 for a header containing 'income' or 'funds in'."""
-    for keyword in ['income', 'funds in', 'push income', 'turnover']:
-        for col in range(1, min(ws.max_column + 1, 20)):
-            if keyword in norm(ws.cell(row=3, column=col).value or ''):
+def find_col(ws, row, *keywords):
+    """Scan a header row for the first column containing any keyword."""
+    for keyword in keywords:
+        for col in range(1, min(ws.max_column + 1, 25)):
+            if keyword in norm(ws.cell(row=row, column=col).value or ''):
                 return col
     return None
 
-# ── Read income from each monthly tab ─────────────────────────────────────────
+# ── Read income AND costs from each monthly tab ───────────────────────────────
 # Tab names: "PUSH + 108 SEP 2024" etc.  Month label = "SEP 2024"
 TAB_RE = re.compile(r'^PUSH \+ \d+ (.+)$')
 
-income_by_month = {}
+income_by_month        = {}
+costs_breakdown_by_month = {}  # list of {p, a} per month
+
 for sheet_name in wb.sheetnames:
     m = TAB_RE.match(sheet_name)
     if not m:
@@ -61,27 +64,42 @@ for sheet_name in wb.sheetnames:
     month_label = m.group(1).strip()
     ws = wb[sheet_name]
 
-    income_col = find_income_col(ws)
-    if not income_col:
-        income_by_month[month_label] = 0.0
-        continue
+    income_col = find_col(ws, 3, 'income', 'funds in', 'push income', 'turnover')
+    costs_col  = find_col(ws, 3, 'project cost', 'costs', 'expense', 'outgoing', 'payment')
+    # Description is usually col A or B
+    desc_col   = find_col(ws, 3, 'description', 'payee', 'detail', 'name', 'reference', 'supplier') or 1
 
-    total = 0.0
+    income_total = 0.0
+    cost_items   = []
+
     for row in range(4, ws.max_row + 1):
-        # Col C (col 3) non-empty = data row; formula/subtotal rows are blank here
+        # Col C (col 3) non-empty = real data row (not formula/subtotal)
         bank_cell = ws.cell(row=row, column=3).value
         if bank_cell is None or bank_cell == '' or bank_cell == 0:
             continue
-        val = ws.cell(row=row, column=income_col).value
-        if val and isinstance(val, (int, float)) and val > 0:
-            total += val
 
-    income_by_month[month_label] = round(total, 2)
+        # Income
+        if income_col:
+            val = ws.cell(row=row, column=income_col).value
+            if val and isinstance(val, (int, float)) and val > 0:
+                income_total += val
+
+        # Project costs
+        if costs_col:
+            val = ws.cell(row=row, column=costs_col).value
+            if val and isinstance(val, (int, float)) and val > 0:
+                desc = ws.cell(row=row, column=desc_col).value or ''
+                cost_items.append({'p': str(desc).strip(), 'a': round(float(val), 2)})
+
+    income_by_month[month_label] = round(income_total, 2)
+    if cost_items:
+        costs_breakdown_by_month[month_label] = cost_items
 
 # ── Read SUMMARY sheet ────────────────────────────────────────────────────────
 ws_sum = wb['SUMMARY']
 
-# Monthly totals — rows 4-22: A=Month B=Spend C=Running D=vs Average E=Food F=Accom
+# ── Monthly totals — rows 4-22 ────────────────────────────────────────────────
+# Expected columns: A=Month B=Spend C=Running D=vs Average E=Food F=Accom
 monthly = []
 for r in range(4, 23):
     month = ws_sum.cell(row=r, column=1).value
@@ -96,17 +114,27 @@ for r in range(4, 23):
         'accom':   round(float(ws_sum.cell(row=r, column=6).value or 0), 2),
     })
 
-# Category breakdown — rows 28-46: A=Month C=Food&Drink D=Transport … J=Family
-CAT_COLS = {
-    'Food & Drink': 3,
-    'Transport':    4,
-    'Comms':        5,
-    'Home':         6,
-    'Finance/Work': 7,
-    'Lifestyle':    8,
-    'Personal':     9,
-    'Family':      10,
-}
+# ── Category breakdown — DYNAMIC column discovery ────────────────────────────
+# Header expected in row 27; data in rows 28-46.
+# Reads ALL named columns — picks up new categories (Mortgage/Rent, Ocado etc.)
+# automatically whenever Greg adds them to the spreadsheet.
+NON_CAT = {'', 'total', 'monthly avg', 'monthly average', 'avg', 'month'}
+CAT_COLS = {}
+for col in range(2, 25):
+    v = ws_sum.cell(row=27, column=col).value
+    if v and norm(v) not in NON_CAT:
+        CAT_COLS[str(v).strip()] = col
+
+if CAT_COLS:
+    print(f"\nCategories found: {list(CAT_COLS.keys())}")
+else:
+    # Fallback to hardcoded columns if header row is blank
+    CAT_COLS = {
+        'Food & Drink': 3, 'Transport': 4, 'Comms': 5, 'Home': 6,
+        'Finance/Work': 7, 'Lifestyle': 8, 'Personal': 9, 'Family': 10,
+    }
+    print("\nWarning: category header row 27 appears empty — using hardcoded columns")
+
 cats = []
 for r in range(28, 47):
     month = ws_sum.cell(row=r, column=1).value
@@ -118,7 +146,7 @@ for r in range(28, 47):
         entry[cat] = round(float(val or 0), 2)
     cats.append(entry)
 
-# ATL project costs — rows 53-71: A=Month C=Project Costs
+# ── ATL project costs total — rows 53-71: A=Month C=Project Costs ─────────────
 atl_costs = {}
 for r in range(53, 72):
     month = ws_sum.cell(row=r, column=1).value
@@ -128,20 +156,22 @@ for r in range(53, 72):
     atl_costs[str(month).strip()] = round(float(costs), 2)
 
 # ── Build ATL array ───────────────────────────────────────────────────────────
-# income  → fresh from monthly tabs
-# costs   → from SUMMARY col C
+# income          → fresh from monthly tabs
+# costs           → from SUMMARY col C
+# costs_breakdown → from monthly tab transaction rows (new)
 # tax, from, breakdown → preserved from existing JSON (manually annotated)
 atl = []
 for entry in monthly:
     m    = entry['m']
     prev = existing_atl.get(m, {})
     atl.append({
-        'm':         m,
-        'income':    income_by_month.get(m, 0.0),
-        'costs':     atl_costs.get(m, 0.0),
-        'tax':       prev.get('tax', 0),
-        'from':      prev.get('from', ''),
-        'breakdown': prev.get('breakdown', []),
+        'm':               m,
+        'income':          income_by_month.get(m, 0.0),
+        'costs':           atl_costs.get(m, 0.0),
+        'costs_breakdown': costs_breakdown_by_month.get(m, prev.get('costs_breakdown', [])),
+        'tax':             prev.get('tax', 0),
+        'from':            prev.get('from', ''),
+        'breakdown':       prev.get('breakdown', []),
     })
 
 # ── Write JSON ────────────────────────────────────────────────────────────────
@@ -159,6 +189,13 @@ with open(JSON_OUT, 'w') as f:
 print(f"\nWritten: {JSON_OUT}")
 print(f"  {len(monthly)} months · {monthly[0]['m']} – {monthly[-1]['m']}")
 
+months_with_cost_breakdown = [m for m, bd in costs_breakdown_by_month.items() if bd]
+if months_with_cost_breakdown:
+    print(f"\nCost breakdowns found for: {', '.join(months_with_cost_breakdown)}")
+else:
+    print("\nNote: no cost breakdown column found in monthly tabs.")
+    print("  Add a 'Project Costs' column to monthly tabs to enable per-payee tracking.")
+
 if existing_atl:
     changes = []
     for entry in atl:
@@ -167,10 +204,10 @@ if existing_atl:
             changes.append(f"  {entry['m']}: £{old_income:,.2f} → £{entry['income']:,.2f}")
     if changes:
         print("\nIncome changes vs previous JSON:")
-        for c in changes:
-            print(c)
+        for c in changes: print(c)
     else:
         print("\nNo income changes vs previous JSON.")
 
 print("\nNext step:")
-print("  git add dashboard_data.json && git commit -m 'Update dashboard data' && git push")
+print("  rm -f ~/push-films-website/.git/HEAD.lock && cd ~/push-films-website && "
+      "git add dashboard_data.json && git commit -m 'Update dashboard data' && git push")
