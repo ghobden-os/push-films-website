@@ -538,17 +538,17 @@ const atl     = [];
 const periods = {};
 
 const catConfig = [
-  { key:'Home',                   color:'#F5D800' },
-  { key:'Food & Drink',           color:'#E8A87C' },
-  { key:'Family',                 color:'#F08080' },
-  { key:'Finance/Work',           color:'#85C1E9' },
-  { key:'Lifestyle',              color:'#BB8FCE' },
-  { key:'Personal',               color:'#A9DFBF' },
-  { key:'Transport',              color:'#7FB3D3' },
-  { key:'Comms',                  color:'#888888' },
-  { key:'Mortgage / Rent',        color:'#5FA8A8' },
-  { key:'Ocado / Household',      color:'#C9A44E' },
-  { key:'Uncategorised',          color:'#555555', isUncat:true }
+  { key:'Home',                   short:'Home',       color:'#F5D800' },
+  { key:'Food & Drink',           short:'Food',       color:'#E8A87C' },
+  { key:'Family',                 short:'Family',     color:'#F08080' },
+  { key:'Finance/Work',           short:'Finance',    color:'#85C1E9' },
+  { key:'Lifestyle',              short:'Lifestyle',  color:'#BB8FCE' },
+  { key:'Personal',               short:'Personal',   color:'#A9DFBF' },
+  { key:'Transport',              short:'Transport',  color:'#7FB3D3' },
+  { key:'Comms',                  short:'Comms',      color:'#888888' },
+  { key:'Mortgage / Rent',        short:'Mortgage',   color:'#5FA8A8' },
+  { key:'Ocado / Household',      short:'Household',  color:'#C9A44E' },
+  { key:'Uncategorised',          short:'Uncat',      color:'#555555', isUncat:true }
 ];
 
 const f   = n => '£' + Math.round(Math.abs(n)).toLocaleString('en-GB');
@@ -707,14 +707,19 @@ function render(pk) {
             font:{ family:"'DM Sans', sans-serif", size:12 },
             generateLabels: chart => {
               const ds = chart.data.datasets[0];
-              return chart.data.labels.map((label, i) => ({
-                text: `${label}  ${f(ds.data[i])}`,
-                fillStyle: ds.backgroundColor[i],
-                strokeStyle: ds.borderColor[i],
-                lineWidth: 1,
-                hidden: false,
-                index: i
-              }));
+              return chart.data.labels.map((label, i) => {
+                const cfg = catConfig.find(c => c.key === label);
+                const short = cfg ? cfg.short : label;
+                return {
+                  text: `${short}  ${f(ds.data[i])}`,
+                  fillStyle: ds.backgroundColor[i],
+                  strokeStyle: ds.borderColor[i],
+                  fontColor: '#EDEDE8',
+                  lineWidth: 1,
+                  hidden: false,
+                  index: i
+                };
+              });
             }
           }
         },
