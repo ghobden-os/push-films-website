@@ -398,18 +398,6 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
         <div class="kpi-sub" id="kpiTaxSub"></div>
       </div>
     </div>
-    <div class="kpi-row" style="grid-template-columns:1fr 1fr">
-      <div class="kpi" style="border-color:#1e2e2e">
-        <div class="kpi-lbl">Household Food</div>
-        <div class="kpi-val" id="kpiFood"></div>
-        <div class="kpi-sub" id="kpiFoodSub"></div>
-      </div>
-      <div class="kpi" style="border-color:#1e2e2e">
-        <div class="kpi-lbl">Accommodation</div>
-        <div class="kpi-val" id="kpiAccom"></div>
-        <div class="kpi-sub" id="kpiAccomSub"></div>
-      </div>
-    </div>
   </div>
 
   <!-- KPI detail panels (shown on click) -->
@@ -657,15 +645,11 @@ function render(pk) {
   document.getElementById('kpiTax').textContent        = f(estTax);
   document.getElementById('kpiTaxSub').textContent     = `estimated liability`;
 
-  // Household Food & Accommodation KPIs
+  // Household Food & Accommodation totals (used by chart below)
   const totFood  = mM.reduce((s,d) => s + (d.food  || 0), 0);
   const totAccom = mM.reduce((s,d) => s + (d.accom || 0), 0);
   const avgFood  = nAvg > 0 ? totFood  / nAvg : 0;
   const avgAccom = nAvg > 0 ? totAccom / nAvg : 0;
-  document.getElementById('kpiFood').textContent     = totFood  > 0 ? f(totFood)  : '—';
-  document.getElementById('kpiFoodSub').textContent  = totFood  > 0 ? `${f(avgFood)}/month avg · ${n} month${n!==1?'s':''}` : 'No data this period';
-  document.getElementById('kpiAccom').textContent    = totAccom > 0 ? f(totAccom) : '—';
-  document.getElementById('kpiAccomSub').textContent = totAccom > 0 ? `${f(avgAccom)}/month avg · ${n} month${n!==1?'s':''}` : 'No data this period';
 
   document.getElementById('foodAccomChartMeta').textContent =
     `${P.sub} · food avg ${f(avgFood)}/mo · accommodation avg ${f(avgAccom)}/mo`;
@@ -1559,7 +1543,7 @@ function rebuildPeriods() {
 
   periods.ty2425 = { label:'Tax Year 2024/25', sub:'Sep 2024 – Aug 2025',    months: taxYearMonths(2024, 2025), size: 12 };
   periods.ty2526 = { label:'Tax Year 2025/26', sub:'Sep 2025 – Aug 2026',    months: taxYearMonths(2025, 2026), size: 12 };
-  periods.cy2024 = { label:'Calendar Year 2024', sub:'Jan – Dec 2024',        months: calYear(2024),              size: 12 };
+  periods.cy2024 = { label:'Calendar Year 2024', sub:'Jan – Dec 2024',        months: calYear(2024) };
   periods.cy2025 = { label:'Calendar Year 2025', sub:'Jan – Dec 2025',        months: calYear(2025),              size: 12 };
   periods.cy2026 = { label:'Calendar Year 2026', sub:'Jan – present',         months: cy2026months };
   periods.last3  = { label:'Last 3 Months', sub:ms.slice(-3).join(' – '),     months: ms.slice(-3) };
