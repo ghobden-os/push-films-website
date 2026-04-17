@@ -96,19 +96,20 @@ for sheet_name in wb.sheetnames:
             income_col = col
             break
 
-    # ATL cost columns: any named column whose header suggests a business/production cost.
-    # Personal spending cols (Coffee, Restaurant, etc.) are already in the SUMMARY cats section.
-    ATL_KEYWORDS = ('cost', 'rent', 'reedland', 'montage', 'salary', 'project',
-                    'transfer', 'tax', 'vat', 'acct', 'production', 'fee', 'payment')
-    atl_cost_cols = {}  # col -> header
+    # Only the "Project Costs" column is used for the breakdown.
+    PRODUCTION_COLS = {}  # col -> display name
     for col, h in all_headers.items():
         if col == income_col:
             continue
-        if any(k in h.lower() for k in ATL_KEYWORDS):
-            atl_cost_cols[col] = h
+        if 'project cost' in h.lower():
+            PRODUCTION_COLS[col] = 'Project Costs'
+            break
+
+    # Date is in col B (col 2) for each data row
+    DATE_COL = 2
 
     income_total = 0.0
-    col_totals   = {}  # header -> running total
+    cost_items   = []  # list of {p: "DD MMM / PayeeName", a: amount}
 
     for row in range(4, ws.max_row + 1):
         # Col C (col 3) non-empty = real data row (not formula/subtotal)
@@ -116,22 +117,28 @@ for sheet_name in wb.sheetnames:
         if bank_cell is None or bank_cell == '' or bank_cell == 0:
             continue
 
+        # Date label for this row
+        date_val = ws.cell(row=row, column=DATE_COL).value
+        if hasattr(date_val, 'strftime'):
+            date_label = date_val.strftime('%-d %b')  # e.g. "14 Oct"
+        else:
+            date_label = str(date_val or '').strip()[:10]
+
         # Income
         if income_col:
             val = ws.cell(row=row, column=income_col).value
             if val and isinstance(val, (int, float)) and val > 0:
                 income_total += val
 
-        # ATL costs — accumulate by column header (= payee/category name)
-        for col, header in atl_cost_cols.items():
+        # Production costs — one item per cell with a value
+        for col, payee in PRODUCTION_COLS.items():
             val = ws.cell(row=row, column=col).value
             if val and isinstance(val, (int, float)) and val > 0:
-                col_totals[header] = col_totals.get(header, 0) + val
+                label = f"{date_label}  ·  {payee}" if date_label else payee
+                cost_items.append({'p': label, 'a': round(float(val), 2)})
 
     income_by_month[month_label] = round(income_total, 2)
-    if col_totals:
-        cost_items = [{'p': k, 'a': round(v, 2)}
-                      for k, v in sorted(col_totals.items(), key=lambda x: -x[1])]
+    if cost_items:
         costs_breakdown_by_month[month_label] = cost_items
 
 # ── Read SUMMARY sheet ────────────────────────────────────────────────────────
