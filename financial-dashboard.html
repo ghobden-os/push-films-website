@@ -162,8 +162,10 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
 /* CATEGORY CARDS */
 .cat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:28px; }
 .cat-card { background:var(--dim); border:1px solid var(--rule); border-radius:6px; padding:20px 22px;
-  cursor:pointer; transition:border-color .2s; }
+  cursor:pointer; transition:border-color .2s, background .15s; }
 .cat-card:hover { border-color:#383838; }
+.cat-card.cat-focused { border-color:var(--gold); background:#1c1a00; }
+.cat-sparkline { width:100%; height:28px; display:block; margin-top:12px; opacity:0.75; }
 .cat-card.uncat-card { border-style:dashed; border-color:#2e2e2e; }
 .cat-card.uncat-card .cat-total { color:var(--mid); }
 .cat-card.uncat-card .cat-avg { color:#3a3a3a; }
@@ -462,12 +464,12 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
     <div id="monthList"></div>
   </div>
 
-  <div class="section-row" style="margin-top:40px">
+  <div class="section-row" style="margin-top:40px" id="categoryTrendsSection">
     <div class="chart-card">
       <div class="chart-card-hdr" style="display:flex;justify-content:space-between;align-items:flex-start">
         <div>
           <div class="chart-card-title">Category Trends</div>
-          <div class="chart-card-meta">How each category changes month to month</div>
+          <div class="chart-card-meta" id="trendFocusLabel">How each category changes month to month</div>
         </div>
         <div style="display:flex;gap:8px;flex-shrink:0">
           <button class="slabel-btn" onclick="toggleAllTrendLines(true)">Show All</button>
@@ -804,11 +806,21 @@ function render(pk) {
     const pct = Math.max(0, a/maxAvg*100);
     const isUncatCard = c.isUncat && t > 0;
     const uncatNote   = c.isUncat ? (t > 0 ? ' · not assigned to a category' : ' · fully categorised ✓') : '';
-    return `<div class="cat-card${isUncatCard ? ' uncat-card' : ''}">
+    const sparkVals   = ms.map(m => { const d = mCU.find(x=>x.m===m); return d ? (d[c.key]||0) : 0; });
+    const sparkMax    = Math.max(...sparkVals, 1);
+    const sparkW      = 100 / sparkVals.length;
+    const sparkBars   = sparkVals.map((v,i) => {
+      const h = v > 0 ? Math.max((v/sparkMax)*100, 5) : 0;
+      return `<rect x="${(i*sparkW+0.3).toFixed(1)}%" y="${(100-h).toFixed(1)}%" width="${(sparkW-0.6).toFixed(1)}%" height="${h.toFixed(1)}%" fill="${c.color}" rx="1"/>`;
+    }).join('');
+    const spark = ms.length > 1 ? `<svg class="cat-sparkline" viewBox="0 0 100 100" preserveAspectRatio="none">${sparkBars}</svg>` : '';
+    const safeKey = c.key.replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+    return `<div class="cat-card${isUncatCard ? ' uncat-card' : ''}" data-catkey="${safeKey}" onclick="focusCategoryCard(this)">
       <div class="cat-name"><span class="cat-dot" style="background:${c.color}"></span>${c.key}</div>
       <div class="cat-total">${a > 0 ? f(a) : '—'}</div>
       <div class="cat-avg">${t > 0 ? f(t) + ' total' : 'None this period'}${uncatNote} · ${n} month${n!==1?'s':''}</div>
       <div class="cat-bar-wrap"><div class="cat-bar" style="width:${pct}%;background:${c.color}"></div></div>
+      ${spark}
     </div>`;
   }).join('');
 
@@ -982,6 +994,33 @@ function toggleAllTrendLines(visible) {
   if (!TC) return;
   TC.data.datasets.forEach(ds => { ds.hidden = !visible; });
   TC.update();
+  // Clear any focused card when using Show All / Hide All
+  if (visible) {
+    document.querySelectorAll('.cat-card.cat-focused').forEach(c => c.classList.remove('cat-focused'));
+    const lbl = document.getElementById('trendFocusLabel');
+    if (lbl) lbl.textContent = 'How each category changes month to month';
+  }
+}
+
+function focusCategoryCard(card) {
+  const key = card.dataset.catkey;
+  const isAlreadyFocused = card.classList.contains('cat-focused');
+  document.querySelectorAll('.cat-card.cat-focused').forEach(c => c.classList.remove('cat-focused'));
+  if (isAlreadyFocused) {
+    // Deselect — restore all lines
+    if (TC) { TC.data.datasets.forEach(ds => { ds.hidden = false; }); TC.update(); }
+    const lbl = document.getElementById('trendFocusLabel');
+    if (lbl) lbl.textContent = 'How each category changes month to month';
+  } else {
+    card.classList.add('cat-focused');
+    if (TC) {
+      TC.data.datasets.forEach(ds => { ds.hidden = ds.label !== key; });
+      TC.update();
+    }
+    const lbl = document.getElementById('trendFocusLabel');
+    if (lbl) lbl.textContent = `Showing: ${key} — click card again or Show All to reset`;
+    document.getElementById('categoryTrendsSection').scrollIntoView({behavior:'smooth', block:'start'});
+  }
 }
 
 function toggleBreakdown(id, btn) {
