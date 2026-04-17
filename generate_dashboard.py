@@ -81,7 +81,7 @@ for sheet_name in wb.sheetnames:
 # ── Read SUMMARY sheet ────────────────────────────────────────────────────────
 ws_sum = wb['SUMMARY']
 
-# Monthly totals — rows 4-22: A=Month B=Spend C=Running D=vs Average
+# Monthly totals — rows 4-22: A=Month B=Spend C=Running D=vs Average E=Food F=Accom
 monthly = []
 for r in range(4, 23):
     month = ws_sum.cell(row=r, column=1).value
@@ -92,6 +92,8 @@ for r in range(4, 23):
         'spend':   round(float(ws_sum.cell(row=r, column=2).value or 0), 2),
         'running': round(float(ws_sum.cell(row=r, column=3).value or 0), 2),
         'vs':      round(float(ws_sum.cell(row=r, column=4).value or 0), 2),
+        'food':    round(float(ws_sum.cell(row=r, column=5).value or 0), 2),
+        'accom':   round(float(ws_sum.cell(row=r, column=6).value or 0), 2),
     })
 
 # Category breakdown — rows 28-46: A=Month C=Food&Drink D=Transport … J=Family
