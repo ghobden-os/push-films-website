@@ -423,9 +423,9 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
           <div class="chart-card-meta" id="spendChartMeta"></div>
         </div>
         <div class="chart-toggle">
-          <button class="ct-btn active" data-sct="doughnut" onclick="setSpendChartType('doughnut')">Pie</button>
+          <button class="ct-btn" data-sct="doughnut" onclick="setSpendChartType('doughnut')">Pie</button>
           <button class="ct-btn" data-sct="hbar" onclick="setSpendChartType('hbar')">H-Bar</button>
-          <button class="ct-btn" data-sct="vbar" onclick="setSpendChartType('vbar')">V-Bar</button>
+          <button class="ct-btn active" data-sct="vbar" onclick="setSpendChartType('vbar')">V-Bar</button>
         </div>
       </div>
       <div class="chart-wrap" id="spendChartWrap" style="height:320px"><canvas id="spendChart"></canvas></div>
@@ -596,7 +596,7 @@ Chart.defaults.font.size = 11;
 const gc = 'rgba(255,255,255,0.04)';
 
 let SC=null, TC=null, FAC=null;
-let spendChartType = 'doughnut';
+let spendChartType = 'vbar';
 let lastDoughnutData = [], lastTotSpend = 0, lastSorted = [];
 
 function render(pk) {
@@ -654,7 +654,9 @@ function render(pk) {
   const ouEl = document.getElementById('kpiOverUnder');
   ouEl.textContent = (overUnder >= 0 ? '+' : '') + f(overUnder);
   ouEl.className   = 'kpi-val ' + (overUnder >= 0 ? 'green' : 'red');
-  document.getElementById('kpiOverUnderSub').textContent = overUnder >= 0 ? `surplus after tax & spend` : `deficit after tax & spend`;
+  const ouMonthly = nAvg > 0 ? overUnder / nAvg : 0;
+  const ouMonthlyStr = (ouMonthly >= 0 ? '+' : '') + f(ouMonthly) + ' / month';
+  document.getElementById('kpiOverUnderSub').textContent = ouMonthlyStr + (overUnder >= 0 ? ' · surplus' : ' · deficit');
 
   // Household Food & Accommodation totals (used by chart below)
   const totFood  = mM.reduce((s,d) => s + (d.food  || 0), 0);
