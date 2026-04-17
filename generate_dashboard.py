@@ -67,7 +67,7 @@ for sheet_name in wb.sheetnames:
     income_col = find_col(ws, 3, 'income', 'funds in', 'push income', 'turnover')
     costs_col  = find_col(ws, 3, 'project cost', 'costs', 'expense', 'outgoing', 'payment')
     # Description is usually col A or B
-    desc_col   = find_col(ws, 3, 'description', 'payee', 'detail', 'name', 'reference', 'supplier') or 1
+    desc_col   = find_col(ws, 3, 'description', 'payee', 'detail', 'name', 'reference', 'supplier') or 2
 
     income_total = 0.0
     cost_items   = []
@@ -118,7 +118,7 @@ for r in range(4, 23):
 # Header expected in row 27; data in rows 28-46.
 # Reads ALL named columns — picks up new categories (Mortgage/Rent, Ocado etc.)
 # automatically whenever Greg adds them to the spreadsheet.
-NON_CAT = {'', 'total', 'monthly avg', 'monthly average', 'avg', 'month'}
+NON_CAT = {'', 'total', 'total spend', 'monthly avg', 'monthly average', 'avg', 'month', 'other / uncategorised', 'other/uncategorised', 'uncategorised', 'other'}
 CAT_COLS = {}
 for col in range(2, 25):
     v = ws_sum.cell(row=27, column=col).value
