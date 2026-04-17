@@ -701,10 +701,10 @@ function render(pk) {
       cutout:'62%',
       plugins:{
         legend:{
-          display:true, position:'right',
+          display:true, position:'bottom',
           labels:{
-            boxWidth:20, boxHeight:20, padding:20, color:'#EDEDE8',
-            font:{ family:"'DM Sans', sans-serif", size:20 },
+            boxWidth:14, boxHeight:14, padding:20, color:'#EDEDE8',
+            font:{ family:"'DM Sans', sans-serif", size:14 },
             generateLabels: chart => {
               const ds = chart.data.datasets[0];
               return chart.data.labels.map((label, i) => {
