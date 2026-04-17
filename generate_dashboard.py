@@ -112,22 +112,24 @@ for sheet_name in wb.sheetnames:
     cost_items   = []  # list of {p: "DD MMM", a: amount}
 
     for row in range(4, ws.max_row + 1):
-        # Read income directly — no gate needed, just check the cell itself
-        if income_col:
+        # Col C gate for income — prevents formula/subtotal rows being double-counted
+        bank_cell = ws.cell(row=row, column=3).value
+        if income_col and bank_cell not in (None, '', 0):
             val = ws.cell(row=row, column=income_col).value
             if val and isinstance(val, (int, float)) and val > 0:
                 income_total += val
 
-        # Production costs — check col K directly; date from col B
+        # Project costs — gate on col B having a real date (not col C, which can be
+        # empty in some months even for genuine transaction rows)
+        date_val = ws.cell(row=row, column=DATE_COL).value
+        if not hasattr(date_val, 'strftime'):
+            continue  # no date = not a transaction row
+        date_label = date_val.strftime('%-d %b')  # e.g. "14 Oct"
+
         for col, payee in PRODUCTION_COLS.items():
             val = ws.cell(row=row, column=col).value
             if val and isinstance(val, (int, float)) and val > 0:
-                date_val = ws.cell(row=row, column=DATE_COL).value
-                if hasattr(date_val, 'strftime'):
-                    date_label = date_val.strftime('%-d %b')  # e.g. "14 Oct"
-                else:
-                    date_label = str(date_val or '').strip()[:10]
-                cost_items.append({'p': date_label or 'Project Costs', 'a': round(float(val), 2)})
+                cost_items.append({'p': date_label, 'a': round(float(val), 2)})
 
     income_by_month[month_label] = round(income_total, 2)
     if cost_items:
