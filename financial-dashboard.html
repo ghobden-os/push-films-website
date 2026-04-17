@@ -166,6 +166,14 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
 .cat-card:hover { border-color:#383838; }
 .cat-card.cat-focused { border-color:var(--gold); background:#1c1a00; }
 .cat-sparkline { width:100%; height:28px; display:block; margin-top:12px; opacity:0.75; }
+.cat-card-desc { display:none; height:100%; }
+.cat-card.cat-flipped .cat-card-main { display:none; }
+.cat-card.cat-flipped .cat-card-desc { display:flex; flex-direction:column; }
+.cat-desc-text { font-size:11px; color:#888; line-height:1.55; margin-top:10px; flex:1; }
+.cat-trend-btn { font-size:9px; color:#444; background:none; border:none; padding:0;
+  cursor:pointer; font-family:var(--font); letter-spacing:0.06em; text-transform:uppercase;
+  margin-top:10px; display:inline-block; transition:color .15s; text-align:left; }
+.cat-trend-btn:hover { color:#888; }
 .cat-card.uncat-card { border-style:dashed; border-color:#2e2e2e; }
 .cat-card.uncat-card .cat-total { color:var(--mid); }
 .cat-card.uncat-card .cat-avg { color:#3a3a3a; }
@@ -195,7 +203,8 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
 .month-detail.open { display:block; }
 .month-detail-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
 .mdc { background:var(--card); border:1px solid var(--rule); border-radius:4px; padding:14px 16px; }
-.mdc-lbl { font-size:10px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:#888; margin-bottom:6px; }
+.mdc-lbl { font-size:10px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:#888; margin-bottom:4px; }
+.mdc-desc { font-size:10px; color:#555; line-height:1.45; margin-bottom:10px; }
 .mdc-val { font-size:18px; font-weight:300; }
 .mdc.mdc-uncat { border-style:dashed; border-color:#2e2e2e; }
 .mdc.mdc-uncat .mdc-val { color:var(--mid); }
@@ -554,17 +563,17 @@ const atl     = [];
 const periods = {};
 
 const catConfig = [
-  { key:'Home',                   short:'Home',       color:'#F5D800' },
-  { key:'Food & Drink',           short:'Food',       color:'#E8A87C' },
-  { key:'Family',                 short:'Family',     color:'#F08080' },
-  { key:'Finance/Work',           short:'Finance',    color:'#85C1E9' },
-  { key:'Lifestyle',              short:'Lifestyle',  color:'#BB8FCE' },
-  { key:'Personal',               short:'Personal',   color:'#A9DFBF' },
-  { key:'Transport',              short:'Transport',  color:'#7FB3D3' },
-  { key:'Comms',                  short:'Comms',      color:'#888888' },
-  { key:'Mortgage / Rent',        short:'Mortgage',   color:'#5FA8A8', isStandalone:true },
-  { key:'Ocado / Household',      short:'Household',  color:'#C9A44E', isStandalone:true },
-  { key:'Uncategorised',          short:'Uncat',      color:'#555555', isUncat:true }
+  { key:'Home',              short:'Home',      color:'#F5D800', desc:'Utilities, insurance, repairs and cleaning. Council tax, gas & electricity, Thames Water, household insurance, and maintenance.' },
+  { key:'Food & Drink',      short:'Food',      color:'#E8A87C', desc:'Eating and drinking out. Restaurants, lunches, coffees and Deliveroo.' },
+  { key:'Family',            short:'Family',    color:'#F08080', desc:'Regular support for Otto, Ivo, Willa and Sally. Allowances, standing orders, tutoring and driving lessons.' },
+  { key:'Finance/Work',      short:'Finance',   color:'#85C1E9', desc:'Admin and work costs. Accountancy fees, bank charges, stationery, computer and phone loan.' },
+  { key:'Lifestyle',         short:'Lifestyle', color:'#BB8FCE', desc:'Golf, gym, holidays, cinema, TV subscriptions and cycling.' },
+  { key:'Personal',          short:'Personal',  color:'#A9DFBF', desc:'Health, grooming, clothing and pets. Medical, dental, hair, clothes, dog walking and vet bills.' },
+  { key:'Transport',         short:'Transport', color:'#7FB3D3', desc:'Getting around. Petrol, motor costs, parking, taxi, TfL, flights and car insurance.' },
+  { key:'Comms',             short:'Comms',     color:'#888888', desc:'Monthly phone and broadband bills.' },
+  { key:'Mortgage / Rent',   short:'Mortgage',  color:'#5FA8A8', desc:'Santander mortgage direct debit, plus Otto and Ivo\'s accommodation costs.', isStandalone:true },
+  { key:'Ocado / Household', short:'Household', color:'#C9A44E', desc:'The weekly household food shop. Ocado plus other supermarket grocery runs.', isStandalone:true },
+  { key:'Uncategorised',     short:'Uncat',     color:'#555555', isUncat:true }
 ];
 
 const f   = n => '£' + Math.round(Math.abs(n)).toLocaleString('en-GB');
@@ -814,13 +823,29 @@ function render(pk) {
       return `<rect x="${(i*sparkW+0.3).toFixed(1)}%" y="${(100-h).toFixed(1)}%" width="${(sparkW-0.6).toFixed(1)}%" height="${h.toFixed(1)}%" fill="${c.color}" rx="1"/>`;
     }).join('');
     const spark = ms.length > 1 ? `<svg class="cat-sparkline" viewBox="0 0 100 100" preserveAspectRatio="none">${sparkBars}</svg>` : '';
-    const safeKey = c.key.replace(/&/g,'&amp;').replace(/"/g,'&quot;');
-    return `<div class="cat-card${isUncatCard ? ' uncat-card' : ''}" data-catkey="${safeKey}" onclick="focusCategoryCard(this)">
-      <div class="cat-name"><span class="cat-dot" style="background:${c.color}"></span>${c.key}</div>
-      <div class="cat-total">${a > 0 ? f(a) : '—'}</div>
-      <div class="cat-avg">${t > 0 ? f(t) + ' total' : 'None this period'}${uncatNote} · ${n} month${n!==1?'s':''}</div>
-      <div class="cat-bar-wrap"><div class="cat-bar" style="width:${pct}%;background:${c.color}"></div></div>
-      ${spark}
+    const safeKey  = c.key.replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+    const canTrend = !c.isUncat && !c.isStandalone;
+    const trendBtn = canTrend
+      ? `<button class="cat-trend-btn" onclick="event.stopPropagation();focusCategoryCard(this.closest('[data-catkey]'))">trend ↓</button>`
+      : '';
+    const descBack = c.desc
+      ? `<div class="cat-card-desc">
+           <div class="cat-name"><span class="cat-dot" style="background:${c.color}"></span>${c.key}</div>
+           <div class="cat-desc-text">${c.desc}</div>
+           ${trendBtn}
+         </div>`
+      : '';
+    const clickHandler = c.desc ? `onclick="toggleCatDesc(this)"` : '';
+    return `<div class="cat-card${isUncatCard ? ' uncat-card' : ''}" data-catkey="${safeKey}" ${clickHandler}>
+      <div class="cat-card-main">
+        <div class="cat-name"><span class="cat-dot" style="background:${c.color}"></span>${c.key}</div>
+        <div class="cat-total">${a > 0 ? f(a) : '—'}</div>
+        <div class="cat-avg">${t > 0 ? f(t) + ' total' : 'None this period'}${uncatNote} · ${n} month${n!==1?'s':''}</div>
+        <div class="cat-bar-wrap"><div class="cat-bar" style="width:${pct}%;background:${c.color}"></div></div>
+        ${spark}
+        ${trendBtn}
+      </div>
+      ${descBack}
     </div>`;
   }).join('');
 
@@ -855,9 +880,10 @@ function render(pk) {
     const catItems = catConfig.map(c=>{
       const val = cu[c.key]||0;
       const isUncatItem = c.isUncat && val > 0;
+      const descHtml = c.desc ? `<div class="mdc-desc">${c.desc}</div>` : '';
       return `<div class="mdc${isUncatItem ? ' mdc-uncat' : ''}">
         <div class="mdc-lbl"><span class="cat-dot" style="background:${c.color}"></span>${c.key}</div>
-        <div class="mdc-val">${val > 0 ? f(val) : '—'}</div>
+        ${descHtml}<div class="mdc-val">${val > 0 ? f(val) : '—'}</div>
       </div>`;
     }).join('');
     const foodVal  = d.food  || 0;
@@ -1000,6 +1026,10 @@ function toggleAllTrendLines(visible) {
     const lbl = document.getElementById('trendFocusLabel');
     if (lbl) lbl.textContent = 'How each category changes month to month';
   }
+}
+
+function toggleCatDesc(card) {
+  card.classList.toggle('cat-flipped');
 }
 
 function focusCategoryCard(card) {
