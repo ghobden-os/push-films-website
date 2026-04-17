@@ -63,7 +63,7 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
 .main { padding:36px var(--pad) 80px; max-width:1360px; margin:0 auto; }
 
 /* SECTION LABEL */
-.slabel { font-size:10px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase;
+.slabel { font-size:11px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase;
   color:var(--gold); margin-bottom:16px; display:flex; align-items:center; gap:12px; }
 .slabel::after { content:''; flex:1; height:1px; background:var(--rule); }
 .slabel-btn { font-size:9px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase;
@@ -78,19 +78,51 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
 .kpi-row.tax-row   { grid-template-columns:repeat(4,1fr); }
 .kpi { background:var(--dim); border:1px solid var(--rule); border-radius:6px;
   padding:20px 24px; display:flex; flex-direction:column; }
-.kpi-lbl { font-size:10px; font-weight:500; letter-spacing:0.13em; text-transform:uppercase;
-  color:var(--mid); margin-bottom:10px; }
+.kpi-lbl { font-size:11px; font-weight:500; letter-spacing:0.13em; text-transform:uppercase;
+  color:#888; margin-bottom:10px; }
 .kpi-val { font-size:32px; font-weight:300; letter-spacing:-0.03em; line-height:1;
   font-variant-numeric:tabular-nums; }
 .kpi-val.green { color:var(--green); }
 .kpi-val.gold  { color:var(--gold); }
 .kpi-val.red   { color:var(--red); }
-.kpi-sub { font-size:11px; color:var(--mid); margin-top:8px; line-height:1.4; }
+.kpi-sub { font-size:12px; color:#888; margin-top:8px; line-height:1.4; }
 .kpi-sub.accent { color:var(--fg); opacity:0.5; }
 .vat-box { display:inline-block; margin-top:8px; font-size:12px; color:#888;
   background:rgba(255,255,255,0.05); border:1px solid #2a2a2a; border-radius:3px;
   padding:4px 10px; letter-spacing:0.02em; }
 .vat-box span { color:#555; margin-right:4px; }
+
+/* CLICKABLE KPI BOXES */
+.kpi.kpi-clickable { cursor:pointer; transition:border-color .2s, background .15s; }
+.kpi.kpi-clickable:hover { border-color:#383838; background:#1e1e1e; }
+.kpi.kpi-clickable.active { border-color:var(--gold); }
+.kpi-expand-hint { font-size:10px; color:#555; margin-top:10px; letter-spacing:0.05em;
+  display:flex; align-items:center; gap:5px; transition:color .15s; }
+.kpi-clickable:hover .kpi-expand-hint { color:#888; }
+.kpi-clickable.active .kpi-expand-hint { color:var(--gold); }
+.kpi-expand-hint .hint-arrow { display:inline-block; transition:transform .2s; font-size:9px; }
+.kpi-clickable.active .kpi-expand-hint .hint-arrow { transform:rotate(180deg); }
+
+/* KPI DETAIL PANEL */
+.kpi-detail-panel { background:#111; border:1px solid var(--rule); border-radius:6px;
+  overflow:hidden; margin-top:2px; display:none; }
+.kpi-detail-panel.open { display:block; }
+.kpi-detail-panel-hdr { padding:14px 20px 12px; border-bottom:1px solid var(--rule);
+  font-size:10px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:#888; }
+.kpi-detail-row { display:grid; align-items:center; padding:10px 20px;
+  border-bottom:1px solid rgba(255,255,255,0.03); }
+.kpi-detail-row:last-child { border-bottom:none; }
+.kpi-detail-row:hover { background:rgba(255,255,255,0.02); }
+.kpi-detail-month { font-size:12px; font-weight:500; }
+.kpi-detail-from { font-size:11px; color:#888; white-space:nowrap; overflow:hidden;
+  text-overflow:ellipsis; }
+.kpi-detail-amt { font-size:13px; font-weight:300; font-variant-numeric:tabular-nums;
+  text-align:right; }
+.kpi-detail-sub { font-size:10px; color:#666; text-align:right; margin-top:1px; }
+.kpi-detail-total { display:grid; align-items:center; padding:10px 20px;
+  background:rgba(255,255,255,0.03); border-top:1px solid var(--rule); }
+.kpi-detail-total .kpi-detail-month { color:#888; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; }
+.kpi-detail-total .kpi-detail-amt { font-weight:500; }
 
 /* IMPORT TOAST */
 #importToast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px);
@@ -117,7 +149,7 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
 .chart-card { background:var(--dim); border:1px solid var(--rule); border-radius:6px; padding:24px; }
 .chart-card-hdr { margin-bottom:20px; }
 .chart-card-title { font-size:13px; font-weight:500; }
-.chart-card-meta { font-size:11px; color:var(--mid); margin-top:3px; }
+.chart-card-meta { font-size:12px; color:#888; margin-top:3px; }
 .chart-wrap { position:relative; height:280px; }
 
 /* CATEGORY CARDS */
@@ -129,9 +161,9 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
 .cat-card.uncat-card .cat-total { color:var(--mid); }
 .cat-card.uncat-card .cat-avg { color:#3a3a3a; }
 .cat-dot { width:8px; height:8px; border-radius:50%; display:inline-block; margin-right:7px; }
-.cat-name { font-size:11px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:var(--mid); margin-bottom:10px; }
+.cat-name { font-size:11px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:#888; margin-bottom:10px; }
 .cat-total { font-size:24px; font-weight:300; letter-spacing:-0.02em; line-height:1; }
-.cat-avg { font-size:11px; color:var(--mid); margin-top:5px; }
+.cat-avg { font-size:12px; color:#888; margin-top:5px; }
 .cat-bar-wrap { height:3px; background:var(--rule); border-radius:2px; margin-top:12px; }
 .cat-bar { height:3px; border-radius:2px; transition:width .4s; }
 
@@ -154,7 +186,7 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
 .month-detail.open { display:block; }
 .month-detail-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
 .mdc { background:var(--card); border:1px solid var(--rule); border-radius:4px; padding:14px 16px; }
-.mdc-lbl { font-size:9px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--mid); margin-bottom:6px; }
+.mdc-lbl { font-size:10px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:#888; margin-bottom:6px; }
 .mdc-val { font-size:18px; font-weight:300; }
 .mdc.mdc-uncat { border-style:dashed; border-color:#2e2e2e; }
 .mdc.mdc-uncat .mdc-val { color:var(--mid); }
@@ -323,15 +355,17 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
       </div>
     </div>
     <div class="kpi-row tax-row">
-      <div class="kpi">
-        <div class="kpi-lbl">Income</div>
+      <div class="kpi kpi-clickable" id="kpiIncomeBox" onclick="toggleKpiPanel('income')">
+        <div class="kpi-lbl">Income (ex VAT)</div>
         <div class="kpi-val green" id="kpiIncome"></div>
         <div class="kpi-sub" id="kpiIncomeSub"></div>
+        <div class="kpi-expand-hint"><span class="hint-arrow">▼</span> View breakdown</div>
       </div>
-      <div class="kpi">
+      <div class="kpi kpi-clickable" id="kpiCostsBox" onclick="toggleKpiPanel('costs')">
         <div class="kpi-lbl">Project Costs</div>
         <div class="kpi-val red" id="kpiCosts"></div>
         <div class="kpi-sub" id="kpiCostsSub"></div>
+        <div class="kpi-expand-hint"><span class="hint-arrow">▼</span> View by month</div>
       </div>
       <div class="kpi">
         <div class="kpi-lbl">Taxable Profit</div>
@@ -346,13 +380,23 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
     </div>
   </div>
 
+  <!-- KPI detail panels (shown on click) -->
+  <div class="kpi-detail-panel" id="incomeDetailPanel">
+    <div class="kpi-detail-panel-hdr" id="incomeDetailHdr">Income breakdown</div>
+    <div id="incomeDetailContent"></div>
+  </div>
+  <div class="kpi-detail-panel" id="costsDetailPanel">
+    <div class="kpi-detail-panel-hdr">Project Costs by month</div>
+    <div id="costsDetailContent"></div>
+  </div>
+
   <div class="section-row">
     <div class="chart-card">
       <div class="chart-card-hdr">
-        <div class="chart-card-title">Monthly Spend by Category</div>
+        <div class="chart-card-title">Spend by Category</div>
         <div class="chart-card-meta" id="spendChartMeta"></div>
       </div>
-      <div class="chart-wrap"><canvas id="spendChart"></canvas></div>
+      <div class="chart-wrap" style="height:320px"><canvas id="spendChart"></canvas></div>
     </div>
   </div>
 
@@ -474,15 +518,17 @@ const atl     = [];
 const periods = {};
 
 const catConfig = [
-  { key:'Home',           color:'#F5D800' },
-  { key:'Food & Drink',   color:'#E8A87C' },
-  { key:'Family',         color:'#F08080' },
-  { key:'Finance/Work',   color:'#85C1E9' },
-  { key:'Lifestyle',      color:'#BB8FCE' },
-  { key:'Personal',       color:'#A9DFBF' },
-  { key:'Transport',      color:'#7FB3D3' },
-  { key:'Comms',          color:'#888888' },
-  { key:'Uncategorised',  color:'#555555', isUncat:true }
+  { key:'Home',                   color:'#F5D800' },
+  { key:'Food & Drink',           color:'#E8A87C' },
+  { key:'Family',                 color:'#F08080' },
+  { key:'Finance/Work',           color:'#85C1E9' },
+  { key:'Lifestyle',              color:'#BB8FCE' },
+  { key:'Personal',               color:'#A9DFBF' },
+  { key:'Transport',              color:'#7FB3D3' },
+  { key:'Comms',                  color:'#888888' },
+  { key:'Mortgage / Rent',        color:'#5FA8A8' },
+  { key:'Ocado / Household',      color:'#C9A44E' },
+  { key:'Uncategorised',          color:'#555555', isUncat:true }
 ];
 
 const f   = n => '£' + Math.round(Math.abs(n)).toLocaleString('en-GB');
@@ -536,85 +582,92 @@ function render(pk) {
 
   // Tax row
   document.getElementById('kpiIncome').textContent     = f(exVatInc);
-  document.getElementById('kpiIncomeSub').innerHTML    = `<span class="vat-box"><span>inc. VAT</span> ${f(totInc)}</span>`;
+  document.getElementById('kpiIncomeSub').textContent  = `inc. VAT: ${f(totInc)}`;
   document.getElementById('kpiCosts').textContent      = f(totCost);
-  document.getElementById('kpiCostsSub').textContent   = `deducted from income`;
+  document.getElementById('kpiCostsSub').textContent   = totCost > 0 ? `across ${mA.filter(a=>a.costs>0).length} month${mA.filter(a=>a.costs>0).length!==1?'s':''}` : 'none this period';
   document.getElementById('kpiProfit').textContent     = f(exVatNetInc);
   document.getElementById('kpiProfitSub').textContent  = `income less project costs`;
   document.getElementById('kpiTax').textContent        = f(estTax);
   document.getElementById('kpiTaxSub').textContent     = `estimated liability`;
 
+  // Build income detail panel content
+  buildIncomeDetail(mA, P.sub);
+  // Build costs detail panel content
+  buildCostsDetail(mA);
+
 
   document.getElementById('spendChartMeta').textContent =
     `${P.sub} · avg ${f(spAvg)} / month`;
 
-  // Calculate rent offset per month (negative when rental income was netted against total)
-  const rentOffsets = mM.map(d => {
-    const cr = mC.find(x=>x.m===d.m)||{};
-    const catSum = realCatConfig.reduce((s,c) => s+(cr[c.key]||0), 0);
-    const offset = d.spend - catSum; // negative = rent offset; positive = uncategorised (shown as segment)
-    return offset < -10 ? offset : 0;
-  });
-  const hasRent = rentOffsets.some(v => v < 0);
+  // Build doughnut data — totals per category for the period
+  const doughnutData = catConfig.map(c => ({
+    key: c.key, color: c.color,
+    total: mCU.reduce((s,d) => s + (d[c.key]||0), 0)
+  })).filter(d => d.total > 0);
 
   if (SC) SC.destroy();
   SC = new Chart(document.getElementById('spendChart').getContext('2d'), {
-    type:'bar',
+    type:'doughnut',
     data:{
-      labels: ms,
-      datasets: [
-        ...catConfig.map(c => ({
-          label: c.key,
-          data: mM.map(d => { const cu = mCU.find(x=>x.m===d.m)||{}; return cu[c.key]||0; }),
-          backgroundColor: c.color + 'cc',
-          borderColor: c.color,
-          borderWidth: 0,
-          borderSkipped: false,
-        })),
-        ...(hasRent ? [{
-          label: 'Rental income offset',
-          data: rentOffsets,
-          backgroundColor: 'rgba(255,255,255,0.07)',
-          borderColor: 'rgba(255,255,255,0.15)',
-          borderWidth: 1,
-          borderSkipped: false,
-          borderDash: [3,3],
-        }] : [])
-      ]
+      labels: doughnutData.map(d => d.key),
+      datasets:[{
+        data: doughnutData.map(d => d.total),
+        backgroundColor: doughnutData.map(d => d.color + 'cc'),
+        borderColor: doughnutData.map(d => d.color),
+        borderWidth: 1,
+        hoverOffset: 6,
+      }]
     },
     options:{
       responsive:true, maintainAspectRatio:false,
+      cutout:'62%',
       plugins:{
         legend:{
-          display:true, position:'bottom',
+          display:true, position:'right',
           labels:{
-            boxWidth:8, boxHeight:8, padding:16, color:'#666',
+            boxWidth:10, boxHeight:10, padding:14, color:'#888',
             font:{ family:"'DM Sans', sans-serif", size:11 },
-            filter: item => item.text !== 'Rental income offset'
+            generateLabels: chart => {
+              const ds = chart.data.datasets[0];
+              return chart.data.labels.map((label, i) => ({
+                text: `${label}  ${f(ds.data[i])}`,
+                fillStyle: ds.backgroundColor[i],
+                strokeStyle: ds.borderColor[i],
+                lineWidth: 1,
+                hidden: false,
+                index: i
+              }));
+            }
           }
         },
         tooltip:{
           callbacks:{
-            title: ctx => ctx[0].label,
             label: ctx => {
-              if(ctx.dataset.label === 'Rental income offset')
-                return ` Rental income offset: ${f(ctx.raw)} (netted from total)`;
-              return ` ${ctx.dataset.label}: ${f(ctx.raw)}`;
-            },
-            footer: ctx => {
-              const d = mM[ctx[0].dataIndex];
-              return `Net total: ${f(d.spend)}`;
+              const pct = ((ctx.raw / totSpend) * 100).toFixed(1);
+              return ` ${ctx.label}: ${f(ctx.raw)} (${pct}%)`;
             }
           }
         }
-      },
-      scales:{
-        x:{ stacked:true, grid:{color:gc}, ticks:{maxRotation:45} },
-        y:{ stacked:true, grid:{color:gc},
-            border:{color:'rgba(255,255,255,0.06)'},
-            ticks:{callback:v=>'£'+(v/1000).toFixed(0)+'k'} }
       }
-    }
+    },
+    plugins:[{
+      id:'donutCenter',
+      beforeDraw(chart) {
+        const {ctx, chartArea:{left,top,right,bottom}} = chart;
+        const cx = (left+right)/2, cy = (top+bottom)/2;
+        ctx.save();
+        ctx.textAlign='center';
+        ctx.textBaseline='middle';
+        ctx.fillStyle='#EDEDE8';
+        ctx.font="300 22px 'DM Sans', sans-serif";
+        ctx.fillText(f(totSpend), cx, cy-10);
+        ctx.fillStyle='#666';
+        ctx.font="400 10px 'DM Sans', sans-serif";
+        ctx.letterSpacing='0.08em';
+        ctx.fillText('TOTAL SPEND', cx, cy+14);
+        ctx.restore();
+      }
+    }]
   });
 
   if (TC) TC.destroy();
@@ -828,6 +881,9 @@ document.querySelectorAll('.tab:not(#savingsTab)').forEach(t=>{
     document.getElementById('savingsView').style.display = 'none';
     document.getElementById('savingsBtn').textContent = '↓ Savings View';
     document.getElementById('savingsBtn').onclick = showSavingsView;
+    // Close detail panels on period change
+    ['incomeDetailPanel','costsDetailPanel'].forEach(id => document.getElementById(id).classList.remove('open'));
+    ['kpiIncomeBox','kpiCostsBox'].forEach(id => document.getElementById(id).classList.remove('active'));
     render(t.dataset.period);
   });
 });
@@ -1032,6 +1088,76 @@ function renderTrendTable(catStats) {
       <div class="cmp-hdr-lbl" style="text-align:right">Change</div>
     </div>
     ${rows}`;
+}
+
+// ── KPI DETAIL PANELS ────────────────────────────────────────────────────────
+
+function buildIncomeDetail(mA, periodSub) {
+  document.getElementById('incomeDetailHdr').textContent = 'Income — ' + periodSub;
+  const rows = [...mA].reverse().map(a => {
+    const gross = a.income;
+    if (gross === 0 && a.costs === 0) return '';
+    const exVat = gross / 1.2;
+    const bd = a.breakdown || [];
+    const bdHtml = bd.length > 0
+      ? '<div style="margin-top:6px;padding-left:12px;border-left:2px solid #2a2a2a">' +
+        bd.map(e => `<div style="display:flex;justify-content:space-between;padding:3px 0"><span style="font-size:11px;color:#888">${e.p}</span><span style="font-size:11px;font-weight:300;color:var(--green)">${f(e.a)}</span></div>`).join('') +
+        '</div>'
+      : '';
+    return `<div class="kpi-detail-row" style="grid-template-columns:120px 1fr 110px;gap:16px">
+      <div class="kpi-detail-month">${a.m}</div>
+      <div>${a.from ? `<div class="kpi-detail-from">${a.from}</div>` : ''}${bdHtml}</div>
+      <div>
+        <div class="kpi-detail-amt" style="color:var(--green)">${gross > 0 ? f(gross) : '—'}</div>
+        ${gross > 0 ? `<div class="kpi-detail-sub">ex VAT: ${f(exVat)}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  const totGross = mA.reduce((s,a) => s + a.income, 0);
+  const totExVat = totGross / 1.2;
+  const totalsRow = `<div class="kpi-detail-total" style="grid-template-columns:120px 1fr 110px;gap:16px">
+    <div class="kpi-detail-month">Total</div>
+    <div></div>
+    <div>
+      <div class="kpi-detail-amt" style="color:var(--green)">${f(totGross)}</div>
+      <div class="kpi-detail-sub">ex VAT: ${f(totExVat)}</div>
+    </div>
+  </div>`;
+
+  document.getElementById('incomeDetailContent').innerHTML = rows + totalsRow;
+}
+
+function buildCostsDetail(mA) {
+  const rows = [...mA].reverse().filter(a => a.costs > 0).map(a =>
+    `<div class="kpi-detail-row" style="grid-template-columns:120px 1fr 110px;gap:16px">
+      <div class="kpi-detail-month">${a.m}</div>
+      <div class="kpi-detail-from">${a.from || ''}</div>
+      <div class="kpi-detail-amt" style="color:var(--red)">− ${f(a.costs)}</div>
+    </div>`
+  ).join('');
+
+  const totCosts = mA.reduce((s,a) => s + a.costs, 0);
+  const totalsRow = totCosts > 0
+    ? `<div class="kpi-detail-total" style="grid-template-columns:120px 1fr 110px;gap:16px">
+        <div class="kpi-detail-month">Total</div>
+        <div></div>
+        <div class="kpi-detail-amt" style="color:var(--red)">− ${f(totCosts)}</div>
+      </div>` : '';
+
+  document.getElementById('costsDetailContent').innerHTML =
+    (rows || `<div style="padding:16px 20px;font-size:12px;color:#666">No project costs this period</div>`) + totalsRow;
+}
+
+function toggleKpiPanel(which) {
+  const panel   = document.getElementById(which === 'income' ? 'incomeDetailPanel' : 'costsDetailPanel');
+  const box     = document.getElementById(which === 'income' ? 'kpiIncomeBox' : 'kpiCostsBox');
+  const isOpen  = panel.classList.contains('open');
+  // Close both panels first
+  ['incomeDetailPanel','costsDetailPanel'].forEach(id => document.getElementById(id).classList.remove('open'));
+  ['kpiIncomeBox','kpiCostsBox'].forEach(id => document.getElementById(id).classList.remove('active'));
+  // Toggle the clicked one
+  if (!isOpen) { panel.classList.add('open'); box.classList.add('active'); }
 }
 
 // ── DATA LOADER ──────────────────────────────────────────────────────────────
