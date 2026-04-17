@@ -81,10 +81,11 @@ PAYEE_MAP = [
     ('VITESSE',                 'Vitesse'),
     ('THEOPENLAB',              'TheOpenLab'),
     ('OPENLAB',                 'TheOpenLab'),
-    # CRH / international wire patterns — all Imagination Europe project costs
+    # CRH / international wire patterns
+    ('LAME PRODU',              'LAME'),
+    ('LAME CR',                 'LAME'),
+    ('LAME FINAL',              'LAME'),
     ('CRH IMAG',                'Imagination Europe'),
-    ('LAME PRODU',              'Imagination Europe'),
-    ('LAME CR',                 'Imagination Europe'),
     ('CRH USA',                 'Imagination Europe'),
     ('PHOENIXC',                'Imagination Europe'),
     ('DUBLINCRH',               'Imagination Europe'),
