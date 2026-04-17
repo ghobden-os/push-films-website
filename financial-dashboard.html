@@ -381,7 +381,7 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
         <div class="kpi-sub" id="kpiProfitSub"></div>
       </div>
     </div>
-    <div class="kpi-row" style="grid-template-columns:repeat(3,1fr)">
+    <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
       <div class="kpi">
         <div class="kpi-lbl">Estimated Tax — 23%</div>
         <div class="kpi-val gold" id="kpiTax"></div>
@@ -393,9 +393,14 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
         <div class="kpi-sub" id="kpiAfterTaxSub"></div>
       </div>
       <div class="kpi">
-        <div class="kpi-lbl">Avg Monthly Spend</div>
-        <div class="kpi-val" id="kpiAvgSpend"></div>
-        <div class="kpi-sub" id="kpiAvgSpendSub"></div>
+        <div class="kpi-lbl">Total Spend</div>
+        <div class="kpi-val" id="kpiTotalSpend"></div>
+        <div class="kpi-sub" id="kpiTotalSpendSub"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Over / Under</div>
+        <div class="kpi-val" id="kpiOverUnder"></div>
+        <div class="kpi-sub" id="kpiOverUnderSub"></div>
       </div>
     </div>
   </div>
@@ -637,14 +642,19 @@ function render(pk) {
   document.getElementById('kpiProfit').textContent      = f(exVatNetInc);
   document.getElementById('kpiProfitSub').textContent   = `income less project costs`;
 
-  // Row 2: Estimated Tax | After Tax | Avg Monthly Spend
-  const afterTax = exVatNetInc - estTax;
-  document.getElementById('kpiTax').textContent         = f(estTax);
-  document.getElementById('kpiTaxSub').textContent      = `estimated liability`;
-  document.getElementById('kpiAfterTax').textContent    = f(afterTax);
-  document.getElementById('kpiAfterTaxSub').textContent = `profit after 23% tax`;
-  document.getElementById('kpiAvgSpend').textContent    = f(spAvg);
-  document.getElementById('kpiAvgSpendSub').textContent = `per month · total ${f(totSpend)}`;
+  // Row 2: Estimated Tax | After Tax | Total Spend | Over / Under
+  const afterTax  = exVatNetInc - estTax;
+  const overUnder = afterTax - totSpend;
+  document.getElementById('kpiTax').textContent          = f(estTax);
+  document.getElementById('kpiTaxSub').textContent       = `estimated liability`;
+  document.getElementById('kpiAfterTax').textContent     = f(afterTax);
+  document.getElementById('kpiAfterTaxSub').textContent  = `profit after 23% tax`;
+  document.getElementById('kpiTotalSpend').textContent   = f(totSpend);
+  document.getElementById('kpiTotalSpendSub').textContent = `${f(spAvg)} / month avg`;
+  const ouEl = document.getElementById('kpiOverUnder');
+  ouEl.textContent = (overUnder >= 0 ? '+' : '') + f(overUnder);
+  ouEl.className   = 'kpi-val ' + (overUnder >= 0 ? 'green' : 'red');
+  document.getElementById('kpiOverUnderSub').textContent = overUnder >= 0 ? `surplus after tax & spend` : `deficit after tax & spend`;
 
   // Household Food & Accommodation totals (used by chart below)
   const totFood  = mM.reduce((s,d) => s + (d.food  || 0), 0);
