@@ -472,6 +472,16 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
     <div id="monthList"></div>
   </div>
 
+  <div class="section-row" style="margin-top:40px">
+    <div class="chart-card">
+      <div class="chart-card-hdr">
+        <div class="chart-card-title">Monthly Spend</div>
+        <div class="chart-card-meta" id="monthlySpendChartMeta"></div>
+      </div>
+      <div class="chart-wrap" style="height:260px"><canvas id="monthlySpendChart"></canvas></div>
+    </div>
+  </div>
+
   <div class="section-row" style="margin-top:40px" id="categoryTrendsSection">
     <div class="chart-card">
       <div class="chart-card-hdr" style="display:flex;justify-content:space-between;align-items:flex-start">
@@ -595,7 +605,7 @@ Chart.defaults.font.family = "'DM Sans', sans-serif";
 Chart.defaults.font.size = 11;
 const gc = 'rgba(255,255,255,0.04)';
 
-let SC=null, TC=null, FAC=null;
+let SC=null, TC=null, FAC=null, MC=null;
 let spendChartType = 'vbar';
 let lastDoughnutData = [], lastTotSpend = 0, lastSorted = [];
 
@@ -705,6 +715,60 @@ function render(pk) {
       },
       scales: {
         x: { grid:{color:gc}, ticks:{maxRotation:45, color:'#aaa', font:{size:11}} },
+        y: { grid:{color:gc}, border:{color:'rgba(255,255,255,0.06)'},
+             ticks:{callback:v=>'£'+(v/1000).toFixed(1)+'k', color:'#aaa', font:{size:11}} }
+      }
+    }
+  });
+
+  // Monthly Spend chart — one bar per month, dashed average line
+  document.getElementById('monthlySpendChartMeta').textContent =
+    `${P.sub} · avg ${f(spAvg)} / month`;
+  if (MC) MC.destroy();
+  MC = new Chart(document.getElementById('monthlySpendChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ms,
+      datasets: [
+        {
+          label: 'Monthly Spend',
+          data: ms.map(m => { const d = mM.find(x => x.m === m); return d ? d.spend : 0; }),
+          backgroundColor: ms.map(m => {
+            const d = mM.find(x => x.m === m);
+            return d && d.spend > spAvg ? 'rgba(224,85,85,0.7)' : 'rgba(245,216,0,0.55)';
+          }),
+          borderColor: ms.map(m => {
+            const d = mM.find(x => x.m === m);
+            return d && d.spend > spAvg ? '#E05555' : '#F5D800';
+          }),
+          borderWidth: 1, borderRadius: 3, order: 2
+        },
+        {
+          label: 'Average',
+          data: ms.map(() => spAvg),
+          type: 'line',
+          borderColor: 'rgba(255,255,255,0.35)',
+          borderDash: [6, 3],
+          borderWidth: 1.5,
+          pointRadius: 0,
+          fill: false,
+          tension: 0,
+          order: 1
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: {
+          label: ctx => ctx.dataset.label === 'Average'
+            ? `Avg: ${f(ctx.parsed.y)}`
+            : `Spend: ${f(ctx.parsed.y)}`
+        }}
+      },
+      scales: {
+        x: { grid:{display:false}, ticks:{color:'#EDEDE8', font:{size:11}, maxRotation:45} },
         y: { grid:{color:gc}, border:{color:'rgba(255,255,255,0.06)'},
              ticks:{callback:v=>'£'+(v/1000).toFixed(1)+'k', color:'#aaa', font:{size:11}} }
       }
