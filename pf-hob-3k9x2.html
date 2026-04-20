@@ -591,7 +591,7 @@ const catConfig = [
   { key:'Comms',             short:'Comms',     color:'#888888',
     desc:['Monthly phone bill','Broadband'] },
   { key:'Mortgage',   short:'Mortgage',  color:'#5FA8A8',
-    desc:['Santander mortgage DD','Birmingham Midshires (until Mar 2025)'], isStandalone:true },
+    desc:['Santander mortgage DD','Birmingham Midshires (until Mar 2025)'] },
   { key:'Ocado / Household', short:'Household', color:'#C9A44E',
     desc:['Ocado weekly shop','Other supermarket runs'], isStandalone:true },
   { key:'Uncategorised',     short:'Uncat',     color:'#555555', isUncat:true }
@@ -624,7 +624,6 @@ function render(pk) {
     const cr = mC.find(x => x.m === d.m) || {};
     const catSum = realCatConfig.reduce((s, c) => s + (cr[c.key] || 0), 0);
     return { ...cr, m: d.m,
-      'Mortgage':   (cats.find(c=>c.m===d.m)||{})['Mortgage'] || 0,
       'Ocado / Household': d.food  || 0,
       'Uncategorised': Math.max(0, d.spend - catSum) };
   });
@@ -783,13 +782,6 @@ function render(pk) {
     key: c.key, color: c.color,
     total: mCU.reduce((s,d) => s + (d[c.key]||0), 0)
   })).filter(d => d.total > 0);
-
-  // Inject Mortgage / Rent as a segment (data lives on monthly entries, not in cats[])
-  const mortgageTotal = mM.reduce((s,d) => s + ((cats.find(c=>c.m===d.m)||{})['Mortgage']||0), 0);
-  if (mortgageTotal > 0) {
-    const mc = catConfig.find(c => c.key === 'Mortgage');
-    doughnutData.push({ key: mc.key, color: mc.color, total: mortgageTotal });
-  }
 
   lastDoughnutData = doughnutData;
   lastTotSpend = totSpend;
