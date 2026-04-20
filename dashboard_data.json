@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-20T13:09:50.515422",
+  "generated": "2026-04-20T17:52:56.055309",
   "source": "ACCOUNTS_2026_COMPLETE_16-04-2026_17-35.xlsx",
   "monthly": [
     {
@@ -24,7 +24,7 @@
       "running": 37431.55,
       "vs": -489.86,
       "food": 389.0,
-      "accom": 2584.3
+      "accom": 1691.8
     },
     {
       "m": "DEC 2024",
@@ -32,15 +32,15 @@
       "running": 49157.95,
       "vs": 184.06,
       "food": 780.19,
-      "accom": 2584.3
+      "accom": 1691.8
     },
     {
       "m": "JAN 2025",
       "spend": 11844.96,
       "running": 61002.91,
       "vs": 302.62,
-      "food": 1401.64,
-      "accom": 2584.3
+      "food": 1216.59,
+      "accom": 1691.8
     },
     {
       "m": "FEB 2025",
@@ -48,7 +48,7 @@
       "running": 71437.58,
       "vs": -1107.67,
       "food": 1231.31,
-      "accom": 2584.3
+      "accom": 1691.8
     },
     {
       "m": "MAR 2025",
@@ -63,7 +63,7 @@
       "spend": 11814.39,
       "running": 95365.99,
       "vs": -254.63,
-      "food": 1343.12,
+      "food": 1321.62,
       "accom": 3212.63
     },
     {
@@ -172,7 +172,7 @@
       "Food & Drink": 1632.88,
       "Transport": 819.2,
       "Comms": 418.33,
-      "Home": 4051.43,
+      "Home": 3931.45,
       "Finance/Work": 1730.79,
       "Lifestyle": 2491.38,
       "Personal": 661.08,
@@ -184,14 +184,14 @@
       "Transport": 310.85,
       "Comms": 299.7,
       "Home": 891.68,
-      "Finance/Work": 4662.03,
-      "Lifestyle": 662.39,
-      "Personal": 696.83,
+      "Finance/Work": 4459.52,
+      "Lifestyle": 591.39,
+      "Personal": 534.83,
       "Family": 1472.0
     },
     {
       "m": "DEC 2024",
-      "Food & Drink": 3019.07,
+      "Food & Drink": 2238.88,
       "Transport": 413.14,
       "Comms": 437.18,
       "Home": 5336.07,
@@ -202,8 +202,8 @@
     },
     {
       "m": "JAN 2025",
-      "Food & Drink": 2216.5,
-      "Transport": 1161.55,
+      "Food & Drink": 1832.05,
+      "Transport": 1121.55,
       "Comms": 400.25,
       "Home": 4681.9,
       "Finance/Work": 1209.88,
@@ -213,13 +213,13 @@
     },
     {
       "m": "FEB 2025",
-      "Food & Drink": 2025.54,
+      "Food & Drink": 1815.54,
       "Transport": 1888.84,
       "Comms": 314.48,
       "Home": 2400.53,
       "Finance/Work": 1549.84,
       "Lifestyle": 748.77,
-      "Personal": 929.84,
+      "Personal": 685.47,
       "Family": 443.0
     },
     {
@@ -228,29 +228,29 @@
       "Transport": 725.14,
       "Comms": 358.84,
       "Home": 3380.89,
-      "Finance/Work": 705.88,
-      "Lifestyle": 640.87,
-      "Personal": 757.31,
-      "Family": 2704.6
+      "Finance/Work": 1205.88,
+      "Lifestyle": 520.87,
+      "Personal": 625.56,
+      "Family": 1812.1
     },
     {
       "m": "APR 2025",
-      "Food & Drink": 2345.27,
-      "Transport": 442.74,
-      "Comms": 297.33,
-      "Home": 3814.9,
-      "Finance/Work": 1547.68,
-      "Lifestyle": 505.27,
+      "Food & Drink": 2300.52,
+      "Transport": 404.13,
+      "Comms": 290.83,
+      "Home": 2532.36,
+      "Finance/Work": 1542.68,
+      "Lifestyle": 465.47,
       "Personal": 294.11,
       "Family": 2208.83
     },
     {
       "m": "MAY 2025",
-      "Food & Drink": 1790.54,
+      "Food & Drink": 1781.19,
       "Transport": 525.38,
       "Comms": 355.7,
       "Home": 2533.45,
-      "Finance/Work": 2781.25,
+      "Finance/Work": 2446.41,
       "Lifestyle": 649.46,
       "Personal": 343.17,
       "Family": 1662.5
@@ -294,7 +294,7 @@
       "Transport": 271.9,
       "Comms": 348.92,
       "Home": 2746.79,
-      "Finance/Work": 1717.25,
+      "Finance/Work": 545.03,
       "Lifestyle": 1209.03,
       "Personal": 971.16,
       "Family": 1379.16
@@ -327,9 +327,9 @@
       "Transport": 741.54,
       "Comms": 413.84,
       "Home": 3300.62,
-      "Finance/Work": 1468.77,
+      "Finance/Work": 718.23,
       "Lifestyle": 2035.53,
-      "Personal": 1321.11,
+      "Personal": 1293.71,
       "Family": 1852.31
     },
     {
