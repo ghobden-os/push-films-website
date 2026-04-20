@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-20T22:46:52.225523",
+  "generated": "2026-04-20T22:51:12.502370",
   "source": "ACCOUNTS_2026_COMPLETE_16-04-2026_17-35.xlsx",
   "monthly": [
     {
@@ -256,9 +256,9 @@
       "Finance/Work": 1542.68,
       "Lifestyle": 465.47,
       "Personal": 294.11,
-      "Family": 1580.5,
+      "Family": 688.0,
       "Other": 1140.05,
-      "Mortgage": 2319.33
+      "Mortgage": 3211.83
     },
     {
       "m": "MAY 2025",
@@ -269,9 +269,9 @@
       "Finance/Work": 2446.41,
       "Lifestyle": 649.46,
       "Personal": 343.17,
-      "Family": 1562.5,
+      "Family": 670.0,
       "Other": 1345.09,
-      "Mortgage": 1791.79
+      "Mortgage": 2684.29
     },
     {
       "m": "JUN 2025",
