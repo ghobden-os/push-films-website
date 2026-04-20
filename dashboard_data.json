@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-20T22:58:49.961661",
+  "generated": "2026-04-20T23:11:58.574138",
   "source": "ACCOUNTS_2026_COMPLETE_16-04-2026_17-35.xlsx",
   "monthly": [
     {
@@ -319,10 +319,10 @@
       "Finance/Work": 2122.12,
       "Lifestyle": 745.48,
       "Personal": 596.69,
-      "Family": 748.33,
+      "Family": 120.0,
       "Other": 289.29,
       "Mortgage": 1691.8,
-      "Kids Accom": 0.0
+      "Kids Accom": 628.33
     },
     {
       "m": "SEP 2025",
@@ -333,10 +333,10 @@
       "Finance/Work": 545.03,
       "Lifestyle": 1209.03,
       "Personal": 971.16,
-      "Family": 1379.16,
+      "Family": 750.83,
       "Other": 456.46,
       "Mortgage": 1691.79,
-      "Kids Accom": 0.0
+      "Kids Accom": 628.33
     },
     {
       "m": "OCT 2025",
@@ -347,10 +347,10 @@
       "Finance/Work": 543.57,
       "Lifestyle": 1733.15,
       "Personal": 968.91,
-      "Family": 1176.33,
+      "Family": 548.0,
       "Other": 914.4,
       "Mortgage": 2337.34,
-      "Kids Accom": 0.0
+      "Kids Accom": 628.33
     },
     {
       "m": "NOV 2025",
@@ -361,10 +361,10 @@
       "Finance/Work": 582.62,
       "Lifestyle": 689.91,
       "Personal": 402.98,
-      "Family": 1636.78,
+      "Family": 1008.45,
       "Other": 1295.97,
       "Mortgage": 2389.48,
-      "Kids Accom": 985.5
+      "Kids Accom": 1613.83
     },
     {
       "m": "DEC 2025",
@@ -375,10 +375,10 @@
       "Finance/Work": 718.23,
       "Lifestyle": 2035.53,
       "Personal": 1293.71,
-      "Family": 1672.31,
+      "Family": 1043.98,
       "Other": 1542.54,
       "Mortgage": 2389.48,
-      "Kids Accom": 1165.5
+      "Kids Accom": 1793.83
     },
     {
       "m": "JAN 2026",
@@ -389,10 +389,10 @@
       "Finance/Work": 525.47,
       "Lifestyle": 1753.8,
       "Personal": 461.89,
-      "Family": 1057.23,
+      "Family": 428.9,
       "Other": 436.15,
       "Mortgage": 2389.48,
-      "Kids Accom": 985.5
+      "Kids Accom": 1613.83
     },
     {
       "m": "FEB 2026",
@@ -403,10 +403,10 @@
       "Finance/Work": 1029.28,
       "Lifestyle": 84.56,
       "Personal": 467.23,
-      "Family": 874.03,
+      "Family": 245.7,
       "Other": 1273.47,
       "Mortgage": 2331.43,
-      "Kids Accom": 985.5
+      "Kids Accom": 1613.83
     },
     {
       "m": "MAR 2026",
@@ -417,10 +417,10 @@
       "Finance/Work": 522.68,
       "Lifestyle": 630.99,
       "Personal": 125.89,
-      "Family": 1252.33,
+      "Family": 624.0,
       "Other": 896.67,
       "Mortgage": 2326.85,
-      "Kids Accom": 985.5
+      "Kids Accom": 1613.83
     }
   ],
   "atl": [
