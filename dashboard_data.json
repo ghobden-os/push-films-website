@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-20T17:52:56.055309",
+  "generated": "2026-04-20T20:06:01.201689",
   "source": "ACCOUNTS_2026_COMPLETE_16-04-2026_17-35.xlsx",
   "monthly": [
     {
@@ -198,14 +198,14 @@
       "Finance/Work": 1590.2,
       "Lifestyle": 2441.43,
       "Personal": 971.98,
-      "Family": 3707.99
+      "Family": 3687.99
     },
     {
       "m": "JAN 2025",
       "Food & Drink": 1832.05,
       "Transport": 1121.55,
       "Comms": 400.25,
-      "Home": 4681.9,
+      "Home": 4070.92,
       "Finance/Work": 1209.88,
       "Lifestyle": 895.85,
       "Personal": 1141.39,
@@ -235,7 +235,7 @@
     },
     {
       "m": "APR 2025",
-      "Food & Drink": 2300.52,
+      "Food & Drink": 2294.52,
       "Transport": 404.13,
       "Comms": 290.83,
       "Home": 2532.36,
@@ -1146,7 +1146,7 @@
     },
     {
       "m": "MAR 2025",
-      "income": 22636.4,
+      "income": 17696.4,
       "costs": 5250.0,
       "costs_breakdown": [
         {
