@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-20T22:41:34.130702",
+  "generated": "2026-04-20T22:46:36.729691",
   "source": "ACCOUNTS_2026_COMPLETE_16-04-2026_17-35.xlsx",
   "monthly": [
     {
@@ -191,9 +191,9 @@
       "Finance/Work": 4459.52,
       "Lifestyle": 591.39,
       "Personal": 534.83,
-      "Family": 1472.0,
+      "Family": 1402.0,
       "Other": 1583.22,
-      "Mortgage": 2974.34
+      "Mortgage": 3044.34
     },
     {
       "m": "DEC 2024",
@@ -204,9 +204,9 @@
       "Finance/Work": 1590.2,
       "Lifestyle": 1621.43,
       "Personal": 971.98,
-      "Family": 4117.99,
+      "Family": 2473.99,
       "Other": 1522.78,
-      "Mortgage": 2973.9
+      "Mortgage": 4617.9
     },
     {
       "m": "JAN 2025",
@@ -217,9 +217,9 @@
       "Finance/Work": 1209.88,
       "Lifestyle": 895.85,
       "Personal": 1141.39,
-      "Family": 1602.76,
+      "Family": 1317.76,
       "Other": 2555.15,
-      "Mortgage": 2974.34
+      "Mortgage": 3259.34
     },
     {
       "m": "FEB 2025",
@@ -243,9 +243,9 @@
       "Finance/Work": 1205.88,
       "Lifestyle": 520.87,
       "Personal": 625.56,
-      "Family": 1812.1,
+      "Family": 919.6,
       "Other": 1456.88,
-      "Mortgage": 2974.34
+      "Mortgage": 3866.84
     },
     {
       "m": "APR 2025",
@@ -256,9 +256,9 @@
       "Finance/Work": 1542.68,
       "Lifestyle": 465.47,
       "Personal": 294.11,
-      "Family": 2208.83,
+      "Family": 1580.5,
       "Other": 1140.05,
-      "Mortgage": 1691.0
+      "Mortgage": 2319.33
     },
     {
       "m": "MAY 2025",
@@ -269,9 +269,9 @@
       "Finance/Work": 2446.41,
       "Lifestyle": 649.46,
       "Personal": 343.17,
-      "Family": 1662.5,
+      "Family": 1562.5,
       "Other": 1345.09,
-      "Mortgage": 1691.79
+      "Mortgage": 1791.79
     },
     {
       "m": "JUN 2025",
@@ -360,9 +360,9 @@
       "Finance/Work": 718.23,
       "Lifestyle": 2035.53,
       "Personal": 1293.71,
-      "Family": 1852.31,
+      "Family": 1672.31,
       "Other": 2928.04,
-      "Mortgage": 2389.48
+      "Mortgage": 2569.48
     },
     {
       "m": "JAN 2026",
