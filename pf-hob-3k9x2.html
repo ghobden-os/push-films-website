@@ -439,7 +439,7 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
   <div class="section-row">
     <div class="chart-card">
       <div class="chart-card-hdr">
-        <div class="chart-card-title">Household Food &amp; Accommodation — by Month</div>
+        <div class="chart-card-title">Household Food — by Month</div>
         <div class="chart-card-meta" id="foodAccomChartMeta"></div>
       </div>
       <div class="chart-wrap" style="height:220px"><canvas id="foodAccomChart"></canvas></div>
@@ -588,8 +588,8 @@ const catConfig = [
     desc:['Petrol & motor costs','Parking','Taxi & TfL','Flights','Car insurance'] },
   { key:'Comms',             short:'Comms',     color:'#888888',
     desc:['Monthly phone bill','Broadband'] },
-  { key:'Mortgage / Rent',   short:'Mortgage',  color:'#5FA8A8',
-    desc:['Santander mortgage DD','Otto\'s accommodation','Ivo\'s accommodation'], isStandalone:true },
+  { key:'Mortgage',   short:'Mortgage',  color:'#5FA8A8',
+    desc:['Santander mortgage DD','Birmingham Midshires (until Mar 2025)'], isStandalone:true },
   { key:'Ocado / Household', short:'Household', color:'#C9A44E',
     desc:['Ocado weekly shop','Other supermarket runs'], isStandalone:true },
   { key:'Uncategorised',     short:'Uncat',     color:'#555555', isUncat:true }
@@ -622,9 +622,9 @@ function render(pk) {
     const cr = mC.find(x => x.m === d.m) || {};
     const catSum = realCatConfig.reduce((s, c) => s + (cr[c.key] || 0), 0);
     return { ...cr, m: d.m,
-      'Mortgage / Rent':   d.accom || 0,
+      'Mortgage':   (cats.find(c=>c.m===d.m)||{})['Mortgage'] || 0,
       'Ocado / Household': d.food  || 0,
-      'Uncategorised': Math.max(0, d.spend - catSum - (d.accom || 0)) };
+      'Uncategorised': Math.max(0, d.spend - catSum) };
   });
 
   document.getElementById('periodLabel').textContent = P.sub;
@@ -675,7 +675,7 @@ function render(pk) {
   const avgAccom = nAvg > 0 ? totAccom / nAvg : 0;
 
   document.getElementById('foodAccomChartMeta').textContent =
-    `${P.sub} · food avg ${f(avgFood)}/mo · accommodation avg ${f(avgAccom)}/mo`;
+    `${P.sub} · avg ${f(avgFood)}/mo`;
 
   if (FAC) FAC.destroy();
   FAC = new Chart(document.getElementById('foodAccomChart').getContext('2d'), {
@@ -691,14 +691,6 @@ function render(pk) {
           borderWidth: 0,
           borderRadius: 2,
         },
-        {
-          label: 'Accommodation',
-          data: ms.map(m => { const d = monthly.find(x=>x.m===m); return d ? (d.accom||0) : 0; }),
-          backgroundColor: '#6EB5E0cc',
-          borderColor: '#6EB5E0',
-          borderWidth: 0,
-          borderRadius: 2,
-        }
       ]
     },
     options: {
@@ -791,9 +783,9 @@ function render(pk) {
   })).filter(d => d.total > 0);
 
   // Inject Mortgage / Rent as a segment (data lives on monthly entries, not in cats[])
-  const mortgageTotal = mM.reduce((s,d) => s + (d.accom||0), 0);
+  const mortgageTotal = mM.reduce((s,d) => s + ((cats.find(c=>c.m===d.m)||{})['Mortgage']||0), 0);
   if (mortgageTotal > 0) {
-    const mc = catConfig.find(c => c.key === 'Mortgage / Rent');
+    const mc = catConfig.find(c => c.key === 'Mortgage');
     doughnutData.push({ key: mc.key, color: mc.color, total: mortgageTotal });
   }
 
@@ -1005,14 +997,10 @@ function render(pk) {
     }).join('');
     const foodVal  = d.food  || 0;
     const accomVal = d.accom || 0;
-    const highlightItems = (foodVal > 0 || accomVal > 0) ? `
+    const highlightItems = foodVal > 0 ? `
       <div class="mdc" style="border-color:#1e2e2e">
         <div class="mdc-lbl" style="color:#E8A87C">Household Food</div>
-        <div class="mdc-val">${foodVal > 0 ? f(foodVal) : '—'}</div>
-      </div>
-      <div class="mdc" style="border-color:#1e2e2e">
-        <div class="mdc-lbl" style="color:#6EB5E0">Accommodation</div>
-        <div class="mdc-val">${accomVal > 0 ? f(accomVal) : '—'}</div>
+        <div class="mdc-val">${f(foodVal)}</div>
       </div>` : '';
     return `<div class="month-row">
       <div class="month-row-hdr" onclick="toggleMonth(this)">
