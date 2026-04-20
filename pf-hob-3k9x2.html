@@ -439,7 +439,8 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
   <div class="section-row">
     <div class="chart-card">
       <div class="chart-card-hdr">
-        <div class="chart-card-title">Household Food — by Month</div>
+        <div class="chart-card-title">Weekly Food Shopping — by Month</div>
+        <div class="chart-card-sub" style="font-size:11px;color:#888;margin-top:2px;">Supermarket only: Ocado, Sainsbury's, M&amp;S, All Week, Simmer. Does not include restaurants, coffee or Deliveroo.</div>
         <div class="chart-card-meta" id="foodAccomChartMeta"></div>
       </div>
       <div class="chart-wrap" style="height:220px"><canvas id="foodAccomChart"></canvas></div>
@@ -575,7 +576,7 @@ const catConfig = [
   { key:'Home',              short:'Home',      color:'#F5D800',
     desc:['Council tax','Gas & electricity','Thames Water','Household insurance','Repairs & maintenance','Cleaning'] },
   { key:'Food & Drink',      short:'Food',      color:'#E8A87C',
-    desc:['Restaurants','Lunches & coffees','Deliveroo'] },
+    desc:['All food & drink spending combined — the full picture','Includes: restaurants, lunches out, coffees, Deliveroo AND supermarket shopping (Ocado, Sainsbury\'s, M&S etc.)','The Weekly Food Shopping chart below shows only the supermarket portion of this total'] },
   { key:'Family',            short:'Family',    color:'#F08080',
     desc:['Otto, Ivo, Willa & Sally','Allowances & standing orders','Tutoring','Driving lessons'] },
   { key:'Finance/Work',      short:'Finance',   color:'#85C1E9',
