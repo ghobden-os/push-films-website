@@ -256,7 +256,7 @@ for r in range(4, 23):
 # Header expected in row 27; data in rows 28-46.
 # Reads ALL named columns — picks up new categories (Mortgage/Rent, Ocado etc.)
 # automatically whenever Greg adds them to the spreadsheet.
-NON_CAT = {'', 'total', 'total spend', 'monthly avg', 'monthly average', 'avg', 'month', 'other / uncategorised', 'other/uncategorised', 'uncategorised', 'other'}
+NON_CAT = {'', 'total', 'total spend', 'monthly avg', 'monthly average', 'avg', 'month', 'uncategorised'}
 CAT_COLS = {}
 for col in range(2, 25):
     v = ws_sum.cell(row=27, column=col).value
