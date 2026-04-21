@@ -346,6 +346,23 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
       </div>
     </div>
   </div>
+  <div class="tab-divider"></div>
+  <div class="tab-group">
+    <div class="tab-group-label">Custom Range</div>
+    <div class="tab-group-tabs" style="align-items:center; gap:4px">
+      <div class="month-select-wrap" id="rangeFromWrap" style="padding:8px 8px 10px">
+        <select class="month-select" id="rangeFrom" onchange="selectCustomRange()">
+          <option value="">From…</option>
+        </select>
+      </div>
+      <span style="color:var(--mid); font-size:10px; padding-bottom:2px; flex-shrink:0">→</span>
+      <div class="month-select-wrap" id="rangeToWrap" style="padding:8px 8px 10px">
+        <select class="month-select" id="rangeTo" onchange="selectCustomRange()">
+          <option value="">To…</option>
+        </select>
+      </div>
+    </div>
+  </div>
 </div>
 
 <main class="main">
@@ -421,11 +438,20 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
         <div class="chart-card-hdr-text">
           <div class="chart-card-title">Expenditure by Category</div>
           <div class="chart-card-meta" id="spendChartMeta"></div>
+          <div id="vbarTotLine" style="display:none; font-size:12px; color:#aaa; margin-top:4px">
+            Total: <span id="vbarTotVal" style="color:var(--fg); font-weight:500"></span>
+          </div>
         </div>
         <div class="chart-toggle">
           <button class="ct-btn" data-sct="doughnut" onclick="setSpendChartType('doughnut')">Pie</button>
           <button class="ct-btn" data-sct="hbar" onclick="setSpendChartType('hbar')">H-Bar</button>
           <button class="ct-btn active" data-sct="vbar" onclick="setSpendChartType('vbar')">V-Bar</button>
+        </div>
+      </div>
+      <div id="vbarSelChipWrap" style="display:none; margin:0 0 12px">
+        <div style="padding:10px 16px; background:rgba(245,216,0,0.06); border:1px solid rgba(245,216,0,0.25); border-radius:5px; display:flex; align-items:center; justify-content:space-between">
+          <span id="vbarSelLabel" style="font-size:12px; color:var(--fg)"></span>
+          <button onclick="clearVbarSelection()" style="background:none; border:none; color:#666; cursor:pointer; font-size:16px; line-height:1; padding:0 2px; font-family:var(--font); transition:color .15s" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='#666'">×</button>
         </div>
       </div>
       <div class="chart-wrap" id="spendChartWrap" style="height:320px"><canvas id="spendChart"></canvas></div>
@@ -613,6 +639,7 @@ const gc = 'rgba(255,255,255,0.04)';
 let SC=null, TC=null, FAC=null, MC=null;
 let spendChartType = 'vbar';
 let lastDoughnutData = [], lastTotSpend = 0, lastSorted = [];
+let selectedBars = new Set();
 
 function render(pk) {
   const P = periods[pk];
@@ -1016,11 +1043,18 @@ function render(pk) {
 
 function buildSpendChart(doughnutData, totSpend) {
   if (SC) SC.destroy();
+  selectedBars.clear();
+  document.getElementById('vbarSelChipWrap').style.display = 'none';
   const wrap = document.getElementById('spendChartWrap');
   const tooltip = { callbacks:{ label: ctx => {
     const pct = ((ctx.raw / totSpend) * 100).toFixed(1);
     return ` ${ctx.label}: ${f(ctx.raw)} (${pct}%)`;
   }}};
+
+  document.getElementById('vbarTotLine').style.display = spendChartType === 'vbar' ? '' : 'none';
+  if (spendChartType === 'vbar') {
+    document.getElementById('vbarTotVal').textContent = f(totSpend);
+  }
 
   if (spendChartType === 'doughnut') {
     wrap.style.height = '320px';
@@ -1114,8 +1148,17 @@ function buildSpendChart(doughnutData, totSpend) {
   document.getElementById('spendChart').addEventListener('click', function(evt) {
     if (!SC || spendChartType === 'doughnut') return;
     const els = SC.getElementsAtEventForMode(evt, 'nearest', {intersect: true}, false);
-    if (els.length) showBarDesc(lastSorted[els[0].index].key);
-    else hideBarDesc();
+    if (els.length) {
+      const idx = els[0].index;
+      if (selectedBars.has(idx)) selectedBars.delete(idx);
+      else selectedBars.add(idx);
+      updateVbarSelection();
+      showBarDesc(lastSorted[idx].key);
+    } else {
+      selectedBars.clear();
+      updateVbarSelection();
+      hideBarDesc();
+    }
   });
 }
 
@@ -1129,6 +1172,63 @@ function showBarDesc(key) {
 
 function hideBarDesc() {
   document.getElementById('spendBarDesc').style.display = 'none';
+}
+
+function updateVbarSelection() {
+  if (!SC) return;
+  const hasSelection = selectedBars.size > 0;
+  const ds = SC.data.datasets[0];
+  ds.backgroundColor = lastSorted.map((d, i) =>
+    !hasSelection || selectedBars.has(i) ? d.color + 'cc' : d.color + '22'
+  );
+  ds.borderColor = lastSorted.map((d, i) =>
+    !hasSelection || selectedBars.has(i) ? d.color : d.color + '33'
+  );
+  SC.update();
+  const chip = document.getElementById('vbarSelChipWrap');
+  if (hasSelection) {
+    const total = [...selectedBars].reduce((s, i) => s + lastSorted[i].total, 0);
+    const names = [...selectedBars].map(i => {
+      const cfg = catConfig.find(c => c.key === lastSorted[i].key);
+      return cfg ? cfg.short : lastSorted[i].key;
+    });
+    document.getElementById('vbarSelLabel').textContent =
+      `${selectedBars.size} selected (${names.join(' + ')}): ${f(total)}`;
+    chip.style.display = '';
+  } else {
+    chip.style.display = 'none';
+  }
+}
+
+function clearVbarSelection() {
+  selectedBars.clear();
+  updateVbarSelection();
+  hideBarDesc();
+}
+
+function selectCustomRange() {
+  const from = document.getElementById('rangeFrom').value;
+  const to   = document.getElementById('rangeTo').value;
+  if (!from || !to) return;
+  const fromIdx = monthly.findIndex(d => d.m === from);
+  const toIdx   = monthly.findIndex(d => d.m === to);
+  if (fromIdx < 0 || toIdx < 0 || toIdx < fromIdx) return;
+  const ms = monthly.slice(fromIdx, toIdx + 1).map(d => d.m);
+  document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+  document.getElementById('monthSelectWrap').classList.remove('active-select');
+  document.getElementById('monthSelect').value = '';
+  document.getElementById('rangeFromWrap').classList.add('active-select');
+  document.getElementById('rangeToWrap').classList.add('active-select');
+  periods['_custom'] = { label: `${from} – ${to}`, sub: `${from} – ${to}`, months: ms };
+  allExpanded = false;
+  document.getElementById('expandAllBtn').textContent = 'Expand All';
+  document.getElementById('mainView').style.display = '';
+  document.getElementById('savingsView').style.display = 'none';
+  document.getElementById('savingsBtn').textContent = '↓ Savings View';
+  document.getElementById('savingsBtn').onclick = showSavingsView;
+  ['incomeDetailPanel','costsDetailPanel'].forEach(id => document.getElementById(id).classList.remove('open'));
+  ['kpiIncomeBox','kpiCostsBox'].forEach(id => document.getElementById(id).classList.remove('active'));
+  render('_custom');
 }
 
 function setSpendChartType(type) {
@@ -1207,6 +1307,18 @@ function populateMonthDropdown() {
     o.value = d.m; o.textContent = d.m;
     sel.appendChild(o);
   });
+  [['rangeFrom','From…'],['rangeTo','To…']].forEach(([id, placeholder]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const prev = el.value;
+    el.innerHTML = `<option value="">${placeholder}</option>`;
+    monthly.forEach(d => {
+      const o = document.createElement('option');
+      o.value = d.m; o.textContent = d.m;
+      el.appendChild(o);
+    });
+    if (prev) el.value = prev;
+  });
   ['cmpA','cmpB'].forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -1223,6 +1335,8 @@ function selectMonth(m) {
   if (!m) return;
   document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
   document.getElementById('monthSelectWrap').classList.add('active-select');
+  document.getElementById('rangeFromWrap').classList.remove('active-select');
+  document.getElementById('rangeToWrap').classList.remove('active-select');
   periods['_month'] = { label: m, sub: m, months: [m] };
   allExpanded = false;
   document.getElementById('expandAllBtn').textContent = 'Expand All';
@@ -1235,6 +1349,8 @@ document.querySelectorAll('.tab:not(#savingsTab)').forEach(t=>{
     t.classList.add('active');
     document.getElementById('monthSelectWrap').classList.remove('active-select');
     document.getElementById('monthSelect').value = '';
+    document.getElementById('rangeFromWrap').classList.remove('active-select');
+    document.getElementById('rangeToWrap').classList.remove('active-select');
     allExpanded = false;
     document.getElementById('expandAllBtn').textContent = 'Expand All';
     document.getElementById('mainView').style.display = '';
