@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-20T23:23:20.904859",
+  "generated": "2026-04-21T09:20:07.572669",
   "source": "ACCOUNTS_2026_COMPLETE_16-04-2026_17-35.xlsx",
   "monthly": [
     {
@@ -369,14 +369,14 @@
     {
       "m": "DEC 2025",
       "Food & Drink": 3298.95,
-      "Transport": 741.54,
+      "Transport": 423.34,
       "Comms": 413.84,
       "Home": 1311.14,
       "Finance/Work": 718.23,
       "Lifestyle": 2035.53,
       "Personal": 1293.71,
       "Family": 1043.98,
-      "Other": 1542.54,
+      "Other": 1860.74,
       "Mortgage": 2389.48,
       "Kids Accom": 1793.83
     },
@@ -1471,12 +1471,20 @@
         {
           "p": "24 Dec",
           "a": 1282.36
+        },
+        {
+          "p": "24 Dec",
+          "a": 318.2
         }
       ],
       "payees": [
         {
           "name": "Ms* Faerncransmont Switzerland Amount In",
           "amount": 1282.36
+        },
+        {
+          "name": "Et Car Hire On 23 Dec Bdc",
+          "amount": 318.2
         }
       ],
       "tax": 0,
@@ -1667,6 +1675,10 @@
       "costs": 28331.97,
       "costs_breakdown": [
         {
+          "p": "27 Feb",
+          "a": 2600.0
+        },
+        {
           "p": "2 Feb",
           "a": 28280.97
         },
@@ -1683,6 +1695,10 @@
         {
           "name": "Swiss Filming * 241390*Theus Sarl* Tf",
           "amount": 28280.97
+        },
+        {
+          "name": "209448 53401359 Nick Piper Inv Ft",
+          "amount": 2600.0
         },
         {
           "name": "Pulll France On 31 Jan Bdc",
