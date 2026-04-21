@@ -280,6 +280,72 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
 .trend-pct { font-size:12px; font-variant-numeric:tabular-nums; text-align:right; }
 .trend-pct.better { color:var(--green); }
 .trend-pct.worse  { color:var(--red); }
+
+/* COMMITMENTS VIEW */
+.cm-urgent { background:#1a0f0f; border:1px solid #4a1a1a; border-radius:6px;
+  padding:20px 24px; margin-bottom:28px; }
+.cm-urgent-title { font-size:11px; font-weight:500; letter-spacing:0.14em;
+  text-transform:uppercase; color:var(--red); margin-bottom:16px;
+  display:flex; align-items:center; gap:8px; }
+.cm-urgent-item { display:flex; align-items:flex-start; gap:16px;
+  padding:12px 0; border-bottom:1px solid #2a1515; }
+.cm-urgent-item:last-child { border-bottom:none; padding-bottom:0; }
+.cm-urgent-name { font-size:13px; font-weight:500; color:var(--fg); min-width:180px; flex-shrink:0; }
+.cm-urgent-detail { font-size:12px; color:#bbb; line-height:1.5; flex:1; }
+.cm-urgent-action { font-size:11px; font-weight:500; letter-spacing:0.06em;
+  text-transform:uppercase; color:var(--red); white-space:nowrap; flex-shrink:0; cursor:pointer; }
+.cm-urgent-action a { color:var(--red); text-decoration:none; }
+.cm-urgent-action a:hover { text-decoration:underline; }
+
+.cm-totals { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:28px; }
+
+.cm-section { margin-bottom:32px; }
+.cm-section-label { font-size:11px; font-weight:500; letter-spacing:0.14em;
+  text-transform:uppercase; color:var(--gold); margin-bottom:12px;
+  display:flex; align-items:center; gap:12px; }
+.cm-section-label::after { content:''; flex:1; height:1px; background:var(--rule); }
+
+.cm-table { width:100%; border-collapse:collapse; }
+.cm-table th { font-size:10px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase;
+  color:#666; text-align:left; padding:8px 12px; border-bottom:1px solid var(--rule); }
+.cm-table th.right { text-align:right; }
+.cm-table td { padding:11px 12px; border-bottom:1px solid #1a1a1a;
+  font-size:13px; vertical-align:top; }
+.cm-table tr:last-child td { border-bottom:none; }
+.cm-table tr:hover td { background:rgba(255,255,255,0.02); }
+.cm-name { font-weight:500; color:var(--fg); }
+.cm-what { font-size:12px; color:#888; margin-top:2px; line-height:1.4; }
+.cm-flag { font-size:11px; color:#c8924a; margin-top:4px; line-height:1.4; }
+.cm-amount { text-align:right; font-variant-numeric:tabular-nums; font-weight:300; white-space:nowrap; }
+.cm-amount .main-amt { font-size:15px; }
+.cm-amount .sub-amt { font-size:11px; color:#666; margin-top:2px; }
+.cm-paydate { font-size:12px; color:#888; white-space:nowrap; }
+.cm-status { white-space:nowrap; }
+.badge { display:inline-block; font-size:10px; font-weight:500; letter-spacing:0.08em;
+  text-transform:uppercase; padding:3px 8px; border-radius:3px; }
+.badge-active  { background:rgba(76,175,125,0.15); color:var(--green); }
+.badge-review  { background:rgba(245,216,0,0.12); color:var(--gold); }
+.badge-cancel  { background:rgba(224,85,85,0.15); color:var(--red); }
+.badge-stopped { background:rgba(255,255,255,0.06); color:#666; }
+
+.cm-renewal { font-size:11px; color:#888; margin-top:3px; }
+.cm-renewal.soon { color:#c8924a; }
+
+.cm-anomalies { margin-bottom:32px; }
+.cm-anomaly-item { padding:14px 0; border-bottom:1px solid var(--rule); display:flex; gap:16px; }
+.cm-anomaly-item:last-child { border-bottom:none; }
+.cm-anomaly-dot { width:6px; height:6px; border-radius:50%; background:#c8924a;
+  margin-top:5px; flex-shrink:0; }
+.cm-anomaly-title { font-size:13px; font-weight:500; color:var(--fg); margin-bottom:4px; }
+.cm-anomaly-detail { font-size:12px; color:#888; line-height:1.5; }
+
+.cm-cal { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:10px; margin-bottom:32px; }
+.cm-cal-item { background:var(--dim); border:1px solid var(--rule); border-radius:6px; padding:16px 18px; }
+.cm-cal-month { font-size:11px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:8px; }
+.cm-cal-action { font-size:12px; color:var(--fg); line-height:1.5; }
+.cm-cal-item.urgent-cal { border-color:#4a1a1a; background:#160d0d; }
+.cm-cal-item.urgent-cal .cm-cal-month { color:var(--red); }
 </style>
 </head>
 <body>
@@ -299,6 +365,13 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
       font-family:var(--font); font-size:11px; font-weight:500; letter-spacing:0.08em;
       text-transform:uppercase; padding:8px 16px; cursor:pointer; white-space:nowrap;
       transition:opacity .2s;">↓ Savings View</button>
+    <button id="commitmentsBtn" onclick="showCommitmentsView()" style="
+      background:transparent; color:var(--mid); border:1px solid var(--rule); border-radius:4px;
+      font-family:var(--font); font-size:11px; font-weight:500; letter-spacing:0.08em;
+      text-transform:uppercase; padding:8px 16px; cursor:pointer; white-space:nowrap;
+      transition:color .2s, border-color .2s;"
+      onmouseover="this.style.color='var(--fg)';this.style.borderColor='#444'"
+      onmouseout="if(!this.classList.contains('active-btn')){this.style.color='var(--mid)';this.style.borderColor='var(--rule)'}">Standing Orders</button>
     <button onclick="document.getElementById('fileImportInput').click()" title="Load updated spreadsheet" style="
       background:transparent; color:var(--mid); border:1px solid var(--rule); border-radius:4px;
       font-family:var(--font); font-size:11px; font-weight:500; letter-spacing:0.08em;
@@ -558,6 +631,11 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
   </div>
 
 </div><!-- /#savingsView -->
+
+<!-- COMMITMENTS VIEW -->
+<div id="commitmentsView" style="display:none">
+  <div id="commitmentsContent"></div>
+</div><!-- /#commitmentsView -->
 
 </main>
 
@@ -1369,16 +1447,22 @@ function showSavingsView() {
   document.getElementById('monthSelect').value = '';
   document.getElementById('mainView').style.display = 'none';
   document.getElementById('savingsView').style.display = '';
+  document.getElementById('commitmentsView').style.display = 'none';
   document.getElementById('savingsBtn').textContent = '↑ Back to Dashboard';
   document.getElementById('savingsBtn').onclick = showMainView;
+  const cb = document.getElementById('commitmentsBtn');
+  cb.style.color = 'var(--mid)'; cb.style.borderColor = 'var(--rule)'; cb.classList.remove('active-btn');
   renderSavings();
 }
 
 function showMainView() {
   document.getElementById('mainView').style.display = '';
   document.getElementById('savingsView').style.display = 'none';
+  document.getElementById('commitmentsView').style.display = 'none';
   document.getElementById('savingsBtn').textContent = '↓ Savings View';
   document.getElementById('savingsBtn').onclick = showSavingsView;
+  const cb = document.getElementById('commitmentsBtn');
+  cb.style.color = 'var(--mid)'; cb.style.borderColor = 'var(--rule)'; cb.classList.remove('active-btn');
   // re-activate first tab
   const firstTab = document.querySelector('.tab[data-period]');
   if (firstTab) { firstTab.classList.add('active'); render(firstTab.dataset.period); }
@@ -1646,6 +1730,7 @@ async function loadDashboardData() {
     monthly.length = 0; (data.monthly || []).forEach(x => monthly.push(x));
     cats.length    = 0; (data.cats    || []).forEach(x => cats.push(x));
     atl.length     = 0; (data.atl     || []).forEach(x => atl.push(x));
+    window._dashData = data;
 
     // Update subtitle
     const src = data.source || '';
@@ -1889,6 +1974,219 @@ document.getElementById('fileImportInput').addEventListener('change', function(e
   };
   reader.readAsArrayBuffer(file);
 });
+
+// ─── COMMITMENTS VIEW ────────────────────────────────────────────────────────
+
+function showCommitmentsView() {
+  // hide other views
+  document.getElementById('mainView').style.display = 'none';
+  document.getElementById('savingsView').style.display = 'none';
+  document.getElementById('commitmentsView').style.display = '';
+
+  // button states
+  document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+  document.getElementById('monthSelectWrap').classList.remove('active-select');
+  document.getElementById('monthSelect').value = '';
+
+  const btn = document.getElementById('commitmentsBtn');
+  btn.style.color = 'var(--gold)';
+  btn.style.borderColor = 'var(--gold)';
+  btn.classList.add('active-btn');
+
+  document.getElementById('savingsBtn').textContent = '↓ Savings View';
+  document.getElementById('savingsBtn').onclick = showSavingsView;
+
+  renderCommitments();
+}
+
+function hideCommitmentsBtn() {
+  const btn = document.getElementById('commitmentsBtn');
+  btn.style.color = 'var(--mid)';
+  btn.style.borderColor = 'var(--rule)';
+  btn.classList.remove('active-btn');
+  document.getElementById('commitmentsView').style.display = 'none';
+}
+
+
+function fmt(n) {
+  if (n == null) return '—';
+  return '£' + Math.round(n).toLocaleString('en-GB');
+}
+
+function renderCommitments() {
+  const cm = window._dashData && window._dashData.commitments;
+  if (!cm) { document.getElementById('commitmentsContent').innerHTML = '<p style="color:#888;padding:40px 0">No commitments data found.</p>'; return; }
+
+  const items = cm.items || [];
+  const cats = [...new Set(items.map(i => i.cat))];
+
+  // monthly items total
+  const monthlyItems = items.filter(i => i.frequency === 'monthly' && i.monthly);
+  const totalMonthly = monthlyItems.reduce((s, i) => s + (i.monthly || 0), 0);
+  const annualItems = items.filter(i => i.frequency === 'annual' && i.annual);
+  const totalAnnual = items.reduce((s, i) => s + (i.annual || 0), 0);
+
+  let html = '';
+
+  // ── Urgent ──────────────────────────────────────────────────────────────
+  if (cm.urgent && cm.urgent.length) {
+    html += `<div class="cm-urgent">
+      <div class="cm-urgent-title">⚠ Action Required</div>`;
+    cm.urgent.forEach(u => {
+      const link = u.url
+        ? `<a href="${u.url}" target="_blank" rel="noopener">${u.action} ↗</a>`
+        : u.action;
+      html += `<div class="cm-urgent-item">
+        <div class="cm-urgent-name">${u.name}</div>
+        <div class="cm-urgent-detail">${u.issue}</div>
+        <div class="cm-urgent-action">${link}</div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  // ── Totals ──────────────────────────────────────────────────────────────
+  html += `<div class="cm-totals">
+    <div class="kpi">
+      <div class="kpi-lbl">Monthly committed</div>
+      <div class="kpi-val">${fmt(totalMonthly)}</div>
+      <div class="kpi-sub">Fixed monthly DDs/SOs</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Annual subs (on top)</div>
+      <div class="kpi-val">${fmt(annualItems.reduce((s,i)=>s+(i.annual||0),0))}</div>
+      <div class="kpi-sub">Paid annually — renewal dates below</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Total annual commitment</div>
+      <div class="kpi-val gold">${fmt(totalAnnual)}</div>
+      <div class="kpi-sub">All items combined</div>
+    </div>
+  </div>`;
+
+  // ── Per-category tables ─────────────────────────────────────────────────
+  cats.forEach(cat => {
+    const catItems = items.filter(i => i.cat === cat);
+    html += `<div class="cm-section">
+      <div class="cm-section-label">${cat}</div>
+      <table class="cm-table">
+        <thead><tr>
+          <th style="width:35%">Item</th>
+          <th class="right">Monthly</th>
+          <th class="right">Annual</th>
+          <th>Pays on</th>
+          <th>Status</th>
+        </tr></thead>
+        <tbody>`;
+
+    catItems.forEach(item => {
+      const statusBadge = {
+        'active':  '<span class="badge badge-active">Active</span>',
+        'review':  '<span class="badge badge-review">Review</span>',
+        'cancel':  '<span class="badge badge-cancel">Cancel</span>',
+        'stopped': '<span class="badge badge-stopped">Stopped</span>',
+      }[item.status] || '';
+
+      const renewalHtml = item.renewal
+        ? `<div class="cm-renewal ${isRenewalSoon(item.renewal) ? 'soon' : ''}">Renews ${formatRenewal(item.renewal)}</div>`
+        : '';
+
+      const flagHtml = item.flag
+        ? `<div class="cm-flag">▲ ${item.flag}</div>`
+        : '';
+
+      html += `<tr>
+        <td>
+          <div class="cm-name">${item.name}</div>
+          <div class="cm-what">${item.what}</div>
+          ${flagHtml}
+        </td>
+        <td class="cm-amount">
+          <div class="main-amt">${item.monthly != null ? fmt(item.monthly) : '—'}</div>
+        </td>
+        <td class="cm-amount">
+          <div class="main-amt">${fmt(item.annual)}</div>
+        </td>
+        <td class="cm-paydate">${item.pay_date}<br>${item.frequency === 'annual' ? '<span style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:0.08em">Annual</span>' : ''}</td>
+        <td class="cm-status">${statusBadge}${renewalHtml}</td>
+      </tr>`;
+    });
+
+    const catMonthly = catItems.filter(i=>i.frequency==='monthly').reduce((s,i)=>s+(i.monthly||0),0);
+    const catAnnual  = catItems.reduce((s,i)=>s+(i.annual||0),0);
+    html += `</tbody>
+      <tfoot><tr style="border-top:1px solid var(--rule)">
+        <td style="font-size:11px;color:#666;padding:8px 12px;text-transform:uppercase;letter-spacing:0.08em">Subtotal</td>
+        <td class="cm-amount" style="font-size:12px;color:#888">${catMonthly ? fmt(catMonthly)+'/mo' : '—'}</td>
+        <td class="cm-amount" style="font-size:12px;color:#888">${fmt(catAnnual)}/yr</td>
+        <td colspan="2"></td>
+      </tr></tfoot>
+      </table></div>`;
+  });
+
+  // ── Cancellation calendar ───────────────────────────────────────────────
+  html += `<div class="slabel" style="margin-top:8px">Cancellation & Renewal Calendar</div>
+  <div class="cm-cal">
+    <div class="cm-cal-item urgent-cal">
+      <div class="cm-cal-month">Now</div>
+      <div class="cm-cal-action">Cancel <strong>Midjourney</strong> — midjourney.com/account<br>Call <strong>Vodafone 191</strong> to audit 7 contracts</div>
+    </div>
+    <div class="cm-cal-item">
+      <div class="cm-cal-month">Sep 2026</div>
+      <div class="cm-cal-action">Cancel <strong>Workona</strong> if not using — before Oct renewal</div>
+    </div>
+    <div class="cm-cal-item">
+      <div class="cm-cal-month">Oct 2026</div>
+      <div class="cm-cal-action">Cancel <strong>KashFlow</strong> if not using — before Nov renewal<br><strong>TV Licence</strong> renewal (~£175)</div>
+    </div>
+    <div class="cm-cal-item">
+      <div class="cm-cal-month">Feb 2027</div>
+      <div class="cm-cal-action"><strong>1Password</strong> annual renewal (~£33)</div>
+    </div>
+    <div class="cm-cal-item">
+      <div class="cm-cal-month">Mar 2027</div>
+      <div class="cm-cal-action"><strong>Admiral car insurance</strong> renewal (~£764) — shop around</div>
+    </div>
+  </div>`;
+
+  // ── Anomalies ───────────────────────────────────────────────────────────
+  if (cm.anomalies && cm.anomalies.length) {
+    html += `<div class="slabel">Things to Investigate</div>
+    <div class="cm-anomalies">`;
+    cm.anomalies.forEach(a => {
+      html += `<div class="cm-anomaly-item">
+        <div class="cm-anomaly-dot"></div>
+        <div>
+          <div class="cm-anomaly-title">${a.title}</div>
+          <div class="cm-anomaly-detail">${a.detail}</div>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  html += `<div style="font-size:11px;color:#444;margin-top:24px;padding-top:16px;border-top:1px solid var(--rule)">
+    Data as at MAR 2026. This section is manually maintained — update dashboard_data.json when contracts change.
+    Last updated: ${cm.updated || '—'}
+  </div>`;
+
+  document.getElementById('commitmentsContent').innerHTML = html;
+}
+
+function isRenewalSoon(dateStr) {
+  if (!dateStr) return false;
+  const d = new Date(dateStr);
+  const now = new Date();
+  const diff = (d - now) / (1000 * 60 * 60 * 24);
+  return diff < 180; // within 6 months
+}
+
+function formatRenewal(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+}
+
 </script>
 
 <div id="importToast"></div>

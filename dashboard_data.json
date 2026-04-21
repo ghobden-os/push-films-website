@@ -1747,5 +1747,508 @@
         }
       ]
     }
-  ]
+  ],
+  "commitments": {
+    "updated": "2026-04-21",
+    "monthly_total": 4110,
+    "annual_total": 57533,
+    "urgent": [
+      {
+        "name": "Midjourney",
+        "issue": "Annual renewal ~NOV 2026. $400/year (~\u00a3315). You said you want to cancel.",
+        "action": "Cancel now",
+        "url": "https://www.midjourney.com/account/",
+        "deadline": "2026-11-01"
+      },
+      {
+        "name": "Vodafone (7 contracts)",
+        "issue": "5 handset finance plans running simultaneously \u2014 clarify which are active vs paid off.",
+        "action": "Call 191 from Vodafone mobile or 03333 040 191",
+        "url": null,
+        "deadline": null
+      },
+      {
+        "name": "Workona",
+        "issue": "Annual ~OCT 2026. $84/year (~\u00a366). Cancel if not using.",
+        "action": "Cancel before Oct 2026",
+        "url": "https://workona.com/settings/billing",
+        "deadline": "2026-10-01"
+      },
+      {
+        "name": "KashFlow",
+        "issue": "Annual ~NOV 2026. ~\u00a3325/year. Cancel if not using.",
+        "action": "Cancel before Oct 2026",
+        "url": "https://app.kashflow.com/settings",
+        "deadline": "2026-10-01"
+      }
+    ],
+    "items": [
+      {
+        "cat": "Housing",
+        "name": "Santander Mortgage",
+        "what": "Main residential mortgage",
+        "monthly": 2327,
+        "annual": 27924,
+        "pay_date": "1st\u20132nd",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": "Jumped ~\u00a3645/mo in Oct 2025 \u2014 fixed rate likely ended. Consider remortgaging."
+      },
+      {
+        "cat": "Housing",
+        "name": "Council Tax \u2014 Lambeth",
+        "what": "Council tax, main property",
+        "monthly": 326,
+        "annual": 3260,
+        "pay_date": "1st\u20132nd",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": null
+      },
+      {
+        "cat": "Housing",
+        "name": "Thames Water",
+        "what": "Water rates, main property",
+        "monthly": 122,
+        "annual": 1464,
+        "pay_date": "1st\u20132nd",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": "Doubled from \u00a366 in Nov 2025 \u2014 query with Thames Water (ref 1147132279)."
+      },
+      {
+        "cat": "Housing",
+        "name": "Home Insurance (LBIS)",
+        "what": "Buildings and contents insurance, monthly finance",
+        "monthly": 120,
+        "annual": 1440,
+        "pay_date": "1st\u20132nd",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": null
+      },
+      {
+        "cat": "Finance",
+        "name": "Barclays BBL Repayment",
+        "what": "Bounceback Loan monthly repayment (0820A6538345702)",
+        "monthly": 515,
+        "annual": 6180,
+        "pay_date": "11th",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": "Amount gradually declining \u2014 confirm remaining term with Barclays."
+      },
+      {
+        "cat": "Phone",
+        "name": "Vodafone \u2014 686732657 (main line)",
+        "what": "Main SIM/airtime contract",
+        "monthly": 48,
+        "annual": 576,
+        "pay_date": "16th",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": null
+      },
+      {
+        "cat": "Phone",
+        "name": "Vodafone \u2014 7054092163-1001",
+        "what": "SIM line \u2014 sometimes charges twice/month",
+        "monthly": 24,
+        "annual": 288,
+        "pay_date": "2nd & 30th",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": "Sometimes hits twice per month \u2014 query with Vodafone."
+      },
+      {
+        "cat": "Phone",
+        "name": "Vodafone Device 1003612784",
+        "what": "Handset finance plan",
+        "monthly": 18,
+        "annual": 216,
+        "pay_date": "16th",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": "Running 18+ months \u2014 confirm if term completed."
+      },
+      {
+        "cat": "Phone",
+        "name": "Vodafone Device 1004032856",
+        "what": "Handset finance plan",
+        "monthly": 17,
+        "annual": 204,
+        "pay_date": "30th",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": "Running 18+ months \u2014 confirm if term completed."
+      },
+      {
+        "cat": "Phone",
+        "name": "Vodafone Device 1004844882",
+        "what": "Handset finance plan",
+        "monthly": 29,
+        "annual": 348,
+        "pay_date": "16th",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": null
+      },
+      {
+        "cat": "Phone",
+        "name": "Vodafone Device 1006112105",
+        "what": "Handset finance plan \u2014 new Dec 2025",
+        "monthly": 23,
+        "annual": 276,
+        "pay_date": "2nd",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": null
+      },
+      {
+        "cat": "Phone",
+        "name": "Vodafone Device 1006112273",
+        "what": "Handset finance plan \u2014 new Jan 2026",
+        "monthly": 23,
+        "annual": 276,
+        "pay_date": "16th",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": null
+      },
+      {
+        "cat": "Phone",
+        "name": "O2 \u2014 D20188959",
+        "what": "SIM / airtime contract",
+        "monthly": 30,
+        "annual": 360,
+        "pay_date": "24th\u201327th",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": null
+      },
+      {
+        "cat": "Insurance",
+        "name": "Aviva Life \u2014 L267563801",
+        "what": "Life insurance policy",
+        "monthly": 52,
+        "annual": 621,
+        "pay_date": "16th",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": "Amount increases annually \u2014 was \u00a346.96, now \u00a351.78."
+      },
+      {
+        "cat": "Insurance",
+        "name": "Aviva \u2014 B528162EN",
+        "what": "Building/income protection type policy \u2014 confirm with Aviva what this covers",
+        "monthly": 43,
+        "annual": 516,
+        "pay_date": "1st\u20132nd",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": "Confirm with Aviva what this policy covers and whether still needed."
+      },
+      {
+        "cat": "Insurance",
+        "name": "Admiral Car Insurance",
+        "what": "Annual car insurance premium",
+        "monthly": null,
+        "annual": 764,
+        "pay_date": "Early March",
+        "frequency": "annual",
+        "status": "active",
+        "renewal": "2027-03-01",
+        "flag": "Shop around at renewal. Close-Darwin DD is monthly finance for this."
+      },
+      {
+        "cat": "Insurance",
+        "name": "Close-Darwin (car ins. finance)",
+        "what": "Monthly instalment plan for Admiral car insurance",
+        "monthly": 51,
+        "annual": 616,
+        "pay_date": "2nd",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": null
+      },
+      {
+        "cat": "Insurance",
+        "name": "D&G Appliance Care \u2014 DBNJ0108710",
+        "what": "Appliance cover plan",
+        "monthly": 17,
+        "annual": 200,
+        "pay_date": "28th\u201330th",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": "Price jumped 60% in Mar 2026 (\u00a310.45 \u2192 \u00a316.71). Query with D&G: 0800 030 4390."
+      },
+      {
+        "cat": "Insurance",
+        "name": "D&G Appliance Care \u2014 DW1H0035379",
+        "what": "Appliance cover plan (second appliance)",
+        "monthly": 8,
+        "annual": 96,
+        "pay_date": "9th",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": null
+      },
+      {
+        "cat": "Gym & Leisure",
+        "name": "Streete Court Leisure",
+        "what": "Golf club membership",
+        "monthly": 339,
+        "annual": 4068,
+        "pay_date": "2nd",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": null
+      },
+      {
+        "cat": "Gym & Leisure",
+        "name": "Hex Ltd (gym / PT)",
+        "what": "Personal training / gym via Hex Ltd",
+        "monthly": 200,
+        "annual": 2400,
+        "pay_date": "1st\u20132nd",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": null
+      },
+      {
+        "cat": "Gym & Leisure",
+        "name": "Virgin Active",
+        "what": "Gym membership",
+        "monthly": 75,
+        "annual": 900,
+        "pay_date": "Last day of month",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": null
+      },
+      {
+        "cat": "Streaming",
+        "name": "Amazon Prime",
+        "what": "Prime membership \u2014 free delivery + Prime Video",
+        "monthly": 9,
+        "annual": 108,
+        "pay_date": "18th",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": null
+      },
+      {
+        "cat": "Streaming",
+        "name": "Disney+",
+        "what": "Disney+ streaming (via PayPal)",
+        "monthly": 10,
+        "annual": 120,
+        "pay_date": "11th\u201312th",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": null
+      },
+      {
+        "cat": "Streaming",
+        "name": "Apple TV+ / One",
+        "what": "Apple streaming service",
+        "monthly": 9,
+        "annual": 108,
+        "pay_date": "21st",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": null
+      },
+      {
+        "cat": "Streaming",
+        "name": "Apple iCloud / Arcade",
+        "what": "Apple iCloud storage or Arcade",
+        "monthly": 3,
+        "annual": 42,
+        "pay_date": "14th",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": null
+      },
+      {
+        "cat": "Streaming",
+        "name": "Apple iCloud / Music",
+        "what": "Apple iCloud storage or Music",
+        "monthly": 3,
+        "annual": 36,
+        "pay_date": "End of month",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": null
+      },
+      {
+        "cat": "AI Tools",
+        "name": "ChatGPT Plus",
+        "what": "OpenAI ChatGPT Plus subscription",
+        "monthly": 20,
+        "annual": 240,
+        "pay_date": "19th\u201320th",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": null
+      },
+      {
+        "cat": "AI Tools",
+        "name": "Anthropic / Claude",
+        "what": "Claude AI subscription or API usage",
+        "monthly": 66,
+        "annual": 792,
+        "pay_date": "~10th",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": "First appeared Mar 2026 \u2014 usage may vary."
+      },
+      {
+        "cat": "AI Tools",
+        "name": "Midjourney",
+        "what": "AI image generation \u2014 annual plan",
+        "monthly": null,
+        "annual": 315,
+        "pay_date": "November",
+        "frequency": "annual",
+        "status": "cancel",
+        "renewal": "2026-11-01",
+        "flag": "You want to cancel this. Cancel now at midjourney.com/account."
+      },
+      {
+        "cat": "Software",
+        "name": "KashFlow",
+        "what": "Cloud accounting software for Push Films",
+        "monthly": null,
+        "annual": 325,
+        "pay_date": "Early November",
+        "frequency": "annual",
+        "status": "review",
+        "renewal": "2026-11-01",
+        "flag": "Annual ~\u00a3325. Cancel by Oct 2026 if not using."
+      },
+      {
+        "cat": "Software",
+        "name": "Workona",
+        "what": "Browser workspace / tab organiser",
+        "monthly": null,
+        "annual": 66,
+        "pay_date": "October",
+        "frequency": "annual",
+        "status": "review",
+        "renewal": "2026-10-01",
+        "flag": "Annual ~\u00a366. Cancel by Sep 2026 if not using."
+      },
+      {
+        "cat": "Software",
+        "name": "1Password",
+        "what": "Password manager",
+        "monthly": null,
+        "annual": 33,
+        "pay_date": "February",
+        "frequency": "annual",
+        "status": "active",
+        "renewal": "2027-02-01",
+        "flag": null
+      },
+      {
+        "cat": "Other",
+        "name": "TV Licence",
+        "what": "Annual BBC TV licence",
+        "monthly": null,
+        "annual": 175,
+        "pay_date": "October",
+        "frequency": "annual",
+        "status": "active",
+        "renewal": "2026-10-01",
+        "flag": null
+      },
+      {
+        "cat": "Other",
+        "name": "Barclays Blue Rewards",
+        "what": "Barclays rewards programme fee \u2014 check cashback exceeds \u00a35/mo",
+        "monthly": 5,
+        "annual": 60,
+        "pay_date": "2nd\u20135th",
+        "frequency": "monthly",
+        "status": "review",
+        "renewal": null,
+        "flag": "Check cashback earned vs \u00a35 fee in Barclays app. Cancel if cashback < \u00a35/mo."
+      },
+      {
+        "cat": "Other",
+        "name": "Netlify (website hosting)",
+        "what": "Hosting for Push Films website",
+        "monthly": 15,
+        "annual": 180,
+        "pay_date": "Various",
+        "frequency": "monthly",
+        "status": "active",
+        "renewal": null,
+        "flag": "Mar 2026 shows ~\u00a370 in one month vs normal \u00a315 \u2014 check Netlify dashboard for overages."
+      }
+    ],
+    "anomalies": [
+      {
+        "title": "Mortgage jumped \u00a3645/mo \u2014 Oct 2025",
+        "detail": "Santander 037526809 rose from \u00a31,692 to \u00a32,337 in Oct 2025, now \u00a32,327. Likely end of fixed rate. A mortgage broker conversation could identify savings."
+      },
+      {
+        "title": "Thames Water doubled \u2014 Nov 2025",
+        "detail": "Went from \u00a366/mo to \u00a3122/mo with no explanation. Call Thames Water on 0800 980 8800, quoting ref 1147132279."
+      },
+      {
+        "title": "Broadband \u2014 nothing visible after BT stopped Jul 2025",
+        "detail": "BT Group PLC (\u00a3126\u2013132/mo) last charged Jul 2025. No replacement visible in the data. Confirm current broadband arrangement."
+      },
+      {
+        "title": "Vodafone double-charging some months",
+        "detail": "Contracts 7054092163-1001 and device 1004032856 both show two charges in the same month on occasion. Could be two separate plans or catch-up payments \u2014 confirm with Vodafone."
+      },
+      {
+        "title": "Netlify spike Mar 2026",
+        "detail": "4\u20135 charges totalling ~\u00a370 in Mar 2026 vs normal \u00a315/mo. Check netlify.com dashboard for bandwidth overages or multiple sites."
+      },
+      {
+        "title": "D&G DBNJ policy \u2014 60% price increase Mar 2026",
+        "detail": "Rose from \u00a310.45 to \u00a316.71 in Mar 2026. Call D&G on 0800 030 4390 to query."
+      },
+      {
+        "title": "Aviva B528162EN \u2014 confirm what this covers",
+        "detail": "Running 18+ months at \u00a343/mo with no increases. Worth calling Aviva to confirm exactly what this covers and whether it is still needed."
+      },
+      {
+        "title": "Amazon Prime \u2014 \u00a395 charge Jul 2025",
+        "detail": "One large charge of \u00a395 in Jul 2025 instead of the usual \u00a38.99. Could be an annual plan or a Prime Video channel add-on. Check Amazon account."
+      }
+    ]
+  }
 }
