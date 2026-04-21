@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-21T09:20:07.572669",
+  "generated": "2026-04-21T09:23:53.393162",
   "source": "ACCOUNTS_2026_COMPLETE_16-04-2026_17-35.xlsx",
   "monthly": [
     {
@@ -573,7 +573,7 @@
     {
       "m": "NOV 2024",
       "income": 8634.0,
-      "costs": 18927.45,
+      "costs": 7442.78,
       "costs_breakdown": [
         {
           "p": "28 Nov",
@@ -1466,7 +1466,7 @@
     {
       "m": "DEC 2025",
       "income": 24540.6,
-      "costs": 1282.36,
+      "costs": 1600.56,
       "costs_breakdown": [
         {
           "p": "24 Dec",
@@ -1672,7 +1672,7 @@
     {
       "m": "FEB 2026",
       "income": 30480.0,
-      "costs": 28331.97,
+      "costs": 30931.97,
       "costs_breakdown": [
         {
           "p": "27 Feb",
@@ -1725,7 +1725,7 @@
     {
       "m": "MAR 2026",
       "income": 0.0,
-      "costs": 0.0,
+      "costs": 672.0,
       "costs_breakdown": [
         {
           "p": "2 Mar",
