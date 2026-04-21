@@ -438,9 +438,6 @@ body { background:var(--bg); color:var(--fg); font-family:var(--font); font-size
         <div class="chart-card-hdr-text">
           <div class="chart-card-title">Expenditure by Category</div>
           <div class="chart-card-meta" id="spendChartMeta"></div>
-          <div id="vbarTotLine" style="display:none; font-size:12px; color:#aaa; margin-top:4px">
-            Total: <span id="vbarTotVal" style="color:var(--fg); font-weight:500"></span>
-          </div>
         </div>
         <div class="chart-toggle">
           <button class="ct-btn" data-sct="doughnut" onclick="setSpendChartType('doughnut')">Pie</button>
@@ -640,6 +637,7 @@ let SC=null, TC=null, FAC=null, MC=null;
 let spendChartType = 'vbar';
 let lastDoughnutData = [], lastTotSpend = 0, lastSorted = [];
 let selectedBars = new Set();
+let lastSpendMeta = '';
 
 function render(pk) {
   const P = periods[pk];
@@ -804,8 +802,8 @@ function render(pk) {
   buildCostsDetail(mA);
 
 
-  document.getElementById('spendChartMeta').textContent =
-    `${P.sub} · avg ${f(spAvg)} / month`;
+  lastSpendMeta = `${P.sub} · avg ${f(spAvg)} / month`;
+  document.getElementById('spendChartMeta').textContent = lastSpendMeta;
 
   // Build doughnut data — totals per category for the period
   const doughnutData = catConfig.filter(c => !c.isStandalone).map(c => ({
@@ -1051,9 +1049,10 @@ function buildSpendChart(doughnutData, totSpend) {
     return ` ${ctx.label}: ${f(ctx.raw)} (${pct}%)`;
   }}};
 
-  document.getElementById('vbarTotLine').style.display = spendChartType === 'vbar' ? '' : 'none';
   if (spendChartType === 'vbar') {
-    document.getElementById('vbarTotVal').textContent = f(totSpend);
+    document.getElementById('spendChartMeta').textContent = lastSpendMeta + ' · total ' + f(totSpend);
+  } else {
+    document.getElementById('spendChartMeta').textContent = lastSpendMeta;
   }
 
   if (spendChartType === 'doughnut') {
@@ -1144,22 +1143,6 @@ function buildSpendChart(doughnutData, totSpend) {
   }
   // Hide desc panel whenever chart type changes
   hideBarDesc();
-  // Attach canvas click listener — more reliable than Chart.js onClick
-  document.getElementById('spendChart').addEventListener('click', function(evt) {
-    if (!SC || spendChartType === 'doughnut') return;
-    const els = SC.getElementsAtEventForMode(evt, 'nearest', {intersect: true}, false);
-    if (els.length) {
-      const idx = els[0].index;
-      if (selectedBars.has(idx)) selectedBars.delete(idx);
-      else selectedBars.add(idx);
-      updateVbarSelection();
-      showBarDesc(lastSorted[idx].key);
-    } else {
-      selectedBars.clear();
-      updateVbarSelection();
-      hideBarDesc();
-    }
-  });
 }
 
 function showBarDesc(key) {
@@ -1692,6 +1675,23 @@ async function loadDashboardData() {
 }
 
 loadDashboardData();
+
+// Single canvas click handler — added once so it never accumulates
+document.getElementById('spendChart').addEventListener('click', function(evt) {
+  if (!SC || spendChartType === 'doughnut') return;
+  const els = SC.getElementsAtEventForMode(evt, 'nearest', {intersect: true}, false);
+  if (els.length) {
+    const idx = els[0].index;
+    if (selectedBars.has(idx)) selectedBars.delete(idx);
+    else selectedBars.add(idx);
+    updateVbarSelection();
+    showBarDesc(lastSorted[idx].key);
+  } else {
+    selectedBars.clear();
+    updateVbarSelection();
+    hideBarDesc();
+  }
+});
 
 // ── SPREADSHEET IMPORTER ────────────────────────────────────────────────────
 
