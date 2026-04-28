@@ -43,15 +43,9 @@
                 'images/hero/hero-8.jpg'
             ];
             var isMobileDevice = window.matchMedia('(max-width: 640px)').matches;
-            var imgs = isMobileDevice ? mobileImgs : allImgs;
-            var param = new URLSearchParams(location.search).get('hero');
-            var day = param !== null ? parseInt(param) % imgs.length : Math.floor(Date.now() / 900000) % imgs.length;
+            var imgs = allImgs; // locked: Forward Focus on all devices
+            var day = 0; // locked: Forward Focus
             document.documentElement.style.setProperty('--hero-img', "url('" + imgs[day] + "')");
-            if (!isMobileDevice) {
-                if (day === 3) document.documentElement.classList.add('hero-label-right');
-                if (day === 3) document.documentElement.classList.add('hero-label-explorer');
-                if (day === 1 || day === 2) document.documentElement.classList.add('hero-label-defender');
-            }
             document.documentElement.classList.add('hero-idx-' + day);
             var pre = document.createElement('link');
             pre.rel = 'preload'; pre.as = 'image'; pre.href = imgs[day];
@@ -2885,7 +2879,7 @@
                 <div class="work-category-header"><span>Automotive</span></div>
                 <div class="work-grid">
                     <article class="work-item accordion" data-vimeo="1171157858" data-gallery="raptor"
-                        data-curated-order="3">
+                        data-curated-order="1">
                         <div class="work-image"><img loading="lazy" src="images/ford-raptor.png" alt="Ford Raptor">
                         </div>
                         <div class="work-info">
@@ -2899,7 +2893,7 @@
                         <div class="work-expand"></div>
                     </article>
                     <article class="work-item accordion" data-vimeo="1171170029" data-gallery="lexieGreen"
-                        data-curated-order="19">
+                        data-curated-order="4">
                         <div class="work-image"><img loading="lazy" src="images/ford-explorer-launch.png"
                                 alt="Ford Explorer"></div>
                         <div class="work-info">
@@ -2916,7 +2910,7 @@
                         <div class="work-expand"></div>
                     </article>
                     <article class="work-item accordion" data-vimeo="1171151952" data-gallery="defender"
-                        data-curated-order="5">
+                        data-curated-order="6">
                         <div class="work-image"><img loading="lazy" src="images/defender.png" alt="Land Rover Defender">
                         </div>
                         <div class="work-info">
@@ -2931,7 +2925,7 @@
                         <div class="work-expand"></div>
                     </article>
                     <article class="work-item accordion" data-vimeo="1171150653" data-gallery="mclaren"
-                        data-curated-order="20">
+                        data-curated-order="7">
                         <div class="work-image"><img loading="lazy" src="images/film-grabs/spider/SPIDER_2.jpg"
                                 alt="McLaren Spider"></div>
                         <div class="work-info">
@@ -2943,7 +2937,7 @@
                         <div class="work-expand"></div>
                     </article>
                     <article class="work-item accordion" data-vimeo="1171178087" data-gallery="rrSportTestTrack"
-                        data-curated-order="15">
+                        data-curated-order="5">
                         <div class="work-image"><img loading="lazy" src="images/range-rover-test-track.png"
                                 alt="Range Rover Sport Test Track"></div>
                         <div class="work-info">
@@ -2957,7 +2951,7 @@
                         <div class="work-expand"></div>
                     </article>
                     <article class="work-item accordion" data-vimeo="1171150941" data-preview="rr-sport-reveal"
-                        data-curated-order="21">
+                        data-curated-order="8">
                         <div class="work-image"><img loading="lazy" src="images/range-rover-reveal.png"
                                 alt="Range Rover Sport Reveal"></div>
                         <div class="work-info">
@@ -2969,7 +2963,7 @@
                         <div class="work-expand"></div>
                     </article>
                     <article class="work-item accordion" data-vimeo="1171151324" data-gallery="corden"
-                        data-curated-order="6">
+                        data-curated-order="3">
                         <div class="work-image"><img loading="lazy" src="images/range-rover-james-corden.png"
                                 alt="Range Rover Sport — James Corden"></div>
                         <div class="work-info">
@@ -2982,7 +2976,7 @@
                         <div class="work-expand"></div>
                     </article>
                     <article class="work-item accordion" data-vimeo="1171150533" data-gallery="discovery"
-                        data-curated-order="22">
+                        data-curated-order="9">
                         <div class="work-image"><img loading="lazy" src="images/discovery-sport.png"
                                 alt="Land Rover Discovery Sport"></div>
                         <div class="work-info">
@@ -2996,7 +2990,7 @@
                         <div class="work-expand"></div>
                     </article>
                     <article class="work-item accordion" data-vimeo="1171541065" data-gallery="tata"
-                        data-curated-order="23">
+                        data-curated-order="12">
                         <div class="work-image"><img loading="lazy" src="images/Tata.png" alt="Tata"></div>
                         <div class="work-info">
                             <h3>Tata Nexon</h3>
@@ -3017,7 +3011,7 @@
                 <div class="work-category-header"><span>Documentary</span></div>
                 <div class="work-grid">
                     <article class="work-item accordion" data-vimeo="1171150609" data-preview="i-am-ali"
-                        data-curated-order="2">
+                        data-curated-order="13">
                         <div class="work-image"><img loading="lazy" src="images/i-am-ali.png" alt="I Am Ali"></div>
                         <div class="work-info">
                             <h3>I Am Ali</h3>
@@ -3035,7 +3029,7 @@
                         <div class="work-expand"></div>
                     </article>
                     <article class="work-item accordion" data-gallery="ironMaiden" data-preview="iron-maiden"
-                        data-curated-order="1">
+                        data-curated-order="2">
                         <div class="work-image"><img loading="lazy" src="images/burning-ambition.png"
                                 alt="Iron Maiden: Burning Ambition"></div>
                         <div class="work-info">
@@ -3062,7 +3056,7 @@
                 <div class="work-category-header"><span>Experiential</span></div>
                 <div class="work-grid">
                     <article class="work-item accordion" data-vimeo="1172076463" data-gallery="fordWheels"
-                        data-curated-order="8">
+                        data-curated-order="11">
                         <div class="work-image"><img loading="lazy" src="images/ford-wheels.png" alt="Ford Wheels">
                         </div>
                         <div class="work-info">
@@ -3079,7 +3073,7 @@
                         <div class="work-expand"></div>
                     </article>
                     <article class="work-item accordion" data-vimeo="1171318976" data-gallery="explorer"
-                        data-preview="explorer" data-start="1140" data-last-hold="12000" data-curated-order="4">
+                        data-preview="explorer" data-start="1140" data-last-hold="12000" data-curated-order="10">
                         <div class="work-image"><img loading="lazy"
                                 src="images/film-grabs/lexie-limit/LEXIE%20LIMIT_2.jpg"
                                 alt="Ford Explorer World Record"></div>
@@ -3103,7 +3097,7 @@
                 <div class="work-category-header"><span>Luxury</span></div>
                 <div class="work-grid">
                     <article class="work-item accordion" data-vimeo="1171158700" data-gallery="vashi"
-                        data-curated-order="7">
+                        data-curated-order="14">
                         <div class="work-image"><img loading="lazy" src="images/vashi.png" alt="Vashi"></div>
                         <div class="work-info">
                             <h3>Vashi</h3>
@@ -3120,7 +3114,7 @@
                 <div class="work-category-header"><span>Expo</span></div>
                 <div class="work-grid">
                     <article class="work-item accordion" data-vimeo="1171151872" data-gallery="familyTree"
-                        data-preview="family-tree" data-curated-order="10">
+                        data-preview="family-tree" data-curated-order="16">
                         <div class="work-image"><img loading="lazy" src="images/family-tree.png"
                                 alt="Family Tree — Milan World Expo"></div>
                         <div class="work-info">
@@ -3136,7 +3130,7 @@
                         </div>
                         <div class="work-expand"></div>
                     </article>
-                    <article class="work-item" data-curated-order="11">
+                    <article class="work-item" data-curated-order="17">
                         <div class="work-image"><img loading="lazy" src="images/Dubai%202020%20/Expo.png"
                                 alt="Expo 2020 — Dubai" style="object-position: 52.4% 100%;"></div>
                         <div class="work-info">
@@ -3150,7 +3144,7 @@
                         </div>
                     </article>
                     <article class="work-item accordion" data-vimeo="1171157242" data-preview="the-turtle"
-                        data-curated-order="12">
+                        data-curated-order="18">
                         <div class="work-image"><img loading="lazy" src="images/the-turtle.png"
                                 alt="The Turtle — Yeosu Expo"></div>
                         <div class="work-info">
@@ -3170,7 +3164,7 @@
                 <div class="work-category-header"><span>Sport</span></div>
                 <div class="work-grid">
                     <article class="work-item accordion" data-vimeo="1171158800" data-preview="bridgestone"
-                        data-curated-order="6">
+                        data-curated-order="15">
                         <div class="work-image"><img loading="lazy" src="images/bridgestone.png" alt="Bridgestone">
                         </div>
                         <div class="work-info">
@@ -3184,7 +3178,7 @@
                         <div class="work-expand"></div>
                     </article>
                     <article class="work-item accordion" data-vimeo="1171158741" data-preview="football-league"
-                        data-curated-order="13">
+                        data-curated-order="19">
                         <div class="work-image"><img loading="lazy" src="images/football-league.png"
                                 alt="Football League"></div>
                         <div class="work-info">
@@ -3196,7 +3190,7 @@
                         <div class="work-expand"></div>
                     </article>
                     <article class="work-item accordion" data-vimeo="1171158957" data-preview="golfing-4-life"
-                        data-curated-order="14">
+                        data-curated-order="20">
                         <div class="work-image"><img loading="lazy" src="images/Golfing4 Life .png"
                                 alt="Golfing 4 Life"></div>
                         <div class="work-info">
@@ -3217,7 +3211,7 @@
                 <div class="work-category-header"><span>Comedy</span></div>
                 <div class="work-grid">
                     <article class="work-item accordion" data-vimeo="1171300697" data-preview="sext-tuesdays"
-                        data-curated-order="16">
+                        data-curated-order="22">
                         <div class="work-image"><img loading="lazy" src="images/Sexy Tuesdays .png" alt="Sexy Tuesdays">
                         </div>
                         <div class="work-info">
@@ -3232,7 +3226,7 @@
                         <div class="work-expand"></div>
                     </article>
                     <article class="work-item accordion" data-vimeo="1171300442" data-preview="waiting-for-conkers"
-                        data-curated-order="17">
+                        data-curated-order="23">
                         <div class="work-image"><img loading="lazy" src="images/Waiting for Conkers.png"
                                 alt="Waiting for Conkers"></div>
                         <div class="work-info">
@@ -3251,7 +3245,7 @@
                 <div class="work-category-header"><span>Everest</span></div>
                 <div class="work-grid">
                     <article class="work-item accordion" data-vimeo="1171320476" data-gallery="everest"
-                        data-curated-order="18">
+                        data-curated-order="21">
                         <div class="work-image"><img loading="lazy" src="images/EVEREST40.JPG" alt="Everest"
                                 style="object-position: center top;"></div>
                         <div class="work-info">
@@ -3749,35 +3743,12 @@
                 'images/hero/hero-7.jpg',
                 'images/hero/hero-8.jpg'
             ];
-            var isMobile = window.matchMedia('(max-width: 640px)').matches;
-            var heroImgs = isMobile ? mobileHeroImgs : allHeroImgs;
-            // Mobile background-position per hero (matches CSS per-hero overrides)
-            var mobilePans = ['18% center', '58% center', '55% center'];
-            var isMobile = window.matchMedia('(max-width: 640px)').matches;
-            function applyPan(el, i) {
-                if (isMobile) el.style.backgroundPosition = mobilePans[i];
-            }
-            var param = new URLSearchParams(location.search).get('hero');
-            var idx = param !== null ? parseInt(param) % heroImgs.length : Math.floor(Date.now() / 900000) % heroImgs.length;
+            var heroImgs = allHeroImgs; // locked: Forward Focus on all devices
+            var idx = 0; // locked: Forward Focus
             var bgA = document.getElementById('heroBgA');
             var bgB = document.getElementById('heroBgB');
             bgA.style.backgroundImage = "url('" + heroImgs[idx] + "')";
-            applyPan(bgA, idx);
-            var activeA = true;
-            // Preload next image
-            function preload(i) { var img = new Image(); img.src = heroImgs[i]; }
-            preload((idx + 1) % heroImgs.length);
-            setInterval(function () {
-                idx = (idx + 1) % heroImgs.length;
-                var incoming = activeA ? bgB : bgA;
-                var outgoing = activeA ? bgA : bgB;
-                incoming.style.backgroundImage = "url('" + heroImgs[idx] + "')";
-                applyPan(incoming, idx);
-                incoming.style.opacity = '1';
-                outgoing.style.opacity = '0';
-                activeA = !activeA;
-                preload((idx + 1) % heroImgs.length);
-            }, 45000);
+            // rotation disabled
         })();
 
         const nav = document.getElementById('nav');
