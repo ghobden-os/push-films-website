@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-03T17:08:19.335492",
+  "generated": "2026-05-03T17:10:40.484882",
   "source": "ACCOUNTS_2026_COMPLETE_26-04-2026.xlsx",
   "monthly": [
     {
@@ -152,6 +152,14 @@
       "running": 219304.43,
       "vs": 1101.95,
       "food": 1459.9,
+      "accom": 3940.68
+    },
+    {
+      "m": "APR 2026",
+      "spend": 11341.66,
+      "running": 0.0,
+      "vs": 0.0,
+      "food": 1006.01,
       "accom": 3940.68
     }
   ],
@@ -1760,6 +1768,16 @@
           "a": 6480.0
         }
       ]
+    },
+    {
+      "m": "APR 2026",
+      "income": 0.0,
+      "costs": 0.0,
+      "costs_breakdown": [],
+      "payees": [],
+      "tax": 0,
+      "from": "",
+      "breakdown": []
     }
   ]
 }
