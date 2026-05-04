@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-03T17:30:19.247891",
+  "generated": "2026-05-04T10:56:30.760212",
   "source": "ACCOUNTS_2026_COMPLETE_26-04-2026.xlsx",
   "monthly": [
     {
@@ -28,7 +28,7 @@
     },
     {
       "m": "DEC 2024",
-      "spend": 16517.07,
+      "spend": 16837.07,
       "running": 49157.95,
       "vs": 184.06,
       "food": 780.19,
@@ -213,10 +213,10 @@
       "Comms": 437.18,
       "Home": 2559.17,
       "Finance/Work": 1590.2,
-      "Lifestyle": 1824.92,
+      "Lifestyle": 2144.92,
       "Personal": 1616.98,
       "Family": 3699.99,
-      "Other": -1430.71,
+      "Other": -1750.71,
       "Mortgage": 2973.9,
       "Kids Accom": 1664.0
     },
