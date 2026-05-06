@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Greg Hobden — Film Producer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300;9..144,400;9..144,500;9..144,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-soft: #444a4f;
+    --ink-muted: #8a8f93;
+    --paper: #f4f4f3;
+    --rule: #d6d8d9;
+    --accent: #2c4f6b;
+    --display: 'Fraunces', Georgia, serif;
+    --body: 'EB Garamond', Georgia, serif;
+    --max: 760px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-size: 17px; }
+
+  body {
+    font-family: var(--body);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.55;
+    font-feature-settings: "kern", "liga", "onum";
+    -webkit-font-smoothing: antialiased;
+    padding: 4rem 1.5rem 6rem;
+  }
+
+  .page {
+    max-width: var(--max);
+    margin: 0 auto;
+  }
+
+  /* Masthead */
+  .masthead {
+    margin-bottom: 4rem;
+    position: relative;
+  }
+
+  .name {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(3.2rem, 9vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    font-variation-settings: "opsz" 144, "SOFT" 50;
+  }
+
+  .name .amp {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+  }
+
+  .role {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1.25rem;
+    color: var(--ink-soft);
+    margin-bottom: 2rem;
+    letter-spacing: 0.01em;
+  }
+
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .contact a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    transition: border-color 0.2s ease, color 0.2s ease;
+    padding-bottom: 1px;
+  }
+
+  .contact a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .contact .label {
+    color: var(--ink-muted);
+  }
+
+  /* Section */
+  section {
+    margin-bottom: 4rem;
+  }
+
+  .section-label {
+    font-family: var(--display);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+  }
+
+  .section-label::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* Profile prose */
+  .profile p {
+    font-size: 1.15rem;
+    line-height: 1.65;
+    margin-bottom: 1.4rem;
+    color: var(--ink);
+  }
+
+  .profile p:first-child {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.45rem;
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 1.8rem;
+  }
+
+  .profile p:first-child::first-letter {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 4rem;
+    line-height: 0.85;
+    float: left;
+    margin: 0.3rem 0.6rem 0 -0.05em;
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  /* Role entries */
+  .role-entry {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .role-entry:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .role-meta {
+    font-family: var(--display);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+
+  .role-meta .year {
+    display: block;
+    font-size: 1rem;
+    color: var(--ink-soft);
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+    margin-top: 0.4rem;
+  }
+
+  .role-body h3 {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1.45rem;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .role-body .place {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1rem;
+    color: var(--ink-soft);
+    margin-bottom: 1.25rem;
+  }
+
+  .role-body p {
+    margin-bottom: 1.1rem;
+    color: var(--ink-soft);
+  }
+
+  .role-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Films inline list */
+  .films {
+    margin-top: 1.5rem;
+  }
+
+  .film {
+    margin-bottom: 1.5rem;
+    padding-left: 1.25rem;
+    border-left: 1px solid var(--rule);
+  }
+
+  .film:last-child {
+    margin-bottom: 0;
+  }
+
+  .film-title {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin-bottom: 0.1rem;
+  }
+
+  .film-credit {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.02em;
+  }
+
+  .film p {
+    font-size: 1rem;
+    margin-bottom: 0;
+  }
+
+  /* Client list */
+  .clients {
+    margin-top: 1.5rem;
+  }
+
+  .client {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+    align-items: baseline;
+  }
+
+  .client-label {
+    font-family: var(--display);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .client-text {
+    color: var(--ink-soft);
+    font-size: 1rem;
+  }
+
+  .client-trail {
+    grid-column: 1 / -1;
+    color: var(--ink-soft);
+    font-size: 1rem;
+    font-style: italic;
+    padding-top: 0.5rem;
+    border-top: 1px dashed var(--rule);
+    margin-top: 0.5rem;
+  }
+
+  /* Skills */
+  .skills {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 3rem;
+    font-size: 1rem;
+    color: var(--ink-soft);
+  }
+
+  .skill-line {
+    border-top: 1px solid var(--rule);
+    padding-top: 0.75rem;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer .colophon {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    max-width: 60%;
+  }
+
+  footer .meta {
+    font-family: var(--display);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    body { padding: 2rem 1.25rem 4rem; }
+    .role-entry { grid-template-columns: 1fr; gap: 0.75rem; }
+    .role-meta { letter-spacing: 0.04em; }
+    .client { grid-template-columns: 1fr; gap: 0.25rem; }
+    .skills { grid-template-columns: 1fr; }
+    .contact { flex-direction: column; gap: 0.5rem; }
+    footer { flex-direction: column; }
+    footer .colophon { max-width: 100%; }
+  }
+
+  /* Print styles */
+  @media print {
+    :root { --paper: #fff; }
+    body { padding: 0; font-size: 11pt; }
+    .role-entry { break-inside: avoid; }
+    .film { break-inside: avoid; }
+    a { color: var(--ink); border-bottom: none; }
+  }
+
+  /* Subtle entrance */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .masthead, section { animation: rise 0.7s ease forwards; }
+  section:nth-of-type(1) { animation-delay: 0.1s; opacity: 0; }
+  section:nth-of-type(2) { animation-delay: 0.2s; opacity: 0; }
+  section:nth-of-type(3) { animation-delay: 0.3s; opacity: 0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="masthead">
+  <h1 class="name">Greg Hobden</h1>
+  <p class="role">Film Producer</p>
+  <div class="contact">
+    <a href="mailto:ghobden@mac.com">ghobden@mac.com</a>
+    <span>07802 179 515</span>
+    <a href="https://greghobden.com">greghobden.com</a>
+    <a href="https://www.linkedin.com/in/greghobden">LinkedIn</a>
+  </div>
+</header>
+
+<section class="profile">
+  <div class="section-label">Profile</div>
+  <p>Thirty years in film. Big screens, small screens, global brands and live audiences.</p>
+  <p>I came up through the crew. Runner, 2nd AD, First AD, Producer. Good filmmaking is built on preparation. The work nobody sees. I learned that early on, and it has never left me.</p>
+  <p>Three theatrical feature documentaries for Universal Pictures. A decade of automotive work for Rolls-Royce, Jaguar Land Rover, McLaren and Ford. Nearly a decade producing for the UAE's pavilions at three successive World Expos. Twelve weeks at 6,000 metres on Everest, managing camera teams embedded with the British Army's attempt on the West Ridge. More people have died on that route than have reached the summit.</p>
+  <p>Live production has become an increasing specialism.</p>
+  <p>Every project has its own challenges. The size of the budget doesn't change that. A high one brings its own complexity. A low one demands different thinking. The expectation of what gets delivered doesn't change either way.</p>
+</section>
+
+<section>
+  <div class="section-label">Experience</div>
+
+  <div class="role-entry">
+    <div class="role-meta">Freelance<span class="year">2000 — Present</span></div>
+    <div class="role-body">
+      <h3>Senior Film Producer</h3>
+      <p>Producing and overseeing high-budget commercial content across automotive, government, luxury and financial sectors. Theatrical feature documentary alongside prestige short-form brand films and large-scale live experiential.</p>
+      <p>Multi-camera operations with aerial and motorcycle units, broadcast in real time to global audiences. The logistical complexity and real-time problem-solving conventional production rarely demands.</p>
+      <div class="clients">
+        <div class="client">
+          <span class="client-label">Automotive</span>
+          <span class="client-text">Rolls-Royce, Jaguar Land Rover, McLaren, Ford.</span>
+        </div>
+        <div class="client">
+          <span class="client-label">Agency</span>
+          <span class="client-text">Imagination (ongoing). Agency Producer on the global launch film for the Land Rover Defender, filmed in Kazakhstan. Agency Producer and Producer on the Range Rover Sport launch film in Los Angeles, with James Corden and Anthony Joshua.</span>
+        </div>
+        <div class="client">
+          <span class="client-label">Government</span>
+          <span class="client-text">Abu Dhabi National Media Council. UAE World Expo Pavilions in Shanghai, Yeosu and Milan, 2009 — 2017.</span>
+        </div>
+        <div class="client">
+          <span class="client-label">Corporate</span>
+          <span class="client-text">CRH (Global Building Materials, Senior Leadership).</span>
+        </div>
+        <div class="client-trail">Financial institutions and luxury sector clients throughout.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="role-entry">
+    <div class="role-meta">Theatrical<span class="year">Universal Pictures</span></div>
+    <div class="role-body">
+      <h3>Documentary Film Producer</h3>
+      <p>The logistical demands of large-scale documentary filmmaking combined with the narrative discipline a cinema audience requires.</p>
+      <div class="films">
+        <div class="film">
+          <div class="film-title">I Am Ali</div>
+          <div class="film-credit">Producer</div>
+          <p>Three world titles. Three decades at the top. The authorised story of Muhammad Ali. Fighter, activist, and one of the most recognised figures of the 20th century. Told through personal audio diaries and interviews with those closest to him. Theatrical release worldwide via Universal Pictures.</p>
+        </div>
+        <div class="film">
+          <div class="film-title">Iron Maiden: Burning Ambition</div>
+          <div class="film-credit">Co-Producer</div>
+          <p>Five decades. Seventeen studio albums. Over 100 million records sold. Almost 2,500 live shows across 64 countries. The definitive story of one of the most iconic journeys in music history. Featuring Javier Bardem, Lars Ulrich and Chuck D. Theatrical release worldwide via Universal Pictures. In cinemas May 7, 2026.</p>
+        </div>
+        <div class="film">
+          <div class="film-title">Third title</div>
+          <div class="film-credit">Producer</div>
+          <p>Feature documentary, music-related, currently under NDA. Theatrical release pending.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="role-entry">
+    <div class="role-meta">Abu Dhabi<span class="year">2009 — 2017</span></div>
+    <div class="role-body">
+      <h3>Lead Producer, UAE World Expo Pavilions</h3>
+      <p class="place">Abu Dhabi National Media Council</p>
+      <p>Senior producer responsible for all film and media content within the UAE's pavilions at three successive World Expos: Shanghai, Yeosu and Milan. Taking the client brief and overseeing a large multidisciplinary team to deliver across multiple productions.</p>
+      <p>The work spanned initial creative development through to final delivery. Managing international crews, overseeing post-production, and maintaining a sustained institutional relationship at the highest levels of government across nearly a decade. A Middle Eastern upbringing informed every aspect of how those relationships were built and sustained.</p>
+    </div>
+  </div>
+
+  <div class="role-entry">
+    <div class="role-meta">Everest<span class="year">2006</span></div>
+    <div class="role-body">
+      <h3>On-Mountain Producer</h3>
+      <p class="place">British Army West Ridge Expedition</p>
+      <p>On-mountain producer at 6,000 metres for twelve weeks, responsible for all filming and live satellite broadcasts from the mountain. The British Army's attempt on the West Ridge was a route no British team had ever climbed. More people have died on it than have reached the summit. The expedition was filmed for television and served as a national Army recruitment campaign.</p>
+    </div>
+  </div>
+
+  <div class="role-entry">
+    <div class="role-meta">Freelance<span class="year">1994 — 2005</span></div>
+    <div class="role-body">
+      <h3>First Assistant Director</h3>
+      <p>Worked as a First Assistant Director across commercials, broadcast drama and music videos. Scheduling, logistics, crew management, on-set operations. The discipline and organisational thinking developed in this role has underpinned everything that followed.</p>
+    </div>
+  </div>
+
+  <div class="role-entry">
+    <div class="role-meta">Rover Cars<span class="year">1992 — 1998</span></div>
+    <div class="role-body">
+      <h3>Production Manager / First Assistant Director</h3>
+      <p>Launch films across a six-year run with one client. The start of what would become a long working relationship with the automotive industry.</p>
+    </div>
+  </div>
+
+  <div class="role-entry">
+    <div class="role-meta">Freelance<span class="year">1990 — 1994</span></div>
+    <div class="role-body">
+      <h3>Runner / 2nd Assistant Director</h3>
+      <p>Started as a runner. Progressed to 2nd AD. Learned the mechanics of production from the ground up across commercial and broadcast sets.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Skills</div>
+  <div class="skills">
+    <div class="skill-line">Film Production. Live Experiential. Documentary. Commercial.</div>
+    <div class="skill-line">Budget. Project Management. Creative Direction. Stakeholder Management.</div>
+    <div class="skill-line">International Production. Aerial. Broadcast / OB. Post-Production.</div>
+    <div class="skill-line">Client Services. Location. Automotive Content. Documentary.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="colophon">Full profile and selected work available on request. Straightforward to reach and deal with.</div>
+  <div class="meta">London &nbsp;·&nbsp; Working internationally</div>
+</footer>
+
+</div>
+</body>
+</html>
