@@ -2888,7 +2888,7 @@
                             <p class="work-desc">The global launch film for the new Ford Ranger Raptor. Directed by Nick
                                 Piper. The brief was simple: show what it can do. The solution was to chain it inside an
                                 Antonov AN-12 Soviet cargo plane and let it break free.</p>
-                            <span class="work-arrow">→</span>
+                            <a class="work-arrow" href="work/ford-ranger-raptor.html" aria-label="Read about Ford Ranger Raptor">→</a>
                         </div>
                         <div class="work-expand"></div>
                     </article>
@@ -2920,7 +2920,7 @@
                                 location in Kazakhstan. The film starred Kenton Cool — the most prolific Everest
                                 summiteer in the world outside of the Sherpa community, with 19 ascents to his name. The
                                 Defender was the perfect vehicle for the world's most demanding mountaineer.</p>
-                            <span class="work-arrow">→</span>
+                            <a class="work-arrow" href="work/land-rover-defender-kazakhstan.html" aria-label="Read about Land Rover Defender Kazakhstan">→</a>
                         </div>
                         <div class="work-expand"></div>
                     </article>
@@ -2946,7 +2946,7 @@
                             <p class="work-desc">At the Jaguar Land Rover test circuit, Jessica Hawkins — W Series
                                 racing driver and official James Bond stunt driver — puts Anthony Joshua through his
                                 paces in the new Range Rover Sport.</p>
-                            <span class="work-arrow">→</span>
+                            <a class="work-arrow" href="work/range-rover-sport-test-track.html" aria-label="Read about Range Rover Sport Test Track">→</a>
                         </div>
                         <div class="work-expand"></div>
                     </article>
@@ -3024,7 +3024,7 @@
                             <blockquote class="work-quote">"The best film about my father ever made." <cite>— Maryam
                                     Ali</cite></blockquote>
                             <img src="images/universal-logo.png" alt="Universal Pictures" class="distrib-logo">
-                            <span class="work-arrow">→</span>
+                            <a class="work-arrow" href="work/i-am-ali.html" aria-label="Read about I Am Ali">→</a>
                         </div>
                         <div class="work-expand"></div>
                     </article>
@@ -3045,7 +3045,7 @@
                                     Hammer</cite></blockquote>
                             <img src="images/universal-logo.png" alt="Universal Pictures" class="distrib-logo">
                             <button class="work-yt-btn" data-youtube="BggdJLnSevQ">▶ Watch trailer</button>
-                            <span class="work-arrow">→</span>
+                            <a class="work-arrow" href="work/iron-maiden-burning-ambition.html" aria-label="Read about Iron Maiden: Burning Ambition">→</a>
                         </div>
                         <div class="work-expand"></div>
                     </article>
@@ -3086,7 +3086,7 @@
                                 as the convoy moved through. Helicopters, drones, motorcycle cameramen from the Tour de
                                 France, relay aircraft at 3,000 feet for the live broadcast. Ford CEO Jim Farley joined
                                 for the final mile into Nice.</p>
-                            <span class="work-arrow">→</span>
+                            <a class="work-arrow" href="work/ford-explorer.html" aria-label="Read about Ford Explorer">→</a>
                         </div>
                         <div class="work-expand"></div>
                     </article>
@@ -3153,7 +3153,7 @@
                             <p class="work-desc">The theme of the Yeosu Expo was The Living Ocean and Coast. A young
                                 Emirati boy. A turtle that had swallowed a plastic bag. A film about what one person can
                                 do. The Turtle went on to win a gold at Cannes.</p>
-                            <span class="work-arrow">→</span>
+                            <a class="work-arrow" href="work/uae-world-expo.html" aria-label="Read about UAE World Expos">→</a>
                         </div>
                         <div class="work-expand"></div>
                     </article>
@@ -3263,7 +3263,7 @@
                                 weeks at altitude, cut off from the world, working with people who had committed
                                 everything to a single goal. The friendships it forged have lasted twenty years.
                                 Directed by Rupert Day.</p>
-                            <span class="work-arrow">→</span>
+                            <a class="work-arrow" href="work/everest-west-ridge.html" aria-label="Read about Everest West Ridge">→</a>
                         </div>
                         <div class="work-expand"></div>
                     </article>
@@ -4779,6 +4779,7 @@
             }
             article.addEventListener('click', (e) => {
                 if (e.target.closest('.work-expand')) return;
+                if (e.target.closest('a.work-arrow')) return;
                 expanded ? collapse() : expand();
             });
             const prev = expandPanel.querySelector('.expand-gal-prev');
