@@ -3086,8 +3086,8 @@
                         </div>
                         <div class="work-expand"></div>
                     </article>
-                    <article class="work-item accordion" data-gallery="ironMaiden" data-preview="iron-maiden"
-                        data-curated-order="2" data-page="work/iron-maiden-burning-ambition.html">
+                    <article class="work-item" data-youtube="BggdJLnSevQ"
+                        data-curated-order="2">
                         <div class="work-image"><img loading="lazy" src="images/burning-ambition.png"
                                 alt="Iron Maiden: Burning Ambition"></div>
                         <div class="work-info">
@@ -3102,9 +3102,8 @@
                                 "Electrifying" <cite>— Rolling Stone UK</cite> &nbsp;·&nbsp; "Must see" <cite>— Metal
                                     Hammer</cite></blockquote>
                             <img src="images/universal-logo.png" alt="Universal Pictures" class="distrib-logo">
-                            <span class="work-arrow">→</span>
+                            <a class="work-arrow" href="work/iron-maiden-burning-ambition.html" aria-label="Read about Iron Maiden: Burning Ambition">→</a>
                         </div>
-                        <div class="work-expand"></div>
                     </article>
                 </div>
             </div>
@@ -4665,7 +4664,8 @@
 
         document.querySelectorAll('.work-item:not(.accordion)[data-youtube]').forEach(article => {
             article.style.cursor = 'pointer';
-            article.addEventListener('click', () => {
+            article.addEventListener('click', (e) => {
+                if (e.target.closest('a')) return;
                 if (vimeoLocked) return;
                 vimeoFrame.src = 'https://www.youtube.com/embed/' + article.dataset.youtube + '?autoplay=1&rel=0';
                 vimeoModal.classList.add('open');
