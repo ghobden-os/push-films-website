@@ -1996,8 +1996,8 @@
 
         .expand-project-link {
             display: block;
-            text-align: center;
-            margin: 28px auto 8px;
+            text-align: right;
+            margin: 0 6.25% 16px;
             font-family: var(--font-sans);
             font-size: 10px;
             font-weight: 500;
@@ -2005,15 +2005,11 @@
             text-transform: uppercase;
             color: var(--gold);
             text-decoration: none;
-            border: 1px solid var(--gold);
-            padding: 12px 24px;
-            width: fit-content;
-            transition: background 0.2s, color 0.2s;
+            transition: opacity 0.2s;
         }
 
         .expand-project-link:hover {
-            background: var(--gold);
-            color: #080808;
+            opacity: 0.7;
         }
 
         .expand-film {
@@ -4679,10 +4675,10 @@
             const expandPanel = article.querySelector('.work-expand');
             const items = (galleryKey && galleries[galleryKey]) ? galleries[galleryKey].items : [];
             let html = '<div class="work-expand-inner">';
+            if (article.dataset.page) html += '<a class="expand-project-link" href="' + article.dataset.page + '">Full project page →</a>';
             if (vimeoId) html += '<div class="expand-film"><div class="film-poster"><div class="film-poster-play"></div></div><iframe class="expand-frame" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen playsinline></iframe></div>';
             if (items.length > 0) html += '<div class="expand-gallery-strip"></div><div class="expand-gallery-bar"><button class="expand-gal-prev">←</button><span class="expand-gal-counter"></span><button class="expand-gal-next">→</button></div>';
             if (galleryKey === 'ironMaiden') html += '<p class="im-release-text">In cinemas May 7</p>';
-            if (article.dataset.page) html += '<a class="expand-project-link" href="' + article.dataset.page + '">View full project →</a>';
             html += '</div>';
             expandPanel.innerHTML = html;
             const frame = expandPanel.querySelector('.expand-frame');
