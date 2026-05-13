@@ -89,12 +89,10 @@
     <div class="project-detail"><div class="detail-label">Client</div><div class="detail-value">Ford</div></div>
     <div class="project-detail"><div class="detail-label">Role</div><div class="detail-value">Producer</div></div>
     <div class="project-detail"><div class="detail-label">Technology</div><div class="detail-value">LED Volume / Unreal Engine</div></div>
-    <div class="project-detail"><div class="detail-label">Location</div><div class="detail-value">French Riviera</div></div>
 </div>
 <div class="project-body">
     <p>Ford's first European-designed, European-manufactured all-electric car. This wasn't a straightforward automotive reveal. It couldn't be.</p>
     <p>No location shoot was possible — the car was still a prototype. So we used an LED volume with Unreal Engine real-time content for the driving sequences, and green screen with CGI compositing for the product features. Multiple production methods, one seamless film.</p>
-    <p>The experiential finale came later: in March 2024, adventurer Lexie Alford became the first person to circumnavigate the globe in an electric vehicle. The finale on the French Riviera closed twenty miles of the Côte d'Azur. Helicopters, drones, motorcycle cameramen from the Tour de France, relay aircraft at 3,000 feet for the live broadcast. Ford CEO Jim Farley joined for the final mile into Nice.</p>
     <button class="watch-btn" id="watchBtn">▶ Watch the film</button>
 </div>
 <div class="project-gallery">
@@ -122,7 +120,7 @@
 </div>
 <script>
     const vm = document.getElementById('vimeoModal'), vf = document.getElementById('vimeoFrame');
-    document.getElementById('watchBtn').addEventListener('click', () => { vf.src = 'https://player.vimeo.com/video/1171318976?autoplay=1&#t=1140s'; vm.classList.add('open'); });
+    document.getElementById('watchBtn').addEventListener('click', () => { vf.src = 'https://player.vimeo.com/video/1171170029?autoplay=1'; vm.classList.add('open'); });
     document.getElementById('vimeoClose').addEventListener('click', () => { vm.classList.remove('open'); vf.src = ''; });
     vm.addEventListener('click', e => { if (e.target === vm) { vm.classList.remove('open'); vf.src = ''; } });
     const imgs = Array.from(document.querySelectorAll('#gallery img'));

@@ -1994,6 +1994,28 @@
             display: block;
         }
 
+        .expand-project-link {
+            display: block;
+            text-align: center;
+            margin: 28px auto 8px;
+            font-family: var(--font-sans);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-decoration: none;
+            border: 1px solid var(--gold);
+            padding: 12px 24px;
+            width: fit-content;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .expand-project-link:hover {
+            background: var(--gold);
+            color: #080808;
+        }
+
         .expand-film {
             position: relative;
             width: 87.5%;
@@ -2913,7 +2935,7 @@
                 <div class="work-category-header"><span>Automotive</span></div>
                 <div class="work-grid">
                     <article class="work-item accordion" data-vimeo="1171157858" data-gallery="raptor"
-                        data-curated-order="1">
+                        data-curated-order="1" data-page="work/ford-ranger-raptor.html">
                         <div class="work-image"><img loading="lazy" src="images/ford-raptor.png" alt="Ford Raptor">
                         </div>
                         <div class="work-info">
@@ -2922,7 +2944,7 @@
                             <p class="work-desc">The global launch film for the new Ford Ranger Raptor. Directed by Nick
                                 Piper. The brief was simple: show what it can do. The solution was to chain it inside an
                                 Antonov AN-12 Soviet cargo plane and let it break free.</p>
-                            <a class="work-arrow" href="work/ford-ranger-raptor.html" aria-label="Read about Ford Ranger Raptor">→</a>
+                            <span class="work-arrow">→</span>
                         </div>
                         <div class="work-expand"></div>
                     </article>
@@ -2939,7 +2961,7 @@
                                 used an LED volume with Unreal Engine real-time content for the driving sequences, and
                                 green screen with CGI compositing for the product features. Multiple production methods,
                                 one seamless film.</p>
-                            <span class="work-arrow">→</span>
+                            <a class="work-arrow" href="work/ford-explorer.html" aria-label="Read about Ford Explorer">→</a>
                         </div>
                         <div class="work-expand"></div>
                     </article>
@@ -3120,7 +3142,7 @@
                                 as the convoy moved through. Helicopters, drones, motorcycle cameramen from the Tour de
                                 France, relay aircraft at 3,000 feet for the live broadcast. Ford CEO Jim Farley joined
                                 for the final mile into Nice.</p>
-                            <a class="work-arrow" href="work/ford-explorer.html" aria-label="Read about Ford Explorer">→</a>
+                            <span class="work-arrow">→</span>
                         </div>
                         <div class="work-expand"></div>
                     </article>
@@ -4660,6 +4682,7 @@
             if (vimeoId) html += '<div class="expand-film"><div class="film-poster"><div class="film-poster-play"></div></div><iframe class="expand-frame" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen playsinline></iframe></div>';
             if (items.length > 0) html += '<div class="expand-gallery-strip"></div><div class="expand-gallery-bar"><button class="expand-gal-prev">←</button><span class="expand-gal-counter"></span><button class="expand-gal-next">→</button></div>';
             if (galleryKey === 'ironMaiden') html += '<p class="im-release-text">In cinemas May 7</p>';
+            if (article.dataset.page) html += '<a class="expand-project-link" href="' + article.dataset.page + '">View full project →</a>';
             html += '</div>';
             expandPanel.innerHTML = html;
             const frame = expandPanel.querySelector('.expand-frame');
