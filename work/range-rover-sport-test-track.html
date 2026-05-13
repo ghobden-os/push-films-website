@@ -52,7 +52,15 @@
         .project-gallery { border-top: 1px solid #1a1a1a; padding: 48px var(--pad) 72px; }
         .section-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); margin-bottom: 20px; }
         .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
-        @media (max-width: 640px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 640px) {
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .project-details { flex-wrap: wrap; }
+            .project-detail { flex: 0 0 50%; }
+            .project-detail:nth-child(odd) { border-right: 1px solid #1a1a1a; }
+            .project-detail:nth-child(even) { border-right: none; }
+            .project-detail { border-bottom: 1px solid #1a1a1a; }
+            .project-detail:nth-last-child(-n+2) { border-bottom: none; }
+        }
         .gallery-grid img { width: 100%; aspect-ratio: 3/2; object-fit: cover; display: block; cursor: pointer; transition: opacity 0.2s; }
         .gallery-grid img:hover { opacity: 0.8; }
         .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; align-items: center; justify-content: center; }
