@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero Tuner — Batch</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111; color: #eee; font-family: monospace; font-size: 13px; }
+  .project { border-bottom: 2px solid #333; margin-bottom: 0; }
+  .hero { position: relative; height: 45vh; min-height: 280px; overflow: hidden; }
+  .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 65%, #111 100%); }
+  .hero-title { position: absolute; bottom: 20px; left: 24px; z-index: 2; font-family: sans-serif; }
+  .hero-title span { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #F5D800; display: block; margin-bottom: 6px; }
+  .hero-title h2 { font-size: 28px; font-weight: 300; color: #fff; }
+  .controls { display: flex; align-items: center; gap: 16px; padding: 12px 24px; background: #1a1a1a; }
+  .controls label { color: #888; white-space: nowrap; }
+  .controls input[type=range] { flex: 1; accent-color: #F5D800; }
+  .val { color: #F5D800; min-width: 60px; text-align: right; font-size: 14px; }
+  .copy-btn { background: #F5D800; color: #000; border: none; padding: 5px 12px; cursor: pointer; font-family: monospace; font-size: 12px; white-space: nowrap; }
+  .copy-btn:hover { background: #fff; }
+  .summary { position: fixed; bottom: 0; left: 0; right: 0; background: #000; border-top: 1px solid #333; padding: 10px 24px; display: flex; align-items: center; gap: 16px; }
+  .summary span { color: #888; font-size: 12px; }
+  .summary-copy { background: #F5D800; color: #000; border: none; padding: 6px 16px; cursor: pointer; font-family: monospace; font-size: 12px; }
+  .summary-copy:hover { background: #fff; }
+  #summaryText { flex: 1; color: #eee; font-size: 11px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .spacer { height: 48px; }
+</style>
+</head>
+<body>
+
+<div class="project" id="p1">
+  <div class="hero">
+    <img id="img1" src="images/film-grabs/spider/SPIDER_2.jpg" alt="">
+    <div class="hero-title"><span>Automotive Film</span><h2>McLaren Spider</h2></div>
+  </div>
+  <div class="controls">
+    <label>mclaren-spider.html</label>
+    <input type="range" min="0" max="100" value="50" oninput="update('img1','v1',this.value,'mclaren-spider.html')">
+    <span class="val" id="v1">50%</span>
+    <button class="copy-btn" onclick="copyOne('mclaren-spider.html','v1')">Copy</button>
+  </div>
+</div>
+
+<div class="project" id="p2">
+  <div class="hero">
+    <img id="img2" src="images/range-rover-reveal.png" alt="">
+    <div class="hero-title"><span>Automotive Film</span><h2>Range Rover Sport Reveal</h2></div>
+  </div>
+  <div class="controls">
+    <label>range-rover-sport-reveal.html</label>
+    <input type="range" min="0" max="100" value="50" oninput="update('img2','v2',this.value,'range-rover-sport-reveal.html')">
+    <span class="val" id="v2">50%</span>
+    <button class="copy-btn" onclick="copyOne('range-rover-sport-reveal.html','v2')">Copy</button>
+  </div>
+</div>
+
+<div class="project" id="p3">
+  <div class="hero">
+    <img id="img3" src="images/range-rover-james-corden.png" alt="">
+    <div class="hero-title"><span>Automotive Film</span><h2>Range Rover Sport — James Corden</h2></div>
+  </div>
+  <div class="controls">
+    <label>range-rover-james-corden.html</label>
+    <input type="range" min="0" max="100" value="50" oninput="update('img3','v3',this.value,'range-rover-james-corden.html')">
+    <span class="val" id="v3">50%</span>
+    <button class="copy-btn" onclick="copyOne('range-rover-james-corden.html','v3')">Copy</button>
+  </div>
+</div>
+
+<div class="project" id="p4">
+  <div class="hero">
+    <img id="img4" src="images/discovery-sport.png" alt="">
+    <div class="hero-title"><span>Automotive Film</span><h2>Land Rover Discovery Sport</h2></div>
+  </div>
+  <div class="controls">
+    <label>land-rover-discovery-sport.html</label>
+    <input type="range" min="0" max="100" value="50" oninput="update('img4','v4',this.value,'land-rover-discovery-sport.html')">
+    <span class="val" id="v4">50%</span>
+    <button class="copy-btn" onclick="copyOne('land-rover-discovery-sport.html','v4')">Copy</button>
+  </div>
+</div>
+
+<div class="project" id="p5">
+  <div class="hero">
+    <img id="img5" src="images/Tata.png" alt="">
+    <div class="hero-title"><span>Automotive Film</span><h2>Tata Nexon</h2></div>
+  </div>
+  <div class="controls">
+    <label>tata-nexon.html</label>
+    <input type="range" min="0" max="100" value="50" oninput="update('img5','v5',this.value,'tata-nexon.html')">
+    <span class="val" id="v5">50%</span>
+    <button class="copy-btn" onclick="copyOne('tata-nexon.html','v5')">Copy</button>
+  </div>
+</div>
+
+<div class="project" id="p6">
+  <div class="hero">
+    <img id="img6" src="images/ford-wheels.png" alt="">
+    <div class="hero-title"><span>Experiential</span><h2>Ford Wheels</h2></div>
+  </div>
+  <div class="controls">
+    <label>ford-wheels.html</label>
+    <input type="range" min="0" max="100" value="50" oninput="update('img6','v6',this.value,'ford-wheels.html')">
+    <span class="val" id="v6">50%</span>
+    <button class="copy-btn" onclick="copyOne('ford-wheels.html','v6')">Copy</button>
+  </div>
+</div>
+
+<div class="project" id="p7">
+  <div class="hero">
+    <img id="img7" src="images/film-grabs/lexie-limit/LEXIE LIMIT_2.jpg" alt="">
+    <div class="hero-title"><span>Experiential</span><h2>Lexie Limitless World Record Finale</h2></div>
+  </div>
+  <div class="controls">
+    <label>lexie-limitless-world-record.html</label>
+    <input type="range" min="0" max="100" value="50" oninput="update('img7','v7',this.value,'lexie-limitless-world-record.html')">
+    <span class="val" id="v7">50%</span>
+    <button class="copy-btn" onclick="copyOne('lexie-limitless-world-record.html','v7')">Copy</button>
+  </div>
+</div>
+
+<div class="project" id="p8">
+  <div class="hero">
+    <img id="img8" src="images/vashi.png" alt="">
+    <div class="hero-title"><span>Luxury</span><h2>Vashi</h2></div>
+  </div>
+  <div class="controls">
+    <label>vashi.html</label>
+    <input type="range" min="0" max="100" value="50" oninput="update('img8','v8',this.value,'vashi.html')">
+    <span class="val" id="v8">50%</span>
+    <button class="copy-btn" onclick="copyOne('vashi.html','v8')">Copy</button>
+  </div>
+</div>
+
+<div class="project" id="p9">
+  <div class="hero">
+    <img id="img9" src="images/bridgestone.png" alt="">
+    <div class="hero-title"><span>Sport</span><h2>Bridgestone</h2></div>
+  </div>
+  <div class="controls">
+    <label>bridgestone.html</label>
+    <input type="range" min="0" max="100" value="50" oninput="update('img9','v9',this.value,'bridgestone.html')">
+    <span class="val" id="v9">50%</span>
+    <button class="copy-btn" onclick="copyOne('bridgestone.html','v9')">Copy</button>
+  </div>
+</div>
+
+<div class="project" id="p10">
+  <div class="hero">
+    <img id="img10" src="images/football-league.png" alt="">
+    <div class="hero-title"><span>Sport</span><h2>Football League</h2></div>
+  </div>
+  <div class="controls">
+    <label>football-league.html</label>
+    <input type="range" min="0" max="100" value="50" oninput="update('img10','v10',this.value,'football-league.html')">
+    <span class="val" id="v10">50%</span>
+    <button class="copy-btn" onclick="copyOne('football-league.html','v10')">Copy</button>
+  </div>
+</div>
+
+<div class="project" id="p11">
+  <div class="hero">
+    <img id="img11" src="images/Golfing4 Life .png" alt="">
+    <div class="hero-title"><span>Sport</span><h2>Golfing 4 Life</h2></div>
+  </div>
+  <div class="controls">
+    <label>golfing-4-life.html</label>
+    <input type="range" min="0" max="100" value="50" oninput="update('img11','v11',this.value,'golfing-4-life.html')">
+    <span class="val" id="v11">50%</span>
+    <button class="copy-btn" onclick="copyOne('golfing-4-life.html','v11')">Copy</button>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<div class="summary">
+  <span>All values:</span>
+  <div id="summaryText">—</div>
+  <button class="summary-copy" onclick="copyAll()">Copy all</button>
+</div>
+
+<script>
+  const values = {
+    'mclaren-spider.html': 50,
+    'range-rover-sport-reveal.html': 50,
+    'range-rover-james-corden.html': 50,
+    'land-rover-discovery-sport.html': 50,
+    'tata-nexon.html': 50,
+    'ford-wheels.html': 50,
+    'lexie-limitless-world-record.html': 50,
+    'vashi.html': 50,
+    'bridgestone.html': 50,
+    'football-league.html': 50,
+    'golfing-4-life.html': 50,
+  };
+
+  function update(imgId, valId, v, key) {
+    document.getElementById(imgId).style.objectPosition = `center ${v}%`;
+    document.getElementById(valId).textContent = `${v}%`;
+    values[key] = parseInt(v);
+    refreshSummary();
+  }
+
+  function refreshSummary() {
+    const parts = Object.entries(values).map(([k,v]) => `${k}: ${v}%`);
+    document.getElementById('summaryText').textContent = parts.join('  |  ');
+  }
+
+  function copyOne(key, valId) {
+    const v = document.getElementById(valId).textContent;
+    navigator.clipboard.writeText(`${key} → center ${v}`);
+  }
+
+  function copyAll() {
+    const lines = Object.entries(values).map(([k,v]) => `${k}: center ${v}%`).join('\n');
+    navigator.clipboard.writeText(lines);
+  }
+
+  refreshSummary();
+</script>
+</body>
+</html>
