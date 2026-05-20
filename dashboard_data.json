@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-20T10:10:51.635004",
+  "generated": "2026-05-20T10:20:09.320450",
   "source": "ACCOUNTS_2026_COMPLETE_26-04-2026.xlsx",
   "monthly": [
     {
@@ -478,7 +478,7 @@
     {
       "m": "OCT 2024",
       "income": 24000.0,
-      "costs": 16227.27,
+      "costs": 14227.27,
       "costs_breakdown": [
         {
           "p": "28 Oct",
@@ -514,10 +514,6 @@
         },
         {
           "p": "10 Oct",
-          "a": 2000.0
-        },
-        {
-          "p": "10 Oct",
           "a": 1190.5
         },
         {
@@ -537,10 +533,6 @@
         {
           "name": "Alastair Fox",
           "amount": 5364.95
-        },
-        {
-          "name": "Sally Hobden",
-          "amount": 2000.0
         },
         {
           "name": "BRAZN",
