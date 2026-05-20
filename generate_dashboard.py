@@ -8,9 +8,17 @@ Run after any spreadsheet update, then:
     git add dashboard_data.json && git commit -m "Update dashboard data" && git push
 """
 
-import os, glob, json, re
+import os, glob, json, re, sys
 from datetime import datetime
 import openpyxl
+
+# safe_workbook blocks accidental .save() on data_only workbooks
+_SCRIPTS = os.path.expanduser(
+    '~/Library/Mobile Documents/com~apple~CloudDocs/'
+    'ICLOUD/GREG PERSONAL /PERSONAL FINANCES /CLAUDE VERSION - MARCH 26 /scripts'
+)
+sys.path.insert(0, _SCRIPTS)
+from safe_workbook import load_workbook as _safe_load_workbook
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
 SPREADSHEET_DIR = os.path.expanduser(
@@ -36,7 +44,7 @@ if os.path.exists(JSON_OUT):
         existing_atl[entry['m']] = entry
 
 # ── Load workbook (data_only reads cached formula values) ─────────────────────
-wb = openpyxl.load_workbook(spreadsheet_path, data_only=True)
+wb = _safe_load_workbook(spreadsheet_path, data_only=True)
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 def norm(t):
@@ -117,10 +125,40 @@ def extract_memo(ws, row):
 def clean_payee(memo):
     """Map a raw bank memo to a readable payee name."""
     upper = memo.upper()
+
+    # Bank wire transfer charges — always "CHARGES*ref*..." format
+    if upper.startswith('CHARGES'):
+        return 'Bank Charges'
+
+    # Faster Payment / CRH wire format: "project ref * BANKCODE*Actual Payee* TF"
+    # The actual payee sits between the 2nd and 3rd asterisk — the project reference
+    # (which often contains the client name, e.g. "CRH IMAGINATION") is before the 1st.
+    crh_match = re.search(r'\*\s*[A-Z0-9]+\s*\*(.+?)\*', memo, re.IGNORECASE)
+    if crh_match:
+        extracted = crh_match.group(1).strip()
+        extracted_upper = extracted.upper()
+        for pattern, name in PAYEE_MAP:
+            if pattern in extracted_upper:
+                return name
+        return extracted[:40].strip().title() if extracted else 'Unknown'
+
+    # For plain CRH memos without asterisks (e.g. "DAVID YARDLEY LTD CRH IMAGIN FT"),
+    # the payee precedes the word CRH — avoid matching the project-name suffix.
+    if 'CRH' in upper and '*' not in memo:
+        before_crh = re.split(r'\bCRH\b', memo, flags=re.IGNORECASE)[0].strip()
+        if before_crh:
+            before_upper = before_crh.upper()
+            for pattern, name in PAYEE_MAP:
+                if pattern in before_upper:
+                    return name
+            return before_crh[:40].strip().title()
+
+    # Standard full-memo pattern match
     for pattern, name in PAYEE_MAP:
         if pattern in upper:
             return name
-    # Fall back to first 30 chars of raw memo, title-cased
+
+    # Fall back to first 40 chars of raw memo, title-cased
     return memo[:40].strip().title() if memo else 'Unknown'
 
 # ── Read income AND costs from each monthly tab ───────────────────────────────
@@ -236,24 +274,34 @@ for sheet_name in wb.sheetnames:
 # ── Read SUMMARY sheet ────────────────────────────────────────────────────────
 ws_sum = wb['SUMMARY']
 
-# ── Monthly totals — rows 4-22 ────────────────────────────────────────────────
+# ── Monthly totals — rows 4-23 ────────────────────────────────────────────────
 # Expected columns: A=Month B=Spend C=Running D=vs Average E=Food F=Accom
 monthly = []
-for r in range(4, 23):
+def _safe_float(v):
+    try:
+        return round(float(v or 0), 2)
+    except (TypeError, ValueError):
+        return 0.0
+
+for r in range(4, 25):
     month = ws_sum.cell(row=r, column=1).value
-    if not month or str(month).strip() in ('TOTAL', 'MONTHLY AVG', ''):
+    if not month:
+        continue
+    month_str = str(month).strip()
+    # Skip summary/total rows — match "TOTAL", "TOTAL (N months)", "MONTHLY AVG", etc.
+    if not month_str or month_str.upper().startswith('TOTAL') or 'AVG' in month_str.upper():
         continue
     monthly.append({
-        'm':       str(month).strip(),
-        'spend':   round(float(ws_sum.cell(row=r, column=2).value or 0), 2),
-        'running': round(float(ws_sum.cell(row=r, column=3).value or 0), 2),
-        'vs':      round(float(ws_sum.cell(row=r, column=4).value or 0), 2),
-        'food':    round(float(ws_sum.cell(row=r, column=5).value or 0), 2),
-        'accom':   round(float(ws_sum.cell(row=r, column=6).value or 0), 2),
+        'm':       month_str,
+        'spend':   _safe_float(ws_sum.cell(row=r, column=2).value),
+        'running': _safe_float(ws_sum.cell(row=r, column=3).value),
+        'vs':      _safe_float(ws_sum.cell(row=r, column=4).value),
+        'food':    _safe_float(ws_sum.cell(row=r, column=5).value),
+        'accom':   _safe_float(ws_sum.cell(row=r, column=6).value),
     })
 
 # ── Category breakdown — DYNAMIC column discovery ────────────────────────────
-# Header expected in row 27; data in rows 28-46.
+# Header expected in row 27; data in rows 28-47.
 # Reads ALL named columns — picks up new categories (Mortgage/Rent, Ocado etc.)
 # automatically whenever Greg adds them to the spreadsheet.
 NON_CAT = {'', 'total', 'total spend', 'monthly avg', 'monthly average', 'avg', 'month', 'uncategorised'}
@@ -274,7 +322,7 @@ else:
     print("\nWarning: category header row 27 appears empty — using hardcoded columns")
 
 cats = []
-for r in range(28, 47):
+for r in range(28, 49):
     month = ws_sum.cell(row=r, column=1).value
     if not month or str(month).strip() in ('TOTAL', 'MONTHLY AVG', ''):
         continue
@@ -308,11 +356,13 @@ for entry in monthly:
         [{'name': k, 'amount': v} for k, v in raw_payees.items()],
         key=lambda x: -x['amount']
     )
+    breakdown_items = costs_breakdown_by_month.get(m, [])
+    costs_total = round(sum(item['a'] for item in breakdown_items), 2) if breakdown_items else atl_costs.get(m, 0.0)
     atl.append({
         'm':               m,
         'income':          income_by_month.get(m, 0.0),
-        'costs':           atl_costs.get(m, 0.0),
-        'costs_breakdown': costs_breakdown_by_month.get(m, []),
+        'costs':           costs_total,
+        'costs_breakdown': breakdown_items,
         'payees':          payees_list,
         'tax':             prev.get('tax', 0),
         'from':            prev.get('from', ''),

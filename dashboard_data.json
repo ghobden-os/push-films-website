@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-04T10:56:30.760212",
+  "generated": "2026-05-20T10:10:51.635004",
   "source": "ACCOUNTS_2026_COMPLETE_26-04-2026.xlsx",
   "monthly": [
     {
@@ -616,11 +616,15 @@
       ],
       "payees": [
         {
-          "name": "Imagination Europe",
-          "amount": 7012.95
+          "name": "Eye Rise Films",
+          "amount": 5752.95
         },
         {
-          "name": "Audio Dept Ltd 25288 Brill Crh Ft",
+          "name": "David Yardley Ltd",
+          "amount": 1260.0
+        },
+        {
+          "name": "Audio Dept Ltd 25288 Brill",
           "amount": 243.36
         },
         {
@@ -772,8 +776,8 @@
           "amount": 2731.5
         },
         {
-          "name": "Imagination Europe",
-          "amount": 2646.43
+          "name": "Taller Stories",
+          "amount": 2631.18
         },
         {
           "name": "David Brill",
@@ -834,6 +838,10 @@
         {
           "name": "Frame Cafe Ireland Amount In Eur",
           "amount": 18.59
+        },
+        {
+          "name": "Bank Charges",
+          "amount": 15.25
         },
         {
           "name": "Uber *Trip On 17 Dec Bdc",
@@ -974,15 +982,15 @@
       "payees": [
         {
           "name": "LAME",
-          "amount": 17491.74
+          "amount": 17476.49
         },
         {
           "name": "8 Feet Fixer",
           "amount": 15185.69
         },
         {
-          "name": "Imagination Europe",
-          "amount": 5678.37
+          "name": "Taller Stories",
+          "amount": 5663.12
         },
         {
           "name": "Brightlight Films",
@@ -1023,6 +1031,10 @@
         {
           "name": "Radiotaxi Fg 52 Italy Amount In Eur 55",
           "amount": 47.83
+        },
+        {
+          "name": "Bank Charges",
+          "amount": 30.5
         },
         {
           "name": "Uber *Trip Netherlands Amount In",
@@ -1147,7 +1159,7 @@
       "payees": [
         {
           "name": "LAME",
-          "amount": 24522.93
+          "amount": 24507.68
         },
         {
           "name": "8 Feet Fixer",
@@ -1200,6 +1212,10 @@
         {
           "name": "Chef Market Fiumic Italy Amount In Eur 3",
           "amount": 27.51
+        },
+        {
+          "name": "Bank Charges",
+          "amount": 15.25
         },
         {
           "name": "Unknown",
@@ -1715,8 +1731,8 @@
       ],
       "payees": [
         {
-          "name": "Swiss Filming * 241390*Theus Sarl* Tf",
-          "amount": 28280.97
+          "name": "Theus Sarl",
+          "amount": 28281.97
         },
         {
           "name": "209448 53401359 Nick Piper Inv Ft",
@@ -1725,10 +1741,6 @@
         {
           "name": "Pulll France On 31 Jan Bdc",
           "amount": 50.0
-        },
-        {
-          "name": "Swiss Filming * 178250*Theus Sarl* Tf",
-          "amount": 1.0
         }
       ],
       "tax": 32373.5,
