@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-01T12:25:47.136769",
+  "generated": "2026-06-01T13:48:46.195954",
   "source": "ACCOUNTS_2026_COMPLETE_26-04-2026.xlsx",
   "monthly": [
     {
@@ -430,11 +430,11 @@
       "Transport": 22.54,
       "Comms": 561.45,
       "Home": 1073.15,
-      "Finance/Work": 522.68,
+      "Finance/Work": 592.32,
       "Lifestyle": 630.99,
       "Personal": 160.89,
       "Family": 1624.0,
-      "Other": -354.08,
+      "Other": -423.72,
       "Mortgage": 2326.85,
       "Kids Accom": 1613.83
     },
@@ -458,11 +458,11 @@
       "Transport": 432.99,
       "Comms": 150.26,
       "Home": 1360.65,
-      "Finance/Work": 564.24,
+      "Finance/Work": 571.06,
       "Lifestyle": 782.76,
       "Personal": 270.58,
       "Family": 1000.0,
-      "Other": 122.74,
+      "Other": 115.92,
       "Mortgage": 2326.85,
       "Kids Accom": 1733.83
     }
