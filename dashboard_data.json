@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-01T12:18:40.823942",
+  "generated": "2026-06-01T12:25:47.136769",
   "source": "ACCOUNTS_2026_COMPLETE_26-04-2026.xlsx",
   "monthly": [
     {
@@ -160,6 +160,14 @@
       "running": 0.0,
       "vs": 0.0,
       "food": 1006.01,
+      "accom": 3940.68
+    },
+    {
+      "m": "MAY 2026",
+      "spend": 9391.72,
+      "running": 0.0,
+      "vs": 0.0,
+      "food": 430.62,
       "accom": 3940.68
     }
   ],
@@ -443,6 +451,20 @@
       "Other": 85.39,
       "Mortgage": 2326.85,
       "Kids Accom": 1613.83
+    },
+    {
+      "m": "MAY 2026",
+      "Food & Drink": 646.82,
+      "Transport": 432.99,
+      "Comms": 150.26,
+      "Home": 1360.65,
+      "Finance/Work": 564.24,
+      "Lifestyle": 782.76,
+      "Personal": 270.58,
+      "Family": 1000.0,
+      "Other": 122.74,
+      "Mortgage": 2326.85,
+      "Kids Accom": 1733.83
     }
   ],
   "atl": [
@@ -1779,6 +1801,26 @@
       "costs": 0.0,
       "costs_breakdown": [],
       "payees": [],
+      "tax": 0,
+      "from": "",
+      "breakdown": []
+    },
+    {
+      "m": "MAY 2026",
+      "income": 0.0,
+      "costs": 735.68,
+      "costs_breakdown": [
+        {
+          "p": "20 May",
+          "a": 735.68
+        }
+      ],
+      "payees": [
+        {
+          "name": "Lia Jusino",
+          "amount": 735.68
+        }
+      ],
       "tax": 0,
       "from": "",
       "breakdown": []
