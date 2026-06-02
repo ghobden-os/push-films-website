@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-01T13:48:46.195954",
+  "generated": "2026-06-02T09:48:16.973837",
   "source": "ACCOUNTS_2026_COMPLETE_26-04-2026.xlsx",
   "monthly": [
     {
@@ -148,18 +148,18 @@
     },
     {
       "m": "MAR 2026",
-      "spend": 10539.14,
+      "spend": 10559.14,
       "running": 219304.43,
       "vs": 1101.95,
-      "food": 1459.9,
+      "food": 1479.9,
       "accom": 3940.68
     },
     {
       "m": "APR 2026",
-      "spend": 11010.41,
+      "spend": 11004.36,
       "running": 0.0,
       "vs": 0.0,
-      "food": 1006.01,
+      "food": 999.96,
       "accom": 3940.68
     },
     {
@@ -426,7 +426,7 @@
     },
     {
       "m": "MAR 2026",
-      "Food & Drink": 2356.84,
+      "Food & Drink": 2376.84,
       "Transport": 22.54,
       "Comms": 561.45,
       "Home": 1073.15,
@@ -440,7 +440,7 @@
     },
     {
       "m": "APR 2026",
-      "Food & Drink": 1522.27,
+      "Food & Drink": 1516.22,
       "Transport": 515.71,
       "Comms": 255.12,
       "Home": 1385.8,
@@ -1797,7 +1797,7 @@
     },
     {
       "m": "APR 2026",
-      "income": 0.0,
+      "income": 69.98,
       "costs": 0.0,
       "costs_breakdown": [],
       "payees": [],
