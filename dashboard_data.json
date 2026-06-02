@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-02T09:48:16.973837",
+  "generated": "2026-06-02T09:58:51.895774",
   "source": "ACCOUNTS_2026_COMPLETE_26-04-2026.xlsx",
   "monthly": [
     {
@@ -132,7 +132,7 @@
     },
     {
       "m": "JAN 2026",
-      "spend": 12489.12,
+      "spend": 12574.12,
       "running": 195273.37,
       "vs": 354.52,
       "food": 1306.03,
@@ -148,7 +148,7 @@
     },
     {
       "m": "MAR 2026",
-      "spend": 10559.14,
+      "spend": 10577.14,
       "running": 219304.43,
       "vs": 1101.95,
       "food": 1479.9,
@@ -398,7 +398,7 @@
     },
     {
       "m": "JAN 2026",
-      "Food & Drink": 1819.67,
+      "Food & Drink": 1904.67,
       "Transport": 1520.8,
       "Comms": 248.18,
       "Home": 1506.7,
@@ -427,7 +427,7 @@
     {
       "m": "MAR 2026",
       "Food & Drink": 2376.84,
-      "Transport": 22.54,
+      "Transport": 40.54,
       "Comms": 561.45,
       "Home": 1073.15,
       "Finance/Work": 592.32,
